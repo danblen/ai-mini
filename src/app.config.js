@@ -27,7 +27,7 @@ export default {
         pagePath: "pages/album/index",
         iconPath: "./static/image/tabbar/photo1.png",
         selectedIconPath: "./static/image/tabbar/photo2.png",
-        text: "相册"
+        text: "作品"
       },
       {
         pagePath: "pages/user/index",
