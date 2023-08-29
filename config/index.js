@@ -5,6 +5,7 @@ const config = {
   deviceRatio: {
     640: 2.34 / 2,
     750: 1,
+    375: 2 / 1,
     828: 1.81 / 2
   },
   sourceRoot: 'src',
@@ -43,6 +44,7 @@ const config = {
     }
   },
   h5: {
+    esnextModules: ["taro-ui"],
     publicPath: '/',
     staticDirectory: 'static',
     postcss: {

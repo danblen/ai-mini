@@ -1,5 +1,5 @@
 {
-  "name": "ai",
+  "name": "easyai",
   "version": "1.0.0",
   "private": true,
   "description": "",
@@ -36,28 +36,30 @@
   "author": "",
   "dependencies": {
     "@babel/runtime": "^7.7.7",
+    "@nutui/nutui-react-taro": "^2.0.14",
     "@tarojs/cli": "3.3.14",
     "@tarojs/components": "3.3.14",
+    "@tarojs/plugin-html": "^3.6.14",
+    "@tarojs/react": "3.3.14",
     "@tarojs/runtime": "3.3.14",
     "@tarojs/taro": "3.3.14",
     "lodash": "4.17.15",
-    "@tarojs/react": "3.3.14",
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
-    "taro-ui": "^3.0.0-alpha.3"
+    "taro-ui": "^3.1.1"
   },
   "devDependencies": {
     "@babel/core": "^7.8.0",
     "@tarojs/mini-runner": "3.3.14",
     "@tarojs/webpack-runner": "3.3.14",
+    "@types/react": "^17.0.2",
     "@types/webpack-env": "^1.13.6",
     "babel-preset-taro": "3.3.14",
     "eslint": "^6.8.0",
     "eslint-config-taro": "3.3.14",
-    "stylelint": "9.3.0",
-    "@types/react": "^17.0.2",
-    "eslint-plugin-react": "^7.8.2",
     "eslint-plugin-import": "^2.12.0",
-    "eslint-plugin-react-hooks": "^4.2.0"
+    "eslint-plugin-react": "^7.8.2",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "stylelint": "9.3.0"
   }
 }

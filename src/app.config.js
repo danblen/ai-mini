@@ -1,5 +1,10 @@
 export default {
-  pages: ["pages/index/index", "pages/user/index"],
+  pages: [
+    "pages/index/index",
+    "pages/user/index",
+    "pages/album/index",
+    "pages/gen/index"
+  ],
   tabBar: {
     backgroundColor: "#fafafa",
     borderStyle: "white",
@@ -8,29 +13,29 @@ export default {
     list: [
       {
         pagePath: "pages/index/index",
-        iconPath: "./static/images/home.png",
-        selectedIconPath: "./static/images/home@selected.png",
-        text: "首页",
+        iconPath: "./static/image/tabbar/home.png",
+        selectedIconPath: "./static/image/tabbar/home1.png",
+        text: "首页"
       },
-      // {
-      //   pagePath: "pages/catalog/catalog",
-      //   iconPath: "./static/images/category.png",
-      //   selectedIconPath: "./static/images/category@selected.png",
-      //   text: "分类",
-      // },
-      // {
-      //   pagePath: "pages/cart/cart",
-      //   iconPath: "./static/images/cart.png",
-      //   selectedIconPath: "./static/images/cart@selected.png",
-      //   text: "购物车",
-      // },
+      {
+        pagePath: "pages/gen/index",
+        iconPath: "./static/image/tabbar/cube1.png",
+        selectedIconPath: "./static/image/tabbar/cube.png",
+        text: "生成"
+      },
+      {
+        pagePath: "pages/album/index",
+        iconPath: "./static/image/tabbar/photo1.png",
+        selectedIconPath: "./static/image/tabbar/photo2.png",
+        text: "相册"
+      },
       {
         pagePath: "pages/user/index",
-        iconPath: "./static/images/my.png",
-        selectedIconPath: "./static/images/my@selected.png",
-        text: "个人",
-      },
-    ],
+        iconPath: "./static/image/tabbar/me.png",
+        selectedIconPath: "./static/image/tabbar/me1.png",
+        text: "我的"
+      }
+    ]
   },
   window: {
     backgroundTextStyle: "light",
