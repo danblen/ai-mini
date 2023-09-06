@@ -63,7 +63,7 @@ const App =() => {
         itemRender={itemVariable}
         onScroll={onScroll}
         itemEqual={false}
-        // containerHeight={500}
+        containerHeight={500}
       />
     </View>
   )

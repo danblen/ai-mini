@@ -1,10 +1,10 @@
 import { Component } from "react";
 import "./app.less";
-// import "./app1.css";
-// import "@nutui/nutui-react-taro/dist/style.css";
-// import "taro-ui/dist/style/components/tabs.scss";
-// import "taro-ui/dist/style/components/button.scss";
-// import "taro-ui/dist/style/components/grid.scss";
+import "./app1.css";
+import "@nutui/nutui-react-taro/dist/style.css";
+import "taro-ui/dist/style/components/tabs.scss";
+import "taro-ui/dist/style/components/button.scss";
+import "taro-ui/dist/style/components/grid.scss";
 // import "@taroify/core/rate/style";
 // import "@taroify/icons/index.scss";
 // import "@taroify/core/index.scss";
