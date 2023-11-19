@@ -21,21 +21,6 @@ export default () => {
     }
   }, []);
   const [images, setImages] = useState([]);
-  const swap = async () => {
-    const srcBase64 = await pathToBase64(indexImage);
-    const tarBase64 = await pathToBase64(indexImage);
-    data.init_images = [srcBase64];
-    data.alwayson_scripts.roop.args[0] = tarBase64;
-    let res1 = await faceSwap(data);
-    if (res1.status === "pending") {
-      getImage(res1.request_id);
-    } else {
-      uni.showToast({
-        title: res1.error_message,
-        icon: "none",
-      });
-    }
-  };
   const getImage = async (requestId) => {
     const newImage = {
       path: "",
@@ -150,7 +135,21 @@ export default () => {
           }}
           shape="circle"
           className="swap"
-          onClick={swap}
+          onClick={async () => {
+            const srcBase64 = await pathToBase64(indexImage);
+            const tarBase64 = await pathToBase64(indexImage);
+            data.init_images = [srcBase64];
+            data.alwayson_scripts.roop.args[0] = tarBase64;
+            let res1 = await faceSwap(data);
+            if (res1.status === "pending") {
+              getImage(res1.request_id);
+            } else {
+              uni.showToast({
+                title: res1.error_message,
+                icon: "none",
+              });
+            }
+          }}
         >
           一键换脸
         </AtButton>
