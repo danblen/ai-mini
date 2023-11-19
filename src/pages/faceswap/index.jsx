@@ -134,6 +134,7 @@ export default () => {
             background: "grey",
             opacity: 0.5,
             color: "white",
+            width: "90%",
           }}
         >
           <ImageUpload />

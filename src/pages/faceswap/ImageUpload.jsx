@@ -5,13 +5,7 @@ import React, { useState } from "react";
 export default () => {
   const [files, setFiles] = useState([
     {
-      url: "https://jimczj.gitee.io/lazyrepay/aragaki1.jpeg",
-    },
-    {
-      url: "https://jimczj.gitee.io/lazyrepay/aragaki2.jpeg",
-    },
-    {
-      url: "https://jimczj.gitee.io/lazyrepay/aragaki3.png",
+      url: "https://danblen.github.io/static/index.jpg",
     },
   ]);
 
