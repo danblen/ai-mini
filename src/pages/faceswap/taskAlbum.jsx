@@ -1,15 +1,15 @@
-import Taro, { useEffect, useState } from "@tarojs/taro";
+import Taro from "@tarojs/taro";
 import { View, ScrollView, Image } from "@tarojs/components";
+import React, { useState, useEffect, useRef } from "react";
 import { getSwapQueueResult } from "../../api";
 
 export default () => {
   const [images, setImages] = useState([]);
-  const timers = {};
-
+  const timersRef = useRef({});
   useEffect(() => {
     return () => {
-      Object.keys(timers).forEach((key) => {
-        clearInterval(timers[key]);
+      Object.keys(timersRef.current).forEach((key) => {
+        clearInterval(timersRef.current[key]);
       });
     };
   }, []);
@@ -35,7 +35,7 @@ export default () => {
     };
     setImages((prevImages) => [...prevImages, newImage]);
 
-    timers[requestId] = setInterval(async () => {
+    timersRef.current[requestId] = setInterval(async () => {
       const requestData = {
         user_id: "",
         request_id: requestId,
@@ -46,7 +46,7 @@ export default () => {
       };
 
       let res = await getSwapQueueResult(requestData).catch(() => {
-        clearInterval(timers[requestId]);
+        clearInterval(timersRef.current[requestId]);
       });
 
       if (res.status === "finishing") {
@@ -61,7 +61,7 @@ export default () => {
               : image
           )
         );
-        clearInterval(timers[requestId]);
+        clearInterval(timersRef.current[requestId]);
       }
     }, 4000);
   };
@@ -93,7 +93,7 @@ export default () => {
             </View>
           ))
         ) : (
-          <Empty />
+          <View>暂无数据</View>
         )}
       </ScrollView>
     </View>
