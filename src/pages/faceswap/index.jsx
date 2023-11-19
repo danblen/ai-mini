@@ -1,5 +1,5 @@
 import { View, Text, Image, Button } from "@tarojs/components";
-import React, { useState, useRef ,useEffect} from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { NavBar, Tabs, Swiper } from "@nutui/nutui-react-taro";
 import { Left, Share, Close } from "@nutui/icons-react-taro";
 import Taro from "@tarojs/taro";
@@ -21,7 +21,6 @@ export default () => {
   }, []);
   const [images, setImages] = useState([]);
   const swap = async () => {
-
     const srcBase64 = await pathToBase64(indexImage);
     const tarBase64 = await pathToBase64(indexImage);
     data.init_images = [srcBase64];
@@ -81,7 +80,6 @@ export default () => {
   const onClose = () => {
     setShow(false);
   };
-
   const onTouchStart = (event) => {
     setStartX(event.touches[0].clientX); // 记录触摸起始点的X坐标
   };
@@ -99,21 +97,59 @@ export default () => {
   return (
     <View onTouchstart={onTouchStart} onTouchEnd={onTouchEnd}>
       {/* <Image className="w100 h100" src={imageUrl}></Image> */}
-      {imageUrl && <Image mode="aspectFill" src={imageUrl} />}
-      <Button
-        type="primary"
-        style="
-          width: 100%;
-          animation: swap 1s infinite;
-          opacity: 0.8;
-          font-weight: bold;
-        "
-        shape="circle"
-        class="swap"
-        onClick={swap}
+      <View
+        style={{
+          overflow: "hidden",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          width: "100%",
+          height: "100vh",
+        }}
       >
-        一键换脸
-      </Button>
+        <Image
+          mode="aspectFill"
+          style={{ width: " 100%", verticalAlign: "middle" }}
+          src={imageUrl}
+        />
+      </View>
+
+      <View
+        style={{
+          position: "fixed",
+          width: "100%",
+          padding: "0 30rpx",
+          bottom: "0rpx",
+        }}
+      >
+        <View
+          style={{
+            marginBottom: "40rpx",
+            borderRadius: "20rpx",
+            background: "grey",
+            opacity: 0.5,
+            color: "white",
+          }}
+        >
+          <ImageUpload ref="uploadRef" />
+        </View>
+        <AtButton
+          type="primary"
+          style={{
+            background: "linear-gradient(to right, #00467f, #a5cc82)",
+            width: "90%",
+            animation: "swap 1s infinite",
+            opacity: 0.8,
+            fontWeight: "bold",
+          }}
+          shape="circle"
+          className="swap"
+          onClick={swap}
+        >
+          一键换脸
+        </AtButton>
+      </View>
+
       <AtDrawer show={show} right mask onClose={onClose}>
         <TaskAlbum images={images} />
       </AtDrawer>
