@@ -54,14 +54,11 @@ const Home = () => {
         </View>
       )} */}
       <Image
-        className="w100 h100"
+        mode="aspectFill"
         src="https://danblen.github.io/static/index.jpg"
         onClick={() => {
           Taro.navigateTo({
-            url: "/pages/faceswap/index",
-            query: {
-              imageUrl: "https://danblen.github.io/static/index.jpg",
-            },
+            url: "/pages/faceswap/index?imageUrl=https://danblen.github.io/static/index.jpg",
           });
         }}
       ></Image>

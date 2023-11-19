@@ -1,5 +1,5 @@
 import { View, Text, Image, Button } from "@tarojs/components";
-import React, { useState, useRef } from "react";
+import React, { useState, useRef ,useEffect} from "react";
 import { NavBar, Tabs, Swiper } from "@nutui/nutui-react-taro";
 import { Left, Share, Close } from "@nutui/icons-react-taro";
 import Taro from "@tarojs/taro";
@@ -9,17 +9,26 @@ import { pathToBase64 } from "../../utils/image-tools.js";
 import { faceSwap } from "../../api/index.js";
 import indexImage from "./index.jpg";
 import TaskAlbum from "./TaskAlbum.jsx";
-const App = () => {
-  const swap = async () => {
+export default () => {
+  const [imageUrl, setImageUrl] = useState("");
+
+  useEffect(() => {
+    // 获取传递过来的参数
+    const params = Taro.getCurrentInstance().router.params;
+    if (params && params.imageUrl) {
+      setImageUrl(params.imageUrl);
+    }
+  }, []);
   const [images, setImages] = useState([]);
-  
-  const srcBase64 = await pathToBase64(indexImage);
+  const swap = async () => {
+
+    const srcBase64 = await pathToBase64(indexImage);
     const tarBase64 = await pathToBase64(indexImage);
     data.init_images = [srcBase64];
     data.alwayson_scripts.roop.args[0] = tarBase64;
     let res1 = await faceSwap(data);
     if (res1.status === "pending") {
-       getImage(res1.request_id);
+      getImage(res1.request_id);
     } else {
       uni.showToast({
         title: res1.error_message,
@@ -89,10 +98,8 @@ const App = () => {
   };
   return (
     <View onTouchstart={onTouchStart} onTouchEnd={onTouchEnd}>
-      <Image
-        className="w100 h100"
-        src="https://danblen.github.io/static/index.jpg"
-      ></Image>
+      {/* <Image className="w100 h100" src={imageUrl}></Image> */}
+      {imageUrl && <Image mode="aspectFill" src={imageUrl} />}
       <Button
         type="primary"
         style="
@@ -113,4 +120,3 @@ const App = () => {
     </View>
   );
 };
-export default App;

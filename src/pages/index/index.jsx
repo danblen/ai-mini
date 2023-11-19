@@ -20,7 +20,7 @@ const App = () => {
         <span onClick={e => Taro.showtoast({ title: "标题" })}>ai写真</span>
       </NavBar> */}
       {/* <Tabs1/> */}
-      <Tabs2/>
+      {/* <Tabs2/> */}
       {/* <Images /> */}
       <Home />
     </>
