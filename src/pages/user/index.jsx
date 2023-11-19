@@ -7,7 +7,6 @@ import {
   Image,
   Checkbox,
   Modal,
-  AtIcon,
 } from "@tarojs/components";
 // import CheckIn from "./CheckIn";
 // import BuyPoint from "./BuyPoint";
@@ -68,7 +67,7 @@ export default () => {
             </View>
 
             <View className="u-m-l-10 u-p-10">
-              <AtIcon value="chevron-right" size="28" color="#969799" />
+              {/* <AtIcon value="chevron-right" size="28" color="#969799" /> */}
             </View>
           </View>
         ) : (

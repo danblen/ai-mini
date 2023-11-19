@@ -9,6 +9,7 @@ import { pathToBase64 } from "../../utils/image-tools.js";
 import { faceSwap } from "../../api/index.js";
 import indexImage from "./index.jpg";
 import TaskAlbum from "./TaskAlbum.jsx";
+import ImageUpload from "./ImageUpload.jsx";
 export default () => {
   const [imageUrl, setImageUrl] = useState("");
 
@@ -95,7 +96,11 @@ export default () => {
     }
   };
   return (
-    <View onTouchstart={onTouchStart} onTouchEnd={onTouchEnd}>
+    <View
+      onTouchstart={onTouchStart}
+      onTouchEnd={onTouchEnd}
+      style={{ background: "black" }}
+    >
       {/* <Image className="w100 h100" src={imageUrl}></Image> */}
       <View
         style={{
@@ -131,7 +136,7 @@ export default () => {
             color: "white",
           }}
         >
-          <ImageUpload ref="uploadRef" />
+          <ImageUpload />
         </View>
         <AtButton
           type="primary"
