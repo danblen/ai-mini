@@ -1,31 +1,39 @@
-import { Component } from 'react'
-import { View, Text } from '@tarojs/components'
-import { AtButton } from 'taro-ui'
+import { View } from "@tarojs/components";
+import { useState } from "react";
+import { AtTabs, AtTabsPane } from "taro-ui";
+import FinishedTask from "./FinishedTask.jsx";
+import PendingTask from "./PendingTask.jsx";
+import img from "./index.jpg";
 
-// import "taro-ui/dist/style/components/button.scss" // 按需引入
-
-export default class Index extends Component {
-
-  componentWillMount () { }
-
-  componentDidMount () { }
-
-  componentWillUnmount () { }
-
-  componentDidShow () { }
-
-  componentDidHide () { }
-
-  render () {
-    return (
-      <View className='index'>
-        <Text>Hello world!</Text>
-        <AtButton type='primary'>I need Taro UI</AtButton>
-        <Text>Taro UI 支持 Vue 了吗？</Text>
-        <AtButton type='primary' circle={true}>支持</AtButton>
-        <Text>共建？</Text>
-        <AtButton type='secondary' circle={true}>来</AtButton>
-      </View>
-    )
-  }
-}
+export default () => {
+  const [current, setCurrent] = useState(0);
+  const onClick = (value) => {
+    setCurrent(value);
+  };
+  return (
+    <View>
+      <AtTabs
+        current={current}
+        tabList={[{ title: "进行中" }, { title: "已完成" }]}
+        swipeable={true}
+        onClick={onClick}
+      >
+        <AtTabsPane current={current} index={0}>
+          <View style="">
+            <FinishedTask
+              images={[
+                "https://danblen.github.io/static/index.jpg",
+                "https://danblen.github.io/static/index.jpg",
+              ]}
+            />
+          </View>
+        </AtTabsPane>
+        <AtTabsPane current={current} index={1}>
+          <View style="">
+            <FinishedTask />
+          </View>
+        </AtTabsPane>
+      </AtTabs>
+    </View>
+  );
+};

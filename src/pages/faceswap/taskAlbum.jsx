@@ -3,8 +3,8 @@ import { View, ScrollView, Image } from "@tarojs/components";
 import React, { useState, useEffect, useRef } from "react";
 import { getSwapQueueResult } from "../../api";
 
-export default () => {
-  const [images, setImages] = useState([]);
+export default (images) => {
+  // const [images, setImages] = useState([]);
   const timersRef = useRef({});
   useEffect(() => {
     return () => {
@@ -27,44 +27,44 @@ export default () => {
     });
   };
 
-  const getImage = async (requestId) => {
-    const newImage = {
-      path: "",
-      status: "pending",
-      requestId,
-    };
-    setImages((prevImages) => [...prevImages, newImage]);
+  // const getImage = async (requestId) => {
+  //   const newImage = {
+  //     path: "",
+  //     status: "pending",
+  //     requestId,
+  //   };
+  //   setImages((prevImages) => [...prevImages, newImage]);
 
-    timersRef.current[requestId] = setInterval(async () => {
-      const requestData = {
-        user_id: "",
-        request_id: requestId,
-        sql_query: {
-          request_status: "",
-          user_id: "",
-        },
-      };
+  //   timersRef.current[requestId] = setInterval(async () => {
+  //     const requestData = {
+  //       user_id: "",
+  //       request_id: requestId,
+  //       sql_query: {
+  //         request_status: "",
+  //         user_id: "",
+  //       },
+  //     };
 
-      let res = await getSwapQueueResult(requestData).catch(() => {
-        clearInterval(timersRef.current[requestId]);
-      });
+  //     let res = await getSwapQueueResult(requestData).catch(() => {
+  //       clearInterval(timersRef.current[requestId]);
+  //     });
 
-      if (res.status === "finishing") {
-        setImages((prevImages) =>
-          prevImages.map((image) =>
-            image.requestId === requestId
-              ? {
-                  ...image,
-                  path: "data:image/png;base64," + res.result.images[0],
-                  status: "SUCCESS",
-                }
-              : image
-          )
-        );
-        clearInterval(timersRef.current[requestId]);
-      }
-    }, 4000);
-  };
+  //     if (res.status === "finishing") {
+  //       setImages((prevImages) =>
+  //         prevImages.map((image) =>
+  //           image.requestId === requestId
+  //             ? {
+  //                 ...image,
+  //                 path: "data:image/png;base64," + res.result.images[0],
+  //                 status: "SUCCESS",
+  //               }
+  //             : image
+  //         )
+  //       );
+  //       clearInterval(timersRef.current[requestId]);
+  //     }
+  //   }, 4000);
+  // };
 
   return (
     <View className="container">
@@ -85,7 +85,7 @@ export default () => {
               ) : (
                 <Image
                   style={{ width: "300rpx", height: "300rpx" }}
-                  src={image.path}
+                  src={image.src}
                   mode="widthFix"
                   onClick={() => onPreviewImage(index)}
                 />

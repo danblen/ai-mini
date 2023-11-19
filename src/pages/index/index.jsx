@@ -9,7 +9,7 @@ import Tabs1 from "./tabs";
 import Tabs2 from "./tabs2";
 import Images2 from "./hot/images2";
 import Images from "./images";
-import Home from "./home";
+import Home from "./Home";
 import { AtButton } from "taro-ui";
 const App = () => {
   const swiperRef = useRef(null);
@@ -20,7 +20,7 @@ const App = () => {
         <span onClick={e => Taro.showtoast({ title: "标题" })}>ai写真</span>
       </NavBar> */}
       {/* <Tabs1/> */}
-      {/* <Tabs2/> */}
+      <Tabs2/>
       {/* <Images /> */}
       <Home />
     </>

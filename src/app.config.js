@@ -1,9 +1,10 @@
 export default {
   pages: [
-    "pages/index/index",
-    "pages/faceswap/index",
     "pages/user/index",
     "pages/album/index",
+    "pages/index/index",
+    "pages/faceswap/index",
+    "pages/refine/index",
     "pages/gen/index"
   ],
   tabBar: {
@@ -19,10 +20,10 @@ export default {
         text: "首页"
       },
       {
-        pagePath: "pages/gen/index",
+        pagePath: "pages/refine/index",
         iconPath: "./static/image/tabbar/cube1.png",
         selectedIconPath: "./static/image/tabbar/cube.png",
-        text: "生成"
+        text: "修图"
       },
       {
         pagePath: "pages/album/index",
