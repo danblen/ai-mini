@@ -23,7 +23,6 @@ const App = () => {
       {/* <Tabs2/> */}
       {/* <Images /> */}
       <Home />
-      
     </>
   );
 };

@@ -1,6 +1,7 @@
 export default {
   pages: [
     "pages/index/index",
+    "pages/faceswap/index",
     "pages/user/index",
     "pages/album/index",
     "pages/gen/index"
