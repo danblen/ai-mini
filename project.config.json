@@ -2,7 +2,7 @@
 	"miniprogramRoot": "dist/",
 	"projectname": "ai",
 	"description": "",
-	"appid": "touristappid",
+	"appid": "wx3e67e2268416075f",
 	"setting": {
 		"urlCheck": true,
 		"es6": false,

@@ -2,6 +2,8 @@ import "@nutui/nutui-react-taro/dist/style.css";
 import "taro-ui/dist/style/components/tabs.scss";
 import "taro-ui/dist/style/components/button.scss";
 import "taro-ui/dist/style/components/grid.scss";
+import "taro-ui/dist/style/components/drawer.scss";
+import "taro-ui/dist/style/components/list.scss";
 import { Component } from "react";
 import "./app.less";
 import "./app1.css";

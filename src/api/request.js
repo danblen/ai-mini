@@ -1,12 +1,12 @@
 import { URL_SD, URL_BACK, HEADER, TOKENNAME } from './app';
-import utils from './utils';
-import store from '../store';
+// import utils from './utils';
+// import store from '../store';
 import Taro from '@tarojs/taro';
 // import { urlToHttpOptions } from 'url';
 
 function toLogin() {
-  store.commit('LOGOUT');
-  uni.showToast({
+  // store.commit('LOGOUT');
+  Taro.showToast({
     title: '请登录',
     icon: 'none',
     duration: 1000,
@@ -33,26 +33,26 @@ function baseRequest(
   }
   if (!noAuth) {
     //登录过期自动登录
-    if (!store.state.app.token) {
-      toLogin();
-      return Promise.reject({
-        msg: '未登录',
-      });
-    }
+    // if (!store.state.app.token) {
+    //   toLogin();
+    //   return Promise.reject({
+    //     msg: '未登录',
+    //   });
+    // }
   }
 
-  if (store.state.app.token) {
-    header[TOKENNAME] = store.state.app.token;
-  }
-  if (store.state.app.uid) {
-    if (data) {
-      data.user_id = store.state.app.uid;
-    } else {
-      data = {
-        user_id: store.state.app.uid,
-      };
-    }
-  }
+  // if (store.state.app.token) {
+  //   header[TOKENNAME] = store.state.app.token;
+  // }
+  // if (store.state.app.uid) {
+  //   if (data) {
+  //     data.user_id = store.state.app.uid;
+  //   } else {
+  //     data = {
+  //       user_id: store.state.app.uid,
+  //     };
+  //   }
+  // }
 
   return new Promise((reslove, reject) => {
     Taro.request({
