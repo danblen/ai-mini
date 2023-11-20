@@ -1,7 +1,7 @@
 export default {
   pages: [
-    "pages/album/index",
     "pages/index/index",
+    "pages/album/index",
     "pages/user/index",
     "pages/faceswap/index",
     "pages/refine/index",

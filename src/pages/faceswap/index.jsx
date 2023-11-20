@@ -3,7 +3,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { NavBar, Tabs, Swiper } from "@nutui/nutui-react-taro";
 import { Left, Share, Close } from "@nutui/icons-react-taro";
 import Taro from "@tarojs/taro";
-import { AtButton, AtDrawer } from "taro-ui";
+import { AtButton, AtDrawer, AtIcon } from "taro-ui";
 import { data } from "./const.js";
 import { pathToBase64 } from "../../utils/image-tools.js";
 import { faceSwap } from "../../api/index.js";
@@ -60,11 +60,11 @@ export default () => {
     }, 4000);
   };
 
-  const [show, setShow] = useState(false);
+  const [showDrawer, setShowDrawer] = useState(false);
   const [startX, setStartX] = useState(0);
 
   const onClose = () => {
-    setShow(false);
+    setShowDrawer(false);
   };
   const onTouchStart = (event) => {
     setStartX(event.touches[0].clientX); // 记录触摸起始点的X坐标
@@ -75,9 +75,9 @@ export default () => {
     const deltaX = endX - startX; // 计算X轴位移距离
 
     if (deltaX < -50) {
-      setShow(true);
+      setShowDrawer(true);
     } else if (deltaX > 50) {
-      setShow(false);
+      setShowDrawer(false);
     }
   };
   return (
@@ -99,63 +99,95 @@ export default () => {
       >
         <Image
           mode="aspectFill"
-          style={{ width: " 100%", verticalAlign: "middle" }}
+          style={{ width: "100%", verticalAlign: "middle" }}
           src={imageUrl}
         />
+      </View>
+      <View
+        style="
+          position: fixed;
+          right: 0;
+          top: 100rpx;
+          opacity: 0.3;
+          padding-left: 8rpx;
+          font-size: 26rpx;
+          color: white;
+          background: black;
+          border-radius: 10rpx 0 0 10rpx;
+        "
+        onClick={() => {
+          setShowDrawer(true);
+        }}
+      >
+        左滑查看作品
+        <AtIcon value="chevron-right" size="20"></AtIcon>
       </View>
 
       <View
         style={{
           position: "fixed",
           width: "100%",
-          padding: "0 30rpx",
-          bottom: "0rpx",
+          bottom: "60rpx",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
         }}
       >
         <View
           style={{
+            width: "95%",
             marginBottom: "40rpx",
             borderRadius: "20rpx",
             background: "grey",
             opacity: 0.5,
             color: "white",
-            width: "90%",
           }}
         >
           <ImageUpload />
         </View>
-        <AtButton
-          type="primary"
+        <View
           style={{
-            background: "linear-gradient(to right, #00467f, #a5cc82)",
-            width: "90%",
-            animation: "swap 1s infinite",
-            opacity: 0.8,
-            fontWeight: "bold",
-          }}
-          shape="circle"
-          className="swap"
-          onClick={async () => {
-            const srcBase64 = await pathToBase64(indexImage);
-            const tarBase64 = await pathToBase64(indexImage);
-            data.init_images = [srcBase64];
-            data.alwayson_scripts.roop.args[0] = tarBase64;
-            let res1 = await faceSwap(data);
-            if (res1.status === "pending") {
-              getImage(res1.request_id);
-            } else {
-              uni.showToast({
-                title: res1.error_message,
-                icon: "none",
-              });
-            }
+            width: "95%",
           }}
         >
-          一键换脸
-        </AtButton>
+          <AtButton
+            type="primary"
+            style={{
+              background: "linear-gradient(to right, #00467f, #a5cc82)",
+              animation: "swap 1s infinite",
+              opacity: 0.8,
+              fontWeight: "bold",
+            }}
+            shape="circle"
+            onClick={async () => {
+              const srcBase64 = await pathToBase64(indexImage);
+              const tarBase64 = await pathToBase64(indexImage);
+              data.init_images = [srcBase64];
+              data.alwayson_scripts.roop.args[0] = tarBase64;
+              let res = await faceSwap(data);
+              if (res.status === "pending") {
+                getImage(res.request_id);
+              } else {
+                Taro.showToast({
+                  title: res.error_message,
+                  icon: "none",
+                });
+              }
+            }}
+          >
+            一键换脸
+          </AtButton>
+        </View>
       </View>
 
-      <AtDrawer show={show} right mask onClose={onClose}>
+      <AtDrawer
+        show={showDrawer}
+        right
+        mask
+        onClose={onClose}
+        style={{ background: "black" }}
+      >
         <TaskAlbum images={images} />
       </AtDrawer>
     </View>

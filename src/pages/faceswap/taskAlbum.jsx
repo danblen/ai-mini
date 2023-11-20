@@ -1,6 +1,7 @@
 import Taro from "@tarojs/taro";
 import { View, ScrollView, Image } from "@tarojs/components";
 import React, { useState, useEffect, useRef } from "react";
+import { AtIcon } from "taro-ui";
 import { getSwapQueueResult } from "../../api";
 
 export default (images) => {
@@ -67,10 +68,10 @@ export default (images) => {
   // };
 
   return (
-    <View className="container">
-      <View onClick={goAlbum}>
+    <View style={{ background: "black" }}>
+      <View  onClick={goAlbum}>
         作品集
-        {/* <Icon name="arrow-right" size="26" /> */}
+        <AtIcon value="chevron-right" size="22" />
       </View>
 
       <ScrollView className="images-scroll">
