@@ -15,18 +15,7 @@ export default (images) => {
     };
   }, []);
 
-  const goAlbum = () => {
-    Taro.reLaunch({
-      url: "/pages/album/index",
-    });
-  };
-
-  const onPreviewImage = (index) => {
-    Taro.previewImage({
-      current: index,
-      urls: images.map((image) => image.path),
-    });
-  };
+  const onPreviewImage = (index) => {};
 
   // const getImage = async (requestId) => {
   //   const newImage = {
@@ -69,7 +58,13 @@ export default (images) => {
 
   return (
     <View style={{ background: "black" }}>
-      <View  onClick={goAlbum}>
+      <View
+        onClick={() => {
+          Taro.reLaunch({
+            url: "/pages/album/index",
+          });
+        }}
+      >
         作品集
         <AtIcon value="chevron-right" size="22" />
       </View>
@@ -88,7 +83,12 @@ export default (images) => {
                   style={{ width: "300rpx", height: "300rpx" }}
                   src={image.src}
                   mode="widthFix"
-                  onClick={() => onPreviewImage(index)}
+                  onClick={() => {
+                    Taro.previewImage({
+                      current: index,
+                      urls: images.map((image) => image.path),
+                    });
+                  }}
                 />
               )}
             </View>

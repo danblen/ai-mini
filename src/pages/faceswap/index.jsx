@@ -21,6 +21,7 @@ export default () => {
     }
   }, []);
   const [images, setImages] = useState([]);
+
   const getImage = async (requestId) => {
     const newImage = {
       path: "",
@@ -62,17 +63,12 @@ export default () => {
 
   const [showDrawer, setShowDrawer] = useState(false);
   const [startX, setStartX] = useState(0);
-
-  const onClose = () => {
-    setShowDrawer(false);
-  };
   const onTouchStart = (event) => {
-    setStartX(event.touches[0].clientX); // 记录触摸起始点的X坐标
+    setStartX(event.touches[0].clientX);
   };
-
   const onTouchEnd = (event) => {
-    const endX = event.changedTouches[0].clientX; // 记录触摸结束点的X坐标
-    const deltaX = endX - startX; // 计算X轴位移距离
+    const endX = event.changedTouches[0].clientX;
+    const deltaX = endX - startX;
 
     if (deltaX < -50) {
       setShowDrawer(true);
@@ -80,6 +76,7 @@ export default () => {
       setShowDrawer(false);
     }
   };
+
   return (
     <View
       onTouchstart={onTouchStart}
@@ -185,7 +182,7 @@ export default () => {
         show={showDrawer}
         right
         mask
-        onClose={onClose}
+        onClose={() => setShowDrawer(false)}
         style={{ background: "black" }}
       >
         <TaskAlbum images={images} />
