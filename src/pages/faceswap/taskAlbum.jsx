@@ -15,47 +15,6 @@ export default (images) => {
     };
   }, []);
 
-  const onPreviewImage = (index) => {};
-
-  // const getImage = async (requestId) => {
-  //   const newImage = {
-  //     path: "",
-  //     status: "pending",
-  //     requestId,
-  //   };
-  //   setImages((prevImages) => [...prevImages, newImage]);
-
-  //   timersRef.current[requestId] = setInterval(async () => {
-  //     const requestData = {
-  //       user_id: "",
-  //       request_id: requestId,
-  //       sql_query: {
-  //         request_status: "",
-  //         user_id: "",
-  //       },
-  //     };
-
-  //     let res = await getSwapQueueResult(requestData).catch(() => {
-  //       clearInterval(timersRef.current[requestId]);
-  //     });
-
-  //     if (res.status === "finishing") {
-  //       setImages((prevImages) =>
-  //         prevImages.map((image) =>
-  //           image.requestId === requestId
-  //             ? {
-  //                 ...image,
-  //                 path: "data:image/png;base64," + res.result.images[0],
-  //                 status: "SUCCESS",
-  //               }
-  //             : image
-  //         )
-  //       );
-  //       clearInterval(timersRef.current[requestId]);
-  //     }
-  //   }, 4000);
-  // };
-
   return (
     <View style={{ background: "black" }}>
       <View
