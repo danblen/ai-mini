@@ -13,8 +13,7 @@ export default () => {
     setFiles(newFiles);
   };
 
-  const onFail = (mes) => {
-  };
+  const onFail = (mes) => {};
 
   const onImageClick = (index, file) => {
   };
@@ -22,6 +21,8 @@ export default () => {
   return (
     <View>
       <AtImagePicker
+        length={5}
+        style={{ height: "100rpx" }}
         files={files}
         onChange={onChange}
         onFail={onFail}

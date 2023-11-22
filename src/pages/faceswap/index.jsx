@@ -81,7 +81,7 @@ export default () => {
     <View
       onTouchstart={onTouchStart}
       onTouchEnd={onTouchEnd}
-      style={{ background: "black" }}
+      style={{ background: "black",height: "100vh", }}
     >
       {/* <Image className="w100 h100" src={imageUrl}></Image> */}
       <View
@@ -91,7 +91,7 @@ export default () => {
           justifyContent: "center",
           alignItems: "center",
           width: "100%",
-          height: "100vh",
+          height: "90vh",
         }}
       >
         <Image
@@ -182,8 +182,9 @@ export default () => {
         show={showDrawer}
         right
         mask
+        width="80%"
         onClose={() => setShowDrawer(false)}
-        style={{ background: "black" }}
+        style={{ background: "black", height: "100%" }}
       >
         <TaskAlbum images={images} />
       </AtDrawer>

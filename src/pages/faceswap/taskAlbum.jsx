@@ -16,8 +16,9 @@ export default (images) => {
   }, []);
 
   return (
-    <View style={{ background: "black" }}>
+    <View style={{ background: "black", height: "100vh", color: "#fff" }}>
       <View
+        style={{ background: "black" }}
         onClick={() => {
           Taro.reLaunch({
             url: "/pages/album/index",
@@ -28,7 +29,7 @@ export default (images) => {
         <AtIcon value="chevron-right" size="22" />
       </View>
 
-      <ScrollView className="images-scroll">
+      <ScrollView style={{ background: "black" }}>
         {images.length ? (
           images.map((image, index) => (
             <View key={index} className="image-container">
