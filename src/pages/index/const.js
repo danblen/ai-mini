@@ -9,7 +9,7 @@ export const imageUrls = [
 
 export const albums = [
   {
-    url: "https://storage.360buyimg.com/jdc-article/NutUItaro34.jpg",
+    url: "https://danblen.github.io/static/index.jpg",
     albumUrls: [
       "https://storage.360buyimg.com/jdc-article/NutUItaro34.jpg",
       "https://storage.360buyimg.com/jdc-article/NutUItaro34.jpg",

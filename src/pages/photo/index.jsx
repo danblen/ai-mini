@@ -3,7 +3,7 @@ import { View, Text, Image, ScrollView } from "@tarojs/components";
 import React, { useState, useEffect, useCallback } from "react";
 import Taro from "@tarojs/taro";
 const faceswapPage =
-  "/pages/faceswap/index?imageUrl=https://danblen.github.io/static/index.jpg";
+  "/pages/faceswap/index";
 
 export default () => {
   const [albumData, setAlbumData] = useState([]);
@@ -29,7 +29,7 @@ export default () => {
     <View className="">
       <View className="">
         <Image
-          style={Styles.image}
+          style={Styles.indexImage}
           className=" "
           mode="scaleToFill"
           onClick={() => {
@@ -39,7 +39,7 @@ export default () => {
           }}
           src={albumData.url}
         ></Image>
-        {albumData.albumUrls.map((url) => (
+        {albumData.albumUrls?.map((url) => (
           <View className="" style={Styles.imageWrap}>
             <Image
               style={Styles.image}
@@ -59,8 +59,10 @@ export default () => {
   );
 };
 const Styles = {
+  indexImage:{},
   image: {
     width: "360rpx",
+    borderRadius: "10rpx",
   },
   imageWrap: {
     paddingLeft: "10rpx",

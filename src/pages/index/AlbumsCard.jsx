@@ -53,6 +53,7 @@ const Styles = {
   },
   image: {
     width: "360rpx",
+    borderRadius: "10rpx",
     display: "inline-block",
   },
   imageWrap: {
