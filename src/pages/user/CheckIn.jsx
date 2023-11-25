@@ -1,7 +1,7 @@
 // import React, { useState } from "react";
 // import Taro from "@tarojs/taro";
 // import { View, RichText, Modal } from "@tarojs/components";
-// import { getPointsByCheck } from "@/services/api";
+// import { getPointsByCheck } from "../../api";
 // import "./style.scss"; // 确保您的样式文件与此路径匹配
 
 // export default ({ isCheck, onCheckUserInfoChange }) => {

@@ -1,7 +1,7 @@
 // import React, { useState } from "react";
 // import Taro from "@tarojs/taro";
 // import { View, Text, Modal } from "@tarojs/components";
-// import { getPointsByCheck } from "@/services/api";
+// import { getPointsByCheck } from "../../api";
 // import "./style.less";
 
 // export default ({ isCheck, onCheckUserInfoChange }) => {
