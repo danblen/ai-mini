@@ -2,9 +2,9 @@ import Taro from "@tarojs/taro";
 import { View } from "@tarojs/components";
 import { AtTabs, AtTabsPane } from "taro-ui";
 import React, { Component, useState } from "react";
-import Hot from "./hot";
-import New from "./new";
-import New from "./Images.jsx";
+import Hot from "./hot/index.jsx";
+import New from "./new/index.jsx";
+import Images from "./Images.jsx";
 import { tags } from "../const/app.js";
 
 export default () => {
@@ -24,7 +24,7 @@ export default () => {
       {tabList.map((tab, index) => (
         <AtTabsPane current={current} index={index}>
           <View style="">
-            
+            <Images />
           </View>
         </AtTabsPane>
       ))}
