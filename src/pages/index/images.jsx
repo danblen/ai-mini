@@ -5,12 +5,11 @@ import Taro from "@tarojs/taro";
 // import { imageUrls } from "./const";
 import { list_files } from "../../api";
 import image from "./index.jpg";
-export default (imageUrls) => {
-  debugger
+export default ({ imageUrls }) => {
   return (
     <View className="">
       <View className="">
-        {imageUrls&&imageUrls?.map((src) => (
+        {imageUrls?.map((src) => (
           <View className="" style={Styles.imageWrap}>
             <Image
               style={Styles.image}
@@ -21,7 +20,7 @@ export default (imageUrls) => {
                   url: "/pages/faceswap/index?imageUrl=https://danblen.github.io/static/index.jpg",
                 });
               }}
-              src={image}
+              src={src}
             ></Image>
           </View>
         ))}

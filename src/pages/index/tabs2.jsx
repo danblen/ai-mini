@@ -1,7 +1,7 @@
 import Taro from "@tarojs/taro";
 import { View } from "@tarojs/components";
 import { AtTabs, AtTabsPane } from "taro-ui";
-import React, { Component, useState,useEffect } from "react";
+import React, { Component, useState, useEffect } from "react";
 import Hot from "./hot/index.jsx";
 // import New from "./new/index.jsx";
 import Images from "./Images.jsx";
@@ -17,8 +17,12 @@ export default () => {
     setCurrent(value);
     setImageUrls(allImages[tabList[value].title]);
   };
-  debugger;
-
+  useEffect(() => {
+    // 当 allImages 或 tabList 发生变化时更新 imageUrls
+    if (tabList.length > 0) {
+      setImageUrls(allImages[tabList[0].title]);
+    }
+  }, [allImages, tabList]);
   const requestServicePhoto = async () => {
     const imagesDir = "images/"; // 静态目录路径
     let subImageDirs = await getPhotoPath(imagesDir).catch(() => {});
@@ -39,7 +43,7 @@ export default () => {
           });
         }
       }
-          
+
       setAllImages(updatedData);
       setTabList(Object.keys(updatedData).map((key) => ({ title: key })));
     }
@@ -60,7 +64,7 @@ export default () => {
           <AtTabsPane current={current} index={index}></AtTabsPane>
         ))}
       </AtTabs>
-      <View style="margin-top:10rpx">
+      <View style=" ">
         <Images imageUrls={imageUrls} />
       </View>
     </>
