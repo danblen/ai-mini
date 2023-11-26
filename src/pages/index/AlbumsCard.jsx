@@ -20,7 +20,7 @@ export default ({ albums }) => {
             <Image
               style={Styles.image}
               className=" "
-              mode="scaleToFill"
+              mode="widthFix"
               onClick={() => {
                 Taro.navigateTo({
                   url: photoPage,
@@ -52,7 +52,7 @@ const Styles = {
     margin: "10rpx",
   },
   image: {
-    width: "360rpx",
+    width: "280rpx",
     borderRadius: "10rpx",
     display: "inline-block",
   },

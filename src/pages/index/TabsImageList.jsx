@@ -8,25 +8,24 @@ import Images from "./Images.jsx";
 // import { tags } from "../const/app.js";
 import { getPhotoPath, URL_BACK, get_all_images } from "../../api/index.js";
 
-export default ({ tagsImage }) => {
-  debugger;
+export default ({ tags_image }) => {
   const [imageUrls, setImageUrls] = useState([]);
   const [tabList, setTabList] = useState([]);
   const [current, setCurrent] = useState(0);
   const onClick = useCallback(
     (value) => {
       setCurrent(value);
-      setImageUrls(tagsImage[tabList[value].title]);
+      setImageUrls(tags_image[tabList[value].title]);
     },
     [tabList]
   );
   useEffect(() => {
-    if (tagsImage) {
-      const tabs = Object.keys(tagsImage).map((key) => ({ title: key }));
+    if (tags_image) {
+      const tabs = Object.keys(tags_image).map((key) => ({ title: key }));
       setTabList(tabs);
-      setImageUrls(tagsImage[tabs[0]?.title]);
+      setImageUrls(tags_image[tabs[0]?.title]);
     }
-  }, [tagsImage]);
+  }, [tags_image]);
   return (
     <>
       <AtTabs

@@ -13,11 +13,11 @@ import TabsImageList from "./TabsImageList";
 import AlbumsCard from "./AlbumsCard";
 import { getPhotoPath, URL_BACK, get_all_images } from "../../api/index.js";
 const App = () => {
-  let [allImages, setAllImages] = useState({ albums: {}, tagsImage: {} });
+  let [allImages, setAllImages] = useState({ albums: {}, tags_image: {} });
   const getAllImages = async () => {
     let allImages = await get_all_images().catch(() => {});
     setAllImages(allImages);
-    debugger;
+    console.log(allImages);
   };
 
   useEffect(() => {
@@ -30,7 +30,7 @@ const App = () => {
       </NavBar> */}
       {/* <Tabs1/> */}
       <AlbumsCard albums={allImages.albums} />
-      <TabsImageList tagsImage={allImages.tagsImage} />
+      <TabsImageList tags_image={allImages.tags_image} />
       {/* <Images /> */}
       {/* <Home /> */}
     </>
