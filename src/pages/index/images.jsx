@@ -9,7 +9,7 @@ export default ({ imageUrls }) => {
   return (
     <View className="">
       <View className="">
-        {imageUrls?.map((src) => (
+        {imageUrls?.map?.((src) => (
           <View className="" style={Styles.imageWrap}>
             <Image
               style={Styles.image}

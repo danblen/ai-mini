@@ -2,8 +2,7 @@
 import { View, Text, Image, ScrollView } from "@tarojs/components";
 import React, { useState, useEffect, useCallback } from "react";
 import Taro from "@tarojs/taro";
-const faceswapPage =
-  "/pages/faceswap/index";
+const faceswapPage = "/pages/faceswap/index";
 
 export default () => {
   const [albumData, setAlbumData] = useState([]);
@@ -37,9 +36,9 @@ export default () => {
               url: faceswapPage,
             });
           }}
-          src={albumData.url}
+          src={albumData.index}
         ></Image>
-        {albumData.albumUrls?.map((url) => (
+        {albumData.urls?.map((url) => (
           <View className="" style={Styles.imageWrap}>
             <Image
               style={Styles.image}
@@ -59,7 +58,7 @@ export default () => {
   );
 };
 const Styles = {
-  indexImage:{},
+  indexImage: {},
   image: {
     width: "360rpx",
     borderRadius: "10rpx",

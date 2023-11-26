@@ -2,10 +2,10 @@
 import { View, Text, Image, ScrollView } from "@tarojs/components";
 import React, { useState, useEffect, useCallback } from "react";
 import Taro from "@tarojs/taro";
-import { albums } from "./const";
+// import { albums } from "./const";
 import image from "./index.jpg";
 const photoPage = "/pages/photo/index";
-export default () => {
+export default ({ albums }) => {
   return (
     <View className="" style={Styles.container}>
       <Text style={Styles.title}>写真集</Text>
@@ -15,7 +15,7 @@ export default () => {
         scrollWithAnimation
         className=""
       >
-        {albums.map((albumData) => (
+        {Object.values(albums)?.map?.((albumData) => (
           <View className="" style={Styles.imageWrap}>
             <Image
               style={Styles.image}
@@ -32,7 +32,7 @@ export default () => {
                   },
                 });
               }}
-              src={albumData.url}
+              src={albumData.index}
             ></Image>
           </View>
         ))}
