@@ -1,6 +1,12 @@
 let URL_SD = "https://facei.top";
 let URL_BACK = "https://facei.top";
 
+// let URL_SD = "https://facei.top:8080";
+// let URL_BACK = "https://facei.top:8080";
+
+// let URL_SD = "https://facei.top:8081";
+// let URL_BACK = "https://facei.top:8081";
+
 module.exports = {
   URL_SD,
   URL_BACK,

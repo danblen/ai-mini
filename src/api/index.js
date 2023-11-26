@@ -25,6 +25,9 @@ export function wechat_login(data) {
 export function get_user(data) {
   return request.post("/get_user", data);
 }
+export function get_all_images(data) {
+  return request.post("/get_all_images", data);
+}
 export function getPhotoData(data) {
   return request.post("/sdapi/v1/query-photo-image-sql-data-by-dict", data);
 }

@@ -2,11 +2,11 @@ import Taro from "@tarojs/taro";
 import { View } from "@tarojs/components";
 import { AtTabs, AtTabsPane } from "taro-ui";
 import React, { Component, useState, useEffect } from "react";
-import Hot from "./hot/index.jsx";
+// import Hot from "./hot/index.jsx";
 // import New from "./new/index.jsx";
 import Images from "./Images.jsx";
 // import { tags } from "../const/app.js";
-import { getPhotoPath, URL_BACK } from "../../api";
+import { getPhotoPath, URL_BACK, get_all_images } from "../../api/index.js";
 
 export default () => {
   let [allImages, setAllImages] = useState({});
@@ -48,8 +48,13 @@ export default () => {
       setTabList(Object.keys(updatedData).map((key) => ({ title: key })));
     }
   };
+  const getAllImages = async () => {
+    let subImageDirs = await get_all_images().catch(() => {});
+    debugger;
+  };
   useEffect(() => {
     requestServicePhoto();
+    getAllImages();
   }, []);
   return (
     <>
