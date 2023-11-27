@@ -1,9 +1,9 @@
 export default {
   pages: [
+    "pages/user/index",
     "pages/index/index",
     "pages/album/index",
     "pages/photo/index",
-    "pages/user/index",
     "pages/faceswap/index",
     "pages/refine/index",
     "pages/gen/index",

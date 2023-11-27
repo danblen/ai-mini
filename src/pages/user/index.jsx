@@ -1,13 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Taro from "@tarojs/taro";
-import {
-  View,
-  Text,
-  Button,
-  Image,
-  Checkbox,
-  Modal,
-} from "@tarojs/components";
+import { View, Text, Button, Image, Checkbox, Modal } from "@tarojs/components";
+import LoginModal from "./LoginModal";
 // import CheckIn from "./CheckIn";
 // import BuyPoint from "./BuyPoint";
 import { AtList, AtListItem } from "taro-ui";
@@ -16,8 +10,8 @@ import { AtList, AtListItem } from "taro-ui";
 export default () => {
   // const [showBuyPointPopup, setShowBuyPointPopup] = useState(false);
   // const [loading, setLoading] = useState(false);
-  // const [showModal, setShowModal] = useState(false);
   // const [isCheckPolicy, setIsCheckPolicy] = useState(false);
+  const [isOpened, setIsOpened] = useState(false);
   const [userInfo, setUserInfo] = useState({
     points: 10,
     userId: "",
@@ -45,7 +39,9 @@ export default () => {
   }, []);
   const onClick = () => {};
   const loading = false;
-  const onLogin = () => {};
+  const onLogin = () => {
+    setIsOpened(true);
+  };
   return (
     <View>
       <View style={{ backgroundColor: "transparent", marginBottom: "50rpx" }}>
@@ -102,6 +98,12 @@ export default () => {
 
       {/* <BuyPoint />
       <GetPoint /> */}
+      <LoginModal
+        isOpened={isOpened}
+        onClose={() => {
+          setIsOpened(false);
+        }}
+      />
     </View>
   );
 };
