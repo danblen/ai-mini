@@ -3,6 +3,7 @@ import { View, Text, Button, Checkbox } from "@tarojs/components";
 import { AtModal, AtModalHeader, AtModalContent, AtModalAction } from "taro-ui";
 import { wechat_login } from "../../api/index.js";
 import Taro from "@tarojs/taro";
+import { wechatLogin } from "../../common/user";
 
 export default ({ isOpened, onClose }) => {
   const [isCheckPolicy, setIsCheckPolicy] = useState(false);
@@ -23,9 +24,9 @@ export default ({ isOpened, onClose }) => {
         icon: "none",
         duration: 2000,
       });
-      return;
+      // return;
     }
-    const res = await wechat_login();
+    const res = await wechatLogin();
     if (res) {
       const updatedUserInfo = {
         points: res.user.points,
