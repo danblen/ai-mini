@@ -4,7 +4,6 @@ import React, { useState, useEffect, useCallback } from "react";
 import Taro from "@tarojs/taro";
 // import { imageUrls } from "./const";
 import { list_files } from "../../api";
-import image from "./index.jpg";
 export default ({ imageUrls }) => {
   return (
     <View className="">
@@ -17,7 +16,7 @@ export default ({ imageUrls }) => {
               mode="scaleToFill"
               onClick={() => {
                 Taro.navigateTo({
-                  url: "/pages/faceswap/index?imageUrl=https://danblen.github.io/static/index.jpg",
+                  url: "/pages/faceswap/index?imageUrl=" + src,
                 });
               }}
               src={src}

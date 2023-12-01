@@ -1,3 +1,5 @@
+import Taro from "@tarojs/taro";
+
 function getLocalFilePath(path) {
   if (
     path.indexOf("_www") === 0 ||
@@ -47,7 +49,24 @@ function biggerThan(v1, v2) {
   }
   return update;
 }
-
+export function downloadImages(imageUrl) {
+  return new Promise((resolve, reject) => {
+    Taro.downloadFile({
+      url: imageUrl,
+      success: (res) => {
+        if (res.statusCode === 200) {
+          this.srcTempFilePath = res.tempFilePath;
+          resolve(res.tempFilePath);
+        } else {
+          reject(new Error("Download failed, status code is not 200"));
+        }
+      },
+      fail: (error) => {
+        reject(error);
+      },
+    });
+  });
+}
 export function pathToBase642(path) {
   return new Promise(function (resolve, reject) {
     if (typeof window === "object" && "document" in window) {

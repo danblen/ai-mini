@@ -5,7 +5,11 @@ import { Left, Share, Close } from "@nutui/icons-react-taro";
 import Taro from "@tarojs/taro";
 import { AtButton, AtDrawer, AtIcon } from "taro-ui";
 import { data } from "./const.js";
-import { pathToBase64 } from "../../utils/image-tools.js";
+import {
+  pathToBase64,
+  pathToBase642,
+  downloadImages,
+} from "../../utils/image-tools.js";
 import { faceSwap } from "../../api/index.js";
 import indexImage from "./index.jpg";
 import TaskAlbum from "./TaskAlbum.jsx";
@@ -13,10 +17,11 @@ import ImageUpload from "./ImageUpload.jsx";
 export default () => {
   const [imageUrl, setImageUrl] = useState("");
 
-  useEffect(() => {
+  useEffect(async () => {
     // 获取传递过来的参数
     const params = Taro.getCurrentInstance().router.params;
     if (params && params.imageUrl) {
+      const url = await downloadImages(params.imageUrl);
       setImageUrl(params.imageUrl);
     }
   }, []);
@@ -76,14 +81,14 @@ export default () => {
       setShowDrawer(false);
     }
   };
+  const [uploadedFiles, setUploadedFiles] = useState([]);
 
   return (
     <View
       onTouchstart={onTouchStart}
       onTouchEnd={onTouchEnd}
-      style={{ background: "black",height: "100vh", }}
+      style={{ background: "black", height: "100vh" }}
     >
-      {/* <Image className="w100 h100" src={imageUrl}></Image> */}
       <View
         style={{
           overflow: "hidden",
@@ -141,7 +146,7 @@ export default () => {
             color: "white",
           }}
         >
-          <ImageUpload />
+          <ImageUpload onFilesChange={(images) => setUploadedFiles(images)} />
         </View>
         <View
           style={{
@@ -158,7 +163,9 @@ export default () => {
             }}
             shape="circle"
             onClick={async () => {
-              const srcBase64 = await pathToBase64(indexImage);
+              debugger;
+              const srcBase64 = await pathToBase642(imageUrl);
+              uploadedFiles;
               const tarBase64 = await pathToBase64(indexImage);
               data.init_images = [srcBase64];
               data.alwayson_scripts.roop.args[0] = tarBase64;

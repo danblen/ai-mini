@@ -5,7 +5,7 @@ import LoginModal from "./LoginModal";
 // import CheckIn from "./CheckIn";
 // import BuyPoint from "./BuyPoint";
 import { AtList, AtListItem } from "taro-ui";
-// import { wechat_login, get_user } from "../../api";
+import { wechat_login, get_user } from "../../api";
 
 export default () => {
   // const [showBuyPointPopup, setShowBuyPointPopup] = useState(false);

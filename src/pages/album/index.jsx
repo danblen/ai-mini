@@ -1,9 +1,8 @@
-import { View,Image } from "@tarojs/components";
+import { View, Image } from "@tarojs/components";
 import { useState, useRef } from "react";
 import { AtTabs, AtTabsPane } from "taro-ui";
 import FinishedTask from "./FinishedTask.jsx";
 import PendingTask from "./PendingTask.jsx";
-import img from "./index.jpg";
 
 export default () => {
   const [current, setCurrent] = useState(0);

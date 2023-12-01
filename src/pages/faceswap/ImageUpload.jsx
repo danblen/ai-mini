@@ -2,7 +2,7 @@ import Taro from "@tarojs/taro";
 import { AtImagePicker } from "taro-ui";
 import { View, Text, Image, Button } from "@tarojs/components";
 import React, { useState } from "react";
-export default () => {
+export default ({ onFilesChange }) => {
   const [files, setFiles] = useState([
     {
       url: "https://danblen.github.io/static/index.jpg",
@@ -11,12 +11,12 @@ export default () => {
 
   const onChange = (newFiles) => {
     setFiles(newFiles);
+    onFilesChange(newFiles);
   };
 
   const onFail = (mes) => {};
 
-  const onImageClick = (index, file) => {
-  };
+  const onImageClick = (index, file) => {};
 
   return (
     <View>

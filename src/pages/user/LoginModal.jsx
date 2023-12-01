@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { View, Text, Button, Checkbox } from "@tarojs/components";
 import { AtModal, AtModalHeader, AtModalContent, AtModalAction } from "taro-ui";
 import { wechat_login } from "../../api/index.js";
+import Taro from "@tarojs/taro";
 
 export default ({ isOpened, onClose }) => {
   const [isCheckPolicy, setIsCheckPolicy] = useState(false);
@@ -60,11 +61,11 @@ export default ({ isOpened, onClose }) => {
               onClick={() => setIsCheckPolicy(!isCheckPolicy)}
             ></Checkbox>
             <Text>我已阅读并同意</Text>
-            <Text style={{ color: "blue" }} onClick={onViewServicePolicy}>
+            <Text style={{ color: "blue" }} onClick={() => {}}>
               《服务协议》
             </Text>
             和
-            <Text style={{ color: "blue" }} onClick={onViewPrivacyPolicy}>
+            <Text style={{ color: "blue" }} onClick={() => {}}>
               《隐私协议》
             </Text>
           </View>
