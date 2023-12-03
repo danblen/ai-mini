@@ -9,24 +9,23 @@ export default ({ onFilesChange }) => {
     },
   ]);
 
-  const onChange = (newFiles) => {
-    setFiles(newFiles);
-    onFilesChange(newFiles);
-  };
-
-  const onFail = (mes) => {};
-
-  const onImageClick = (index, file) => {};
-
   return (
     <View>
       <AtImagePicker
         length={5}
         style={{ height: "100rpx" }}
         files={files}
-        onChange={onChange}
-        onFail={onFail}
-        onImageClick={onImageClick}
+        onChange={(newFiles) => {
+          setFiles(newFiles);
+          onFilesChange(newFiles);
+        }}
+        onFail={(mes) => {}}
+        onImageClick={(index, file) => {
+          // Taro.previewImage({
+          //   current: index,
+          //   urls: files.map((image) => image.url),
+          // });
+        }}
       />
     </View>
   );

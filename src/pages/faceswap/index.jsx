@@ -47,6 +47,7 @@ export default () => {
   const [startX, setStartX] = useState(0);
   const [imageUrl, setImageUrl] = useState("");
   const [images, setImages] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [uploadedFiles, setUploadedFiles] = useState([]);
 
   useEffect(() => {
@@ -121,7 +122,7 @@ export default () => {
         }}
       >
         <Image
-          mode="aspectFill"
+          mode="widthFix"
           style={{ width: "100%", verticalAlign: "middle" }}
           src={imageUrl}
         />
@@ -183,13 +184,15 @@ export default () => {
               fontWeight: "bold",
             }}
             shape="circle"
+            loading={loading}
             onClick={async () => {
+              setLoading(true);
               const srcBase64 = await wxPathToBase64(imageUrl);
               const tarBase64 = await wxPathToBase64(indexImage);
               data.init_images = [srcBase64];
               data.alwayson_scripts.roop.args[0] = tarBase64;
               let res = await faceSwap(data);
-              // debugger;
+              setLoading(false);
               if (res.status === "pending") {
                 getTaskImages(res.request_id);
               } else {
