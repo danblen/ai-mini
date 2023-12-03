@@ -6,33 +6,16 @@ import Taro from "@tarojs/taro";
 import { AtButton, AtDrawer, AtIcon } from "taro-ui";
 import { data } from "./const.js";
 import { wxPathToBase64, downloadImages } from "../../utils/image-tools.js";
-import { faceSwap } from "../../api/index.js";
+import { faceSwap, getSwapQueueResult } from "../../api/index.js";
 import indexImage from "./index.jpg";
 import TaskAlbum from "./TaskAlbum.jsx";
 import ImageUpload from "./ImageUpload.jsx";
-export default () => {
-  const [imageUrl, setImageUrl] = useState("");
 
-  useEffect(async () => {
-    // 获取传递过来的参数
-    const params = Taro.getCurrentInstance().router.params;
-    if (params && params.imageUrl) {
-      debugger;
-      const url = await downloadImages(params.imageUrl);
-      setImageUrl(url);
-    }
-  }, []);
-  const [images, setImages] = useState([]);
-
-  const getImage = async (requestId) => {
-    const newImage = {
-      path: "",
-      status: "pending",
-      requestId,
-    };
-    setImages((prevImages) => [...prevImages, newImage]);
-
-    timersRef.current[requestId] = setInterval(async () => {
+let timers = {};
+const getTaskImage = async (requestId) => {
+  return new Promise((resolve, reject) => {
+    // 创建一个计时器，每隔3秒执行一次
+    timers[requestId] = setInterval(async () => {
       const requestData = {
         user_id: "",
         request_id: requestId,
@@ -42,29 +25,71 @@ export default () => {
         },
       };
 
-      let res = await getSwapQueueResult(requestData).catch(() => {
-        clearInterval(timersRef.current[requestId]);
-      });
+      try {
+        // 调用getSwapQueueResult函数获取结果
+        let res = await getSwapQueueResult(requestData);
 
-      if (res.status === "finishing") {
-        setImages((prevImages) =>
-          prevImages.map((image) =>
-            image.requestId === requestId
-              ? {
-                  ...image,
-                  src: "data:image/png;base64," + res.result.images[0],
-                  status: "SUCCESS",
-                }
-              : image
-          )
-        );
-        clearInterval(timersRef.current[requestId]);
+        if (res.status === "finishing") {
+          // 更新图像数组中对应请求的图像状态和数据
+          resolve(res);
+          clearInterval(timers[requestId]);
+        }
+      } catch (error) {
+        reject();
+        clearInterval(timers[requestId]);
       }
     }, 3000);
-  };
+  });
+};
 
+export default () => {
   const [showDrawer, setShowDrawer] = useState(false);
   const [startX, setStartX] = useState(0);
+  const [imageUrl, setImageUrl] = useState("");
+  const [images, setImages] = useState([]);
+  const [uploadedFiles, setUploadedFiles] = useState([]);
+
+  useEffect(() => {
+    const down = async () => {
+      const tempFilePath = await downloadImages(params.imageUrl);
+      if (!ignore) setImageUrl(tempFilePath);
+    };
+    // 获取传递过来的参数
+    const params = Taro.getCurrentInstance().router.params;
+    let ignore = false;
+    if (params && params.imageUrl) {
+      down();
+    }
+    return () => {
+      ignore = true;
+      Object.keys(timers).forEach((key) => {
+        clearInterval(timers[key]);
+      });
+    };
+  }, []);
+
+  const getTaskImages = async (requestId) => {
+    const newImage = {
+      src: "",
+      status: "pending",
+      requestId,
+    };
+    setImages((prevImages) => [...prevImages, newImage]);
+
+    const res = await getTaskImage(requestId);
+    setImages((prevImages) =>
+      prevImages.map((image) =>
+        image.requestId === requestId
+          ? {
+              ...image,
+              src: "data:image/png;base64," + res.result.images[0],
+              status: "SUCCESS",
+            }
+          : image
+      )
+    );
+  };
+
   const onTouchStart = (event) => {
     setStartX(event.touches[0].clientX);
   };
@@ -78,7 +103,6 @@ export default () => {
       setShowDrawer(false);
     }
   };
-  const [uploadedFiles, setUploadedFiles] = useState([]);
 
   return (
     <View
@@ -160,15 +184,14 @@ export default () => {
             }}
             shape="circle"
             onClick={async () => {
-              debugger;
               const srcBase64 = await wxPathToBase64(imageUrl);
-              uploadedFiles;
               const tarBase64 = await wxPathToBase64(indexImage);
               data.init_images = [srcBase64];
               data.alwayson_scripts.roop.args[0] = tarBase64;
               let res = await faceSwap(data);
+              // debugger;
               if (res.status === "pending") {
-                getImage(res.request_id);
+                getTaskImages(res.request_id);
               } else {
                 Taro.showToast({
                   title: res.error_message,

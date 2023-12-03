@@ -11,15 +11,18 @@ import TabsImageList from "./TabsImageList";
 // import Images from "./Images";
 // import Home from "./Home";
 import AlbumsCard from "./AlbumsCard";
+import { useData } from "../hooks/useData.js";
 import { getPhotoPath, URL_BACK, get_all_images } from "../../api/index.js";
 const App = () => {
   let [allImages, setAllImages] = useState({ albums: {}, tags_image: {} });
   const getAllImages = async () => {
     let allImages = await get_all_images().catch(() => {});
     setAllImages(allImages);
-    console.log(allImages);
   };
-
+  // const allImages = useData(() => get_all_images(), {
+  //   albums: {},
+  //   tags_image: {},
+  // });
   useEffect(() => {
     getAllImages();
   }, []);

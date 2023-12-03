@@ -4,8 +4,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { AtIcon } from "taro-ui";
 import { getSwapQueueResult } from "../../api";
 
-export default (images) => {
-  // const [images, setImages] = useState([]);
+export default ({ images }) => {
   const timersRef = useRef({});
   useEffect(() => {
     return () => {
@@ -35,7 +34,7 @@ export default (images) => {
             <View key={index} className="image-container">
               {image.status === "pending" ? (
                 <View className="loading-container">
-                  <Loading />
+                  {/* <Loading /> */}
                   <View>制作中</View>
                 </View>
               ) : (
@@ -46,7 +45,7 @@ export default (images) => {
                   onClick={() => {
                     Taro.previewImage({
                       current: index,
-                      urls: images.map((image) => image.path),
+                      urls: images.map((image) => image.src),
                     });
                   }}
                 />

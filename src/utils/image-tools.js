@@ -55,7 +55,6 @@ export function downloadImages(imageUrl) {
       url: imageUrl,
       success: (res) => {
         if (res.statusCode === 200) {
-          this.srcTempFilePath = res.tempFilePath;
           resolve(res.tempFilePath);
         } else {
           reject(new Error("Download failed, status code is not 200"));
