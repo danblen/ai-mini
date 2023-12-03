@@ -1,14 +1,14 @@
-import { URL_SD, URL_BACK, HEADER, TOKENNAME } from './app';
+import { URL_SD, URL_BACK, HEADER, TOKENNAME } from "./app";
 // import utils from './utils';
 // import store from '../store';
-import Taro from '@tarojs/taro';
+import Taro from "@tarojs/taro";
 // import { urlToHttpOptions } from 'url';
 
 function toLogin() {
   // store.commit('LOGOUT');
   Taro.showToast({
-    title: '请登录',
-    icon: 'none',
+    title: "请登录",
+    icon: "none",
     duration: 1000,
   });
 }
@@ -20,13 +20,13 @@ function baseRequest(
   url,
   method,
   data,
-  { noAuth = true, noVerify = false, noAlert = false },
+  { noAuth = true, noVerify = false, noAlert = false }
 ) {
-  let Url = '',
+  let Url = "",
     header = HEADER;
 
   // 请求地址处理
-  if (url.startsWith('/sdapi') > 0) {
+  if (url.startsWith("/sdapi") > 0) {
     Url = URL_SD + url;
   } else {
     Url = URL_BACK + url;
@@ -57,7 +57,7 @@ function baseRequest(
   return new Promise((reslove, reject) => {
     Taro.request({
       url: Url,
-      method: method || 'GET',
+      method: method || "GET",
       timeout: 600000,
       header: header,
       // header: {
@@ -90,11 +90,11 @@ function baseRequest(
 
 const request = {};
 
-['options', 'get', 'post', 'put', 'head', 'delete', 'trace', 'connect'].forEach(
+["options", "get", "post", "put", "head", "delete", "trace", "connect"].forEach(
   (method) => {
     request[method] = (api, data, opt) =>
       baseRequest(api, method, data, opt || {});
-  },
+  }
 );
 
 export default request;

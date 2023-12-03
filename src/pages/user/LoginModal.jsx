@@ -5,7 +5,7 @@ import { wechat_login } from "../../api/index.js";
 import Taro from "@tarojs/taro";
 import { wechatLogin } from "../../common/user";
 
-export default ({ isOpened, onClose }) => {
+export default ({ isOpened, onConfirmLogin, onClose }) => {
   const [isCheckPolicy, setIsCheckPolicy] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -17,26 +17,6 @@ export default ({ isOpened, onClose }) => {
 
   const showToast = (message) => {};
 
-  const onConfirmLogin = async () => {
-    if (!isCheckPolicy) {
-      Taro.showToast({
-        title: "请勾选我已阅读并同意《服务协议》和《隐私协议》",
-        icon: "none",
-        duration: 2000,
-      });
-      // return;
-    }
-    const res = await wechatLogin();
-    if (res) {
-      const updatedUserInfo = {
-        points: res.user.points,
-        isCheck: res.user.is_check,
-        userId: res.user.user_id,
-      };
-      setUserInfo(updatedUserInfo);
-      Taro.setStorageSync("userInfo", updatedUserInfo);
-    }
-  };
   return (
     <AtModal isOpened={isOpened} onClose={onClose}>
       <AtModalHeader>欢迎登录</AtModalHeader>
@@ -52,7 +32,17 @@ export default ({ isOpened, onClose }) => {
             shape="circle"
             className="swap"
             loading={loading}
-            onClick={onConfirmLogin}
+            onClick={() => {
+              if (!isCheckPolicy) {
+                Taro.showToast({
+                  title: "请勾选我已阅读并同意《服务协议》和《隐私协议》",
+                  icon: "none",
+                  duration: 2000,
+                });
+                return;
+              }
+              onConfirmLogin();
+            }}
           >
             微信授权登录
           </Button>
@@ -74,7 +64,6 @@ export default ({ isOpened, onClose }) => {
       </AtModalContent>
       <AtModalAction>
         <Button onClick={onClose}>取消</Button>
-        {/* <Button onClick={onClose}>确定</Button> */}
       </AtModalAction>
     </AtModal>
   );

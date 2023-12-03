@@ -4,70 +4,85 @@ import { View, Text, Button, Image, Checkbox, Modal } from "@tarojs/components";
 import LoginModal from "./LoginModal";
 // import CheckIn from "./CheckIn";
 // import BuyPoint from "./BuyPoint";
-import { AtList, AtListItem } from "taro-ui";
+import { AtList, AtListItem, AtIcon } from "taro-ui";
 import { wechat_login, get_user } from "../../api";
+import { wechatLogin } from "../../common/user";
 
 export default () => {
   // const [showBuyPointPopup, setShowBuyPointPopup] = useState(false);
-  // const [loading, setLoading] = useState(false);
-  // const [isCheckPolicy, setIsCheckPolicy] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [isOpened, setIsOpened] = useState(false);
   const [userInfo, setUserInfo] = useState({
     points: 10,
     userId: "",
     isCheck: false,
-    avatarUrl: "",
+    avatarUrl: "https://danblen.github.io/static/index.jpg",
   });
 
   const fetchUserInfo = async () => {
-    const userId = Taro.getStorageSync("userInfo").userId;
-    if (userId) {
-      const res = await getUser({ user_id: userId });
-      if (res) {
-        setUserInfo({
-          ...userInfo,
-          userId: res.user.user_id,
-          points: res.user.points,
-          isCheck: res.user.is_check,
-        });
-      }
+    const userInfo = Taro.getStorageSync("userInfo");
+    if (userInfo.userId) {
+      setUserInfo({
+        ...userInfo,
+      });
+    }
+  };
+
+  const onConfirmLogin = async () => {
+    const res = await wechatLogin();
+    if (res) {
+      const updatedUserInfo = {
+        points: res.user.points,
+        isCheck: res.user.is_check,
+        userId: res.user.user_id,
+      };
+      setUserInfo((preData) => ({
+        ...preData,
+        updatedUserInfo,
+      }));
+      Taro.setStorageSync("userInfo", updatedUserInfo);
+      setIsOpened(false);
     }
   };
 
   useEffect(() => {
     fetchUserInfo();
   }, []);
-  const onClick = () => {};
-  const loading = false;
-  const onLogin = () => {
-    setIsOpened(true);
-  };
   return (
     <View>
-      <View style={{ backgroundColor: "transparent", marginBottom: "50rpx" }}>
+      <View
+        style={{
+          backgroundColor: "transparent",
+          marginBottom: "50rpx",
+          height: "200rpx",
+        }}
+      >
         {userInfo.userId ? (
-          <View className="user-box u-flex u-p-l-30 u-p-r-20 u-p-b-30">
-            <View className="u-m-r-10">
-              {/* <Avatar
-                  className="avatar"
-                  size="large"
-                  image={userInfo.avatarUrl}
-                /> */}
-            </View>
-
-            <View className="u-flex-1">
-              <Text className="u-font-18 u-p-b-20">微信用户</Text>
-              <Text className="u-font-14 u-tips-color">
+          <View className="user-box ">
+            <Image
+              mode="aspectFill"
+              className="avatar"
+              style={{
+                display: "inline-block",
+                borderRadius: "50%",
+                width: "100rpx",
+                height: "100rpx",
+              }}
+              src={"https://danblen.github.io/static/index.jpg"}
+            />
+            <View
+              className=""
+              style={{ display: "inline-block", marginLeft: "30rpx" }}
+            >
+              <View className=" ">微信用户</View>
+              <View className=" ">
                 ID:{userInfo.userId}
-              </Text>
-            </View>
-
-            <View className="u-m-l-10 u-p-10">
-              {/* <AtIcon value="chevron-right" size="28" color="#969799" /> */}
+                <AtIcon value="chevron-right" size="20" color="#969799" />
+              </View>
             </View>
           </View>
         ) : (
-          <View className="user-box u-p-l-30 u-p-r-20 u-p-b-40">
+          <View className="">
             <View style={{ textAlign: "center", fontSize: "20px" }}>
               欢迎来到AI写真
             </View>
@@ -79,7 +94,7 @@ export default () => {
                 animation: "swap 1s infinite",
               }}
               loading={loading}
-              onClick={onLogin}
+              onClick={() => setIsOpened(true)}
             >
               微信一键登陆
             </Button>
@@ -89,7 +104,7 @@ export default () => {
 
       <AtList>
         <AtListItem title="剩余次数" />
-        <AtListItem title="签到" onClick={onClick} />
+        <AtListItem title="签到" onClick={() => {}} />
         <AtListItem title="购买次卡" arrow="right" />
         <AtListItem title="问题反馈" />
         <AtListItem title="联系我们" />
@@ -100,6 +115,7 @@ export default () => {
       <GetPoint /> */}
       <LoginModal
         isOpened={isOpened}
+        onConfirmLogin={onConfirmLogin}
         onClose={() => {
           setIsOpened(false);
         }}
