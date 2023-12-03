@@ -38,7 +38,7 @@ export default () => {
       };
       setUserInfo((preData) => ({
         ...preData,
-        updatedUserInfo,
+        ...updatedUserInfo,
       }));
       Taro.setStorageSync("userInfo", updatedUserInfo);
       setIsOpened(false);
@@ -47,7 +47,7 @@ export default () => {
 
   useEffect(() => {
     fetchUserInfo();
-  }, []);
+  }, userInfo);
   return (
     <View>
       <View
@@ -103,12 +103,24 @@ export default () => {
       </View>
 
       <AtList>
-        <AtListItem title="剩余次数" />
+        <AtListItem title="剩余积分" extraText={userInfo.points} />
         <AtListItem title="签到" onClick={() => {}} />
         <AtListItem title="购买次卡" arrow="right" />
         <AtListItem title="问题反馈" />
         <AtListItem title="联系我们" />
-        <AtListItem title="退出登录" />
+        <AtListItem
+          title="退出登录"
+          onClick={() => {
+            const emptyInfo = {
+              points: 0,
+              userId: "",
+              isCheck: false,
+              avatarUrl: "",
+            };
+            setUserInfo(emptyInfo);
+            Taro.setStorageSync("userInfo", emptyInfo);
+          }}
+        />
       </AtList>
 
       {/* <BuyPoint />

@@ -67,27 +67,26 @@ export function downloadImages(imageUrl) {
     });
   });
 }
-export function pathToBase642(path) {
+// 浏览器环境下的函数
+export function browserPathToBase64(path) {
   return new Promise(function (resolve, reject) {
-    if (typeof window === "object" && "document" in window) {
-      if (typeof FileReader === "function") {
-        var xhr = new XMLHttpRequest();
-        xhr.open("GET", path, true);
-        xhr.responseType = "blob";
-        xhr.onload = function () {
-          if (this.status === 200) {
-            let fileReader = new FileReader();
-            fileReader.onload = function (e) {
-              resolve(e.target.result);
-            };
-            fileReader.onerror = reject;
-            fileReader.readAsDataURL(this.response);
-          }
-        };
-        xhr.onerror = reject;
-        xhr.send();
-        return;
-      }
+    if (typeof FileReader === "function") {
+      var xhr = new XMLHttpRequest();
+      xhr.open("GET", path, true);
+      xhr.responseType = "blob";
+      xhr.onload = function () {
+        if (this.status === 200) {
+          let fileReader = new FileReader();
+          fileReader.onload = function (e) {
+            resolve(e.target.result);
+          };
+          fileReader.onerror = reject;
+          fileReader.readAsDataURL(this.response);
+        }
+      };
+      xhr.onerror = reject;
+      xhr.send();
+    } else {
       var canvas = document.createElement("canvas");
       var c2x = canvas.getContext("2d");
       var img = new Image();
@@ -100,51 +99,12 @@ export function pathToBase642(path) {
       };
       img.onerror = reject;
       img.src = path;
-      return;
     }
-    if (typeof plus === "object") {
-      plus.io.resolveLocalFileSystemURL(
-        getLocalFilePath(path),
-        function (entry) {
-          entry.file(
-            function (file) {
-              var fileReader = new plus.io.FileReader();
-              fileReader.onload = function (data) {
-                resolve(data.target.result);
-              };
-              fileReader.onerror = function (error) {
-                reject(error);
-              };
-              fileReader.readAsDataURL(file);
-            },
-            function (error) {
-              reject(error);
-            }
-          );
-        },
-        function (error) {
-          reject(error);
-        }
-      );
-      return;
-    }
-    if (typeof wx === "object" && wx.canIUse("getFileSystemManager")) {
-      wx.getFileSystemManager().readFile({
-        filePath: path,
-        encoding: "base64",
-        success: function (res) {
-          resolve("data:image/png;base64," + res.data);
-        },
-        fail: function (error) {
-          reject(error);
-        },
-      });
-      return;
-    }
-    reject(new Error("not support"));
   });
 }
-export function pathToBase64(path) {
+
+// 小程序（微信小程序）环境下的函数
+export function wxPathToBase64(path) {
   return new Promise(function (resolve, reject) {
     if (typeof wx === "object" && wx.canIUse("getFileSystemManager")) {
       wx.getFileSystemManager().readFile({
@@ -157,9 +117,36 @@ export function pathToBase64(path) {
           reject(error);
         },
       });
-      return;
+    } else {
+      reject(new Error("not supported in this environment"));
     }
-    reject(new Error("not support"));
+  });
+}
+export function plusPathToBase64(path) {
+  return new Promise(function (resolve, reject) {
+    plus.io.resolveLocalFileSystemURL(
+      getLocalFilePath(path),
+      function (entry) {
+        entry.file(
+          function (file) {
+            var fileReader = new plus.io.FileReader();
+            fileReader.onload = function (data) {
+              resolve(data.target.result);
+            };
+            fileReader.onerror = function (error) {
+              reject(error);
+            };
+            fileReader.readAsDataURL(file);
+          },
+          function (error) {
+            reject(error);
+          }
+        );
+      },
+      function (error) {
+        reject(error);
+      }
+    );
   });
 }
 

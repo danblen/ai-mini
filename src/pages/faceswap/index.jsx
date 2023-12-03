@@ -5,11 +5,7 @@ import { Left, Share, Close } from "@nutui/icons-react-taro";
 import Taro from "@tarojs/taro";
 import { AtButton, AtDrawer, AtIcon } from "taro-ui";
 import { data } from "./const.js";
-import {
-  pathToBase64,
-  pathToBase642,
-  downloadImages,
-} from "../../utils/image-tools.js";
+import { wxPathToBase64, downloadImages } from "../../utils/image-tools.js";
 import { faceSwap } from "../../api/index.js";
 import indexImage from "./index.jpg";
 import TaskAlbum from "./TaskAlbum.jsx";
@@ -21,8 +17,9 @@ export default () => {
     // 获取传递过来的参数
     const params = Taro.getCurrentInstance().router.params;
     if (params && params.imageUrl) {
+      debugger;
       const url = await downloadImages(params.imageUrl);
-      setImageUrl(params.imageUrl);
+      setImageUrl(url);
     }
   }, []);
   const [images, setImages] = useState([]);
@@ -63,7 +60,7 @@ export default () => {
         );
         clearInterval(timersRef.current[requestId]);
       }
-    }, 4000);
+    }, 3000);
   };
 
   const [showDrawer, setShowDrawer] = useState(false);
@@ -164,9 +161,9 @@ export default () => {
             shape="circle"
             onClick={async () => {
               debugger;
-              const srcBase64 = await pathToBase642(imageUrl);
+              const srcBase64 = await wxPathToBase64(imageUrl);
               uploadedFiles;
-              const tarBase64 = await pathToBase64(indexImage);
+              const tarBase64 = await wxPathToBase64(indexImage);
               data.init_images = [srcBase64];
               data.alwayson_scripts.roop.args[0] = tarBase64;
               let res = await faceSwap(data);
