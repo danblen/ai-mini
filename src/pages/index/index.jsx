@@ -16,8 +16,10 @@ import { getPhotoPath, URL_BACK, get_all_images } from "../../api/index.js";
 const App = () => {
   let [allImages, setAllImages] = useState({ albums: {}, tags_image: {} });
   const getAllImages = async () => {
-    let allImages = await get_all_images().catch(() => {});
-    setAllImages(allImages);
+    let allImages = await get_all_images();
+    if (allImages) {
+      setAllImages(allImages);
+    }
   };
   // const allImages = useData(() => get_all_images(), {
   //   albums: {},
@@ -32,8 +34,8 @@ const App = () => {
         <span onClick={e => Taro.showtoast({ title: "标题" })}>ai写真</span>
       </NavBar> */}
       {/* <Tabs1/> */}
-      <AlbumsCard albums={allImages.albums} />
-      <TabsImageList tags_image={allImages.tags_image} />
+      <AlbumsCard albums={allImages?.albums} />
+      <TabsImageList tags_image={allImages?.tags_image} />
       {/* <Images /> */}
       {/* <Home /> */}
     </>

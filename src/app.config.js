@@ -1,11 +1,11 @@
 export default {
   pages: [
+    "pages/refine/index",
     "pages/index/index",
     "pages/user/index",
     "pages/album/index",
     "pages/photo/index",
     "pages/faceswap/index",
-    "pages/refine/index",
     "pages/gen/index",
   ],
   tabBar: {
