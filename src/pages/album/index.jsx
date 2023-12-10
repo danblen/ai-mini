@@ -4,7 +4,7 @@ import { AtTabs, AtTabsPane } from "taro-ui";
 import FinishedTask from "./FinishedTask.jsx";
 import PendingTask from "./PendingTask.jsx";
 
-export default () => {
+export default ({ images }) => {
   const [current, setCurrent] = useState(0);
   const onClick = (value) => {
     setCurrent(value);
@@ -19,12 +19,7 @@ export default () => {
       >
         <AtTabsPane current={current} index={0}>
           <View style="">
-            <FinishedTask
-              images={[
-                "https://danblen.github.io/static/index.jpg",
-                "https://danblen.github.io/static/index.jpg",
-              ]}
-            />
+            <FinishedTask images={images} />
           </View>
         </AtTabsPane>
         <AtTabsPane current={current} index={1}>

@@ -44,7 +44,7 @@ export default ({ images }) => {
                   mode="widthFix"
                   onClick={() => {
                     Taro.previewImage({
-                      current: index,
+                      current: image.src,
                       urls: images.map((image) => image.src),
                     });
                   }}

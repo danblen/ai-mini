@@ -49,6 +49,7 @@ export default () => {
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(false);
   const [uploadedFiles, setUploadedFiles] = useState([]);
+  const [selectedIndex, setSelectedIndex] = useState(0);
 
   useEffect(() => {
     const down = async () => {
@@ -168,8 +169,14 @@ export default () => {
             color: "white",
           }}
         >
-          <ImageUpload onFilesChange={(images) => setUploadedFiles(images)} />
+          <ImageUpload
+            onFilesChange={(images) => setUploadedFiles(images)}
+            onSelectImage={(index) => {
+              setSelectedIndex(index);
+            }}
+          />
         </View>
+
         <View
           style={{
             width: "95%",
@@ -188,7 +195,9 @@ export default () => {
             onClick={async () => {
               setLoading(true);
               const srcBase64 = await wxPathToBase64(imageUrl);
-              const tarBase64 = await wxPathToBase64(indexImage);
+              const tarBase64 = await wxPathToBase64(
+                uploadedFiles[selectedIndex].url
+              );
               data.init_images = [srcBase64];
               data.alwayson_scripts.roop.args[0] = tarBase64;
               let res = await faceSwap(data);
