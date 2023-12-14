@@ -1,55 +1,46 @@
 import React, { useState, useEffect } from "react";
-import Taro from "@tarojs/taro";
+import Taro, { useTabItemTap } from "@tarojs/taro";
 import { View, Text, Button, Image, Checkbox, Modal } from "@tarojs/components";
 import LoginModal from "./LoginModal";
 // import CheckIn from "./CheckIn";
 // import BuyPoint from "./BuyPoint";
 import { AtList, AtListItem, AtIcon } from "taro-ui";
 import { wechat_login, get_user } from "../../api";
-import { wechatLogin } from "../../common/user";
+import {
+  wechatLogin,
+  getUpdatedUserInfo,
+  clearUserInfo,
+} from "../../common/user";
 
 export default () => {
   // const [showBuyPointPopup, setShowBuyPointPopup] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isOpened, setIsOpened] = useState(false);
   const [userInfo, setUserInfo] = useState({
-    points: 10,
-    userId: "",
-    isCheck: false,
-    avatarUrl: "https://danblen.github.io/static/index.jpg",
+    data: {
+      points: 10,
+      user_id: "",
+      is_check: false,
+      avatarUrl: "https://danblen.github.io/static/index.jpg",
+    },
   });
 
   const fetchUserInfo = async () => {
-    const userInfo = Taro.getStorageSync("userInfo");
-    if (userInfo.userId) {
-      setUserInfo({
-        ...userInfo,
-      });
+    const userInfo = await getUpdatedUserInfo();
+    console.log(userInfo);
+    if (userInfo) {
+      setUserInfo(userInfo);
     }
   };
 
-  const onConfirmLogin = async () => {
-    const res = await wechatLogin();
-    if (res) {
-      const updatedUserInfo = {
-        points: res.user.points,
-        isCheck: res.user.is_check,
-        userId: res.user.user_id,
-      };
-      setUserInfo((preData) => ({
-        ...preData,
-        ...updatedUserInfo,
-      }));
-      Taro.setStorageSync("userInfo", updatedUserInfo);
-      setIsOpened(false);
-    }
-  };
-
-  useEffect(() => {
+  // useEffect(() => {
+  //   fetchUserInfo();
+  // }, userInfo);
+  useTabItemTap(() => {
     fetchUserInfo();
-  }, userInfo);
+  });
   return (
-    <View>
+    <>
       <View
         style={{
           backgroundColor: "transparent",
@@ -57,7 +48,7 @@ export default () => {
           height: "200rpx",
         }}
       >
-        {userInfo.userId ? (
+        {userInfo?.isLogin ? (
           <View className="user-box ">
             <Image
               mode="aspectFill"
@@ -76,7 +67,7 @@ export default () => {
             >
               <View className=" ">微信用户</View>
               <View className=" ">
-                ID:{userInfo.userId}
+                ID:{userInfo.data.user_id}
                 <AtIcon value="chevron-right" size="20" color="#969799" />
               </View>
             </View>
@@ -103,7 +94,7 @@ export default () => {
       </View>
 
       <AtList>
-        <AtListItem title="剩余积分" extraText={userInfo.points} />
+        <AtListItem title="剩余积分" extraText={userInfo?.data.points || ""} />
         <AtListItem title="签到" onClick={() => {}} />
         <AtListItem title="购买次卡" arrow="right" />
         <AtListItem title="问题反馈" />
@@ -111,14 +102,8 @@ export default () => {
         <AtListItem
           title="退出登录"
           onClick={() => {
-            const emptyInfo = {
-              points: 0,
-              userId: "",
-              isCheck: false,
-              avatarUrl: "",
-            };
-            setUserInfo(emptyInfo);
-            Taro.setStorageSync("userInfo", emptyInfo);
+            clearUserInfo();
+            setUserInfo(null);
           }}
         />
       </AtList>
@@ -127,11 +112,17 @@ export default () => {
       <GetPoint /> */}
       <LoginModal
         isOpened={isOpened}
-        onConfirmLogin={onConfirmLogin}
+        onConfirmLogin={async () => {
+          const res = await wechatLogin();
+          if (res) {
+            setUserInfo(res);
+            setIsOpened(false);
+          }
+        }}
         onClose={() => {
           setIsOpened(false);
         }}
       />
-    </View>
+    </>
   );
 };

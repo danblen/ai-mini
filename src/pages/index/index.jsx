@@ -1,15 +1,6 @@
 import { View, Text } from "@tarojs/components";
 import React, { useState, useEffect, useRef } from "react";
-// import { NavBar, Tabs, Swiper } from "@nutui/nutui-react-taro";
-// import { Left, Share, Close } from "@nutui/icons-react-taro";
-// import Taro from "@tarojs/taro";
-// import Hot from "./hot";
-// import New from "./new";
-// import Tabs1 from "./Tabs";
 import TabsImageList from "./TabsImageList";
-// import Images2 from "./hot/images2";
-// import Images from "./Images";
-// import Home from "./Home";
 import AlbumsCard from "./AlbumsCard";
 import { useData } from "../hooks/useData.js";
 import { getPhotoPath, URL_BACK, get_all_images } from "../../api/index.js";
