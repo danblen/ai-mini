@@ -2,7 +2,7 @@ import { View } from "@tarojs/components";
 import { useState } from "react";
 import { AtButton } from "taro-ui";
 import { faceSwap } from "../../api/index.js";
-import { wxPathToBase64 } from "../../utils/image-tools.js";
+import { wxPathToBase64 } from "../../utils/imageTools.js";
 export default () => {
   const [loading, setLoading] = useState(false);
 

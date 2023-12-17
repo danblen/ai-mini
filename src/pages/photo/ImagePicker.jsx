@@ -3,7 +3,7 @@ import Taro from "@tarojs/taro";
 import React, { useEffect, useState } from "react";
 import { AtButton, AtIcon } from "taro-ui";
 import { faceSwap } from "../../api/index.js";
-import { downloadImages, wxPathToBase64 } from "../../utils/image-tools.js";
+import { downloadImages, wxPathToBase64 } from "../../utils/imageTools.js";
 import ImageUpload from "./ImageUpload.jsx";
 import { data } from "./const.js";
 

@@ -5,7 +5,7 @@ import { Left, Share, Close } from "@nutui/icons-react-taro";
 import Taro from "@tarojs/taro";
 import { AtButton, AtDrawer, AtIcon } from "taro-ui";
 import { data } from "./const.js";
-import { wxPathToBase64, downloadImages } from "../../utils/image-tools.js";
+import { wxPathToBase64, downloadImages } from "../../utils/imageTools.js";
 import { faceSwap, getSwapQueueResult } from "../../api/index.js";
 import indexImage from "./index.jpg";
 import TaskAlbum from "../comps/TaskAlbum.jsx";
