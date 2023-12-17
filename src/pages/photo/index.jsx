@@ -2,6 +2,9 @@
 import { View, Text, Image, ScrollView } from "@tarojs/components";
 import React, { useState, useEffect, useCallback } from "react";
 import Taro from "@tarojs/taro";
+import { AtDrawer } from "taro-ui";
+import TaskAlbum from "../comps/TaskAlbum";
+import ActionButton from "./ActionButton";
 const faceswapPage = "/pages/faceswap/index";
 
 export default () => {
@@ -24,6 +27,22 @@ export default () => {
   //     setAlbumData(params.albumData);
   //   }
   // }, []);
+  const [showDrawer, setShowDrawer] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [images, setImages] = useState([]);
+  const onTouchStart = (event) => {
+    setStartX(event.touches[0].clientX);
+  };
+  const onTouchEnd = (event) => {
+    const endX = event.changedTouches[0].clientX;
+    const deltaX = endX - startX;
+
+    if (deltaX < -50) {
+      setShowDrawer(true);
+    } else if (deltaX > 50) {
+      setShowDrawer(false);
+    }
+  };
   return (
     <View className="">
       <View className="">
@@ -54,6 +73,17 @@ export default () => {
           </View>
         ))}
       </View>
+      <ActionButton />
+      <AtDrawer
+        show={showDrawer}
+        right
+        mask
+        width="80%"
+        onClose={() => setShowDrawer(false)}
+        style={{ background: "black", height: "100%" }}
+      >
+        <TaskAlbum images={images} />
+      </AtDrawer>
     </View>
   );
 };
