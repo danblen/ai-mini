@@ -3,8 +3,9 @@ import { View, Text, Image, ScrollView } from "@tarojs/components";
 import React, { useState, useEffect, useCallback } from "react";
 import Taro from "@tarojs/taro";
 import { AtDrawer } from "taro-ui";
-import TaskAlbum from "../comps/TaskAlbum";
+import TaskList from "../comps/TaskList";
 import ActionButton from "./ActionButton";
+import ImagePicker from "./ImagePicker";
 const faceswapPage = "/pages/faceswap/index";
 
 export default () => {
@@ -44,7 +45,7 @@ export default () => {
     }
   };
   return (
-    <View className="">
+    <View onTouchstart={onTouchStart} onTouchEnd={onTouchEnd} className="">
       <View className="">
         <Image
           style={Styles.indexImage}
@@ -73,7 +74,39 @@ export default () => {
           </View>
         ))}
       </View>
-      <ActionButton />
+
+      <View
+        style={{
+          position: "fixed",
+          width: "100%",
+          bottom: "60rpx",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <View
+          style={{
+            width: "95%",
+            marginBottom: "40rpx",
+            borderRadius: "20rpx",
+            background: "grey",
+            opacity: 0.5,
+            color: "white",
+          }}
+        >
+          <ImagePicker></ImagePicker>
+        </View>
+        <View
+          style={{
+            width: "95%",
+          }}
+        >
+          <ActionButton />
+        </View>
+      </View>
+
       <AtDrawer
         show={showDrawer}
         right
@@ -82,7 +115,7 @@ export default () => {
         onClose={() => setShowDrawer(false)}
         style={{ background: "black", height: "100%" }}
       >
-        <TaskAlbum images={images} />
+        <TaskList images={images} />
       </AtDrawer>
     </View>
   );

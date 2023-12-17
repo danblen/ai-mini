@@ -1,11 +1,7 @@
-import { Image, View } from "@tarojs/components";
 import Taro from "@tarojs/taro";
 import React, { useEffect, useState } from "react";
-import { AtButton, AtIcon } from "taro-ui";
-import { faceSwap } from "../../api/index.js";
-import { downloadImages, wxPathToBase64 } from "../../utils/imageTools.js";
-import ImageUpload from "./ImageUpload.jsx";
-import { data } from "./const.js";
+import { downloadImages } from "../../utils/imageTools.js";
+import ImageUpload from "../faceswap/ImageUpload.jsx";
 
 export default () => {
   const [imageUrl, setImageUrl] = useState("");
@@ -32,45 +28,12 @@ export default () => {
     };
   }, []);
 
-  const getTaskImages = async (requestId) => {
-    const newImage = {
-      src: "",
-      status: "pending",
-      requestId,
-    };
-    setImages((prevImages) => [...prevImages, newImage]);
-
-    const res = await getTaskImage(requestId);
-    setImages((prevImages) =>
-      prevImages.map((image) =>
-        image.requestId === requestId
-          ? {
-              ...image,
-              src: "data:image/png;base64," + res.result.images[0],
-              status: "SUCCESS",
-            }
-          : image
-      )
-    );
-  };
-
   return (
-    <View
-      style={{
-        width: "95%",
-        marginBottom: "40rpx",
-        borderRadius: "20rpx",
-        background: "grey",
-        opacity: 0.5,
-        color: "white",
+    <ImageUpload
+      onFilesChange={(images) => setUploadedFiles(images)}
+      onSelectImage={(index) => {
+        setSelectedIndex(index);
       }}
-    >
-      <ImageUpload
-        onFilesChange={(images) => setUploadedFiles(images)}
-        onSelectImage={(index) => {
-          setSelectedIndex(index);
-        }}
-      />
-    </View>
+    />
   );
 };

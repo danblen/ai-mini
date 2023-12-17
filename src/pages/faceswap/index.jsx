@@ -8,7 +8,7 @@ import { data } from "./const.js";
 import { wxPathToBase64, downloadImages } from "../../utils/imageTools.js";
 import { faceSwap, getSwapQueueResult } from "../../api/index.js";
 import indexImage from "./index.jpg";
-import TaskAlbum from "../comps/TaskAlbum.jsx";
+import TaskList from "../comps/TaskList.jsx";
 import ImageUpload from "./ImageUpload.jsx";
 
 let timers = {};
@@ -225,7 +225,7 @@ export default () => {
         onClose={() => setShowDrawer(false)}
         style={{ background: "black", height: "100%" }}
       >
-        <TaskAlbum images={images} />
+        <TaskList images={images} />
       </AtDrawer>
     </View>
   );
