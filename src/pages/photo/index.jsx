@@ -11,14 +11,22 @@ const faceswapPage = "/pages/faceswap/index";
 export default () => {
   const [albumData, setAlbumData] = useState([]);
   // 使用 Taro 提供的事件监听函数
-  const eventChannel = Taro.getCurrentInstance().page.getOpenerEventChannel();
-  // 监听数据传递事件
-  eventChannel.on("acceptDataFromOpenerPage", (data) => {
-    // 在这里处理接收到的数据
-    const albumData = data.albumData;
-    // 打印数据，以验证是否成功接收
-    setAlbumData(albumData);
-    console.log(albumData);
+  // const eventChannel = Taro.getCurrentInstance().page.getOpenerEventChannel();
+  // // 监听数据传递事件
+  // eventChannel.on("acceptDataFromOpenerPage", (data) => {
+  //   // 在这里处理接收到的数据
+  //   const albumData = data.albumData;
+  //   // 打印数据，以验证是否成功接收
+  //   setAlbumData(albumData);
+  //   console.log(albumData);
+  // });
+  useEffect(() => {
+    const params = Taro.getCurrentInstance().router.params;
+    let ignore = false;
+    if (params && params.albumData) {
+      setAlbumData(albumData);
+      down();
+    }
   });
 
   // useEffect(() => {

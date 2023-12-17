@@ -21,10 +21,10 @@ export default () => {
       down();
     }
     return () => {
-      ignore = true;
-      Object.keys(timers).forEach((key) => {
-        clearInterval(timers[key]);
-      });
+      // ignore = true;
+      // Object.keys(timers).forEach((key) => {
+      //   clearInterval(timers[key]);
+      // });
     };
   }, []);
 

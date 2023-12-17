@@ -1,8 +1,7 @@
 // import { useTextSelection } from "@reactuses/core";
-import { View, Text, Image, ScrollView } from "@tarojs/components";
-import React, { useState, useEffect, useCallback } from "react";
+import { Image, ScrollView, Text, View } from "@tarojs/components";
 import Taro from "@tarojs/taro";
-// import { albums } from "./const";
+import React from "react";
 const photoPage = "/pages/photo/index";
 export default ({ albums }) => {
   return (
