@@ -43,7 +43,7 @@ export default {
   window: {
     backgroundTextStyle: "light",
     navigationBarBackgroundColor: "#fff",
-    navigationBarTitleText: "WeChat",
+    navigationBarTitleText: "AI写真",
     navigationBarTextStyle: "black",
   },
 };
