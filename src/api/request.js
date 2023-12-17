@@ -1,4 +1,4 @@
-import { URL_SD, URL_BACK, HEADER, TOKENNAME } from "./app";
+import { HEADER, URL_BACK, URL_SD } from "./config";
 // import utils from './utils';
 // import store from '../store';
 import Taro from "@tarojs/taro";

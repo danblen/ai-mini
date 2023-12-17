@@ -1,7 +1,6 @@
-import request from "./request.js";
-import { HTTP_CONFIG_URL, HTTP_TRANSLATE_URL } from "./app.js";
+import { URL_BACK, URL_SD } from "./config.js";
 import { img2img1 } from "./const.js";
-import { URL_BACK, URL_SD } from "./app.js";
+import request from "./request.js";
 export { URL_BACK, URL_SD };
 // /images/
 // /images/?tag=标签名称
