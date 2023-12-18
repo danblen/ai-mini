@@ -33,8 +33,8 @@ export function getPhotoData(data) {
 export function getPhotoPath(path) {
   return request.post(`/list-files?path=${encodeURIComponent(path)}`);
 }
-export function get_completed_tasks_on_user(user_id) {
-  return request.post("/get_completed_tasks_on_user/" + user_id + "/");
+export function QueryUserDataAPI(data) {
+  return request.post("/query-user-data", data);
 }
 export function get_pending_tasks_on_user(user_id) {
   return request.post("/get_pending_tasks_on_user/" + user_id + "/");

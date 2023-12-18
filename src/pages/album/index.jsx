@@ -1,19 +1,43 @@
-import { View, Image } from "@tarojs/components";
-import { useState, useRef } from "react";
+import { View } from "@tarojs/components";
+import Taro from "@tarojs/taro";
+import { useEffect, useState } from "react";
 import { AtTabs, AtTabsPane } from "taro-ui";
+import { QueryUserDataAPI } from "../../api/index.js";
 import FinishedTask from "./FinishedTask.jsx";
-import { get_album_images } from "../../api/index.js";
-import PendingTask from "./PendingTask.jsx";
 
 export default ({ images }) => {
   const [current, setCurrent] = useState(0);
   let [allImages, setAllImages] = useState({ albums: {}, tags_image: {} });
-  const getAllImages = async () => {
-    let allImages = await get_album_images();
-    if (allImages) {
-      setAllImages(allImages);
+  useEffect(async () => {
+    const userInfo = Taro.getStorageSync("userInfo");
+    if (userInfo) {
+      let allImages = await QueryUserDataAPI({
+        user_id: userInfo.data.user_id,
+      });
+      if (allImages) {
+        setAllImages(allImages);
+      }
+    } else {
     }
+  });
+  const fetchUserImage = async () => {
+    // let userInfo = Taro.getStorageSync("userInfo");
+    // console.log(userInfo);
+    // if (!userInfo) {
+    //   let res = await QueryUserDataAPI({
+    //     user_id: userInfo.data.user_id,
+    //   });
+    //   if (res) {
+    //     setAllImages(res);
+    //   }
+    // } else {
+    //   setAllImages(userInfo);
+    // }
   };
+
+  useTabItemTap(() => {
+    fetchUserImage();
+  });
   const onClick = (value) => {
     setCurrent(value);
   };

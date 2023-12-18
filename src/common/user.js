@@ -54,7 +54,6 @@ export const getUser = async () => {
 export const getUserInfo = async () => {
   try {
     const userInfo = Taro.getStorageSync("userInfo");
-    userInfo.data = user;
     if (!userInfo) return null;
     return userInfo;
   } catch (error) {

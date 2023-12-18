@@ -5,7 +5,7 @@ import LoginModal from "./LoginModal";
 // import CheckIn from "./CheckIn";
 // import BuyPoint from "./BuyPoint";
 import { AtList, AtListItem, AtIcon } from "taro-ui";
-import { wechat_login, get_user } from "../../api";
+import { wechat_login, get_user, QueryUserDataAPI } from "../../api";
 import {
   wechatLogin,
   getUpdatedUserInfo,
@@ -18,7 +18,7 @@ export default () => {
   const [isOpened, setIsOpened] = useState(false);
   const [userInfo, setUserInfo] = useState({
     data: {
-      points: 10,
+      points: 0,
       user_id: "",
       is_check: false,
       avatarUrl: "https://danblen.github.io/static/index.jpg",
@@ -26,16 +26,21 @@ export default () => {
   });
 
   const fetchUserInfo = async () => {
-    const userInfo = await getUpdatedUserInfo();
-    console.log(userInfo);
-    if (userInfo) {
-      setUserInfo(userInfo);
+    let userInfo = Taro.getStorageSync("userInfo");
+    if (!userInfo) {
+      let res = await QueryUserDataAPI({
+        user_id: userInfo.data.user_id,
+      });
+      if (res) {
+        setUserInfo(res);
+        Taro.setStorageSync("userInfo", {
+          data: res,
+        });
+      }
+    } else {
     }
   };
 
-  // useEffect(() => {
-  //   fetchUserInfo();
-  // }, userInfo);
   useTabItemTap(() => {
     fetchUserInfo();
   });
@@ -95,7 +100,11 @@ export default () => {
 
       <AtList>
         <AtListItem title="剩余积分" extraText={userInfo?.data.points || ""} />
-        <AtListItem title="签到" onClick={() => {}} />
+        <AtListItem
+          title="签到"
+          extraText={userInfo?.data.is_check ? "已签到" : "点击签到"}
+          onClick={() => {}}
+        />
         <AtListItem title="购买次卡" arrow="right" />
         <AtListItem title="问题反馈" />
         <AtListItem title="联系我们" />
