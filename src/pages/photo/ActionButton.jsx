@@ -1,11 +1,50 @@
 import { View } from "@tarojs/components";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AtButton } from "taro-ui";
 import { faceSwap } from "../../api/index.js";
-import { wxPathToBase64 } from "../../utils/imageTools.js";
-export default () => {
+import { downloadImages, wxPathToBase64 } from "../../utils/imageTools.js";
+import { data } from "../faceswap/const.js";
+import Taro from "@tarojs/taro";
+export default ({ albumUrls, selfUrl }) => {
   const [loading, setLoading] = useState(false);
+  const [imageUrls, setImageUrls] = useState([]);
+  useEffect(() => {
+    const down = async (urls) => {
+      if (urls?.length) {
+        let res = await Promise.all(
+          urls.map(async (image) => {
+            return await downloadImages(image);
+          })
+        );
+        setImageUrls(res);
+      }
+    };
+    down(albumUrls);
+    let ignore = false;
+    return () => {
+      ignore = true;
+    };
+  }, [albumUrls]);
 
+  const swapOne = async (originUrl) => {
+    const originBase64 = await wxPathToBase64(originUrl);
+    const selfBase64 = await wxPathToBase64(selfUrl);
+    data.init_images = [originBase64];
+    data.alwayson_scripts.roop.args[0] = selfBase64;
+    let res = await faceSwap(data).catch((err) => {
+      console.log(err);
+    });
+    if (res) {
+      if (res?.status === "pending") {
+        getTaskImages(res.request_id);
+      }
+    } else {
+      Taro.showToast({
+        title: res?.error_message,
+        icon: "none",
+      });
+    }
+  };
   return (
     <AtButton
       type="primary"
@@ -18,22 +57,9 @@ export default () => {
       shape="circle"
       loading={loading}
       onClick={async () => {
-        setLoading(true);
-        const srcBase64 = await wxPathToBase64(imageUrl);
-        const tarBase64 = await wxPathToBase64(
-          uploadedFiles[selectedIndex].url
-        );
-        data.init_images = [srcBase64];
-        data.alwayson_scripts.roop.args[0] = tarBase64;
-        let res = await faceSwap(data);
-        setLoading(false);
-        if (res.status === "pending") {
-          getTaskImages(res.request_id);
-        } else {
-          Taro.showToast({
-            title: res.error_message,
-            icon: "none",
-          });
+        if (selfUrl && albumUrls?.length) {
+          setLoading(true);
+          imageUrls.forEach((albumUrl) => swapOne(albumUrl));
         }
       }}
     >

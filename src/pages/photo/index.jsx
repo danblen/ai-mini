@@ -1,7 +1,6 @@
-// import { useTextSelection } from "@reactuses/core";
-import { View, Text, Image, ScrollView } from "@tarojs/components";
-import React, { useState, useEffect, useCallback } from "react";
+import { Image, View } from "@tarojs/components";
 import Taro from "@tarojs/taro";
+import React, { useState } from "react";
 import { AtDrawer } from "taro-ui";
 import TaskList from "../comps/TaskList";
 import ActionButton from "./ActionButton";
@@ -9,33 +8,25 @@ import ImagePicker from "./ImagePicker";
 const faceswapPage = "/pages/faceswap/index";
 
 export default () => {
+  const [uploadedFiles, setUploadedFiles] = useState([]);
   const [albumData, setAlbumData] = useState([]);
-  // 使用 Taro 提供的事件监听函数
-  // const eventChannel = Taro.getCurrentInstance().page.getOpenerEventChannel();
-  // // 监听数据传递事件
-  // eventChannel.on("acceptDataFromOpenerPage", (data) => {
-  //   // 在这里处理接收到的数据
-  //   const albumData = data.albumData;
-  //   // 打印数据，以验证是否成功接收
-  //   setAlbumData(albumData);
-  //   console.log(albumData);
-  // });
-  useEffect(() => {
-    const params = Taro.getCurrentInstance().router.params;
-    let ignore = false;
-    if (params && params.albumData) {
-      setAlbumData(albumData);
-      down();
-    }
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const eventChannel = Taro.getCurrentInstance().page.getOpenerEventChannel();
+  eventChannel.on("acceptDataFromOpenerPage", (data) => {
+    const albumData = data.albumData;
+    console.log(albumData);
+    setAlbumData(albumData);
   });
-
   // useEffect(() => {
   //   const params = Taro.getCurrentInstance().router.params;
-  //   console.log(params)
+  //   console.log(params);
+  //   let ignore = false;
   //   if (params && params.albumData) {
-  //     setAlbumData(params.albumData);
+  //     setAlbumData(albumData);
+  //     down();
   //   }
-  // }, []);
+  // });
+
   const [showDrawer, setShowDrawer] = useState(false);
   const [startX, setStartX] = useState(0);
   const [images, setImages] = useState([]);
@@ -104,14 +95,22 @@ export default () => {
             color: "white",
           }}
         >
-          <ImagePicker></ImagePicker>
+          <ImagePicker
+            onFilesChange={(images) => setUploadedFiles(images)}
+            onSelectImage={(index) => {
+              setSelectedIndex(index);
+            }}
+          ></ImagePicker>
         </View>
         <View
           style={{
             width: "95%",
           }}
         >
-          <ActionButton />
+          <ActionButton
+            albumUrls={albumData.urls}
+            selfUrl={uploadedFiles[selectedIndex]?.url}
+          />
         </View>
       </View>
 
