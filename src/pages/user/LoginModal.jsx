@@ -6,7 +6,7 @@ import Taro from "@tarojs/taro";
 import { wechatLogin } from "../../common/user";
 
 export default ({ isOpened, onConfirmLogin, onClose }) => {
-  const [isCheckPolicy, setIsCheckPolicy] = useState(false);
+  const [isCheckPolicy, setIsCheckPolicy] = useState(true);
   const [loading, setLoading] = useState(false);
 
   const [userInfo, setUserInfo] = useState({

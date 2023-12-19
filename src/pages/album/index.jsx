@@ -1,5 +1,5 @@
 import { View } from "@tarojs/components";
-import Taro from "@tarojs/taro";
+import Taro, { useTabItemTap } from "@tarojs/taro";
 import { useEffect, useState } from "react";
 import { AtTabs, AtTabsPane } from "taro-ui";
 import { QueryUserDataAPI } from "../../api/index.js";
@@ -38,16 +38,15 @@ export default ({ images }) => {
   useTabItemTap(() => {
     fetchUserImage();
   });
-  const onClick = (value) => {
-    setCurrent(value);
-  };
   return (
     <View>
       <AtTabs
         current={current}
         tabList={[{ title: "进行中" }, { title: "已完成" }]}
         swipeable={true}
-        onClick={onClick}
+        onClick={(value) => {
+          setCurrent(value);
+        }}
       >
         <AtTabsPane current={current} index={0}>
           <View style="">

@@ -1,16 +1,12 @@
-import React, { useState, useEffect } from "react";
+import { Button, Image, View } from "@tarojs/components";
 import Taro, { useTabItemTap } from "@tarojs/taro";
-import { View, Text, Button, Image, Checkbox, Modal } from "@tarojs/components";
+import React, { useState } from "react";
 import LoginModal from "./LoginModal";
 // import CheckIn from "./CheckIn";
 // import BuyPoint from "./BuyPoint";
-import { AtList, AtListItem, AtIcon } from "taro-ui";
-import { wechat_login, get_user, QueryUserDataAPI } from "../../api";
-import {
-  wechatLogin,
-  getUpdatedUserInfo,
-  clearUserInfo,
-} from "../../common/user";
+import { AtIcon, AtList, AtListItem } from "taro-ui";
+import { QueryUserDataAPI } from "../../api";
+import { clearUserInfo, wechatLogin } from "../../common/user";
 
 export default () => {
   // const [showBuyPointPopup, setShowBuyPointPopup] = useState(false);
@@ -27,7 +23,7 @@ export default () => {
 
   const fetchUserInfo = async () => {
     let userInfo = Taro.getStorageSync("userInfo");
-    if (!userInfo) {
+    if (userInfo) {
       let res = await QueryUserDataAPI({
         user_id: userInfo.data.user_id,
       });
@@ -124,7 +120,15 @@ export default () => {
         onConfirmLogin={async () => {
           const res = await wechatLogin();
           if (res) {
-            setUserInfo(res);
+            debugger;
+            setUserInfo({
+              isLogin: true,
+              data: res.data,
+            });
+            Taro.setStorageSync("userInfo", {
+              isLogin: true,
+              data: res.data,
+            });
             setIsOpened(false);
           }
         }}

@@ -6,7 +6,12 @@ const photoPage = "/pages/photo/index";
 export default ({ albums }) => {
   return (
     <View className="" style={Styles.container}>
-      <Text style={Styles.title}>写真集</Text>
+      <View style={Styles.flexContainer}>
+        <Text style={Styles.title}>写真集</Text>
+        <View style={Styles.flexPlaceholder} />
+        <Text style={Styles.seeAll}>See all</Text>
+      </View>
+
       <ScrollView
         style={Styles.scroll}
         scrollX
@@ -39,6 +44,14 @@ export default ({ albums }) => {
   );
 };
 const Styles = {
+  flexContainer: {
+    display: "flex",
+    alignItems: "center",
+  },
+  flexPlaceholder: {
+    flex: 1,
+  },
+  seeAll: {},
   title: {
     lineHeight: "60rpx",
     color: "#121",
