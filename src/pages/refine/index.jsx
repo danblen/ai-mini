@@ -59,7 +59,7 @@ export default ({}) => {
                 }
               }}
             >
-              一键换脸
+              -一键换脸-
             </Button>
           </View>
         )}
