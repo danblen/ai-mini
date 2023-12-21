@@ -27,7 +27,7 @@ export default ({ tags_image }) => {
     }
   }, [tags_image]);
   return (
-    <>
+    <View style={Styles.container}>
       <AtTabs
         current={current}
         tabList={tabList}
@@ -42,6 +42,14 @@ export default ({ tags_image }) => {
       <View style=" ">
         <Images imageUrls={imageUrls} />
       </View>
-    </>
+    </View>
   );
+};
+const Styles = {
+  container: {
+    borderRadius: "10rpx",
+    background: "linear-gradient(to right, #ecf0f1, #ecf0f1)",
+    // background: "linear-gradient(to right, #27ae60, #2ecc71)",
+    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+  },
 };

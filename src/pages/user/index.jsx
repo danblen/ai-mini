@@ -28,7 +28,8 @@ export default () => {
         user_id: userInfo.data.user_id,
       });
       if (res) {
-        setUserInfo(res);
+        debugger;
+        setUserInfo({ data: res.data });
         Taro.setStorageSync("userInfo", {
           data: res,
         });
@@ -120,7 +121,6 @@ export default () => {
         onConfirmLogin={async () => {
           const res = await wechatLogin();
           if (res) {
-            debugger;
             setUserInfo({
               isLogin: true,
               data: res.data,
