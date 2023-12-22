@@ -4,6 +4,7 @@ import TabsImageList from "./TabsImageList";
 import AlbumsCard from "./AlbumsCard";
 import { useData } from "../hooks/useData.js";
 import { getPhotoPath, URL_BACK, get_all_images } from "../../api/index.js";
+import TopBanner from "./TopBanner.jsx";
 const App = () => {
   let [allImages, setAllImages] = useState({ albums: {}, tags_image: {} });
   const getAllImages = async () => {
@@ -25,6 +26,7 @@ const App = () => {
         <span onClick={e => Taro.showtoast({ title: "标题" })}>ai写真</span>
       </NavBar> */}
       {/* <Tabs1/> */}
+      <TopBanner banners={allImages?.banners} />
       <AlbumsCard albums={allImages?.albums} />
       <TabsImageList tags_image={allImages?.tags_image} />
       {/* <Images /> */}

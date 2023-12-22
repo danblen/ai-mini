@@ -1,47 +1,44 @@
 // import { useTextSelection } from "@reactuses/core";
-import { Image, ScrollView, Text, View } from "@tarojs/components";
+import {
+  Image,
+  ScrollView,
+  Text,
+  View,
+  Swiper,
+  SwiperItem,
+} from "@tarojs/components";
 import Taro from "@tarojs/taro";
 import React from "react";
 import { AtIcon } from "taro-ui";
 const photoPage = "/pages/photo/index";
-export default ({ albums }) => {
+export default ({ banners }) => {
   return (
     <View className="" style={Styles.container}>
-      <View style={Styles.flexContainer}>
-        <Text style={Styles.title}>写真集</Text>
-        <View style={Styles.flexPlaceholder} />
-        <Text style={Styles.seeAll}>更多</Text>
-        <AtIcon value="chevron-right" size="20"></AtIcon>
-      </View>
-
-      <ScrollView
-        style={Styles.scroll}
-        scrollX
-        scrollWithAnimation
-        className=""
+      <Swiper
+        className="test-h"
+        indicatorColor="#999"
+        indicatorActiveColor="#333"
+        circular
+        indicatorDots
+        autoplay
+        style={Styles.Swiper}
       >
-        {Object.values(albums)?.map?.((albumData) => (
-          <View className="" style={Styles.imageWrap}>
+        {banners?.map?.((banner) => (
+          <SwiperItem>
             <Image
               style={Styles.image}
               className=" "
               mode="widthFix"
               onClick={() => {
                 Taro.navigateTo({
-                  url: photoPage,
-                  success: function (res) {
-                    // 通过eventChannel向被打开页面传送数据
-                    res.eventChannel.emit("acceptDataFromOpenerPage", {
-                      albumData: albumData,
-                    });
-                  },
+                  url: "/pages/faceswap/index?imageUrl=" + banner,
                 });
               }}
-              src={albumData.index}
+              src={banner}
             ></Image>
-          </View>
+          </SwiperItem>
         ))}
-      </ScrollView>
+      </Swiper>
     </View>
   );
 };
@@ -60,21 +57,25 @@ const Styles = {
     color: "#121",
     fontSize: "30rpx",
   },
+  Swiper: {
+    height: "600rpx",
+  },
   container: {
+    height: "600rpx",
     borderRadius: "10rpx",
     background: "linear-gradient(to right, #ecf0f1, #ecf0f1)",
     margin: "10rpx",
     boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
   },
   image: {
-    width: "280rpx",
+    width: "100%",
     borderRadius: "10rpx",
     display: "inline-block",
   },
-  imageWrap: {
-    paddingLeft: "10rpx",
-    display: "inline-block",
-  },
+  // imageWrap: {
+  //   paddingLeft: "10rpx",
+  //   display: "inline-block",
+  // },
   scroll: {
     whiteSpace: "nowrap",
   },
