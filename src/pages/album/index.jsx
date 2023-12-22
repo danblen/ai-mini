@@ -4,22 +4,28 @@ import { useEffect, useState } from "react";
 import { AtTabs, AtTabsPane } from "taro-ui";
 import { QueryUserDataAPI } from "../../api/index.js";
 import FinishedTask from "./FinishedTask.jsx";
-
+import { fetchProcessedImages } from "../../utils/imageTools.js";
 export default ({ images }) => {
   const [current, setCurrent] = useState(0);
-  let [allImages, setAllImages] = useState({ albums: {}, tags_image: {} });
+  const [allImages, setAllImages] = useState([]);
+
   useEffect(async () => {
-    const userInfo = Taro.getStorageSync("userInfo");
-    if (userInfo) {
-      let allImages = await QueryUserDataAPI({
-        user_id: userInfo.data.user_id,
-      });
-      if (allImages) {
-        setAllImages(allImages);
+    try {
+      // const userInfo = Taro.getStorageSync("userInfo");
+      const userInfo = {
+        user_id: "123456",
+        request_status: "finishing",
+      };
+      console.log("userInfo:", userInfo); // 打印用户信息
+
+      const processedImages = await fetchProcessedImages(userInfo);
+      if (processedImages.length > 0) {
+        setAllImages(processedImages);
       }
-    } else {
+    } catch (error) {
+      console.error("Error in useEffect:", error);
     }
-  });
+  }, []);
   const fetchUserImage = async () => {
     // let userInfo = Taro.getStorageSync("userInfo");
     // console.log(userInfo);
@@ -40,7 +46,12 @@ export default ({ images }) => {
   });
   return (
     <View>
-      <AtTabs
+      <AtTabsPane current={current} index={0}>
+        <View style="">
+          <FinishedTask images={allImages} />
+        </View>
+      </AtTabsPane>
+      {/* <AtTabs
         current={current}
         tabList={[{ title: "进行中" }, { title: "已完成" }]}
         swipeable={true}
@@ -50,15 +61,15 @@ export default ({ images }) => {
       >
         <AtTabsPane current={current} index={0}>
           <View style="">
-            <FinishedTask images={images} />
+            <FinishedTask images={allImages} />
           </View>
         </AtTabsPane>
         <AtTabsPane current={current} index={1}>
           <View style="">
-            <FinishedTask />
+            <FinishedTask images={allImages} />
           </View>
         </AtTabsPane>
-      </AtTabs>
+      </AtTabs> */}
     </View>
   );
 };

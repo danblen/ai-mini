@@ -1,5 +1,7 @@
 import Taro from "@tarojs/taro";
 
+import { QueryUserDataAPI } from "../api/index.js";
+
 function getLocalFilePath(path) {
   if (
     path.indexOf("_www") === 0 ||
@@ -260,4 +262,37 @@ export function base64ToPath(base64) {
     }
     reject(new Error("not support"));
   });
+}
+
+export async function fetchProcessedImages(userInfo) {
+  try {
+    console.log("userInfo:", userInfo); // 打印用户信息
+    if (userInfo) {
+      let downLoadUserImages = await QueryUserDataAPI(userInfo);
+      console.log("downLoadUserImages:", downLoadUserImages); // 打印获取到的图片数据
+
+      if (downLoadUserImages) {
+        let processedImages = [];
+        for (let i = 0; i < downLoadUserImages.length; i++) {
+          let entry = downLoadUserImages[i];
+          let pathParts = entry["output_image_path"].split(
+            "/home/ubuntu/code/ai-flask/sd_make_images/"
+          );
+          let fileName = pathParts[pathParts.length - 1];
+          processedImages.push("https://facei.top/user-pic/" + fileName);
+          console.log(
+            "output_image_path:",
+            "https://facei.top/user-pic/" + fileName
+          );
+        }
+        return processedImages;
+      }
+    } else {
+      console.error("Error input ", userInfo);
+      return [];
+    }
+  } catch (error) {
+    console.error("Error fetching processed images:", error);
+    return [];
+  }
 }

@@ -13,10 +13,10 @@ export function get_points_by_check(data) {
   return request.post("/get_points_by_check", data);
 }
 export function faceSwap(data) {
-  return request.post("/sdapi/v1/queue-process", data);
+  return request.post("/queue-process", data);
 }
 export function getSwapQueueResult(data) {
-  return request.post("/sdapi/v1/queue-query-result", data);
+  return request.post("/query-result", data);
 }
 export function wechat_login(data) {
   return request.post("/wechat_login", data);
@@ -33,6 +33,20 @@ export function getPhotoData(data) {
 export function getPhotoPath(path) {
   return request.post(`/list-files?path=${encodeURIComponent(path)}`);
 }
+
+/* 可通过字典查询UserSqlData数据
+@data(dict):可选匹配特征：
+            user_id             = Integer
+            main_image_path     = String
+            roop_image_path     = String
+            output_image_path   = String
+            created_at          = DateTime
+            befor_process_time  = Float
+            process_time        = Float
+            image_type          = String
+            request_id          = String
+            request_status      = String
+*/
 export function QueryUserDataAPI(data) {
   return request.post("/query-user-data", data);
 }
