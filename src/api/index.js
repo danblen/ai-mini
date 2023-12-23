@@ -48,7 +48,10 @@ export function getPhotoPath(path) {
             request_status      = String
 */
 export function QueryUserDataAPI(data) {
-  return request.post("/query-user-data", data);
+  return request.post("/query-user-process-data", data);
+}
+export function QueryUserInfoAPI(data) {
+  return request.post("/query-user-info", data);
 }
 export function get_pending_tasks_on_user(user_id) {
   return request.post("/get_pending_tasks_on_user/" + user_id + "/");

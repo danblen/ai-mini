@@ -266,10 +266,10 @@ export function base64ToPath(base64) {
 
 export async function fetchProcessedImages(userInfo) {
   try {
-    console.log("userInfo:", userInfo); // 打印用户信息
+    // console.log("userInfo:", userInfo); // 打印用户信息
     if (userInfo) {
       let downLoadUserImages = await QueryUserDataAPI(userInfo);
-      console.log("downLoadUserImages:", downLoadUserImages); // 打印获取到的图片数据
+      // console.log("downLoadUserImages:", downLoadUserImages); // 打印获取到的图片数据1
 
       if (downLoadUserImages) {
         let processedImages = [];
@@ -280,12 +280,15 @@ export async function fetchProcessedImages(userInfo) {
           );
           let fileName = pathParts[pathParts.length - 1];
           processedImages.push("https://facei.top/user-pic/" + fileName);
-          console.log(
-            "output_image_path:",
-            "https://facei.top/user-pic/" + fileName
-          );
+          // console.log(
+          //   "output_image_path:",
+          //   "https://facei.top/user-pic/" + fileName
+          // );
         }
         return processedImages;
+      } else {
+        console.log("downLoadUserImages is null");
+        return [];
       }
     } else {
       console.error("Error input ", userInfo);

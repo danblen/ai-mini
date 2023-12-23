@@ -5,7 +5,7 @@ import LoginModal from "./LoginModal";
 // import CheckIn from "./CheckIn";
 // import BuyPoint from "./BuyPoint";
 import { AtIcon, AtList, AtListItem } from "taro-ui";
-import { QueryUserDataAPI } from "../../api";
+import { QueryUserInfoAPI } from "../../api";
 import { clearUserInfo, wechatLogin } from "../../common/user";
 
 export default () => {
@@ -21,10 +21,12 @@ export default () => {
     },
   });
 
+  console.log("userInfo2223:", userInfo);
+
   const fetchUserInfo = async () => {
     let userInfo = Taro.getStorageSync("userInfo");
     if (userInfo) {
-      let res = await QueryUserDataAPI({
+      let res = await QueryUserInfoAPI({
         user_id: userInfo.data.user_id,
       });
       if (res) {
@@ -109,7 +111,7 @@ export default () => {
           title="退出登录"
           onClick={() => {
             clearUserInfo();
-            setUserInfo(null);
+            setUserInfo({ data: {} });
           }}
         />
       </AtList>
