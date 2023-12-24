@@ -1,5 +1,6 @@
 export default {
   pages: [
+    "pages/agreements/index",
     "pages/index/index",
     "pages/user/index",
     "pages/refine/index",

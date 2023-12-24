@@ -4,18 +4,11 @@ import { AtModal, AtModalHeader, AtModalContent, AtModalAction } from "taro-ui";
 import { wechat_login } from "../../api/index.js";
 import Taro from "@tarojs/taro";
 import { wechatLogin } from "../../common/user";
+const agreementsUrl = "pages/agreements/index";
 
 export default ({ isOpened, onConfirmLogin, onClose }) => {
   const [isCheckPolicy, setIsCheckPolicy] = useState(false);
   const [loading, setLoading] = useState(false);
-
-  const [userInfo, setUserInfo] = useState({
-    points: 0,
-    isCheck: false,
-    userId: "",
-  });
-
-  const showToast = (message) => {};
 
   return (
     <AtModal isOpened={isOpened} onClose={onClose}>
@@ -48,12 +41,20 @@ export default ({ isOpened, onConfirmLogin, onClose }) => {
           </Button>
           <View style={{ fontSize: "24rpx", margin: "40rpx 0" }}>
             <Checkbox
+              style={{ fontSize: "10rpx" }}
               checked={isCheckPolicy}
               onClick={() => setIsCheckPolicy(!isCheckPolicy)}
             ></Checkbox>
             <Text>我已阅读并同意</Text>
-            <Text style={{ color: "blue" }} onClick={() => {}}>
-              《服务协议》
+            <Text
+              style={{ color: "blue" }}
+              onClick={() => {
+                Taro.navigateTo({
+                  url: agreementsUrl,
+                });
+              }}
+            >
+              《用户服务条款》
             </Text>
             和
             <Text style={{ color: "blue" }} onClick={() => {}}>
