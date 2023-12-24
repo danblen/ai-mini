@@ -74,7 +74,7 @@ export default ({ images }) => {
     <View>
       <AtTabs
         current={current}
-        tabList={[{ title: "进行中" }, { title: "已完成" }]}
+        tabList={[{ title: "已完成" }, { title: "进行中" }]}
         swipeable={true}
         onClick={(value) => {
           setCurrent(value);
@@ -85,11 +85,11 @@ export default ({ images }) => {
             <FinishedTask images={allImages} />
           </View>
         </AtTabsPane>
-        {/* <AtTabsPane current={current} index={1}>
+        <AtTabsPane current={current} index={1}>
           <View style="">
             <FinishedTask images={allImages} />
           </View>
-        </AtTabsPane> */}
+        </AtTabsPane>
       </AtTabs>
       <LoginModal
         isOpened={isOpened}

@@ -28,7 +28,6 @@ export default () => {
   const fetchUserInfo = async () => {
     let userInfo = Taro.getStorageSync("userInfo");
     if (userInfo?.data?.user_id) {
-      setUserInfo(userInfo);
       let res = await get_user_info({
         user_id: userInfo.data.user_id,
       });
@@ -39,18 +38,25 @@ export default () => {
           data: res.data,
         }));
         Taro.setStorageSync("userInfo", {
+          isLogin: true,
           data: res.data,
+        });
+      } else {
+        setUserInfo({
+          isLogin: false,
+          data: {},
         });
       }
     } else {
+      setUserInfo({
+        isLogin: false,
+        data: {},
+      });
     }
   };
 
   useTabItemTap((tab) => {
-    console.log(aa);
-    if (tab.index === 3) {
-      fetchUserInfo();
-    }
+    fetchUserInfo();
   });
   return (
     <>
