@@ -46,8 +46,11 @@ export default () => {
     }
   };
 
-  useTabItemTap(() => {
-    fetchUserInfo();
+  useTabItemTap((tab) => {
+    console.log(aa);
+    if (tab.index === 3) {
+      fetchUserInfo();
+    }
   });
   return (
     <>

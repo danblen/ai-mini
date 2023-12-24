@@ -1,5 +1,5 @@
 import { View } from "@tarojs/components";
-import Taro, { useTabItemTap } from "@tarojs/taro";
+import Taro, { useLoad, useReady, useTabItemTap } from "@tarojs/taro";
 import { useEffect, useState } from "react";
 import { AtTabs, AtTabsPane } from "taro-ui";
 import { QueryUserDataAPI, QueryUserPcocessDataAPI } from "../../api/index.js";
@@ -52,7 +52,6 @@ export default ({ images }) => {
     interval = setInterval(fetchData, 3000); // 60秒刷新一次
     return () => clearInterval(interval); // 清除定时器
   }, []);
-
   const fetchUserImage = async () => {
     // let userInfo = Taro.getStorageSync("userInfo");
     // console.log(userInfo);
