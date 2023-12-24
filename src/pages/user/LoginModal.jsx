@@ -1,9 +1,7 @@
-import React, { useState } from "react";
-import { View, Text, Button, Checkbox } from "@tarojs/components";
-import { AtModal, AtModalHeader, AtModalContent, AtModalAction } from "taro-ui";
-import { wechat_login } from "../../api/index.js";
+import { Button, Checkbox, Text, View } from "@tarojs/components";
 import Taro from "@tarojs/taro";
-import { wechatLogin } from "../../common/user";
+import React, { useState } from "react";
+import { AtModal, AtModalAction, AtModalContent, AtModalHeader } from "taro-ui";
 // 必须要有/开头
 const agreementsUrl = "/pages/user/agreements/index";
 const privacyUrl = "/pages/user/privacy/index";
@@ -56,7 +54,7 @@ export default ({ isOpened, onConfirmLogin, onClose }) => {
                 });
               }}
             >
-              《用户服务条款》
+              《用户协议》
             </Text>
             和
             <Text
