@@ -3,7 +3,6 @@ import React, { useState, useRef, useEffect, useCallback } from "react";
 import { AtButton, AtTabs, AtTabsPane } from "taro-ui";
 import { wxPathToBase64, downloadImages } from "../../utils/imageTools.js";
 import { faceSwap, getSwapQueueResult } from "../../api/index.js";
-import indexImage from "./index.jpg";
 
 export default ({}) => {
   const [current, setCurrent] = useState(0);
@@ -22,11 +21,11 @@ export default ({}) => {
           height: "90vh",
         }}
       >
-        <Image
+        {/* <Image
           mode="widthFix"
           style={{ width: "100%", verticalAlign: "middle" }}
           src={indexImage}
-        />
+        /> */}
       </View>
 
       <View>
