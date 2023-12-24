@@ -4,7 +4,9 @@ import { AtModal, AtModalHeader, AtModalContent, AtModalAction } from "taro-ui";
 import { wechat_login } from "../../api/index.js";
 import Taro from "@tarojs/taro";
 import { wechatLogin } from "../../common/user";
-const agreementsUrl = "pages/agreements/index";
+// 必须要有/开头
+const agreementsUrl = "/pages/user/agreements/index";
+const privacyUrl = "/pages/user/privacy/index";
 
 export default ({ isOpened, onConfirmLogin, onClose }) => {
   const [isCheckPolicy, setIsCheckPolicy] = useState(false);
@@ -57,7 +59,14 @@ export default ({ isOpened, onConfirmLogin, onClose }) => {
               《用户服务条款》
             </Text>
             和
-            <Text style={{ color: "blue" }} onClick={() => {}}>
+            <Text
+              style={{ color: "blue" }}
+              onClick={() => {
+                Taro.navigateTo({
+                  url: privacyUrl,
+                });
+              }}
+            >
               《隐私协议》
             </Text>
           </View>

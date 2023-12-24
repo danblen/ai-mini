@@ -1,14 +1,14 @@
 export default {
   pages: [
     "pages/index/index",
-    // "pages/agreements/index",
     "pages/user/index",
-    // "pages/agreements/privacy",
     "pages/refine/index",
     "pages/album/index",
     "pages/photo/index",
     "pages/faceswap/index",
     "pages/gen/index",
+    "pages/user/agreements/index",
+    "pages/user/privacy/index",
   ],
   tabBar: {
     backgroundColor: "#fafafa",
