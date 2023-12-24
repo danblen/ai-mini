@@ -1,8 +1,9 @@
 export default {
   pages: [
-    "pages/agreements/index",
     "pages/index/index",
+    // "pages/agreements/index",
     "pages/user/index",
+    // "pages/agreements/privacy",
     "pages/refine/index",
     "pages/album/index",
     "pages/photo/index",
