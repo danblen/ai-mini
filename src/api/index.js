@@ -24,8 +24,8 @@ export function wechat_login(data) {
 export function get_user(data) {
   return request.post("/get_user", data);
 }
-export function get_all_images(data) {
-  return request.get("/images", data);
+export function get_all_images() {
+  return request.get("/images");
 }
 export function getPhotoData(data) {
   return request.post("/sdapi/v1/query-photo-image-sql-data-by-dict", data);
@@ -52,6 +52,12 @@ export function QueryUserDataAPI(data) {
 }
 export function QueryUserInfoAPI(data) {
   return request.post("/query-user-info", data);
+}
+export function QueryUserPcocessDataAPI(data) {
+  return request.post("/query-user-process-data", data);
+}
+export function get_user_info(data) {
+  return request.post("/users", data);
 }
 export function get_pending_tasks_on_user(user_id) {
   return request.post("/get_pending_tasks_on_user/" + user_id + "/");

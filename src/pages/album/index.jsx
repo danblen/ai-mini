@@ -2,7 +2,7 @@ import { View } from "@tarojs/components";
 import Taro, { useTabItemTap } from "@tarojs/taro";
 import { useEffect, useState } from "react";
 import { AtTabs, AtTabsPane } from "taro-ui";
-import { QueryUserDataAPI } from "../../api/index.js";
+import { QueryUserDataAPI, QueryUserPcocessDataAPI } from "../../api/index.js";
 import FinishedTask from "./FinishedTask.jsx";
 import LoginModal from "../user/LoginModal";
 import { fetchProcessedImages } from "../../utils/imageTools.js";
@@ -69,16 +69,11 @@ export default ({ images }) => {
   };
 
   useTabItemTap(() => {
-    fetchUserImage();
+    // fetchUserInfo();
   });
   return (
     <View>
-      <AtTabsPane current={current} index={0}>
-        <View style="">
-          <FinishedTask images={allImages} />
-        </View>
-      </AtTabsPane>
-      {/* <AtTabs
+      <AtTabs
         current={current}
         tabList={[{ title: "进行中" }, { title: "已完成" }]}
         swipeable={true}
@@ -91,12 +86,12 @@ export default ({ images }) => {
             <FinishedTask images={allImages} />
           </View>
         </AtTabsPane>
-        <AtTabsPane current={current} index={1}>
+        {/* <AtTabsPane current={current} index={1}>
           <View style="">
             <FinishedTask images={allImages} />
           </View>
-        </AtTabsPane>
-      </AtTabs> */}
+        </AtTabsPane> */}
+      </AtTabs>
       <LoginModal
         isOpened={isOpened}
         onConfirmLogin={async () => {

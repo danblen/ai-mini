@@ -6,6 +6,7 @@ import LoginModal from "./LoginModal";
 // import BuyPoint from "./BuyPoint";
 import { AtIcon, AtList, AtListItem } from "taro-ui";
 import { QueryUserInfoAPI } from "../../api";
+import { QueryUserDataAPI, get_user_info } from "../../api";
 import { clearUserInfo, wechatLogin } from "../../common/user";
 
 export default () => {
@@ -13,6 +14,7 @@ export default () => {
   const [loading, setLoading] = useState(false);
   const [isOpened, setIsOpened] = useState(false);
   const [userInfo, setUserInfo] = useState({
+    isLogin: false,
     data: {
       points: 0,
       user_id: "",
@@ -25,15 +27,19 @@ export default () => {
 
   const fetchUserInfo = async () => {
     let userInfo = Taro.getStorageSync("userInfo");
-    if (userInfo) {
-      let res = await QueryUserInfoAPI({
+    if (userInfo?.data?.user_id) {
+      setUserInfo(userInfo);
+      let res = await get_user_info({
         user_id: userInfo.data.user_id,
       });
       if (res) {
-        debugger;
-        setUserInfo({ data: res.data });
+        setUserInfo((pre) => ({
+          ...pre,
+          isLogin: true,
+          data: res.data,
+        }));
         Taro.setStorageSync("userInfo", {
-          data: res,
+          data: res.data,
         });
       }
     } else {
@@ -71,7 +77,7 @@ export default () => {
             >
               <View className=" ">微信用户</View>
               <View className=" ">
-                ID:{userInfo.data.user_id}
+                ID: {userInfo.data.user_id.slice(0, 6) + "xxxxxx"}
                 <AtIcon value="chevron-right" size="20" color="#969799" />
               </View>
             </View>
@@ -98,7 +104,7 @@ export default () => {
       </View>
 
       <AtList>
-        <AtListItem title="剩余积分" extraText={userInfo?.data.points || ""} />
+        <AtListItem title="剩余积分" extraText={userInfo?.data?.points || ""} />
         <AtListItem
           title="签到"
           extraText={userInfo?.data.is_check ? "已签到" : "点击签到"}

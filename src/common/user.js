@@ -12,15 +12,15 @@ export const wechatLogin = () =>
               // 登录成功，获取到用户的 code
               // 向服务器发送 code
               let wechatRes = await wechat_login({ code: loginRes.code });
-              let userInfo = {
-                code: loginRes.code,
-                data: wechatRes.data,
-                isLogin: true,
-              };
-              Taro.setStorageSync("userInfo", userInfo);
-              userInfo = Taro.getStorageSync("userInfo");
-              console.log(111, userInfo);
-              resolve(userInfo);
+              // let userInfo = {
+              //   code: loginRes.code,
+              //   data: wechatRes.data,
+              // isLogin: true,
+              // };
+              // Taro.setStorageSync("userInfo", userInfo);
+              // userInfo = Taro.getStorageSync("userInfo");
+              // console.log(111, userInfo);
+              resolve(wechatRes);
             } else {
               // 登录失败
               console.log("登录失败", loginRes);

@@ -14,7 +14,6 @@ export default () => {
   const eventChannel = Taro.getCurrentInstance().page.getOpenerEventChannel();
   eventChannel.on("acceptDataFromOpenerPage", (data) => {
     const albumData = data.albumData;
-    console.log(albumData);
     setAlbumData(albumData);
   });
   // useEffect(() => {
