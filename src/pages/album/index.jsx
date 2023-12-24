@@ -24,24 +24,20 @@ export default ({ images }) => {
   let interval;
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        const storageUserInfo = Taro.getStorageSync("userInfo");
-        if (storageUserInfo.data.user_id) {
-          const userInfo = {
-            user_id: storageUserInfo.data.user_id,
-            request_status: "finishing",
-          };
+      const storageUserInfo = Taro.getStorageSync("userInfo");
+      if (storageUserInfo?.data?.user_id) {
+        const userInfo = {
+          user_id: storageUserInfo.data.user_id,
+          request_status: "finishing",
+        };
 
-          const processedImages = await fetchProcessedImages(userInfo);
-          if (processedImages.length > 0) {
-            setAllImages(processedImages);
-          }
-        } else {
-          // console.log("storageUserInfo:", storageUserInfo);
-          setIsOpened(true);
+        const processedImages = await fetchProcessedImages(userInfo).catch();
+        if (processedImages?.length > 0) {
+          setAllImages(processedImages);
         }
-      } catch (error) {
-        console.error("Error in useEffect:", error);
+      } else {
+        setAllImages([]);
+        setIsOpened(true);
       }
     };
 
@@ -52,20 +48,6 @@ export default ({ images }) => {
     interval = setInterval(fetchData, 3000); // 60秒刷新一次
     return () => clearInterval(interval); // 清除定时器
   }, []);
-  const fetchUserImage = async () => {
-    // let userInfo = Taro.getStorageSync("userInfo");
-    // console.log(userInfo);
-    // if (!userInfo) {
-    //   let res = await QueryUserDataAPI({
-    //     user_id: userInfo.data.user_id,
-    //   });
-    //   if (res) {
-    //     setAllImages(res);
-    //   }
-    // } else {
-    //   setAllImages(userInfo);
-    // }
-  };
 
   useTabItemTap(() => {
     // fetchUserInfo();
@@ -85,11 +67,11 @@ export default ({ images }) => {
             <FinishedTask images={allImages} />
           </View>
         </AtTabsPane>
-        <AtTabsPane current={current} index={1}>
+        {/* <AtTabsPane current={current} index={1}>
           <View style="">
             <FinishedTask images={allImages} />
           </View>
-        </AtTabsPane>
+        </AtTabsPane> */}
       </AtTabs>
       <LoginModal
         isOpened={isOpened}

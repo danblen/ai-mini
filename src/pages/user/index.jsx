@@ -125,8 +125,14 @@ export default () => {
         <AtListItem
           title="退出登录"
           onClick={() => {
-            clearUserInfo();
-            setUserInfo({ data: {} });
+            setUserInfo({
+              isLogin: false,
+              data: {},
+            });
+            Taro.setStorageSync("userInfo", {
+              isLogin: false,
+              data: {},
+            });
           }}
         />
       </AtList>
