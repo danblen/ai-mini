@@ -17,7 +17,7 @@ export default ({ images }) => {
   return (
     <View style={{ background: "black", height: "100vh", color: "#fff" }}>
       <View
-        style={{ background: "black" }}
+        style={{ background: "black", marginBottom: "20rpx" }}
         onClick={() => {
           Taro.reLaunch({
             url: "/pages/album/index",

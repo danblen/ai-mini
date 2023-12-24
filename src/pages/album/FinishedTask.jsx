@@ -21,7 +21,17 @@ const ImageList = ({ images, loadMore }) => {
       <View className="image-list">
         {images?.map((image, index) => (
           <View className="image-item" key={index}>
-            <Image className="image" src={image} mode="aspectFill" />
+            <Image
+              className="image"
+              src={image}
+              mode="widthFix"
+              onClick={() => {
+                Taro.previewImage({
+                  current: image,
+                  urls: images.map((image) => image),
+                });
+              }}
+            />
           </View>
         ))}
       </View>
