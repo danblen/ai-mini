@@ -1,12 +1,11 @@
 import { View } from "@tarojs/components";
-import Taro, { useLoad, useReady, useTabItemTap } from "@tarojs/taro";
+import Taro, { useTabItemTap } from "@tarojs/taro";
 import { useEffect, useState } from "react";
 import { AtTabs, AtTabsPane } from "taro-ui";
-import { QueryUserDataAPI, QueryUserPcocessDataAPI } from "../../api/index.js";
-import FinishedTask from "./FinishedTask.jsx";
-import LoginModal from "../user/LoginModal";
+import { wechatLogin } from "../../common/user";
 import { fetchProcessedImages } from "../../utils/imageTools.js";
-import { clearUserInfo, setUserInfo, wechatLogin } from "../../common/user";
+import LoginModal from "../user/LoginModal";
+import FinishedTask from "./FinishedTask.jsx";
 
 export default ({ images }) => {
   const [current, setCurrent] = useState(0);
@@ -63,7 +62,11 @@ export default ({ images }) => {
         }}
       >
         <AtTabsPane current={current} index={0}>
-          <View style="">
+          <View
+            style={{
+              marginTop: "10rpx",
+            }}
+          >
             <FinishedTask images={allImages} />
           </View>
         </AtTabsPane>

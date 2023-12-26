@@ -1,7 +1,6 @@
 import React from "react";
 import Taro from "@tarojs/taro";
 import { View, Text, Image, ScrollView } from "@tarojs/components";
-import "./FinishedTask.less";
 
 const ImageList = ({ images, loadMore }) => {
   const handleScrollToLower = () => {
@@ -11,7 +10,6 @@ const ImageList = ({ images, loadMore }) => {
   // if (!images || images.length === 0) {
   //   return <Text>图片加载中...</Text>; // 或其他占位内容
   // }
-
   return (
     <ScrollView
       scrollY
@@ -20,11 +18,21 @@ const ImageList = ({ images, loadMore }) => {
     >
       <View className="image-list">
         {images?.map((image, index) => (
-          <View className="image-item" key={index}>
+          <View
+            style={{
+              paddingLeft: "10rpx",
+              display: "inline-block",
+            }}
+            key={index}
+          >
             <Image
               className="image"
               src={image}
               mode="widthFix"
+              style={{
+                width: "360rpx",
+                borderRadius: "10rpx",
+              }}
               onClick={() => {
                 Taro.previewImage({
                   current: image,

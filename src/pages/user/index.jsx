@@ -5,9 +5,8 @@ import LoginModal from "./LoginModal";
 // import CheckIn from "./CheckIn";
 // import BuyPoint from "./BuyPoint";
 import { AtIcon, AtList, AtListItem } from "taro-ui";
-import { QueryUserInfoAPI } from "../../api";
-import { QueryUserDataAPI, get_user_info } from "../../api";
-import { clearUserInfo, wechatLogin } from "../../common/user";
+import { get_user_info } from "../../api";
+import { wechatLogin } from "../../common/user";
 
 export default () => {
   // const [showBuyPointPopup, setShowBuyPointPopup] = useState(false);
@@ -22,8 +21,6 @@ export default () => {
       avatarUrl: "https://danblen.github.io/static/index.jpg",
     },
   });
-
-  console.log("userInfo2223:", userInfo);
 
   const fetchUserInfo = async () => {
     let userInfo = Taro.getStorageSync("userInfo");
