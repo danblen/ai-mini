@@ -113,7 +113,12 @@ export default () => {
       </View>
 
       <AtList>
-        <AtListItem title="剩余积分" extraText={userInfo?.data?.points || ""} />
+        <AtListItem
+          title="剩余积分"
+          extraText={
+            userInfo?.data?.points !== undefined ? userInfo.data.points : 0
+          }
+        />
         <AtListItem
           title="签到"
           extraText={userInfo?.data.is_check ? "已签到" : "点击签到"}
