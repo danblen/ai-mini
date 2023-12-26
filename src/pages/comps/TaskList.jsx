@@ -2,7 +2,6 @@ import Taro from "@tarojs/taro";
 import { View, ScrollView, Image } from "@tarojs/components";
 import React, { useState, useEffect, useRef } from "react";
 import { AtIcon } from "taro-ui";
-import { getSwapQueueResult } from "../../api";
 
 export default ({ images }) => {
   const timersRef = useRef({});
@@ -17,7 +16,12 @@ export default ({ images }) => {
   return (
     <View style={{ background: "black", height: "100vh", color: "#fff" }}>
       <View
-        style={{ background: "black", marginBottom: "20rpx" }}
+        style={{
+          background: "black",
+          paddingTop: "20rpx",
+          marginBottom: "20rpx",
+          marginLeft: "15rpx",
+        }}
         onClick={() => {
           Taro.reLaunch({
             url: "/pages/album/index",
@@ -31,7 +35,12 @@ export default ({ images }) => {
       <ScrollView style={{ background: "black" }}>
         {images.length ? (
           images.map((image, index) => (
-            <View key={index} className="image-container">
+            <View
+              key={index}
+              style={{
+                display: "inline-block",
+              }}
+            >
               {image.status === "pending" ? (
                 <View className="loading-container">
                   {/* <Loading /> */}
@@ -39,7 +48,11 @@ export default ({ images }) => {
                 </View>
               ) : (
                 <Image
-                  style={{ width: "300rpx", height: "300rpx" }}
+                  style={{
+                    width: "280rpx",
+                    marginLeft: "15rpx",
+                    borderRadius: "10rpx",
+                  }}
                   src={image.src}
                   mode="widthFix"
                   onClick={() => {

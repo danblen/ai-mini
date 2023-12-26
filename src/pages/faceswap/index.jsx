@@ -197,7 +197,6 @@ export default () => {
               const tarBase64 = await wxPathToBase64(
                 uploadedFiles[selectedIndex].url
               );
-
               const storageUserInfo = Taro.getStorageSync("userInfo");
               data.user_id = storageUserInfo.data.user_id;
               data.init_images = [srcBase64];
