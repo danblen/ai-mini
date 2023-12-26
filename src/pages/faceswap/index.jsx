@@ -202,9 +202,11 @@ export default () => {
               data.user_id = storageUserInfo.data.user_id;
               data.init_images = [srcBase64];
               data.alwayson_scripts.roop.args[0] = tarBase64;
-              let res = await faceSwap(data).catch(() => {
-                setLoading(false);
-              });
+              let res = await faceSwap(data)
+                .catch(() => {})
+                .finally(() => {
+                  setLoading(false);
+                });
               if (res.status === "pending") {
                 getTaskImages(res.request_id);
               } else {
