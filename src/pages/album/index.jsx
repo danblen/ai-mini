@@ -1,5 +1,5 @@
 import { View } from "@tarojs/components";
-import Taro, { useTabItemTap } from "@tarojs/taro";
+import Taro, { useTabItemTap, useDidShow, useDidHide } from "@tarojs/taro";
 import { useEffect, useState } from "react";
 import { AtTabs, AtTabsPane } from "taro-ui";
 import { wechatLogin } from "../../common/user";
@@ -11,6 +11,7 @@ export default ({ images }) => {
   const [current, setCurrent] = useState(0);
   const [allImages, setAllImages] = useState([]);
   const [isOpened, setIsOpened] = useState(false);
+  const [interval, setIntervalVlu] = useState(false);
   const [userInfo, setUserInfo] = useState({
     data: {
       points: 0,
@@ -20,36 +21,33 @@ export default ({ images }) => {
     },
   });
 
-  let interval;
-  useEffect(() => {
-    const fetchData = async () => {
-      const storageUserInfo = Taro.getStorageSync("userInfo");
-      if (storageUserInfo?.data?.user_id) {
-        const userInfo = {
-          user_id: storageUserInfo.data.user_id,
-          request_status: "finishing",
-        };
+  const fetchData = async () => {
+    const storageUserInfo = Taro.getStorageSync("userInfo");
+    if (storageUserInfo?.data?.user_id) {
+      const userInfo = {
+        user_id: storageUserInfo.data.user_id,
+        request_status: "finishing",
+      };
 
-        const processedImages = await fetchProcessedImages(userInfo).catch();
-        if (processedImages?.length > 0) {
-          setAllImages(processedImages);
-        }
-      } else {
-        setAllImages([]);
-        setIsOpened(true);
+      const processedImages = await fetchProcessedImages(userInfo).catch();
+      if (processedImages?.length > 0) {
+        setAllImages(processedImages);
       }
-    };
+    } else {
+      setAllImages([]);
+      setIsOpened(true);
+    }
+  };
 
-    // 获取初始数据
+  useDidShow(() => {
     fetchData();
+    const interval = setInterval(fetchData, 1000);
+    setIntervalVlu(interval);
+  });
 
-    // 设置定时器，每隔一段时间更新数据
-    interval = setInterval(fetchData, 3000); // 60秒刷新一次
-    return () => clearInterval(interval); // 清除定时器
-  }, []);
-
-  useTabItemTap(() => {
-    // fetchUserInfo();
+  // useDidHide 钩子，在页面隐藏时执行
+  useDidHide(() => {
+    clearInterval(interval);
   });
   return (
     <View>
