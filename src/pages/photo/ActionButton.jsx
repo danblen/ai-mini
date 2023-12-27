@@ -1,14 +1,13 @@
 import { View } from "@tarojs/components";
 import { useEffect, useState } from "react";
 import { AtButton } from "taro-ui";
-import { faceSwap } from "../../api/index.js";
+import { faceSwap, getSwapQueueResult } from "../../api/index.js";
 import { downloadImages, wxPathToBase64 } from "../../utils/imageTools.js";
 import { data } from "../faceswap/const.js";
 import Taro from "@tarojs/taro";
 let timers = {};
 const getTaskImage = async (requestId) => {
   return new Promise((resolve, reject) => {
-    // 创建一个计时器，每隔3秒执行一次
     timers[requestId] = setInterval(async () => {
       const requestData = {
         user_id: "",
@@ -29,7 +28,7 @@ const getTaskImage = async (requestId) => {
           clearInterval(timers[requestId]);
         }
       } catch (error) {
-        reject();
+        reject(error);
         clearInterval(timers[requestId]);
       }
     }, 3000);
@@ -60,6 +59,10 @@ export default ({ albumUrls, selfUrl }) => {
   const swapOne = async (originUrl) => {
     const originBase64 = await wxPathToBase64(originUrl);
     const selfBase64 = await wxPathToBase64(selfUrl);
+    const storageUserInfo = Taro.getStorageSync("userInfo");
+    if (storageUserInfo?.data?.user_id) {
+      data.user_id = storageUserInfo?.data?.user_id;
+    }
     data.init_images = [originBase64];
     data.alwayson_scripts.roop.args[0] = selfBase64;
     let res = await faceSwap(data).catch((err) => {
@@ -67,13 +70,13 @@ export default ({ albumUrls, selfUrl }) => {
     });
     if (res) {
       if (res?.status === "pending") {
-        const res = await getTaskImage(res.request_id);
+        const res1 = await getTaskImage(res.request_id);
         setImages((prevImages) =>
           prevImages.map((image) =>
             image.requestId === requestId
               ? {
                   ...image,
-                  src: "data:image/png;base64," + res.result.images[0],
+                  src: "data:image/png;base64," + res1.result.images[0],
                   status: "SUCCESS",
                 }
               : image

@@ -49,11 +49,11 @@ export default () => {
           style={Styles.indexImage}
           className=" "
           mode="scaleToFill"
-          onClick={() => {
-            Taro.navigateTo({
-              url: faceswapPage,
-            });
-          }}
+          // onClick={() => {
+          //   Taro.navigateTo({
+          //     url: faceswapPage,
+          //   });
+          // }}
           src={albumData.index}
         ></Image>
         {albumData.urls?.map((url) => (
@@ -62,11 +62,11 @@ export default () => {
               style={Styles.image}
               className=" "
               mode="scaleToFill"
-              onClick={() => {
-                Taro.navigateTo({
-                  url: faceswapPage,
-                });
-              }}
+              // onClick={() => {
+              //   Taro.navigateTo({
+              //     url: faceswapPage,
+              //   });
+              // }}
               src={url}
             ></Image>
           </View>
