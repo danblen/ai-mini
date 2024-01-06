@@ -12,8 +12,9 @@ export default ({ imageUrls }) => {
           <View className="" style={Styles.imageWrap}>
             <Image
               style={Styles.image}
+              mode="aspectFill"
+              lazyLoad={true}
               className=" "
-              mode="scaleToFill"
               onClick={() => {
                 Taro.navigateTo({
                   url: "/pages/faceswap/index?imageUrl=" + src,

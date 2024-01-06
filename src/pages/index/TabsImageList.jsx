@@ -36,7 +36,7 @@ export default ({ tags_image }) => {
         onClick={onClick}
       >
         {tabList.map((tab, index) => (
-          <AtTabsPane current={current} index={index}></AtTabsPane>
+          <AtTabsPane className="" current={current} index={index}></AtTabsPane>
         ))}
       </AtTabs>
       <View style=" ">
@@ -48,8 +48,11 @@ export default ({ tags_image }) => {
 const Styles = {
   container: {
     borderRadius: "10rpx",
-    background: "linear-gradient(to right, #ecf0f1, #ecf0f1)",
+    // margin: "10rpx",
+    marginTop: "20rpx",
+    background: "linear-gradient(to top, #a5c3b6, #fbfbfb)",
     // background: "linear-gradient(to right, #27ae60, #2ecc71)",
     boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+    padding: "5rpx",
   },
 };

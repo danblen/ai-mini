@@ -26,9 +26,16 @@ const App = () => {
         <span onClick={e => Taro.showtoast({ title: "标题" })}>ai写真</span>
       </NavBar> */}
       {/* <Tabs1/> */}
-      <TopBanner banners={allImages?.banners} />
-      <AlbumsCard albums={allImages?.albums} />
-      <TabsImageList tags_image={allImages?.tags_image} />
+      <View
+        style={{
+          background:
+            "linear-gradient(to left, #fdfdfd, #61866f)" /* 设置为橙色渐变 */,
+        }}
+      >
+        <TopBanner banners={allImages?.banners} />
+        <AlbumsCard albums={allImages?.albums} />
+        <TabsImageList tags_image={allImages?.tags_image} />
+      </View>
       {/* <Images /> */}
       {/* <Home /> */}
     </>
