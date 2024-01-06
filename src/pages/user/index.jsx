@@ -56,41 +56,64 @@ export default () => {
     fetchUserInfo();
   });
   return (
-    <>
+    <View style={{}}>
       <View
         style={{
-          backgroundColor: "transparent",
-          marginBottom: "50rpx",
-          height: "200rpx",
+          backgroundColor: " #ecf0f1",
+          height: "400rpx",
+          paddingTop: "40rpx",
         }}
       >
         {userInfo?.isLogin ? (
-          <View className="user-box ">
+          <View className="user-box " style={{}}>
             <Image
               mode="aspectFill"
               className="avatar"
               style={{
                 display: "inline-block",
-                borderRadius: "50%",
-                width: "100rpx",
-                height: "100rpx",
+                position: "relative",
+                top: "10rpx",
+                marginLeft: "30rpx",
+                borderRadius: "10%",
+                width: "150rpx",
+                height: "150rpx",
               }}
               src={"https://danblen.github.io/static/index.jpg"}
             />
             <View
               className=""
-              style={{ display: "inline-block", marginLeft: "30rpx" }}
+              style={{
+                display: "inline-block",
+                marginLeft: "50rpx",
+              }}
             >
-              <View className=" ">微信用户</View>
+              <View
+                style={{
+                  fontSize: "40rpx",
+                  height: "100rpx",
+                  verticalAlign: "top",
+                }}
+              >
+                微信用户
+              </View>
               <View className=" ">
-                ID: {userInfo.data.user_id.slice(0, 6) + "xxxxxx"}
+                ID: {userInfo.data.user_id.slice(0, 6) + "****"}
                 <AtIcon value="chevron-right" size="20" color="#969799" />
               </View>
             </View>
           </View>
         ) : (
-          <View className="">
-            <View style={{ textAlign: "center", fontSize: "20px" }}>
+          <View
+            style={{
+              paddingTop: "20rpx",
+            }}
+          >
+            <View
+              style={{
+                textAlign: "center",
+                fontSize: "40rpx",
+              }}
+            >
               欢迎来到AI写真
             </View>
             <Button
@@ -109,35 +132,37 @@ export default () => {
         )}
       </View>
 
-      <AtList>
-        <AtListItem
-          title="剩余积分"
-          extraText={
-            userInfo?.data?.points !== undefined ? userInfo.data.points : 0
-          }
-        />
-        <AtListItem
-          title="签到"
-          extraText={userInfo?.data.is_check ? "已签到" : "点击签到"}
-          onClick={() => {}}
-        />
-        <AtListItem title="购买次卡" arrow="right" />
-        <AtListItem title="问题反馈" />
-        <AtListItem title="联系我们" />
-        <AtListItem
-          title="退出登录"
-          onClick={() => {
-            setUserInfo({
-              isLogin: false,
-              data: {},
-            });
-            Taro.setStorageSync("userInfo", {
-              isLogin: false,
-              data: {},
-            });
-          }}
-        />
-      </AtList>
+      <View style={Style.cardStyle}>
+        <AtList>
+          <AtListItem
+            title="剩余积分"
+            extraText={
+              userInfo?.data?.points !== undefined ? userInfo.data.points : 0
+            }
+          />
+          <AtListItem
+            title="签到"
+            extraText={userInfo?.data.is_check ? "已签到" : "点击签到"}
+            onClick={() => {}}
+          />
+          <AtListItem title="购买次卡" arrow="right" />
+          <AtListItem title="问题反馈" />
+          <AtListItem title="联系我们" />
+          <AtListItem
+            title="退出登录"
+            onClick={() => {
+              setUserInfo({
+                isLogin: false,
+                data: {},
+              });
+              Taro.setStorageSync("userInfo", {
+                isLogin: false,
+                data: {},
+              });
+            }}
+          />
+        </AtList>
+      </View>
 
       {/* <BuyPoint />
       <GetPoint /> */}
@@ -161,6 +186,19 @@ export default () => {
           setIsOpened(false);
         }}
       />
-    </>
+    </View>
   );
+};
+
+const Style = {
+  cardStyle: {
+    margin: "30rpx",
+    position: "relative",
+    top: "-200rpx",
+    border: "1px solid #e0e0e0",
+    backgroundColor: "#fff",
+    borderRadius: "20rpx",
+    padding: "20rpx",
+    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+  },
 };

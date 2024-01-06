@@ -1,47 +1,14 @@
-import { View, Text, Image, Button } from "@tarojs/components";
-import React, { useState, useRef, useEffect } from "react";
-import { NavBar, Tabs, Swiper } from "@nutui/nutui-react-taro";
-import { Left, Share, Close } from "@nutui/icons-react-taro";
+import { Image, View } from "@tarojs/components";
 import Taro from "@tarojs/taro";
+import React, { useEffect, useState } from "react";
 import { AtButton, AtDrawer, AtIcon } from "taro-ui";
-import { data } from "./const.js";
-import { wxPathToBase64, downloadImages } from "../../utils/imageTools.js";
-import { faceSwap, getSwapQueueResult } from "../../api/index.js";
+import { faceSwap } from "../../api/index.js";
+import compareIcon from "../../static/image/my/icons8-compare-64.png";
+import { downloadImages, wxPathToBase64 } from "../../utils/imageTools.js";
 import TaskList from "../comps/TaskList.jsx";
 import ImageUpload from "./ImageUpload.jsx";
-import compareIcon from "../../static/image/my/icons8-compare-64.png";
-
-let timers = {};
-const getTaskImage = async (requestId) => {
-  return new Promise((resolve, reject) => {
-    // 创建一个计时器，每隔3秒执行一次
-    timers[requestId] = setInterval(async () => {
-      const requestData = {
-        user_id: "",
-        request_id: requestId,
-        sql_query: {
-          request_status: "",
-          user_id: "",
-        },
-      };
-
-      try {
-        // 调用getSwapQueueResult函数获取结果
-        let res = await getSwapQueueResult(requestData);
-
-        if (res.status === "finishing") {
-          // 更新图像数组中对应请求的图像状态和数据
-          console.log("show res:", res);
-          resolve(res);
-          clearInterval(timers[requestId]);
-        }
-      } catch (error) {
-        reject();
-        clearInterval(timers[requestId]);
-      }
-    }, 3000);
-  });
-};
+import { data } from "./const.js";
+import { clearTimers, getTaskImage } from "./getTaskImage.js";
 
 export default () => {
   const [showDrawer, setShowDrawer] = useState(false);
@@ -68,9 +35,7 @@ export default () => {
     }
     return () => {
       ignore = true;
-      Object.keys(timers).forEach((key) => {
-        clearInterval(timers[key]);
-      });
+      clearTimers();
     };
   }, []);
   useEffect(() => {

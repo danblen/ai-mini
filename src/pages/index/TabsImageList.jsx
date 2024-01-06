@@ -48,11 +48,10 @@ export default ({ tags_image }) => {
 const Styles = {
   container: {
     borderRadius: "10rpx",
-    // margin: "10rpx",
     marginTop: "20rpx",
     background: "linear-gradient(to top, #a5c3b6, #fbfbfb)",
     // background: "linear-gradient(to right, #27ae60, #2ecc71)",
     boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-    padding: "5rpx",
+    // padding: "5rpx",
   },
 };
