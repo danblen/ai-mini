@@ -178,29 +178,34 @@ export default () => {
             borderRadius: "50%",
           }}
         >
-          <AtButton
-            type="primary"
-            onClick={() => setCompareImageSwap((prev) => !prev)}
-            disabled={!showImageSwap}
-            style={{
-              // backgroundColor: showImageSwap ? "#ccc" : "", // 根据条件设置背景颜色
-              width: "30px",
-              height: "30px",
-              // borderRadius: "50%", // 圆形背景
-              // display: "flex",
-              // justifyContent: "center",
-              // alignItems: "center",
-            }}
-          >
-            <Image
-              src={compareIcon}
+          {showImageSwap && (
+            <View
+              type="primary"
+              onClick={() => setCompareImageSwap((prev) => !prev)}
               style={{
-                width: "30px",
-                height: "30px",
-                // filter: showImageSwap ? "grayscale(100%)" : "",
+                backgroundColor: showImageSwap ? "#ccc" : "#ccc", // 根据条件设置背景颜色
+                width: "50px",
+                height: "50px",
+                borderRadius: "50%", // 圆形背景
+                // display: "flex",
+                // justifyContent: "center",
+                // alignItems: "center",
               }}
-            />
-          </AtButton>
+            >
+              <Image
+                src={compareIcon}
+                mode="widthFix"
+                style={{
+                  width: "50rpx",
+                  height: "50rpx",
+                  position: "absolute",
+                  top: "25rpx",
+                  left: "25rpx",
+                  // filter: showImageSwap ? "grayscale(100%)" : "",
+                }}
+              />
+            </View>
+          )}
         </View>
       </View>
       <View
