@@ -68,7 +68,7 @@ const Styles = {
     boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
   },
   image: {
-    width: "280rpx",
+    width: "300rpx",
     borderRadius: "10rpx",
     display: "inline-block",
   },

@@ -43,19 +43,34 @@ export default () => {
     }
   };
   return (
-    <View onTouchstart={onTouchStart} onTouchEnd={onTouchEnd} className="">
+    <View
+      onTouchstart={onTouchStart}
+      onTouchEnd={onTouchEnd}
+      className=""
+      style={{
+        marginBottom: "200rpx",
+      }}
+    >
       <View className="">
-        <Image
-          style={Styles.indexImage}
-          className=" "
-          mode="scaleToFill"
-          // onClick={() => {
-          //   Taro.navigateTo({
-          //     url: faceswapPage,
-          //   });
-          // }}
-          src={albumData.index}
-        ></Image>
+        <View
+          style={{
+            height: "50vh",
+            overflow: "hidden",
+            position: "relative",
+            marginBottom: "20rpx",
+          }}
+        >
+          <Image
+            style={{
+              width: "100%",
+              position: "absolute",
+              top: 0,
+              left: 0,
+            }}
+            mode="widthFix"
+            src={albumData.index}
+          />
+        </View>
         {albumData.urls?.map((url) => (
           <View className="" style={Styles.imageWrap}>
             <Image
@@ -90,7 +105,7 @@ export default () => {
             marginBottom: "40rpx",
             borderRadius: "20rpx",
             background: "grey",
-            opacity: 0.5,
+            opacity: 0.8,
             color: "white",
           }}
         >
@@ -123,6 +138,7 @@ export default () => {
       >
         <TaskList images={images} />
       </AtDrawer>
+      <View style={{ height: "200rpx" }}></View>
     </View>
   );
 };
