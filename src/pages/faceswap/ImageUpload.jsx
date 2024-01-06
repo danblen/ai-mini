@@ -14,6 +14,12 @@ export default ({ onFilesChange, onSelectImage }) => {
       onChange={(newFiles) => {
         setFiles(newFiles);
         onFilesChange(newFiles);
+        setSelectedIndex(newFiles.length - 1);
+        onSelectImage(newFiles.length - 1);
+        Taro.showToast({
+          title: `当前选择第${newFiles.length}张`,
+          icon: "none",
+        });
       }}
       onFail={(mes) => {}}
       onImageClick={(index, file) => {

@@ -210,7 +210,7 @@ export default () => {
             marginBottom: "40rpx",
             borderRadius: "20rpx",
             background: "grey",
-            opacity: 0.5,
+            opacity: 0.8,
             color: "white",
           }}
         >
@@ -238,25 +238,32 @@ export default () => {
             shape="circle"
             loading={loading}
             onClick={async () => {
-              setLoading(true);
-              const srcBase64 = await wxPathToBase64(imageUrl);
-              const tarBase64 = await wxPathToBase64(
-                uploadedFiles[selectedIndex].url
-              );
-              const storageUserInfo = Taro.getStorageSync("userInfo");
-              data.user_id = storageUserInfo.data.user_id;
-              data.init_images = [srcBase64];
-              data.alwayson_scripts.roop.args[0] = tarBase64;
-              let res = await faceSwap(data)
-                .catch(() => {})
-                .finally(() => {
-                  setLoading(false);
-                });
-              if (res.status === "pending") {
-                getTaskImages(res.request_id);
+              if (uploadedFiles[selectedIndex] && imageUrl) {
+                setLoading(true);
+                const srcBase64 = await wxPathToBase64(imageUrl);
+                const tarBase64 = await wxPathToBase64(
+                  uploadedFiles[selectedIndex].url
+                );
+                const storageUserInfo = Taro.getStorageSync("userInfo");
+                data.user_id = storageUserInfo.data.user_id;
+                data.init_images = [srcBase64];
+                data.alwayson_scripts.roop.args[0] = tarBase64;
+                let res = await faceSwap(data)
+                  .catch(() => {})
+                  .finally(() => {
+                    setLoading(false);
+                  });
+                if (res.status === "pending") {
+                  getTaskImages(res.request_id);
+                } else {
+                  Taro.showToast({
+                    title: res.error_message,
+                    icon: "none",
+                  });
+                }
               } else {
                 Taro.showToast({
-                  title: res.error_message,
+                  title: `请点击+号,选择人脸图像~`,
                   icon: "none",
                 });
               }
