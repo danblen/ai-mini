@@ -9,6 +9,7 @@ import { wxPathToBase64, downloadImages } from "../../utils/imageTools.js";
 import { faceSwap, getSwapQueueResult } from "../../api/index.js";
 import TaskList from "../comps/TaskList.jsx";
 import ImageUpload from "./ImageUpload.jsx";
+import compareIcon from "../../static/image/my/icons8-compare-64.png";
 
 let timers = {};
 const getTaskImage = async (requestId) => {
@@ -30,6 +31,7 @@ const getTaskImage = async (requestId) => {
 
         if (res.status === "finishing") {
           // 更新图像数组中对应请求的图像状态和数据
+          console.log("show res:", res);
           resolve(res);
           clearInterval(timers[requestId]);
         }
@@ -50,6 +52,9 @@ export default () => {
   const [uploadedFiles, setUploadedFiles] = useState([]);
   const [selectedIndex, setSelectedIndex] = useState(0);
 
+  const [showImageSrc, setShowImageSrc] = useState(true);
+  const [showImageSwap, setShowImageSwap] = useState(false);
+  const [compareImageSwap, setCompareImageSwap] = useState(false);
   useEffect(() => {
     const down = async () => {
       const tempFilePath = await downloadImages(params.imageUrl);
@@ -68,7 +73,21 @@ export default () => {
       });
     };
   }, []);
-
+  useEffect(() => {
+    if (
+      images &&
+      images.length > 0 &&
+      images[images.length - 1].status === "SUCCESS"
+    ) {
+      setCompareImageSwap(true);
+      setShowImageSwap(true);
+      setShowImageSrc(false);
+      console.log("show images:", images.length, images);
+    } else {
+      setShowImageSwap(false);
+      setShowImageSrc(true);
+    }
+  }, [images]);
   const getTaskImages = async (requestId) => {
     const newImage = {
       src: "",
@@ -123,9 +142,66 @@ export default () => {
       >
         <Image
           mode="widthFix"
-          style={{ width: "100%", verticalAlign: "middle" }}
+          style={{
+            width: "100%",
+            verticalAlign: "middle",
+            opacity: 1,
+            transition: "opacity 1s",
+          }}
           src={imageUrl}
         />
+
+        {/* 第二张图，初始时完全不可见，通过动画逐渐显示 */}
+        <Image
+          mode="widthFix"
+          style={{
+            width: "100%",
+            verticalAlign: "middle",
+            position: "absolute",
+            right: 0, // 设置初始位置在屏幕右侧
+            opacity: compareImageSwap ? 1 : 0, // 根据条件设置透明度
+            transition: "opacity 1s",
+          }}
+          src={
+            showImageSwap && images[images.length - 1].status === "SUCCESS"
+              ? images[images.length - 1].src
+              : imageUrl
+          }
+        />
+        <View
+          style={{
+            position: "absolute",
+            top: "73%",
+            left: "90%",
+            transform: "translate(-50%, -50%)",
+            zIndex: 10,
+            borderRadius: "50%",
+          }}
+        >
+          <AtButton
+            type="primary"
+            onClick={() => setCompareImageSwap((prev) => !prev)}
+            disabled={!showImageSwap}
+            style={{
+              // backgroundColor: showImageSwap ? "#ccc" : "", // 根据条件设置背景颜色
+              width: "30px",
+              height: "30px",
+              // borderRadius: "50%", // 圆形背景
+              // display: "flex",
+              // justifyContent: "center",
+              // alignItems: "center",
+            }}
+          >
+            <Image
+              src={compareIcon}
+              style={{
+                width: "30px",
+                height: "30px",
+                // filter: showImageSwap ? "grayscale(100%)" : "",
+              }}
+            />
+          </AtButton>
+        </View>
       </View>
       <View
         style="
