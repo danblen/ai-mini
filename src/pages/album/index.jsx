@@ -50,61 +50,45 @@ export default ({ images }) => {
   });
   return (
     <View>
-      <AtTabs
-        current={current}
-        tabList={[{ title: "已完成" }, { title: "进行中" }]}
-        swipeable={true}
-        onClick={(value) => {
-          setCurrent(value);
-        }}
-      >
-        <AtTabsPane current={current} index={0}>
-          {userInfo.isLogin ? (
-            <View
-              style={{
-                marginTop: "10rpx",
-              }}
-            >
-              <FinishedTask images={allImages} />
-            </View>
-          ) : (
-            <View
-              style={{
-                paddingTop: "20rpx",
-              }}
-            >
-              <View
-                style={{
-                  textAlign: "center",
-                  fontSize: "40rpx",
-                }}
-              >
-                您还未登陆，请先登陆
-              </View>
-              <Button
-                type="primary"
-                style={{
-                  position: "relative",
-                  width: "40%",
-                  animation: "swap 1s infinite",
-                }}
-                onClick={() => {
-                  Taro.switchTab({
-                    url: "/pages/user/index",
-                  });
-                }}
-              >
-                去登陆
-              </Button>
-            </View>
-          )}
-        </AtTabsPane>
-        {/* <AtTabsPane current={current} index={1}>
-          <View style="">
-            <FinishedTask images={allImages} />
+      {userInfo.isLogin ? (
+        <View
+          style={{
+            marginTop: "10rpx",
+          }}
+        >
+          <FinishedTask images={allImages} />
+        </View>
+      ) : (
+        <View
+          style={{
+            paddingTop: "20rpx",
+          }}
+        >
+          <View
+            style={{
+              textAlign: "center",
+              fontSize: "40rpx",
+            }}
+          >
+            您还未登陆，请先登陆
           </View>
-        </AtTabsPane> */}
-      </AtTabs>
+          <Button
+            type="primary"
+            style={{
+              position: "relative",
+              width: "40%",
+              animation: "swap 1s infinite",
+            }}
+            onClick={() => {
+              Taro.switchTab({
+                url: "/pages/user/index",
+              });
+            }}
+          >
+            去登陆
+          </Button>
+        </View>
+      )}
     </View>
   );
 };
