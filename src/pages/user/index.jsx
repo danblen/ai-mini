@@ -24,7 +24,7 @@ export default () => {
 
   const fetchUserInfo = async () => {
     let userInfo = Taro.getStorageSync("userInfo");
-    if (userInfo?.isLogin) {
+    if (userInfo?.isLogin && userInfo.data?.user_id) {
       let res = await get_user_info({
         user_id: userInfo.data.user_id,
       });

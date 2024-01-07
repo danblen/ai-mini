@@ -23,16 +23,16 @@ export default ({ images }) => {
   const fetchData = async () => {
     const storageUserInfo = Taro.getStorageSync("userInfo");
     setUserInfo(storageUserInfo);
-    if (storageUserInfo?.isLogin) {
+    if (storageUserInfo?.isLogin && storageUserInfo.data?.user_id) {
       const userInfo = {
         user_id: storageUserInfo.data.user_id,
         request_status: "finishing",
       };
 
       const processedImages = await fetchProcessedImages(userInfo).catch();
-      if (processedImages?.length > 0) {
-        setAllImages(processedImages);
-      }
+      // if (processedImages?.length > 0) {
+      setAllImages(processedImages);
+      // }
     } else {
       setAllImages([]);
     }

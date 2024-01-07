@@ -47,7 +47,6 @@ export default () => {
       setCompareImageSwap(true);
       setShowImageSwap(true);
       setShowImageSrc(false);
-      console.log("show images:", images.length, images);
     } else {
       setShowImageSwap(false);
       setShowImageSrc(true);

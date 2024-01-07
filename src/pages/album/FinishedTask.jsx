@@ -1,16 +1,17 @@
 // 将按键浮在图片上方
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Taro from "@tarojs/taro";
 import { AtIcon } from "taro-ui";
-import { View, Image, ScrollView } from "@tarojs/components";
+import { View, Image, ScrollView, Text } from "@tarojs/components";
+import { delete_all_images, delete_select_images } from "../../api";
 
 const ImageList = ({ images, loadMore }) => {
+  const [showImages, setShowImages] = useState([]);
   const [selectedImages, setSelectedImages] = useState([]);
   const [selectedMode, setSelectedMode] = useState(false);
-
-  const handleScrollToLower = () => {
-    loadMore();
-  };
+  useEffect(() => {
+    setShowImages(images);
+  }, [images]);
 
   const toggleSelectImage = (index) => {
     if (selectedMode) {
@@ -22,39 +23,60 @@ const ImageList = ({ images, loadMore }) => {
         setSelectedImages([...selectedImages, index]);
       }
     } else {
+      const urlsArray = images.map((image) => image.url);
       Taro.previewImage({
-        current: images[index],
-        urls: images,
+        current: images[index].url,
+        urls: urlsArray,
       });
     }
   };
 
-  const handleDeleteSelectedImages = () => {
+  const handleDeleteSelectedImages = async () => {
     if (selectedImages.length) {
       Taro.showModal({
         title: "确认删除",
-        content: "确定要删除选中的图像吗？",
-        success: function (res) {
+        content: "确定要删除选中的作品吗？",
+        success: async (res) => {
           if (res.confirm) {
-            setSelectedImages([]);
-            // 处理删除后的逻辑，比如更新图像列表或者触发外部回调
+            try {
+              const imagesToDelete = selectedImages.map(
+                (index) => showImages[index]
+              );
+              const response = await delete_select_images(imagesToDelete); // 发送删除所有作品的请求
+              setSelectedImages([]);
+              const updatedImages = showImages.filter(
+                (image, index) => !selectedImages.includes(index)
+              );
+              setShowImages(updatedImages);
+            } catch (error) {
+              console.error("删除全部作品失败", error);
+            }
           }
         },
       });
     }
   };
-
-  const handleDeleteAllImages = () => {
-    Taro.showModal({
-      title: "确认删除",
-      content: "确定要删除全部图像吗？将不会留下任何记录~",
-      success: function (res) {
-        if (res.confirm) {
-          setSelectedImages([]);
-          // 处理删除全部图片的逻辑，比如更新图像列表或者触发外部回调
-        }
-      },
-    });
+  const handleDeleteAllImages = async () => {
+    if (showImages.length) {
+      Taro.showModal({
+        title: "确认删除",
+        content: "确定要删除全部作品吗？回收站同时清除~",
+        success: async (res) => {
+          if (res.confirm) {
+            try {
+              let userInfo = Taro.getStorageSync("userInfo");
+              const response = await delete_all_images({
+                user_id: userInfo.data.user_id,
+              });
+              setSelectedImages([]);
+              setShowImages([]);
+            } catch (error) {
+              console.error("删除全部作品失败", error);
+            }
+          }
+        },
+      });
+    }
   };
 
   const handleToggleMode = () => {
@@ -70,58 +92,78 @@ const ImageList = ({ images, loadMore }) => {
       <ScrollView
         scrollY
         style={{ height: "100vh" }}
-        onScrollToLower={handleScrollToLower}
+        onScrollToLower={loadMore}
       >
-        <View className="image-list" style={{ position: "relative" }}>
-          {images?.map((image, index) => (
-            <View
-              key={index}
-              style={{
-                position: "relative",
-                paddingLeft: "10rpx",
-                display: "inline-block",
-                marginBottom: "20px", // 图片间距
-              }}
-            >
-              <Image
-                className="image"
-                src={image}
-                mode="widthFix"
+        {showImages.length === 0 ? (
+          <View
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              height: "100vh",
+            }}
+          >
+            <Text style={{ textAlign: "center" }}>
+              没有作品可显示,快去首页试试吧~
+            </Text>
+          </View>
+        ) : (
+          <View className="image-list" style={{ position: "relative" }}>
+            {showImages?.map((image, index) => (
+              <View
+                key={index}
                 style={{
-                  width: "360rpx",
-                  borderRadius: "10rpx",
-                  border: selectedImages.includes(index) ? "2px solid red" : "", // 根据选中状态添加边框
+                  position: "relative",
+                  paddingLeft: "10rpx",
+                  display: "inline-block",
+                  marginBottom: "20px", // 图片间距
                 }}
-                lazyLoad={true}
-                onClick={() => toggleSelectImage(index)} // 根据模式执行不同的操作
-              />
-              {selectedImages.includes(index) && (
-                <View
+              >
+                <Image
+                  className="image"
+                  src={image.url}
+                  mode="widthFix"
                   style={{
-                    position: "absolute",
-                    top: "5px",
-                    right: "5px",
-                    zIndex: "10",
+                    width: "360rpx",
+                    borderRadius: "10rpx",
+                    border: selectedImages.includes(index)
+                      ? "2px solid red"
+                      : "", // 根据选中状态添加边框
                   }}
-                >
-                  <AtIcon
-                    value="close-circle"
-                    size="20"
-                    color="#e80505"
-                    onClick={() => toggleSelectImage(index)}
-                  />
-                </View>
-              )}
-            </View>
-          ))}
-        </View>
+                  lazyLoad={true}
+                  onClick={() => toggleSelectImage(index)} // 根据模式执行不同的操作
+                />
+                {selectedImages.includes(index) && (
+                  <View
+                    style={{
+                      position: "absolute",
+                      top: "5px",
+                      right: "5px",
+                      zIndex: "10",
+                    }}
+                  >
+                    <AtIcon
+                      value="close-circle"
+                      size="20"
+                      color="#e80505"
+                      onClick={() => null}
+                    />
+                  </View>
+                )}
+              </View>
+            ))}
+            {showImages.length === 0 && (
+              <View style={{ textAlign: "center" }}>没有作品可显示</View>
+            )}
+          </View>
+        )}
       </ScrollView>
       <View
         style={{
+          position: "fixed",
+          top: "10px",
+          left: "10px",
           display: "flex",
-          position: "sticky",
-          bottom: "800px",
-          zIndex: 100,
           backgroundColor: "rgba(255, 255, 255, 0)",
         }}
       >

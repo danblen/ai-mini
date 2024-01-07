@@ -279,7 +279,11 @@ export async function fetchProcessedImages(userInfo) {
             "/home/ubuntu/code/ai-flask/sd_make_images/"
           );
           let fileName = pathParts[pathParts.length - 1];
-          processedImages.push("https://facei.top/user-pic/" + fileName);
+          let imageInfo = {
+            url: "https://facei.top/user-pic/" + fileName,
+            request_id: entry["request_id"],
+          };
+          processedImages.push(imageInfo);
           // console.log(
           //   "output_image_path:",
           //   "https://facei.top/user-pic/" + fileName

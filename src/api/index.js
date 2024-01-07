@@ -25,7 +25,13 @@ export function get_user(data) {
   return request.post("/get_user", data);
 }
 export function get_all_images() {
-  return request.get("/images");
+  return request.get("/get-all-images");
+}
+export function delete_all_images(data) {
+  return request.post("/delete-all-images", data);
+}
+export function delete_select_images(data) {
+  return request.post("/delete-select-images", data);
 }
 export function getPhotoData(data) {
   return request.post("/sdapi/v1/query-photo-image-sql-data-by-dict", data);
