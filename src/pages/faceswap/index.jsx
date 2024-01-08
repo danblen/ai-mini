@@ -1,7 +1,7 @@
 import { Image, View } from "@tarojs/components";
 import Taro from "@tarojs/taro";
 import React, { useEffect, useState } from "react";
-import { AtButton, AtDrawer, AtIcon } from "taro-ui";
+import { AtDrawer, AtIcon } from "taro-ui";
 import compareIcon from "../../static/image/my/icons8-compare-64.png";
 import { downloadImages } from "../../utils/imageTools.js";
 import TaskList from "../comps/TaskList.jsx";
@@ -14,7 +14,6 @@ export default () => {
   const [startX, setStartX] = useState(0);
   const [imageUrl, setImageUrl] = useState("");
   const [images, setImages] = useState([]);
-  const [loading, setLoading] = useState(false);
   const [uploadedFiles, setUploadedFiles] = useState([]);
   const [selectedIndex, setSelectedIndex] = useState(0);
 
@@ -51,7 +50,7 @@ export default () => {
       setShowImageSrc(true);
     }
   }, [images]);
-  const getTaskImages = async (requestId) => {
+  const onUpdateTaskImages = async (requestId) => {
     const newImage = {
       src: "",
       status: "pending",
@@ -224,7 +223,7 @@ export default () => {
           canSwap={uploadedFiles[selectedIndex] && imageUrl}
           imageUrl={imageUrl}
           selectedImageUrl={uploadedFiles[selectedIndex]?.url}
-          onGetTaskImages={getTaskImages}
+          onUpdateTaskImages={onUpdateTaskImages}
         ></SwapButton>
       </View>
 

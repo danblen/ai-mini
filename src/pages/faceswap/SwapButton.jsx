@@ -6,7 +6,12 @@ import { AtButton } from "taro-ui";
 import { wxPathToBase64 } from "../../utils/imageTools";
 import { data } from "./const.js";
 
-export default ({ canSwap, imageUrl, selectedImageUrl, onGetTaskImages }) => {
+export default ({
+  canSwap,
+  imageUrl,
+  selectedImageUrl,
+  onUpdateTaskImages,
+}) => {
   const [loading, setLoading] = useState(false);
   return (
     <View
@@ -39,7 +44,7 @@ export default ({ canSwap, imageUrl, selectedImageUrl, onGetTaskImages }) => {
                 setLoading(false);
               });
             if (res.status === "pending") {
-              onGetTaskImages(res.request_id);
+              onUpdateTaskImages(res.request_id);
             } else {
               Taro.showToast({
                 title: res.error_message,
