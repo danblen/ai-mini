@@ -2,13 +2,12 @@ import { Image, View } from "@tarojs/components";
 import Taro from "@tarojs/taro";
 import React, { useEffect, useState } from "react";
 import { AtButton, AtDrawer, AtIcon } from "taro-ui";
-import { faceSwap } from "../../api/index.js";
 import compareIcon from "../../static/image/my/icons8-compare-64.png";
-import { downloadImages, wxPathToBase64 } from "../../utils/imageTools.js";
+import { downloadImages } from "../../utils/imageTools.js";
 import TaskList from "../comps/TaskList.jsx";
 import ImageUpload from "./ImageUpload.jsx";
-import { data } from "./const.js";
 import { clearTimers, getTaskImage } from "./getTaskImage.js";
+import SwapButton from "./SwapButton.jsx";
 
 export default () => {
   const [showDrawer, setShowDrawer] = useState(false);
@@ -172,6 +171,7 @@ export default () => {
           )}
         </View>
       </View>
+
       <View
         style="
           position: fixed;
@@ -220,57 +220,12 @@ export default () => {
             }}
           />
         </View>
-
-        <View
-          style={{
-            width: "95%",
-          }}
-        >
-          <AtButton
-            type="primary"
-            style={{
-              background: "linear-gradient(to right, #00467f, #a5cc82)",
-              animation: "swap 1s infinite",
-              opacity: 0.8,
-              fontWeight: "bold",
-            }}
-            shape="circle"
-            loading={loading}
-            onClick={async () => {
-              if (uploadedFiles[selectedIndex] && imageUrl) {
-                setLoading(true);
-                const srcBase64 = await wxPathToBase64(imageUrl);
-                const tarBase64 = await wxPathToBase64(
-                  uploadedFiles[selectedIndex].url
-                );
-                const storageUserInfo = Taro.getStorageSync("userInfo");
-                data.user_id = storageUserInfo.data.user_id;
-                data.init_images = [srcBase64];
-                data.alwayson_scripts.roop.args[0] = tarBase64;
-                let res = await faceSwap(data)
-                  .catch(() => {})
-                  .finally(() => {
-                    setLoading(false);
-                  });
-                if (res.status === "pending") {
-                  getTaskImages(res.request_id);
-                } else {
-                  Taro.showToast({
-                    title: res.error_message,
-                    icon: "none",
-                  });
-                }
-              } else {
-                Taro.showToast({
-                  title: `请点击+号,选择人脸图像~`,
-                  icon: "none",
-                });
-              }
-            }}
-          >
-            一键换脸
-          </AtButton>
-        </View>
+        <SwapButton
+          canSwap={uploadedFiles[selectedIndex] && imageUrl}
+          imageUrl={imageUrl}
+          selectedImageUrl={uploadedFiles[selectedIndex]?.url}
+          onGetTaskImages={getTaskImages}
+        ></SwapButton>
       </View>
 
       <AtDrawer
