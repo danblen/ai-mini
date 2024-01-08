@@ -1,11 +1,8 @@
 import { Button, View } from "@tarojs/components";
-import Taro, { useTabItemTap, useDidShow, useDidHide } from "@tarojs/taro";
-import { useEffect, useState } from "react";
-import { AtTabs, AtTabsPane } from "taro-ui";
-import { wechatLogin } from "../../common/user";
-import { fetchProcessedImages } from "../../utils/imageTools.js";
-import LoginModal from "../user/LoginModal";
+import Taro, { useDidHide, useDidShow } from "@tarojs/taro";
+import { useState } from "react";
 import FinishedTask from "./FinishedTask.jsx";
+import { fetchProcessedImages } from "./fetchProcessedImages.js";
 
 export default ({ images }) => {
   const [current, setCurrent] = useState(0);
