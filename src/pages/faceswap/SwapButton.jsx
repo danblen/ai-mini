@@ -4,7 +4,7 @@ import { useState } from "react";
 import { View } from "@tarojs/components";
 import { AtButton } from "taro-ui";
 import { wxPathToBase64 } from "../../utils/imageTools";
-import { data } from "./const.js";
+import { data } from "../../const/sdApiParams.js";
 
 export default ({
   canSwap,

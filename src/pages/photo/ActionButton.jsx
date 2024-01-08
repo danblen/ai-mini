@@ -3,38 +3,11 @@ import { useEffect, useState } from "react";
 import { AtButton } from "taro-ui";
 import { faceSwap, getSwapQueueResult } from "../../api/index.js";
 import { downloadImages, wxPathToBase64 } from "../../utils/imageTools.js";
-import { data } from "../faceswap/const.js";
+import { data } from "../../const/sdApiParams.js";
 import Taro from "@tarojs/taro";
-let timers = {};
-const getTaskImage = async (requestId) => {
-  return new Promise((resolve, reject) => {
-    timers[requestId] = setInterval(async () => {
-      const requestData = {
-        user_id: "",
-        request_id: requestId,
-        sql_query: {
-          request_status: "",
-          user_id: "",
-        },
-      };
-
-      try {
-        // 调用getSwapQueueResult函数获取结果
-        let res = await getSwapQueueResult(requestData);
-
-        if (res.status === "finishing") {
-          // 更新图像数组中对应请求的图像状态和数据
-          resolve(res);
-          clearInterval(timers[requestId]);
-        }
-      } catch (error) {
-        reject(error);
-        clearInterval(timers[requestId]);
-      }
-    }, 3000);
-  });
-};
-export default ({ albumUrls, selfUrl }) => {
+import { getTaskImage } from "../../common/getTaskImage.js";
+let isSwaped = false;
+export default ({ albumUrls, selfUrl, onUpdateTaskImages }) => {
   const [loading, setLoading] = useState(false);
   const [images, setImages] = useState([]);
   const [imageUrls, setImageUrls] = useState([]);
@@ -56,7 +29,7 @@ export default ({ albumUrls, selfUrl }) => {
     };
   }, [albumUrls]);
 
-  const swapOne = async (originUrl) => {
+  const swapOneFace = async (originUrl) => {
     const originBase64 = await wxPathToBase64(originUrl);
     const selfBase64 = await wxPathToBase64(selfUrl);
     const storageUserInfo = Taro.getStorageSync("userInfo");
@@ -65,24 +38,9 @@ export default ({ albumUrls, selfUrl }) => {
     }
     data.init_images = [originBase64];
     data.alwayson_scripts.roop.args[0] = selfBase64;
-    let res = await faceSwap(data).catch((err) => {
-      console.log(err);
-    });
-    if (res) {
-      if (res?.status === "pending") {
-        const res1 = await getTaskImage(res.request_id);
-        setImages((prevImages) =>
-          prevImages.map((image) =>
-            image.requestId === requestId
-              ? {
-                  ...image,
-                  src: "data:image/png;base64," + res1.result.images[0],
-                  status: "SUCCESS",
-                }
-              : image
-          )
-        );
-      }
+    let res = await faceSwap(data).catch((err) => {});
+    if (res?.status === "pending") {
+      onUpdateTaskImages(res.request_id);
     } else {
       Taro.showToast({
         title: res?.error_message,
@@ -102,9 +60,11 @@ export default ({ albumUrls, selfUrl }) => {
       shape="circle"
       loading={loading}
       onClick={async () => {
-        if (selfUrl && albumUrls?.length) {
+        if (selfUrl && albumUrls?.length && !isSwaped) {
+          isSwaped = true;
           setLoading(true);
-          imageUrls.forEach((albumUrl) => swapOne(albumUrl));
+          imageUrls.forEach((albumUrl) => swapOneFace(albumUrl));
+          setLoading(false);
         }
       }}
     >

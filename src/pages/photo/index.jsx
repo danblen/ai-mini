@@ -1,34 +1,52 @@
 import { Image, View } from "@tarojs/components";
 import Taro from "@tarojs/taro";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AtDrawer } from "taro-ui";
 import TaskList from "../comps/TaskList";
 import ActionButton from "./ActionButton";
-import ImagePicker from "./ImagePicker";
-const faceswapPage = "/pages/faceswap/index";
+import { clearTimers, getTaskImage } from "../../common/getTaskImage";
+import ImagePicker from "../comps/ImagePicker";
 
 export default () => {
   const [uploadedFiles, setUploadedFiles] = useState([]);
   const [albumData, setAlbumData] = useState([]);
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const eventChannel = Taro.getCurrentInstance().page.getOpenerEventChannel();
-  eventChannel.on("acceptDataFromOpenerPage", (data) => {
-    const albumData = data.albumData;
-    setAlbumData(albumData);
-  });
-  // useEffect(() => {
-  //   const params = Taro.getCurrentInstance().router.params;
-  //   console.log(params);
-  //   let ignore = false;
-  //   if (params && params.albumData) {
-  //     setAlbumData(albumData);
-  //     down();
-  //   }
-  // });
-
+  useEffect(() => {
+    const eventChannel = Taro.getCurrentInstance().page.getOpenerEventChannel();
+    eventChannel.on("acceptDataFromOpenerPage", (data) => {
+      const albumData = data.albumData;
+      setAlbumData(albumData);
+    });
+    return () => {
+      clearTimers();
+    };
+  }, []);
   const [showDrawer, setShowDrawer] = useState(false);
   const [startX, setStartX] = useState(0);
   const [images, setImages] = useState([]);
+
+  const onUpdateTaskImages = async (requestId) => {
+    const newImage = {
+      src: "",
+      status: "pending",
+      requestId,
+    };
+    setImages((prevImages) => [...prevImages, newImage]);
+
+    const res = await getTaskImage(requestId);
+    setImages((prevImages) =>
+      prevImages.map((image) =>
+        image.requestId === requestId
+          ? {
+              ...image,
+              src: "data:image/png;base64," + res.result.images[0],
+              status: "SUCCESS",
+            }
+          : image
+      )
+    );
+  };
+
   const onTouchStart = (event) => {
     setStartX(event.touches[0].clientX);
   };
@@ -114,7 +132,7 @@ export default () => {
             onSelectImage={(index) => {
               setSelectedIndex(index);
             }}
-          ></ImagePicker>
+          />
         </View>
         <View
           style={{
@@ -124,6 +142,7 @@ export default () => {
           <ActionButton
             albumUrls={albumData.urls}
             selfUrl={uploadedFiles[selectedIndex]?.url}
+            onUpdateTaskImages={onUpdateTaskImages}
           />
         </View>
       </View>

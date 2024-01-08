@@ -5,10 +5,10 @@ import { AtDrawer } from "taro-ui";
 import compareIcon from "../../static/image/my/icons8-compare-64.png";
 import { downloadImages } from "../../utils/imageTools.js";
 import TaskList from "../comps/TaskList.jsx";
-import ImageUploader from "./ImageUploader.jsx";
+import ImagePicker from "../comps/ImagePicker.jsx";
 import SwapButton from "./SwapButton.jsx";
 import TaskListTip from "./TaskListTip.jsx";
-import { clearTimers, getTaskImage } from "./getTaskImage.js";
+import { clearTimers, getTaskImage } from "../../common/getTaskImage.js";
 
 export default () => {
   const [showDrawer, setShowDrawer] = useState(false);
@@ -195,7 +195,7 @@ export default () => {
             color: "white",
           }}
         >
-          <ImageUploader
+          <ImagePicker
             onFilesChange={(images) => setUploadedFiles(images)}
             onSelectImage={(index) => {
               setSelectedIndex(index);

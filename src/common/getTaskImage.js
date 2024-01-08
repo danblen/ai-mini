@@ -1,4 +1,4 @@
-import { getSwapQueueResult } from "../../api/index.js";
+import { getSwapQueueResult } from "../api/index.js";
 let timers = {};
 export const getTaskImage = async (requestId) => {
   return new Promise((resolve, reject) => {
