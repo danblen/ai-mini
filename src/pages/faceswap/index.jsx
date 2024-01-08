@@ -5,7 +5,7 @@ import { AtDrawer, AtIcon } from "taro-ui";
 import compareIcon from "../../static/image/my/icons8-compare-64.png";
 import { downloadImages } from "../../utils/imageTools.js";
 import TaskList from "../comps/TaskList.jsx";
-import ImageUpload from "./ImageUpload.jsx";
+import ImageUploader from "./ImageUploader.jsx";
 import { clearTimers, getTaskImage } from "./getTaskImage.js";
 import SwapButton from "./SwapButton.jsx";
 
@@ -212,7 +212,7 @@ export default () => {
             color: "white",
           }}
         >
-          <ImageUpload
+          <ImageUploader
             onFilesChange={(images) => setUploadedFiles(images)}
             onSelectImage={(index) => {
               setSelectedIndex(index);
