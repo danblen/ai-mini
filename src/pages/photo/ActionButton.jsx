@@ -1,15 +1,12 @@
-import { View } from "@tarojs/components";
+import Taro from "@tarojs/taro";
 import { useEffect, useState } from "react";
 import { AtButton } from "taro-ui";
-import { faceSwap, getSwapQueueResult } from "../../api/index.js";
-import { downloadImages, wxPathToBase64 } from "../../utils/imageTools.js";
+import { faceSwap } from "../../api/index.js";
 import { data } from "../../const/sdApiParams.js";
-import Taro from "@tarojs/taro";
-import { getTaskImage } from "../../common/getTaskImage.js";
+import { downloadImages, wxPathToBase64 } from "../../utils/imageTools.js";
 let isSwaped = false;
 export default ({ albumUrls, selfUrl, onUpdateTaskImages }) => {
   const [loading, setLoading] = useState(false);
-  const [images, setImages] = useState([]);
   const [imageUrls, setImageUrls] = useState([]);
   useEffect(() => {
     const down = async (urls) => {
