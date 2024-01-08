@@ -6,12 +6,7 @@ import { AtButton } from "taro-ui";
 import { wxPathToBase64 } from "../../utils/imageTools";
 import { data } from "../../const/sdApiParams.js";
 
-export default ({
-  canSwap,
-  imageUrl,
-  selectedImageUrl,
-  onUpdateTaskImages,
-}) => {
+export default ({ imageUrl, selectedImageUrl, onUpdateTaskImages }) => {
   const [loading, setLoading] = useState(false);
   return (
     <View
@@ -30,7 +25,7 @@ export default ({
         shape="circle"
         loading={loading}
         onClick={async () => {
-          if (canSwap) {
+          if (imageUrl && selectedImageUrl) {
             setLoading(true);
             const srcBase64 = await wxPathToBase64(imageUrl);
             const tarBase64 = await wxPathToBase64(selectedImageUrl);

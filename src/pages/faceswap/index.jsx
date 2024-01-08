@@ -203,7 +203,6 @@ export default () => {
           />
         </View>
         <SwapButton
-          canSwap={uploadedFiles[selectedIndex] && imageUrl}
           imageUrl={imageUrl}
           selectedImageUrl={uploadedFiles[selectedIndex]?.url}
           onUpdateTaskImages={onUpdateTaskImages}
