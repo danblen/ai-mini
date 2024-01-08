@@ -2,7 +2,7 @@ import { View, Text } from "@tarojs/components";
 import React, { useState, useEffect, useRef } from "react";
 import TabsImageList from "./TabsImageList";
 import AlbumsCard from "./AlbumsCard";
-import { useData } from "../hooks/useData.js";
+import { useData } from "../../hooks/useData.js";
 import { getPhotoPath, URL_BACK, get_all_images } from "../../api/index.js";
 import TopBanner from "./TopBanner.jsx";
 const App = () => {
