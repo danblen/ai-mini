@@ -1,13 +1,14 @@
 import { Image, View } from "@tarojs/components";
 import Taro from "@tarojs/taro";
 import React, { useEffect, useState } from "react";
-import { AtDrawer, AtIcon } from "taro-ui";
+import { AtDrawer } from "taro-ui";
 import compareIcon from "../../static/image/my/icons8-compare-64.png";
 import { downloadImages } from "../../utils/imageTools.js";
 import TaskList from "../comps/TaskList.jsx";
 import ImageUploader from "./ImageUploader.jsx";
-import { clearTimers, getTaskImage } from "./getTaskImage.js";
 import SwapButton from "./SwapButton.jsx";
+import TaskListTip from "./TaskListTip.jsx";
+import { clearTimers, getTaskImage } from "./getTaskImage.js";
 
 export default () => {
   const [showDrawer, setShowDrawer] = useState(false);
@@ -171,25 +172,7 @@ export default () => {
         </View>
       </View>
 
-      <View
-        style="
-          position: fixed;
-          right: 0;
-          top: 100rpx;
-          opacity: 0.3;
-          padding-left: 8rpx;
-          font-size: 26rpx;
-          color: white;
-          background: black;
-          border-radius: 10rpx 0 0 10rpx;
-        "
-        onClick={() => {
-          setShowDrawer(true);
-        }}
-      >
-        左滑查看作品
-        <AtIcon value="chevron-right" size="20"></AtIcon>
-      </View>
+      <TaskListTip onClick={() => setShowDrawer(true)}></TaskListTip>
 
       <View
         style={{
