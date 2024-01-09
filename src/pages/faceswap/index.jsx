@@ -190,8 +190,8 @@ export default () => {
             width: "95%",
             marginBottom: "40rpx",
             borderRadius: "20rpx",
-            background: "grey",
-            opacity: 0.8,
+            background: "transparent", // 将背景改为透明
+            opacity: 1,
             color: "white",
           }}
         >
