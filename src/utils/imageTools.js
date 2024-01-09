@@ -107,22 +107,28 @@ export function browserPathToBase64(path) {
 // 小程序（微信小程序）环境下的函数
 export function wxPathToBase64(path) {
   return new Promise(function (resolve, reject) {
-    if (typeof wx === "object" && wx.canIUse("getFileSystemManager")) {
-      wx.getFileSystemManager().readFile({
-        filePath: path,
-        encoding: "base64",
-        success: function (res) {
-          resolve("data:image/png;base64," + res.data);
-        },
-        fail: function (error) {
-          reject(error);
-        },
-      });
+    // 判断路径是否为 URL
+    if (path.startsWith("http://") || path.startsWith("https://")) {
+      if (typeof wx === "object" && wx.canIUse("getFileSystemManager")) {
+        wx.getFileSystemManager().readFile({
+          filePath: path,
+          encoding: "base64",
+          success: function (res) {
+            resolve("data:image/png;base64," + res.data);
+          },
+          fail: function (error) {
+            reject(error);
+          },
+        });
+      } else {
+        reject(new Error("not supported in this environment"));
+      }
     } else {
-      reject(new Error("not supported in this environment"));
+      resolve(path); // 如果不是 URL，直接返回原始路径
     }
   });
 }
+
 export function plusPathToBase64(path) {
   return new Promise(function (resolve, reject) {
     plus.io.resolveLocalFileSystemURL(

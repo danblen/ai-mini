@@ -1,3 +1,4 @@
+import { QueryUserDataAPI } from "../../api/index.js";
 export async function fetchProcessedImages(userInfo) {
   try {
     // console.log("userInfo:", userInfo); // 打印用户信息

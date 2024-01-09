@@ -35,7 +35,7 @@ const ImageList = ({ images, loadMore }) => {
     if (selectedImages.length) {
       Taro.showModal({
         title: "确认删除",
-        content: "确定要删除选中的作品吗？",
+        content: "确定要永久删除选中的作品吗？",
         success: async (res) => {
           if (res.confirm) {
             try {
@@ -60,7 +60,7 @@ const ImageList = ({ images, loadMore }) => {
     if (showImages.length) {
       Taro.showModal({
         title: "确认删除",
-        content: "确定要删除全部作品吗？回收站同时清除~",
+        content: "确定要永久删除全部作品吗？回收站同时清除~",
         success: async (res) => {
           if (res.confirm) {
             try {
