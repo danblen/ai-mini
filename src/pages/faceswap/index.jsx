@@ -21,6 +21,7 @@ export default () => {
   const [showImageSrc, setShowImageSrc] = useState(true);
   const [showImageSwap, setShowImageSwap] = useState(false);
   const [compareImageSwap, setCompareImageSwap] = useState(false);
+
   useEffect(() => {
     const down = async () => {
       const tempFilePath = await downloadImages(params.imageUrl);
@@ -34,7 +35,9 @@ export default () => {
     }
     return () => {
       ignore = true;
-      clearTimers();
+      //getTaskImage立即进行getSwapQueueResult不需要关闭定时器，如果关闭则相应request_id可能获取不到结果
+      // 只需要等待getSwapQueueResult获取到结果即自动关闭定时器
+      // clearTimers();
     };
   }, []);
   useEffect(() => {
@@ -71,6 +74,9 @@ export default () => {
           : image
       )
     );
+    Taro.getApp().globalData.updateGlobalClickCount(-1);
+    const updatedClickCount = Taro.getApp().globalData.clickCount;
+    Taro.eventCenter.trigger("globalClickCountChanged", updatedClickCount);
   };
 
   const onTouchStart = (event) => {
