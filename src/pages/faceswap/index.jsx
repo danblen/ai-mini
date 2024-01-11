@@ -210,7 +210,13 @@ export default () => {
         </View>
         <SwapButton
           imageUrl={imageUrl}
-          selectedImageUrl={uploadedFiles[selectedIndex]?.url}
+          selectedImageUrl={
+            uploadedFiles[selectedIndex]?.compressBase64 // 检查是否存在 compressBase64 属性
+              ? uploadedFiles[selectedIndex].compressBase64 // 如果存在，使用 compressBase64
+              : uploadedFiles[selectedIndex]?.url // 否则检查是否存在 url 属性
+              ? uploadedFiles[selectedIndex].url // 如果存在，使用 url
+              : "" // 如果都不存在，设置为空字符串或者其他默认值
+          }
           onUpdateTaskImages={onUpdateTaskImages}
         ></SwapButton>
       </View>

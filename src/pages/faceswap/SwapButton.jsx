@@ -24,7 +24,8 @@ const SwapCount = ({ clickCount }) => (
           size="38"
           content={
             <Text style={{ fontWeight: "bold", color: "#12fd0e" }}>
-              {clickCount.toString()}个作品即将完成...
+              {clickCount.toString()}个作品即将完成,预计等待
+              {(clickCount * 5).toString()}秒...
             </Text>
           }
         />
