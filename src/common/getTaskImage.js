@@ -19,8 +19,8 @@ export const getTaskImage = async (requestId) => {
           resolve(res);
         }
       } catch (error) {
+        resolve(null);
         clearInterval(timers[requestId]);
-        reject();
       }
     };
 
