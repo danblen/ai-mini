@@ -27,7 +27,6 @@ export default () => {
   const [showImageSwap, setShowImageSwap] = useState(false);
   const [compareImageSwap, setCompareImageSwap] = useState(false);
   const [rating, setRating] = useState(0);
-  const [requestId, setRequestId] = useState(0);
 
   useEffect(() => {
     const down = async () => {
@@ -64,11 +63,8 @@ export default () => {
   }, [images]);
 
   useEffect(() => {
-    const data = {};
-    // data的任何字段都要匹配数据库字段
-    data.user_like_status = rating;
-    data.request_id = requestId;
-    updateUserProcessInfo(data);
+    console.log("rating", rating);
+    // server api save
   }, [rating]);
 
   const onUpdateTaskImages = async (requestId) => {
