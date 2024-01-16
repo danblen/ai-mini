@@ -1,8 +1,12 @@
 import { Image, View } from "@tarojs/components";
 import Taro from "@tarojs/taro";
 import React, { useEffect, useState } from "react";
-import { AtDrawer } from "taro-ui";
+import { AtDrawer, AtIcon } from "taro-ui";
 import compareIcon from "../../static/image/my/icons8-compare-64.png";
+import IconGood from "../../static/image/my/icons-good.png";
+import IconGood1 from "../../static/image/my/icons-good1.png";
+import IconBad from "../../static/image/my/icons-bad.png";
+import IconBad1 from "../../static/image/my/icons-bad1.png";
 import { downloadImages } from "../../utils/imageTools.js";
 import TaskList from "../comps/TaskList.jsx";
 import ImagePicker from "../comps/ImagePicker.jsx";
@@ -21,6 +25,7 @@ export default () => {
   const [showImageSrc, setShowImageSrc] = useState(true);
   const [showImageSwap, setShowImageSwap] = useState(false);
   const [compareImageSwap, setCompareImageSwap] = useState(false);
+  const [rating, setRating] = useState(0);
 
   useEffect(() => {
     const down = async () => {
@@ -54,6 +59,12 @@ export default () => {
       setShowImageSrc(true);
     }
   }, [images]);
+
+  useEffect(() => {
+    console.log("rating", rating);
+    // server api save
+  }, [rating]);
+
   const onUpdateTaskImages = async (requestId) => {
     const newImage = {
       src: "",
@@ -140,22 +151,53 @@ export default () => {
         <View
           style={{
             position: "absolute",
-            top: "73%",
+            top: "65%",
             left: "90%",
             transform: "translate(-50%, -50%)",
             zIndex: 10,
             borderRadius: "50%",
+            display: "flex",
+            flexDirection: "column", // 将按钮排成一列
+            alignItems: "center",
           }}
         >
+          {showImageSwap && (
+            <View
+              style={{
+                marginTop: "5px",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
+              <Image
+                src={rating === 1 ? IconGood : IconGood1}
+                style={{ width: "24px", height: "24px" }}
+                onClick={() => setRating((prev) => (prev === 1 ? 0 : 1))}
+              />
+              <Image
+                src={rating === -1 ? IconBad : IconBad1}
+                style={{
+                  width: "24px",
+                  height: "24px",
+                  // marginLeft: "5px",
+                  marginTop: "20px",
+                }}
+                onClick={() => setRating((prev) => (prev === -1 ? 0 : -1))}
+              />
+            </View>
+          )}
           {showImageSwap && (
             <View
               type="primary"
               onClick={() => setCompareImageSwap((prev) => !prev)}
               style={{
-                backgroundColor: showImageSwap ? "#ccc" : "#ccc", // 根据条件设置背景颜色
+                backgroundColor: showImageSwap ? "#ccc" : "#ccc",
                 width: "50px",
                 height: "50px",
                 borderRadius: "50%", // 圆形背景
+                marginTop: "20px",
+                // marginLeft: "20px",
                 // display: "flex",
                 // justifyContent: "center",
                 // alignItems: "center",
@@ -167,9 +209,11 @@ export default () => {
                 style={{
                   width: "50rpx",
                   height: "50rpx",
-                  position: "absolute",
-                  top: "25rpx",
-                  left: "25rpx",
+                  // position: "absolute",
+                  // top: "25rpx",
+                  // left: "25rpx",
+                  marginTop: "10px",
+                  marginLeft: "10px",
                   // filter: showImageSwap ? "grayscale(100%)" : "",
                 }}
               />
