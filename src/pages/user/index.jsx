@@ -7,6 +7,7 @@ import LoginModal from "./LoginModal";
 import { AtIcon, AtList, AtListItem } from "taro-ui";
 import { get_user_info } from "../../api";
 import { wechatLogin } from "../../common/user";
+import { updateUserInfo } from "../../api";
 
 export default () => {
   // const [showBuyPointPopup, setShowBuyPointPopup] = useState(false);
@@ -17,8 +18,8 @@ export default () => {
     data: {
       points: 0,
       user_id: "",
-      is_check: false,
-      avatarUrl: "https://danblen.github.io/static/index.jpg",
+      is_check: 0,
+      avatarUrl: "https://facei.top/static/pic/123.png",
     },
   });
 
@@ -55,6 +56,24 @@ export default () => {
   useTabItemTap((tab) => {
     fetchUserInfo();
   });
+
+  const handleCheckIn = async (userInfo) => {
+    let res = await updateUserInfo({
+      points: userInfo.data.points + 10,
+      user_id: userInfo.data.user_id,
+      is_check: 1,
+    });
+    if (res) {
+      setUserInfo((pre) => ({
+        ...pre,
+        isLogin: true,
+        data: res,
+      }));
+    } else {
+      console.error("更新用户信息失败，res 或 res.data 不存在。", res);
+    }
+  };
+
   return (
     <View style={{}}>
       <View
@@ -78,7 +97,7 @@ export default () => {
                 width: "150rpx",
                 height: "150rpx",
               }}
-              src={"https://danblen.github.io/static/index.jpg"}
+              src={"https://facei.top/static/pic/123.png"}
             />
             <View
               className=""
@@ -143,7 +162,11 @@ export default () => {
           <AtListItem
             title="签到"
             extraText={userInfo?.data.is_check ? "已签到" : "点击签到"}
-            onClick={() => {}}
+            onClick={() => {
+              if (userInfo.isLogin && !userInfo?.data.is_check) {
+                handleCheckIn(userInfo);
+              }
+            }}
           />
           <AtListItem title="购买次卡" arrow="right" />
           <AtListItem title="问题反馈" />

@@ -13,6 +13,7 @@ import ImagePicker from "../comps/ImagePicker.jsx";
 import SwapButton from "./SwapButton.jsx";
 import TaskListTip from "./TaskListTip.jsx";
 import { clearTimers, getTaskImage } from "../../common/getTaskImage.js";
+import { updateUserProcessInfo } from "../../api";
 
 export default () => {
   const [showDrawer, setShowDrawer] = useState(false);
@@ -26,6 +27,7 @@ export default () => {
   const [showImageSwap, setShowImageSwap] = useState(false);
   const [compareImageSwap, setCompareImageSwap] = useState(false);
   const [rating, setRating] = useState(0);
+  const [requestId, setRequestId] = useState(0);
 
   useEffect(() => {
     const down = async () => {
@@ -57,12 +59,16 @@ export default () => {
     } else {
       setShowImageSwap(false);
       setShowImageSrc(true);
+      setRating(0);
     }
   }, [images]);
 
   useEffect(() => {
-    console.log("rating", rating);
-    // server api save
+    const data = {};
+    // data的任何字段都要匹配数据库字段
+    data.user_like_status = rating;
+    data.request_id = requestId;
+    updateUserProcessInfo(data);
   }, [rating]);
 
   const onUpdateTaskImages = async (requestId) => {
@@ -85,6 +91,7 @@ export default () => {
           : image
       )
     );
+    setRequestId(requestId);
     Taro.getApp().globalData.updateGlobalClickCount(-1);
     const updatedClickCount = Taro.getApp().globalData.clickCount;
     Taro.eventCenter.trigger("globalClickCountChanged", updatedClickCount);

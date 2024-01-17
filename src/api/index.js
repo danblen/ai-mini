@@ -39,6 +39,12 @@ export function getPhotoData(data) {
 export function getPhotoPath(path) {
   return request.post(`/list-files?path=${encodeURIComponent(path)}`);
 }
+export function updateUserProcessInfo(data) {
+  return request.post("/update-user-process-info", data);
+}
+export function updateUserInfo(data) {
+  return request.post("/update-user-info", data);
+}
 
 /* 可通过字典查询UserSqlData数据
 @data(dict):可选匹配特征：
