@@ -14,6 +14,7 @@ import SwapButton from "./SwapButton.jsx";
 import TaskListTip from "./TaskListTip.jsx";
 import { clearTimers, getTaskImage } from "../../common/getTaskImage.js";
 import { updateUserProcessInfo } from "../../api";
+import CustomNavBar from "../index/CustomNavBar.jsx";
 export default () => {
   const [showDrawer, setShowDrawer] = useState(false);
   const [startX, setStartX] = useState(0);
