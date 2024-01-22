@@ -63,7 +63,7 @@ const Styles = {
   container: {
     borderRadius: "10rpx",
     background: "linear-gradient(to right, #79bfa0, #6c9a85)",
-    margin: "10rpx",
+    margin: "20rpx",
     marginTop: "20rpx",
     boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
   },

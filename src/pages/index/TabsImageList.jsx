@@ -1,5 +1,5 @@
 import Taro from "@tarojs/taro";
-import { View } from "@tarojs/components";
+import { View, Text } from "@tarojs/components";
 import { AtTabs, AtTabsPane } from "taro-ui";
 import React, { useState, useEffect, useCallback } from "react";
 // import Hot from "./hot/index.jsx";

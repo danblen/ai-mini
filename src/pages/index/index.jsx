@@ -5,6 +5,9 @@ import AlbumsCard from "./AlbumsCard";
 import { useData } from "../../hooks/useData.js";
 import { getPhotoPath, URL_BACK, get_all_images } from "../../api/index.js";
 import TopBanner from "./TopBanner.jsx";
+import Buttons from "./Buttons.jsx";
+import CustomNavBar from "./CustomNavBar.jsx";
+
 const App = () => {
   let [allImages, setAllImages] = useState({ albums: {}, tags_image: {} });
   const getAllImages = async () => {
@@ -26,13 +29,14 @@ const App = () => {
         <span onClick={e => Taro.showtoast({ title: "标题" })}>ai写真</span>
       </NavBar> */}
       {/* <Tabs1/> */}
+      <CustomNavBar></CustomNavBar>
       <View
         style={{
-          background:
-            "linear-gradient(to left, #fdfdfd, #61866f)" /* 设置为橙色渐变 */,
+          background: "linear-gradient(to left, #2d7948, #6d8a78)" /* 渐变 */,
         }}
       >
         <TopBanner banners={allImages?.banners} />
+        <Buttons />
         <AlbumsCard albums={allImages?.albums} />
         <TabsImageList tags_image={allImages?.tags_image} />
       </View>

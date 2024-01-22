@@ -64,7 +64,7 @@ const Styles = {
     height: "600rpx",
     borderRadius: "10rpx",
     background: "linear-gradient(to right, #ecf0f1, #ecf0f1)",
-    margin: "10rpx",
+    margin: "20rpx",
     boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
   },
   image: {
