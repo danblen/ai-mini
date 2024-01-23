@@ -25,10 +25,6 @@ const App = () => {
   }, []);
   return (
     <>
-      {/* <NavBar>
-        <span onClick={e => Taro.showtoast({ title: "标题" })}>ai写真</span>
-      </NavBar> */}
-      {/* <Tabs1/> */}
       <CustomNavBar></CustomNavBar>
       <View
         style={{
