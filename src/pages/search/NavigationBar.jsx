@@ -1,4 +1,4 @@
-import { Text, View } from '@tarojs/components';
+import { Input, Text, View } from '@tarojs/components';
 import Taro from '@tarojs/taro';
 import { useState } from 'react';
 import { AtDrawer } from 'taro-ui';
@@ -16,16 +16,16 @@ export default () => {
           paddingTop: '100rpx',
         }}>
         <View
-          className="at-icon at-icon-menu"
+          className="at-icon at-icon-chevron-left"
           style={{
             marginLeft: '20rpx',
             fontSize: '50rpx',
             color: 'black',
           }}
           onClick={() => {
-            setShowDrawer(true);
+            Taro.navigateBack();
           }}></View>
-        <View
+        <Input
           style={{
             width: '400rpx',
             height: '60rpx',
@@ -35,22 +35,8 @@ export default () => {
             backgroundColor: '#f5f5f5',
             lineHeight: '60rpx',
           }}
-          onClick={() => {
-            Taro.navigateTo({ url: '/pages/search/index' });
-          }}>
-          <Text
-            className="at-icon at-icon-search"
-            style={{
-              fontSize: '30rpx',
-            }}></Text>
-          <Text
-            style={{
-              fontSize: '30rpx',
-              marginLeft: '10rpx',
-            }}>
-            搜全站
-          </Text>
-        </View>
+          placeholder="搜索全站"
+          onClick={() => {}}></Input>
       </View>
 
       <AtDrawer

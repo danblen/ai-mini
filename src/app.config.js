@@ -6,6 +6,7 @@ export default {
     'pages/user/index',
     'pages/discover/index',
     'pages/setting/index',
+    'pages/search/index',
     'pages/faceswap/index',
     'pages/refine/index',
     'pages/album/index',

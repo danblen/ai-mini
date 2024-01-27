@@ -40,8 +40,7 @@ const App = () => {
 
       <View
         style={{
-          background: 'linear-gradient(to left, #2d7948, #6d8a78)' /* 渐变 */,
-
+          background: 'linear-gradient(to left, #2d7948, #6d8a78)',
           marginTop: '180rpx',
         }}>
         <TopBanner banners={allImages?.banners} />
