@@ -10,10 +10,9 @@ export default () => {
     <>
       <View
         style={{
-          height: '180rpx',
+          height: '80rpx',
           width: '100%',
           display: 'flex',
-          paddingTop: '100rpx',
         }}>
         <View
           className="at-icon at-icon-menu"

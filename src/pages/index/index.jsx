@@ -30,9 +30,10 @@ const App = () => {
           top: '-5rpx',
           left: 0,
           width: '100%',
-          height: '180rpx',
+          // height: '180rpx',
           backgroundColor: '#fff',
           opacity: '0.9',
+          paddingTop: '100rpx',
           zIndex: '1000',
         }}>
         <NavigationBar></NavigationBar>

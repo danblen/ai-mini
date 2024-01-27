@@ -1,36 +1,67 @@
-import { View } from '@tarojs/components';
+import { Text, View } from '@tarojs/components';
 import { useState } from 'react';
 import { AtDrawer } from 'taro-ui';
 
-const NavigationBar = () => {
+export default ({ currentTab, onSwitchTab }) => {
   const [showDrawer, setShowDrawer] = useState(false);
 
   return (
     <View
       style={{
-        height: '180rpx',
+        height: '80rpx',
         width: '100%',
         display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
       }}>
       <View
+        className="at-icon at-icon-menu"
         style={{
-          color: 'white',
-          marginTop: '90rpx',
           marginLeft: '20rpx',
+          fontSize: '50rpx',
+          color: 'black',
         }}
         onClick={() => {
           setShowDrawer(true);
+        }}></View>
+      <View
+        style={{
+          height: '60rpx',
+          marginLeft: '180rpx',
+          background: 'transparent',
+          lineHeight: '60rpx',
         }}>
-        <View
-          className="at-icon at-icon-menu"
+        <Text
           style={{
-            fontSize: '50rpx',
-            color: 'black',
-          }}></View>
+            fontSize: '30rpx',
+            fontWeight: currentTab === 'recommend' ? 'bold' : 'normal',
+          }}
+          onClick={() => {
+            onSwitchTab('recommend');
+          }}>
+          推荐
+        </Text>
+        <Text
+          style={{
+            fontSize: '30rpx',
+            marginLeft: '40rpx',
+            fontWeight: currentTab === 'hot' ? 'bold' : 'normal',
+          }}
+          onClick={() => {
+            onSwitchTab('hot');
+          }}>
+          热门
+        </Text>
+        <Text
+          style={{
+            fontSize: '30rpx',
+            marginLeft: '40rpx',
+            fontWeight: currentTab === 'new' ? 'bold' : 'normal',
+          }}
+          onClick={() => {
+            onSwitchTab('new');
+          }}>
+          动态
+        </Text>
       </View>
-      <View style={{ color: 'white' }}>AI写真</View>
 
       <AtDrawer
         show={showDrawer}
@@ -49,6 +80,3 @@ const NavigationBar = () => {
     </View>
   );
 };
-
-// 导出函数式组件
-export default NavigationBar;
