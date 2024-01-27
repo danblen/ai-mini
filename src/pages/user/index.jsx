@@ -76,7 +76,7 @@ export default () => {
               width: '150rpx',
               height: '150rpx',
             }}
-            src={'https://danblen.github.io/static/index.jpg'}
+            src={'https://facei.top/static/pic/123.png'}
           />
           <View
             className=""
