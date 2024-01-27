@@ -161,8 +161,8 @@ const ImageList = ({ images, loadMore }) => {
       <View
         style={{
           position: "fixed",
-          top: "10px",
-          left: "10px",
+          top: "40px",
+          left: "20px",
           display: "flex",
           backgroundColor: "rgba(255, 255, 255, 0)",
         }}

@@ -7,7 +7,7 @@ export default ({ onClick }) => {
       style="
         position: fixed;
         right: 0;
-        top: 100rpx;
+        top: 230rpx;
         opacity: 0.3;
         padding-left: 8rpx;
         font-size: 26rpx;
