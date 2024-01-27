@@ -1,13 +1,11 @@
-import { Button, Image, View } from "@tarojs/components";
-import Taro, { useTabItemTap } from "@tarojs/taro";
-import React, { useState } from "react";
-import LoginModal from "./LoginModal";
+import { Image, View } from '@tarojs/components';
+import Taro, { useTabItemTap } from '@tarojs/taro';
+import React, { useState } from 'react';
+import LoginModal from './LoginModal';
 // import CheckIn from "./CheckIn";
 // import BuyPoint from "./BuyPoint";
-import { AtIcon, AtList, AtListItem } from "taro-ui";
-import { get_user_info } from "../../api";
-import { wechatLogin } from "../../common/user";
-import { updateUserInfo } from "../../api";
+import { get_user_info } from '../../api';
+import { wechatLogin } from '../../common/user';
 
 export default () => {
   // const [showBuyPointPopup, setShowBuyPointPopup] = useState(false);
@@ -17,25 +15,25 @@ export default () => {
     isLogin: false,
     data: {
       points: 0,
-      user_id: "",
-      is_check: 0,
-      avatarUrl: "https://facei.top/static/pic/123.png",
+      user_id: '',
+      is_check: false,
+      avatarUrl: 'https://danblen.github.io/static/index.jpg',
     },
   });
 
   const fetchUserInfo = async () => {
-    let userInfo = Taro.getStorageSync("userInfo");
+    let userInfo = Taro.getStorageSync('userInfo');
     if (userInfo?.isLogin && userInfo.data?.user_id) {
       let res = await get_user_info({
         user_id: userInfo.data.user_id,
       });
       if (res) {
-        setUserInfo((pre) => ({
+        setUserInfo(pre => ({
           ...pre,
           isLogin: true,
           data: res.data,
         }));
-        Taro.setStorageSync("userInfo", {
+        Taro.setStorageSync('userInfo', {
           isLogin: true,
           data: res.data,
         });
@@ -53,105 +51,210 @@ export default () => {
     }
   };
 
-  useTabItemTap((tab) => {
+  useTabItemTap(tab => {
     fetchUserInfo();
   });
-
-  const handleCheckIn = async (userInfo) => {
-    let res = await updateUserInfo({
-      points: userInfo.data.points + 10,
-      user_id: userInfo.data.user_id,
-      is_check: 1,
-    });
-    if (res) {
-      setUserInfo((pre) => ({
-        ...pre,
-        isLogin: true,
-        data: res,
-      }));
-    } else {
-      console.error("更新用户信息失败，res 或 res.data 不存在。", res);
-    }
-  };
-
   return (
     <View style={{}}>
+      {/* <NavigationBar></NavigationBar> */}
       <View
         style={{
-          backgroundColor: " #ecf0f1",
-          height: "400rpx",
-          paddingTop: "40rpx",
-        }}
-      >
-        {userInfo?.isLogin ? (
-          <View className="user-box " style={{}}>
-            <Image
-              mode="aspectFill"
-              className="avatar"
-              style={{
-                display: "inline-block",
-                position: "relative",
-                top: "10rpx",
-                marginLeft: "30rpx",
-                borderRadius: "10%",
-                width: "150rpx",
-                height: "150rpx",
-              }}
-              src={"https://facei.top/static/pic/123.png"}
-            />
-            <View
-              className=""
-              style={{
-                display: "inline-block",
-                marginLeft: "50rpx",
-              }}
-            >
+          backgroundColor: ' #ecf0f1',
+          height: '300rpx',
+          paddingTop: '140rpx',
+        }}>
+        <View className="user-box " style={{}}>
+          <Image
+            mode="aspectFill"
+            className="avatar"
+            style={{
+              display: 'inline-block',
+              position: 'relative',
+              top: '10rpx',
+              marginLeft: '30rpx',
+              borderRadius: '10%',
+              width: '150rpx',
+              height: '150rpx',
+            }}
+            src={'https://danblen.github.io/static/index.jpg'}
+          />
+          <View
+            className=""
+            style={{
+              display: 'inline-block',
+              marginLeft: '50rpx',
+            }}>
+            {userInfo?.isLogin && (
+              <View>
+                <View
+                  style={{
+                    fontSize: '40rpx',
+                    height: '100rpx',
+                    verticalAlign: 'top',
+                  }}>
+                  微信用户
+                </View>
+                <View className=" ">
+                  ID: {userInfo?.data?.user_id?.slice(0, 6) + '****'}
+                  <View className="at-icon at-icon-chevron-right" />
+                </View>
+              </View>
+            )}
+            {!userInfo?.isLogin && (
               <View
+                type="primary"
                 style={{
-                  fontSize: "40rpx",
-                  height: "100rpx",
-                  verticalAlign: "top",
+                  position: 'relative',
+                  top: '-50rpx',
+                  width: '400rpx',
+                  fontSize: '40rpx',
+                  animation: 'swap 1s infinite',
                 }}
-              >
-                微信用户
+                loading={loading}
+                onClick={() => setIsOpened(true)}>
+                微信一键登陆
+                <View className="at-icon at-icon-chevron-right" />
               </View>
-              <View className=" ">
-                ID: {userInfo.data.user_id.slice(0, 6) + "****"}
-                <AtIcon value="chevron-right" size="20" color="#969799" />
-              </View>
-            </View>
+            )}
           </View>
-        ) : (
+          <View
+            className="at-icon at-icon-settings"
+            style={{
+              fontSize: '48rpx',
+              position: 'absolute',
+              top: '200rpx',
+              right: '30rpx',
+            }}
+            onClick={() => {
+              Taro.navigateTo({
+                url: '/pages/setting/index',
+              });
+            }}></View>
+        </View>
+        {/* {!userInfo?.isLogin && (
           <View
             style={{
-              paddingTop: "20rpx",
-            }}
-          >
+              paddingTop: '20rpx',
+            }}>
+            <View
+              className="at-icon at-icon-settings"
+              style={{
+                fontSize: '40rpx',
+                position: 'absolute',
+                top: '10rpx',
+                right: '10rpx',
+              }}
+              onClick={() => {
+                Taro.navigateTo({
+                  url: '/pages/setting/index',
+                });
+              }}></View>
             <View
               style={{
-                textAlign: "center",
-                fontSize: "40rpx",
-              }}
-            >
+                textAlign: 'center',
+                fontSize: '40rpx',
+              }}>
               欢迎来到AI写真
             </View>
             <Button
               type="primary"
               style={{
-                position: "relative",
-                width: "40%",
-                animation: "swap 1s infinite",
+                position: 'relative',
+                width: '40%',
+                animation: 'swap 1s infinite',
               }}
               loading={loading}
-              onClick={() => setIsOpened(true)}
-            >
+              onClick={() => setIsOpened(true)}>
               微信一键登陆
             </Button>
           </View>
-        )}
+        )} */}
       </View>
 
-      <View style={Style.cardStyle}>
+      <View
+        style={{
+          fontSize: '40rpx',
+          height: '100rpx',
+          border: '1px solid #ccc',
+          borderRadius: '10px',
+          top: '10rpx',
+          margin: '10px',
+          right: '10rpx',
+          padding: '10rpx',
+        }}
+        onClick={() => {}}>
+        <View
+          style={{
+            lineHeight: '100rpx',
+          }}>
+          还没签到，去签到
+          <View className="at-icon at-icon-chevron-right" />
+        </View>
+      </View>
+
+      <View style={Style.gridContainerStyle}>
+        <View style={Style.gridItemStyle}>
+          <View
+            className="at-icon at-icon-settings"
+            style={{
+              fontSize: '40rpx',
+              width: '40rpx',
+              top: '10rpx',
+              right: '10rpx',
+            }}
+            onClick={() => {}}></View>
+          <View>我的积分</View>
+        </View>
+        <View style={Style.gridItemStyle}>
+          <View
+            className="at-icon at-icon-settings"
+            style={{
+              fontSize: '40rpx',
+              width: '40rpx',
+              top: '10rpx',
+              right: '10rpx',
+            }}
+            onClick={() => {}}></View>
+          <View>我的作品</View>
+        </View>
+        <View style={Style.gridItemStyle}>
+          <View
+            className="at-icon at-icon-settings"
+            style={{
+              fontSize: '40rpx',
+              width: '40rpx',
+              top: '10rpx',
+              right: '10rpx',
+            }}
+            onClick={() => {}}></View>
+          <View>我的签到</View>
+        </View>
+        <View style={Style.gridItemStyle}>
+          <View
+            className="at-icon at-icon-settings"
+            style={{
+              fontSize: '40rpx',
+              width: '40rpx',
+              top: '10rpx',
+              right: '10rpx',
+            }}
+            onClick={() => {}}></View>
+          <View>我的签到</View>
+        </View>
+        <View style={Style.gridItemStyle}>
+          <View
+            className="at-icon at-icon-settings"
+            style={{
+              fontSize: '40rpx',
+              width: '40rpx',
+              top: '10rpx',
+              right: '10rpx',
+            }}
+            onClick={() => {}}></View>
+          <View>我的签到</View>
+        </View>
+      </View>
+      {/* <View style={Style.cardStyle}>
         <AtList>
           <AtListItem
             title="剩余积分"
@@ -161,12 +264,8 @@ export default () => {
           />
           <AtListItem
             title="签到"
-            extraText={userInfo?.data.is_check ? "已签到" : "点击签到"}
-            onClick={() => {
-              if (userInfo.isLogin && !userInfo?.data.is_check) {
-                handleCheckIn(userInfo);
-              }
-            }}
+            extraText={userInfo?.data.is_check ? '已签到' : '点击签到'}
+            onClick={() => {}}
           />
           <AtListItem title="购买次卡" arrow="right" />
           <AtListItem title="问题反馈" />
@@ -178,14 +277,14 @@ export default () => {
                 isLogin: false,
                 data: {},
               });
-              Taro.setStorageSync("userInfo", {
+              Taro.setStorageSync('userInfo', {
                 isLogin: false,
                 data: {},
               });
             }}
           />
         </AtList>
-      </View>
+      </View> */}
 
       {/* <BuyPoint />
       <GetPoint /> */}
@@ -198,7 +297,7 @@ export default () => {
               isLogin: true,
               data: res.data,
             });
-            Taro.setStorageSync("userInfo", {
+            Taro.setStorageSync('userInfo', {
               isLogin: true,
               data: res.data,
             });
@@ -214,14 +313,30 @@ export default () => {
 };
 
 const Style = {
+  gridContainerStyle: {
+    backgroundColor: '#fff',
+    borderRadius: '10px',
+    border: '1px solid #ccc',
+    padding: '16px',
+    margin: '10px',
+    display: 'grid',
+    gridTemplateColumns: 'repeat(3, 1fr)' /* 3列的网格，每列平均分配宽度 */,
+    gap: '16px' /* 网格项之间的间隔 */,
+  },
+
+  gridItemStyle: {
+    padding: '16px',
+    // border: '1px solid #ccc',
+    textAlign: 'center',
+  },
   cardStyle: {
-    margin: "30rpx",
-    position: "relative",
-    top: "-200rpx",
-    border: "1px solid #e0e0e0",
-    backgroundColor: "#fff",
-    borderRadius: "20rpx",
-    padding: "20rpx",
-    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+    margin: '30rpx',
+    position: 'relative',
+    top: '-200rpx',
+    border: '1px solid #e0e0e0',
+    backgroundColor: '#fff',
+    borderRadius: '20rpx',
+    padding: '20rpx',
+    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
   },
 };
