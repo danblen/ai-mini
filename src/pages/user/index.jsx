@@ -1,3 +1,6 @@
+/**
+ * 用户页
+ */
 import { Image, View } from '@tarojs/components';
 import Taro, { useTabItemTap } from '@tarojs/taro';
 import React, { useState } from 'react';

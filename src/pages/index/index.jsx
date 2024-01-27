@@ -1,3 +1,7 @@
+/**
+ * 首页
+ */
+
 import { View } from '@tarojs/components';
 import React, { useEffect, useState } from 'react';
 import { get_all_images } from '../../api/index.js';
@@ -86,8 +90,6 @@ const App = () => {
         <AlbumsCard albums={allImages?.albums} />
         <TabsImageList tags_image={allImages?.tags_image} />
       </View>
-      {/* <Images /> */}
-      {/* <Home /> */}
     </>
   );
 };

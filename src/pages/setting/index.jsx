@@ -1,3 +1,6 @@
+/**
+ * 设置页
+ */
 import { View } from '@tarojs/components';
 import React, { useCallback, useState } from 'react';
 import { AtList, AtListItem } from 'taro-ui';

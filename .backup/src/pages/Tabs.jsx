@@ -1,11 +1,7 @@
-import { View, Text } from "@tarojs/components";
-import React, { useState, useRef } from "react";
-import { NavBar, Tabs, Swiper } from "@nutui/nutui-react-taro";
-import { Left, Share, Close } from "@nutui/icons-react-taro";
-import Taro from "@tarojs/taro";
-import Hot from "./hot";
-import New from "./new";
-import { AtButton } from "taro-ui";
+import { Swiper, Tabs } from '@nutui/nutui-react-taro';
+import React, { useRef, useState } from 'react';
+import Hot from '../../../src/pages/index/hot';
+import New from '../../../src/pages/index/new';
 const App = () => {
   const swiperRef = useRef(null);
   const [tabIndex, setTabIndex] = useState(0);
@@ -18,8 +14,7 @@ const App = () => {
         onChange={page => {
           swiperRef.current?.to(page);
           setTabIndex(page);
-        }}
-      >
+        }}>
         <Tabs.TabPane title="热门" />
         <Tabs.TabPane title="精选" />
         <Tabs.TabPane title="最新" />
@@ -31,8 +26,7 @@ const App = () => {
         ref={swiperRef}
         onChange={page => {
           setTabIndex(page.detail.current);
-        }}
-      >
+        }}>
         <Swiper.Item>
           <Hot />
         </Swiper.Item>
@@ -40,7 +34,7 @@ const App = () => {
           <New />
         </Swiper.Item>
         <Swiper.Item>
-          <div style={{ padding: "10px" }}>Tab 3</div>
+          <div style={{ padding: '10px' }}>Tab 3</div>
         </Swiper.Item>
       </Swiper>
     </>

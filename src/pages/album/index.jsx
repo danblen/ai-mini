@@ -1,8 +1,11 @@
-import { Button, View } from "@tarojs/components";
-import Taro, { useDidHide, useDidShow } from "@tarojs/taro";
-import { useState } from "react";
-import FinishedTask from "./FinishedTask.jsx";
-import { fetchProcessedImages } from "./fetchProcessedImages.js";
+/**
+ * 作品页
+ */
+import { Button, View } from '@tarojs/components';
+import Taro, { useDidHide, useDidShow } from '@tarojs/taro';
+import { useState } from 'react';
+import FinishedTask from './FinishedTask.jsx';
+import { fetchProcessedImages } from './fetchProcessedImages.js';
 
 export default ({ images }) => {
   const [current, setCurrent] = useState(0);
@@ -12,18 +15,18 @@ export default ({ images }) => {
     isLogin: false,
     data: {
       points: 0,
-      user_id: "",
+      user_id: '',
       is_check: false,
     },
   });
 
   const fetchData = async () => {
-    const storageUserInfo = Taro.getStorageSync("userInfo");
+    const storageUserInfo = Taro.getStorageSync('userInfo');
     setUserInfo(storageUserInfo);
     if (storageUserInfo?.isLogin && storageUserInfo.data?.user_id) {
       const userInfo = {
         user_id: storageUserInfo.data.user_id,
-        request_status: "finishing",
+        request_status: 'finishing',
       };
 
       const processedImages = await fetchProcessedImages(userInfo).catch();
@@ -50,38 +53,34 @@ export default ({ images }) => {
       {userInfo.isLogin ? (
         <View
           style={{
-            marginTop: "10rpx",
-          }}
-        >
+            marginTop: '10rpx',
+          }}>
           <FinishedTask images={allImages} />
         </View>
       ) : (
         <View
           style={{
-            paddingTop: "20rpx",
-          }}
-        >
+            paddingTop: '20rpx',
+          }}>
           <View
             style={{
-              textAlign: "center",
-              fontSize: "40rpx",
-            }}
-          >
+              textAlign: 'center',
+              fontSize: '40rpx',
+            }}>
             您还未登陆，请先登陆
           </View>
           <Button
             type="primary"
             style={{
-              position: "relative",
-              width: "40%",
-              animation: "swap 1s infinite",
+              position: 'relative',
+              width: '40%',
+              animation: 'swap 1s infinite',
             }}
             onClick={() => {
               Taro.switchTab({
-                url: "/pages/user/index",
+                url: '/pages/user/index',
               });
-            }}
-          >
+            }}>
             去登陆
           </Button>
         </View>

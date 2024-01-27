@@ -1,24 +1,28 @@
-import { Image, View } from "@tarojs/components";
-import Taro from "@tarojs/taro";
-import React, { useEffect, useState } from "react";
-import { AtDrawer, AtIcon } from "taro-ui";
-import compareIcon from "../../static/image/my/icons8-compare-64.png";
-import IconGood from "../../static/image/my/icons-good.png";
-import IconGood1 from "../../static/image/my/icons-good1.png";
-import IconBad from "../../static/image/my/icons-bad.png";
-import IconBad1 from "../../static/image/my/icons-bad1.png";
-import { downloadImages } from "../../utils/imageTools.js";
-import TaskList from "../comps/TaskList.jsx";
-import ImagePicker from "../comps/ImagePicker.jsx";
-import SwapButton from "./SwapButton.jsx";
-import TaskListTip from "./TaskListTip.jsx";
-import { clearTimers, getTaskImage } from "../../common/getTaskImage.js";
-import { updateUserProcessInfo } from "../../api";
-import CustomNavBar from "../index/CustomNavBar.jsx";
+/**
+ * 换脸页面
+ */
+
+import { Image, View } from '@tarojs/components';
+import Taro from '@tarojs/taro';
+import React, { useEffect, useState } from 'react';
+import { AtDrawer, AtIcon } from 'taro-ui';
+import compareIcon from '../../static/image/my/icons8-compare-64.png';
+import IconGood from '../../static/image/my/icons-good.png';
+import IconGood1 from '../../static/image/my/icons-good1.png';
+import IconBad from '../../static/image/my/icons-bad.png';
+import IconBad1 from '../../static/image/my/icons-bad1.png';
+import { downloadImages } from '../../utils/imageTools.js';
+import TaskList from '../comps/TaskList.jsx';
+import ImagePicker from '../comps/ImagePicker.jsx';
+import SwapButton from './SwapButton.jsx';
+import TaskListTip from './TaskListTip.jsx';
+import { clearTimers, getTaskImage } from '../../common/getTaskImage.js';
+import { updateUserProcessInfo } from '../../api';
+import CustomNavBar from '../index/CustomNavBar.jsx';
 export default () => {
   const [showDrawer, setShowDrawer] = useState(false);
   const [startX, setStartX] = useState(0);
-  const [imageUrl, setImageUrl] = useState("");
+  const [imageUrl, setImageUrl] = useState('');
   const [images, setImages] = useState([]);
   const [uploadedFiles, setUploadedFiles] = useState([]);
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -51,7 +55,7 @@ export default () => {
     if (
       images &&
       images.length > 0 &&
-      images[images.length - 1].status === "SUCCESS"
+      images[images.length - 1].status === 'SUCCESS'
     ) {
       setCompareImageSwap(true);
       setShowImageSwap(true);
@@ -71,36 +75,36 @@ export default () => {
     updateUserProcessInfo(data);
   }, [rating]);
 
-  const onUpdateTaskImages = async (requestId) => {
+  const onUpdateTaskImages = async requestId => {
     const newImage = {
-      src: "",
-      status: "pending",
+      src: '',
+      status: 'pending',
       requestId,
     };
-    setImages((prevImages) => [...prevImages, newImage]);
+    setImages(prevImages => [...prevImages, newImage]);
 
     const res = await getTaskImage(requestId);
-    setImages((prevImages) =>
-      prevImages.map((image) =>
+    setImages(prevImages =>
+      prevImages.map(image =>
         image.requestId === requestId
           ? {
               ...image,
-              src: "data:image/png;base64," + res.result.images[0],
-              status: "SUCCESS",
+              src: 'data:image/png;base64,' + res.result.images[0],
+              status: 'SUCCESS',
             }
-          : image
-      )
+          : image,
+      ),
     );
     setRequestId(requestId);
     Taro.getApp().globalData.updateGlobalClickCount(-1);
     const updatedClickCount = Taro.getApp().globalData.clickCount;
-    Taro.eventCenter.trigger("globalClickCountChanged", updatedClickCount);
+    Taro.eventCenter.trigger('globalClickCountChanged', updatedClickCount);
   };
 
-  const onTouchStart = (event) => {
+  const onTouchStart = event => {
     setStartX(event.touches[0].clientX);
   };
-  const onTouchEnd = (event) => {
+  const onTouchEnd = event => {
     const endX = event.changedTouches[0].clientX;
     const deltaX = endX - startX;
 
@@ -115,26 +119,24 @@ export default () => {
     <View
       onTouchstart={onTouchStart}
       onTouchEnd={onTouchEnd}
-      style={{ background: "black", height: "100vh" }}
-    >
+      style={{ background: 'black', height: '100vh' }}>
       <CustomNavBar></CustomNavBar>
       <View
         style={{
-          overflow: "hidden",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          width: "100%",
-          height: "90vh",
-        }}
-      >
+          overflow: 'hidden',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          width: '100%',
+          height: '90vh',
+        }}>
         <Image
           mode="widthFix"
           style={{
-            width: "100%",
-            verticalAlign: "middle",
+            width: '100%',
+            verticalAlign: 'middle',
             opacity: 1,
-            transition: "opacity 1s",
+            transition: 'opacity 1s',
           }}
           src={imageUrl}
         />
@@ -143,85 +145,82 @@ export default () => {
         <Image
           mode="widthFix"
           style={{
-            width: "100%",
-            verticalAlign: "middle",
-            position: "absolute",
+            width: '100%',
+            verticalAlign: 'middle',
+            position: 'absolute',
             right: 0, // 设置初始位置在屏幕右侧
             opacity: compareImageSwap ? 1 : 0, // 根据条件设置透明度
-            transition: "opacity 1s",
+            transition: 'opacity 1s',
           }}
           src={
-            showImageSwap && images[images.length - 1].status === "SUCCESS"
+            showImageSwap && images[images.length - 1].status === 'SUCCESS'
               ? images[images.length - 1].src
               : imageUrl
           }
         />
         <View
           style={{
-            position: "absolute",
-            top: "65%",
-            left: "90%",
-            transform: "translate(-50%, -50%)",
+            position: 'absolute',
+            top: '65%',
+            left: '90%',
+            transform: 'translate(-50%, -50%)',
             zIndex: 10,
-            borderRadius: "50%",
-            display: "flex",
-            flexDirection: "column", // 将按钮排成一列
-            alignItems: "center",
-          }}
-        >
+            borderRadius: '50%',
+            display: 'flex',
+            flexDirection: 'column', // 将按钮排成一列
+            alignItems: 'center',
+          }}>
           {showImageSwap && (
             <View
               style={{
-                marginTop: "5px",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-              }}
-            >
+                marginTop: '5px',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+              }}>
               <Image
                 src={rating === 1 ? IconGood : IconGood1}
-                style={{ width: "24px", height: "24px" }}
-                onClick={() => setRating((prev) => (prev === 1 ? 0 : 1))}
+                style={{ width: '24px', height: '24px' }}
+                onClick={() => setRating(prev => (prev === 1 ? 0 : 1))}
               />
               <Image
                 src={rating === -1 ? IconBad : IconBad1}
                 style={{
-                  width: "24px",
-                  height: "24px",
+                  width: '24px',
+                  height: '24px',
                   // marginLeft: "5px",
-                  marginTop: "20px",
+                  marginTop: '20px',
                 }}
-                onClick={() => setRating((prev) => (prev === -1 ? 0 : -1))}
+                onClick={() => setRating(prev => (prev === -1 ? 0 : -1))}
               />
             </View>
           )}
           {showImageSwap && (
             <View
               type="primary"
-              onClick={() => setCompareImageSwap((prev) => !prev)}
+              onClick={() => setCompareImageSwap(prev => !prev)}
               style={{
-                backgroundColor: showImageSwap ? "#ccc" : "#ccc",
-                width: "50px",
-                height: "50px",
-                borderRadius: "50%", // 圆形背景
-                marginTop: "20px",
+                backgroundColor: showImageSwap ? '#ccc' : '#ccc',
+                width: '50px',
+                height: '50px',
+                borderRadius: '50%', // 圆形背景
+                marginTop: '20px',
                 // marginLeft: "20px",
                 // display: "flex",
                 // justifyContent: "center",
                 // alignItems: "center",
-              }}
-            >
+              }}>
               <Image
                 src={compareIcon}
                 mode="widthFix"
                 style={{
-                  width: "50rpx",
-                  height: "50rpx",
+                  width: '50rpx',
+                  height: '50rpx',
                   // position: "absolute",
                   // top: "25rpx",
                   // left: "25rpx",
-                  marginTop: "10px",
-                  marginLeft: "10px",
+                  marginTop: '10px',
+                  marginLeft: '10px',
                   // filter: showImageSwap ? "grayscale(100%)" : "",
                 }}
               />
@@ -234,28 +233,26 @@ export default () => {
 
       <View
         style={{
-          position: "fixed",
-          width: "100%",
-          bottom: "60rpx",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
+          position: 'fixed',
+          width: '100%',
+          bottom: '60rpx',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}>
         <View
           style={{
-            width: "95%",
-            marginBottom: "40rpx",
-            borderRadius: "20rpx",
-            background: "transparent", // 将背景改为透明
+            width: '95%',
+            marginBottom: '40rpx',
+            borderRadius: '20rpx',
+            background: 'transparent', // 将背景改为透明
             opacity: 1,
-            color: "white",
-          }}
-        >
+            color: 'white',
+          }}>
           <ImagePicker
-            onFilesChange={(images) => setUploadedFiles(images)}
-            onSelectImage={(index) => {
+            onFilesChange={images => setUploadedFiles(images)}
+            onSelectImage={index => {
               setSelectedIndex(index);
             }}
           />
@@ -267,10 +264,9 @@ export default () => {
               ? uploadedFiles[selectedIndex].compressBase64 // 如果存在，使用 compressBase64
               : uploadedFiles[selectedIndex]?.url // 否则检查是否存在 url 属性
               ? uploadedFiles[selectedIndex].url // 如果存在，使用 url
-              : "" // 如果都不存在，设置为空字符串或者其他默认值
+              : '' // 如果都不存在，设置为空字符串或者其他默认值
           }
-          onUpdateTaskImages={onUpdateTaskImages}
-        ></SwapButton>
+          onUpdateTaskImages={onUpdateTaskImages}></SwapButton>
       </View>
 
       <AtDrawer
@@ -279,8 +275,7 @@ export default () => {
         mask
         width="80%"
         onClose={() => setShowDrawer(false)}
-        style={{ background: "black", height: "100%" }}
-      >
+        style={{ background: 'black', height: '100%' }}>
         <TaskList images={images} />
       </AtDrawer>
     </View>

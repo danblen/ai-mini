@@ -1,4 +1,6 @@
-先删掉.swc 整个文件夹
+如果根目录有.swc 文件夹先删掉.swc 整个文件夹
+
+# 安装工具
 
 node 版本 16.xx.xx
 
@@ -6,9 +8,13 @@ npm i -g @tarojs/cli
 
 npm i -g yarn
 
-安装依赖 yarn
+# 启动项目
 
+安装依赖 yarn
 启动项目 yarn dev:weapp
+备注：(如果 package.json 文件有更新依赖需要重新运行这两个命令)
+
+# 查看运行效果
 
 微信开发者工具打开 dist
 

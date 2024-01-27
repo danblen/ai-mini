@@ -1,3 +1,7 @@
+/**
+ * 发现页
+ */
+
 import { View } from '@tarojs/components';
 import React, { useCallback, useState } from 'react';
 import Buttons from '../comps/Buttons';
