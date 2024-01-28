@@ -7,12 +7,12 @@ import React, { useEffect, useState } from 'react';
 import { get_all_images } from '../../api/index.js';
 import Buttons from '../comps/Buttons.jsx';
 import AlbumsCard from './AlbumsCard';
-import NavigationBar from './NavigationBar.jsx';
+import NavBar from './NavBar.jsx';
 import TabsImageList from './TabsImageList';
 import TopBanner from './TopBanner.jsx';
 import WaterfallPage from './WaterfallPage.jsx';
 
-const App = () => {
+export default () => {
   let [allImages, setAllImages] = useState({ albums: {}, tags_image: {} });
   const getAllImages = async () => {
     let allImages = await get_all_images();
@@ -25,7 +25,7 @@ const App = () => {
   }, []);
   return (
     <>
-      <View
+      {/* <View
         style={{
           position: 'fixed',
           top: '-5rpx',
@@ -36,9 +36,9 @@ const App = () => {
           opacity: '0.9',
           paddingTop: '100rpx',
           zIndex: '1000',
-        }}>
-        <NavigationBar></NavigationBar>
-      </View>
+        }}> */}
+      <NavBar></NavBar>
+      {/* </View> */}
 
       <View
         style={{
@@ -91,9 +91,8 @@ const App = () => {
         />
         <AlbumsCard albums={allImages?.albums} />
         <WaterfallPage />
-        {/* <TabsImageList tags_image={allImages?.tags_image} /> */}
+        <TabsImageList tags_image={allImages?.tags_image} />
       </View>
     </>
   );
 };
-export default App;

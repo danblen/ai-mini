@@ -205,8 +205,10 @@ export default () => {
               top: '10rpx',
               right: '10rpx',
             }}
-            onClick={() => {}}></View>
-          <View>我的积分</View>
+            onClick={() => {
+              Taro.navigateTo({ url: '/pages/album/index' });
+            }}></View>
+          <View>我的作品</View>
         </View>
         <View style={Style.gridItemStyle}>
           <View
@@ -218,7 +220,7 @@ export default () => {
               right: '10rpx',
             }}
             onClick={() => {}}></View>
-          <View>我的作品</View>
+          <View>我的积分</View>
         </View>
         <View style={Style.gridItemStyle}>
           <View

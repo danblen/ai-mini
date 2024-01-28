@@ -2,21 +2,32 @@ import { Text, View } from '@tarojs/components';
 import Taro from '@tarojs/taro';
 import { useState } from 'react';
 import { AtDrawer } from 'taro-ui';
+import LeftDrawer from '../comps/LeftDrawer';
 
 export default () => {
   const [showDrawer, setShowDrawer] = useState(false);
 
   return (
-    <>
+    <View
+      style={{
+        position: 'fixed',
+        top: '0rpx',
+        height: '100rpx',
+        paddingTop: '80rpx',
+        zIndex: '10',
+        width: '100%',
+        backgroundColor: 'white',
+      }}>
       <View
         style={{
-          height: '80rpx',
-          width: '100%',
           display: 'flex',
+          alignItems: 'center',
         }}>
         <View
           className="at-icon at-icon-menu"
           style={{
+            height: '100rpx',
+            lineHeight: '98rpx',
             marginLeft: '20rpx',
             fontSize: '50rpx',
             color: 'black',
@@ -27,21 +38,21 @@ export default () => {
         <View
           style={{
             width: '400rpx',
-            height: '60rpx',
+            height: '62rpx',
+            lineHeight: '62rpx',
             borderRadius: '50rpx',
             marginLeft: '30rpx',
             paddingLeft: '30rpx',
             backgroundColor: '#f5f5f5',
-            lineHeight: '60rpx',
           }}
           onClick={() => {
             Taro.navigateTo({ url: '/pages/search/index' });
           }}>
-          <Text
+          <View
             className="at-icon at-icon-search"
             style={{
               fontSize: '30rpx',
-            }}></Text>
+            }}></View>
           <Text
             style={{
               fontSize: '30rpx',
@@ -52,20 +63,12 @@ export default () => {
         </View>
       </View>
 
-      <AtDrawer
-        show={showDrawer}
-        left
-        mask
-        width="80%"
-        onClose={() => setShowDrawer(false)}
-        style={{ background: 'black', height: '100%' }}>
-        <View style={{ marginTop: '200rpx' }}>
-          <View>微信用户</View>
-          <View>设置</View>
-          <View>深色模式</View>
-          <View>退出登陆</View>
-        </View>
-      </AtDrawer>
-    </>
+      <LeftDrawer
+        showDrawer={showDrawer}
+        onClose={() => {
+          setShowDrawer(false);
+        }}
+      />
+    </View>
   );
 };
