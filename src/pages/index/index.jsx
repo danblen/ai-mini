@@ -2,15 +2,14 @@
  * 首页
  */
 
-import { View } from '@tarojs/components';
+import { Text, View } from '@tarojs/components';
 import React, { useEffect, useState } from 'react';
 import { get_all_images } from '../../api/index.js';
-import Buttons from '../comps/Buttons.jsx';
+import ButtonsBox from '../comps/ButtonsBox.jsx';
 import AlbumsCard from './AlbumsCard';
 import NavBar from './NavBar.jsx';
-import TabsImageList from './TabsImageList';
 import TopBanner from './TopBanner.jsx';
-import WaterfallPage from './WaterfallPage.jsx';
+import WaterfallList from './WaterfallList.jsx';
 
 export default () => {
   let [allImages, setAllImages] = useState({ albums: {}, tags_image: {} });
@@ -25,28 +24,14 @@ export default () => {
   }, []);
   return (
     <>
-      {/* <View
-        style={{
-          position: 'fixed',
-          top: '-5rpx',
-          left: 0,
-          width: '100%',
-          // height: '180rpx',
-          backgroundColor: '#fff',
-          opacity: '0.9',
-          paddingTop: '100rpx',
-          zIndex: '1000',
-        }}> */}
       <NavBar></NavBar>
-      {/* </View> */}
 
       <View
         style={{
-          background: 'linear-gradient(to left, #2d7948, #6d8a78)',
           marginTop: '180rpx',
         }}>
         <TopBanner banners={allImages?.banners} />
-        <Buttons
+        <ButtonsBox
           buttons={[
             {
               imageUrl: require('../../static/image/my/icons8-joker-dc-200.png'),
@@ -86,12 +71,46 @@ export default () => {
                 description: '晒一晒你的作品，获取积分',
               },
             },
-            // Add more buttons as needed
           ]}
         />
+
+        <View
+          style={{
+            fontSize: '40rpx',
+            margin: '20rpx',
+            display: 'flex',
+            justifyContent: 'space-between',
+          }}>
+          <Text style={{}}>写真集</Text>
+          {/* <View
+          style={{
+            display: 'flex',
+            color: 'grey',
+            justifyContent: 'space-between',
+          }}>
+          <View style={{}}>更多</View>
+          <View
+            className="at-icon at-icon-chevron-right"
+            style={{
+              fontSize: '50rpx',
+            }}></View>
+        </View> */}
+        </View>
         <AlbumsCard albums={allImages?.albums} />
-        <WaterfallPage />
-        <TabsImageList tags_image={allImages?.tags_image} />
+
+        <View
+          style={{
+            fontSize: '40rpx',
+            margin: '30rpx 18rpx 18rpx 18rpx ',
+            display: 'flex',
+            justifyContent: 'space-between',
+          }}>
+          <Text style={{}}>最近热门</Text>
+        </View>
+        <WaterfallList
+          imageListLeft={allImages?.tags_image['古装']}
+          imageListRight={allImages?.tags_image['氛围感']}
+        />
       </View>
     </>
   );

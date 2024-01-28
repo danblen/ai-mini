@@ -1,10 +1,10 @@
 export default {
   pages: [
     'pages/index/index',
+    'pages/discover/index',
     'pages/message/index',
     'pages/activity/Activity',
     'pages/user/index',
-    'pages/discover/index',
     'pages/setting/index',
     'pages/search/index',
     'pages/faceswap/index',
@@ -52,6 +52,6 @@ export default {
     navigationBarTitleText: 'AI写真',
     navigationBarTextStyle: 'black',
     backgroundTextStyle: 'light',
-    backgroundColor: '#fff',
+    backgroundColor: '#f9f9f9',
   },
 };

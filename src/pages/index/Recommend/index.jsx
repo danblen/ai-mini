@@ -1,5 +1,5 @@
 import { View } from '@tarojs/components';
-import Buttons from '../../comps/Buttons';
+import ButtonsBox from '../../comps/ButtonsBox';
 
 export default () => {
   return <View></View>;

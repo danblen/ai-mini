@@ -1,5 +1,5 @@
 import { View } from '@tarojs/components';
-import Buttons from '../../comps/Buttons';
+import ButtonsBox from '../../comps/ButtonsBox';
 
 export default () => {
   return (
@@ -7,7 +7,7 @@ export default () => {
       style={{
         marginTop: '170rpx',
       }}>
-      <Buttons
+      <ButtonsBox
         buttons={[
           {
             imageUrl: require('../../../static/image/my/icons8-joker-dc-200.png'),

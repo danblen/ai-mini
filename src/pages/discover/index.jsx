@@ -3,13 +3,12 @@
  */
 
 import { View } from '@tarojs/components';
-import React, { useCallback, useEffect, useState } from 'react';
-import Buttons from '../comps/Buttons';
-import NavBar from './NavBar';
+import React, { useEffect, useState } from 'react';
+import { get_all_images } from '../../api';
 import Hot from './Hot';
+import NavBar from './NavBar';
 import New from './New';
 import Recommend from './Recommend';
-import { get_all_images } from '../../api';
 
 export default ({}) => {
   const [currentTab, setCurrentTab] = useState('recommend');

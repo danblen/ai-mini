@@ -41,7 +41,6 @@ export default ({ tags_image }) => {
                 marginRight: '20rpx',
                 display: 'inline-block',
                 backgroundColor: current === tab.title ? '#eee' : '#fff',
-                // height: '60rpx',
                 width: '100rpx',
                 borderRadius: '30rpx',
                 lineHeight: '60rpx',
@@ -67,7 +66,7 @@ export default ({ tags_image }) => {
           }}></View>
       </View>
 
-      <View style={{ paddingTop: '70rpx' }}>
+      <View style={{ paddingTop: '100rpx' }}>
         <Images imageUrls={imageUrls} />
       </View>
 

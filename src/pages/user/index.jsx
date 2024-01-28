@@ -178,8 +178,8 @@ export default () => {
         style={{
           fontSize: '40rpx',
           height: '100rpx',
-          border: '1px solid #ccc',
           borderRadius: '10px',
+          backgroundColor: '#fff',
           top: '10rpx',
           margin: '10px',
           right: '10rpx',
@@ -321,7 +321,6 @@ const Style = {
   gridContainerStyle: {
     backgroundColor: '#fff',
     borderRadius: '10px',
-    border: '1px solid #ccc',
     padding: '16px',
     margin: '10px',
     display: 'grid',

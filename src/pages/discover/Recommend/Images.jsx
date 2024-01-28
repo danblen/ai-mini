@@ -1,7 +1,6 @@
-import { View, Text, Image } from '@tarojs/components';
-import React from 'react';
-import { AtIcon } from 'taro-ui';
+import { Image, Text, View } from '@tarojs/components';
 import Taro from '@tarojs/taro';
+import React from 'react';
 
 export default ({ imageUrls }) => {
   return (
@@ -65,7 +64,7 @@ const Styles = {
   },
   image: {
     width: '100%',
-    borderRadius: '10rpx',
+    borderRadius: '15rpx',
   },
   heatInfo: {
     position: 'relative',

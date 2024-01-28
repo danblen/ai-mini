@@ -1,9 +1,7 @@
+import { Image, Text, View } from '@tarojs/components';
 import Taro from '@tarojs/taro';
-import { View, Image, Text } from '@tarojs/components';
-import IconGood from '../../static/image/my/icons-good.png';
-import IconGood1 from '../../static/image/my/icons-good1.png';
 
-const Buttons = ({ buttons }) => {
+export default ({ buttons }) => {
   const handleButtonClick = (pagePath, params) => {
     if (!pagePath || !params) {
       console.error('Invalid navigation parameters:', pagePath, params);
@@ -28,11 +26,10 @@ const Buttons = ({ buttons }) => {
         padding: '10px',
         marginTop: '20px',
         marginBottom: '20px',
-        marginLeft: '20rpx',
-        marginRight: '20rpx',
+        marginLeft: '18rpx',
+        marginRight: '18rpx',
         borderRadius: '10rpx',
-        background: 'linear-gradient(to right, #02ad6e7a, #02ad6e7a)',
-        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+        background: '#fff',
       }}>
       <View style={{ display: 'flex', justifyContent: 'space-between' }}>
         {buttons.map((button, index) => (
@@ -57,7 +54,6 @@ const Buttons = ({ buttons }) => {
                   textAlign: 'center',
                   marginTop: '5px',
                   flex: 1,
-                  color: '#cdcecd',
                 }}>
                 {button.text}
               </Text>
@@ -68,5 +64,3 @@ const Buttons = ({ buttons }) => {
     </View>
   );
 };
-
-export default Buttons;
