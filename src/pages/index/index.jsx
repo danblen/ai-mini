@@ -10,6 +10,7 @@ import AlbumsCard from './AlbumsCard';
 import NavigationBar from './NavigationBar.jsx';
 import TabsImageList from './TabsImageList';
 import TopBanner from './TopBanner.jsx';
+import WaterfallPage from './WaterfallPage.jsx';
 
 const App = () => {
   let [allImages, setAllImages] = useState({ albums: {}, tags_image: {} });
@@ -89,7 +90,8 @@ const App = () => {
           ]}
         />
         <AlbumsCard albums={allImages?.albums} />
-        <TabsImageList tags_image={allImages?.tags_image} />
+        <WaterfallPage />
+        {/* <TabsImageList tags_image={allImages?.tags_image} /> */}
       </View>
     </>
   );
