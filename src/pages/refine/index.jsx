@@ -33,7 +33,7 @@ export default ({}) => {
   const [isEraserActivated, setIsEraserActivated] = useState(false);
   const [hasLoadSrcImage, setHasLoadSrcImage] = useState(false);
 
-  const onClick = useCallback(value => {
+  const onClick = useCallback((value) => {
     console.log('cur:', value, hasLoadSrcImage);
     if (hasLoadSrcImage) {
       if (value === 1) {
@@ -47,7 +47,7 @@ export default ({}) => {
           Taro.showModal({
             title: '是否保存文件',
             content: '是否需要保存当前文件？',
-            success: res => {
+            success: (res) => {
               if (res.confirm) {
                 console.log('用户点击确定');
                 saveOutputImageToAlbum(ouputImage[ouputImage.length - 1].src);
@@ -67,7 +67,7 @@ export default ({}) => {
     setCurrentTab(value);
   });
 
-  const saveOutputImageToAlbum = base64Image => {
+  const saveOutputImageToAlbum = (base64Image) => {
     // 将 base64 转为临时文件路径
     const tempFilePath = `${Taro.env.USER_DATA_PATH}/tempImage.png`;
     Taro.getFileSystemManager().writeFile({
@@ -79,13 +79,13 @@ export default ({}) => {
         // 保存到相册
         Taro.saveImageToPhotosAlbum({
           filePath: tempFilePath,
-          success: res => {
+          success: (res) => {
             Taro.showToast({
               title: '保存成功',
               icon: 'success',
             });
           },
-          fail: error => {
+          fail: (error) => {
             Taro.showToast({
               title: '保存失败',
               icon: 'none',
@@ -93,7 +93,7 @@ export default ({}) => {
           },
         });
       },
-      fail: error => {
+      fail: (error) => {
         console.error('写入文件失败', error);
       },
     });
@@ -115,7 +115,7 @@ export default ({}) => {
         node: true,
         size: true,
       })
-      .exec(res => {
+      .exec((res) => {
         const canvas = res[0].node;
         console.log('res:', res[0].width, res[0].height);
         canvas.width = res[0].width;
@@ -172,7 +172,7 @@ export default ({}) => {
     }
   };
 
-  const touchStart = event => {
+  const touchStart = (event) => {
     if (isExpanded) {
       Ctx.beginPath();
       Ctx.moveTo(event.touches[0].x, event.touches[0].y);
@@ -180,7 +180,7 @@ export default ({}) => {
       sethasDraw(true);
     }
   };
-  const move = event => {
+  const move = (event) => {
     if (isExpanded) {
       if (isEraserActivated) {
         Ctx.globalCompositeOperation = 'destination-out';
@@ -202,45 +202,45 @@ export default ({}) => {
     }
   };
 
-  const onUpdateTaskImages = async requestId => {
+  const onUpdateTaskImages = async (requestId) => {
     const newImage = {
       src: '',
       status: 'pending',
       requestId,
     };
-    setOuputImage(prevImages => [...prevImages, newImage]);
+    setOuputImage((prevImages) => [...prevImages, newImage]);
 
     const res = await getTaskImage(requestId);
-    setOuputImage(prevImages =>
-      prevImages.map(image =>
+    setOuputImage((prevImages) =>
+      prevImages.map((image) =>
         image.requestId === requestId
           ? {
               ...image,
               src: 'data:image/png;base64,' + res.result.images[0],
               status: 'SUCCESS',
             }
-          : image,
-      ),
+          : image
+      )
     );
     Taro.hideLoading();
   };
 
-  const downloadImage = url => {
+  const downloadImage = (url) => {
     return new Promise((resolve, reject) => {
       Taro.downloadFile({
         url: url,
-        success: res => resolve(res.tempFilePath),
-        fail: error => reject(error),
+        success: (res) => resolve(res.tempFilePath),
+        fail: (error) => reject(error),
       });
     });
   };
 
-  const getImageInfo = src => {
+  const getImageInfo = (src) => {
     return new Promise((resolve, reject) => {
       Taro.getImageInfo({
         src: src,
-        success: info => resolve(info),
-        fail: error => reject(error),
+        success: (info) => resolve(info),
+        fail: (error) => reject(error),
       });
     });
   };
@@ -251,19 +251,19 @@ export default ({}) => {
         canvas: canvas,
         destWidth: dstWidth,
         destHeight: dstHeight,
-        success: res => resolve(res.tempFilePath),
-        fail: error => reject(error),
+        success: (res) => resolve(res.tempFilePath),
+        fail: (error) => reject(error),
       });
     });
   };
 
-  const readFileAsBase64 = filePath => {
+  const readFileAsBase64 = (filePath) => {
     return new Promise((resolve, reject) => {
       Taro.getFileSystemManager().readFile({
         filePath: filePath,
         encoding: 'base64',
-        success: data => resolve(data),
-        fail: error => reject(error),
+        success: (data) => resolve(data),
+        fail: (error) => reject(error),
       });
     });
   };
@@ -282,7 +282,7 @@ export default ({}) => {
             node: true,
             size: true,
           })
-          .exec(res => resolve(res));
+          .exec((res) => resolve(res));
       });
 
       // const localImagePath = await downloadImage(srcImage);
@@ -295,7 +295,7 @@ export default ({}) => {
       const canvasTempFile = await canvasToTempFile(
         canvas,
         info.width,
-        info.height,
+        info.height
       );
       console.log('canvasToTempFile success');
 
@@ -314,12 +314,12 @@ export default ({}) => {
       console.error(error);
     }
   };
-  const requestSdTransform = async data => {
+  const requestSdTransform = async (data) => {
     // 将原图转为base64
     const srcBase64 = await wxPathToBase64(srcImage);
     console.log('srcBase64 success');
 
-    const storageUserInfo = Taro.getStorageSync('userInfo');
+    const storageUserInfo = getStorageSync('userInfo');
 
     data.init_images = [srcBase64];
     data.user_id = storageUserInfo.data.user_id;
@@ -336,7 +336,7 @@ export default ({}) => {
       });
     }
   };
-  const handleUploadOptionClick = async index => {
+  const handleUploadOptionClick = async (index) => {
     // 打开本地相册选择图片
     if (index === 0) {
       try {
@@ -362,13 +362,13 @@ export default ({}) => {
   const uploadSrcImage = () => {
     wx.showActionSheet({
       itemList: ['选择图片'],
-      success: res => {
+      success: (res) => {
         console.log('res:', res);
         if (res.tapIndex !== undefined && !res.cancel) {
           handleUploadOptionClick(res.tapIndex);
         }
       },
-      fail: error => {
+      fail: (error) => {
         setHasLoadSrcImage(false);
       },
     });
@@ -403,7 +403,8 @@ export default ({}) => {
           )}
       </View>
       <View
-        style={{ margin: '30px', marginTop: '100px', position: 'relative' }}>
+        style={{ margin: '30px', marginTop: '100px', position: 'relative' }}
+      >
         <Image
           mode="widthFix"
           style={{ width: '100%', height: '100%', verticalAlign: 'middle' }}
@@ -437,7 +438,8 @@ export default ({}) => {
               zIndex: 2,
             }}
             canvasId="canvas123"
-            id="canvas123"></Canvas>
+            id="canvas123"
+          ></Canvas>
         )}
       </View>
 
@@ -447,20 +449,23 @@ export default ({}) => {
           tabList={[{ title: '老旧照片变高清' }, { title: '局部重绘' }]}
           swipeable={true}
           scroll
-          onClick={onClick}></AtTabs>
+          onClick={onClick}
+        ></AtTabs>
 
         {currentTab === 0 && (
           <View>
             <Button
               onClick={async () => {
                 sdWith2KParams();
-              }}>
+              }}
+            >
               高清画质
             </Button>
             <Button
               onClick={async () => {
                 sdWith4KParams();
-              }}>
+              }}
+            >
               超清画质
             </Button>
           </View>
@@ -472,33 +477,38 @@ export default ({}) => {
                 console.log(lineWidth);
                 if (lineWidth >= 40) setlineWidth(lineWidth);
                 else setlineWidth(lineWidth + 5);
-              }}>
+              }}
+            >
               笔画+
             </Button>
             <Button
               onClick={async () => {
                 if (lineWidth <= 5) setlineWidth(5);
                 else setlineWidth(lineWidth - 5);
-              }}>
+              }}
+            >
               笔画-
             </Button>
             <Button
               onClick={async () => {
                 initCanvas();
-              }}>
+              }}
+            >
               清屏
             </Button>
             <Button
               onClick={async () => {
                 setIsEraserActivated(!isEraserActivated);
-              }}>
+              }}
+            >
               {isEraserActivated ? '取消橡皮擦' : '橡皮擦'}
             </Button>
             <Button onClick={async () => {}}>比较</Button>
             <Button
               onClick={async () => {
                 inpaitUseSD();
-              }}>
+              }}
+            >
               开始重绘
             </Button>
           </View>

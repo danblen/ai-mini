@@ -1,9 +1,9 @@
 // 将按键浮在图片上方
-import React, { useState, useEffect } from "react";
-import Taro from "@tarojs/taro";
-import { AtIcon } from "taro-ui";
-import { View, Image, ScrollView, Text } from "@tarojs/components";
-import { delete_all_images, delete_select_images } from "../../api";
+import React, { useState, useEffect } from 'react';
+import Taro from '@tarojs/taro';
+import { AtIcon } from 'taro-ui';
+import { View, Image, ScrollView, Text } from '@tarojs/components';
+import { delete_all_images, delete_select_images } from '../../api';
 
 const ImageList = ({ images, loadMore }) => {
   const [showImages, setShowImages] = useState([]);
@@ -34,8 +34,8 @@ const ImageList = ({ images, loadMore }) => {
   const handleDeleteSelectedImages = async () => {
     if (selectedImages.length) {
       Taro.showModal({
-        title: "确认删除",
-        content: "确定要永久删除选中的作品吗？",
+        title: '确认删除',
+        content: '确定要永久删除选中的作品吗？',
         success: async (res) => {
           if (res.confirm) {
             try {
@@ -49,7 +49,7 @@ const ImageList = ({ images, loadMore }) => {
               );
               setShowImages(updatedImages);
             } catch (error) {
-              console.error("删除全部作品失败", error);
+              console.error('删除全部作品失败', error);
             }
           }
         },
@@ -59,19 +59,19 @@ const ImageList = ({ images, loadMore }) => {
   const handleDeleteAllImages = async () => {
     if (showImages.length) {
       Taro.showModal({
-        title: "确认删除",
-        content: "确定要永久删除全部作品吗？回收站同时清除~",
+        title: '确认删除',
+        content: '确定要永久删除全部作品吗？回收站同时清除~',
         success: async (res) => {
           if (res.confirm) {
             try {
-              let userInfo = Taro.getStorageSync("userInfo");
+              let userInfo = getStorageSync('userInfo');
               const response = await delete_all_images({
                 user_id: userInfo.data.user_id,
               });
               setSelectedImages([]);
               setShowImages([]);
             } catch (error) {
-              console.error("删除全部作品失败", error);
+              console.error('删除全部作品失败', error);
             }
           }
         },
@@ -88,35 +88,35 @@ const ImageList = ({ images, loadMore }) => {
   };
 
   return (
-    <View style={{ position: "relative" }}>
+    <View style={{ position: 'relative' }}>
       <ScrollView
         scrollY
-        style={{ height: "100vh" }}
+        style={{ height: '100vh' }}
         onScrollToLower={loadMore}
       >
         {showImages.length === 0 ? (
           <View
             style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              height: "100vh",
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              height: '100vh',
             }}
           >
-            <Text style={{ textAlign: "center" }}>
+            <Text style={{ textAlign: 'center' }}>
               没有作品可显示,快去首页试试吧~
             </Text>
           </View>
         ) : (
-          <View className="image-list" style={{ position: "relative" }}>
+          <View className="image-list" style={{ position: 'relative' }}>
             {showImages?.map((image, index) => (
               <View
                 key={index}
                 style={{
-                  position: "relative",
-                  paddingLeft: "10rpx",
-                  display: "inline-block",
-                  marginBottom: "20px", // 图片间距
+                  position: 'relative',
+                  paddingLeft: '10rpx',
+                  display: 'inline-block',
+                  marginBottom: '20px', // 图片间距
                 }}
               >
                 <Image
@@ -124,11 +124,11 @@ const ImageList = ({ images, loadMore }) => {
                   src={image.url}
                   mode="widthFix"
                   style={{
-                    width: "360rpx",
-                    borderRadius: "10rpx",
+                    width: '360rpx',
+                    borderRadius: '10rpx',
                     border: selectedImages.includes(index)
-                      ? "2px solid red"
-                      : "", // 根据选中状态添加边框
+                      ? '2px solid red'
+                      : '', // 根据选中状态添加边框
                   }}
                   lazyLoad={true}
                   onClick={() => toggleSelectImage(index)} // 根据模式执行不同的操作
@@ -136,10 +136,10 @@ const ImageList = ({ images, loadMore }) => {
                 {selectedImages.includes(index) && (
                   <View
                     style={{
-                      position: "absolute",
-                      top: "5px",
-                      right: "5px",
-                      zIndex: "10",
+                      position: 'absolute',
+                      top: '5px',
+                      right: '5px',
+                      zIndex: '10',
                     }}
                   >
                     <AtIcon
@@ -153,31 +153,31 @@ const ImageList = ({ images, loadMore }) => {
               </View>
             ))}
             {showImages.length === 0 && (
-              <View style={{ textAlign: "center" }}>没有作品可显示</View>
+              <View style={{ textAlign: 'center' }}>没有作品可显示</View>
             )}
           </View>
         )}
       </ScrollView>
       <View
         style={{
-          position: "fixed",
-          top: "40px",
-          left: "20px",
-          display: "flex",
-          backgroundColor: "rgba(255, 255, 255, 0)",
+          position: 'fixed',
+          top: '40px',
+          left: '20px',
+          display: 'flex',
+          backgroundColor: 'rgba(255, 255, 255, 0)',
         }}
       >
-        <View style={{ textAlign: "center" }}>
+        <View style={{ textAlign: 'center' }}>
           <AtIcon
             value="list"
             size="24"
             color="#054622"
             onClick={handleToggleMode} // 点击选择按钮时切换模式
           />
-          {selectedMode ? "取消" : "选择"}
+          {selectedMode ? '取消' : '选择'}
         </View>
         {selectedMode && (
-          <View style={{ textAlign: "center" }}>
+          <View style={{ textAlign: 'center' }}>
             <AtIcon
               value="trash"
               size="24"
@@ -188,7 +188,7 @@ const ImageList = ({ images, loadMore }) => {
           </View>
         )}
         {selectedMode && (
-          <View style={{ textAlign: "center" }}>
+          <View style={{ textAlign: 'center' }}>
             <AtIcon
               value="trash"
               size="24"

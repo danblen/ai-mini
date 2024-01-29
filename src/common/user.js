@@ -17,8 +17,8 @@ export const wechatLogin = () =>
               //   data: wechatRes.data,
               // isLogin: true,
               // };
-              // Taro.setStorageSync("userInfo", userInfo);
-              // userInfo = Taro.getStorageSync("userInfo");
+              // setStorageSync("userInfo", userInfo);
+              // userInfo = getStorageSync("userInfo");
               // console.log(111, userInfo);
               resolve(wechatRes);
             } else {
@@ -43,7 +43,7 @@ export const logout = () => {
 };
 export const getUser = async () => {
   try {
-    const userInfo = Taro.getStorageSync('userInfo');
+    const userInfo = getStorageSync('userInfo');
     if (!userInfo) {
       return null;
     }
@@ -55,7 +55,7 @@ export const getUser = async () => {
 };
 export const getUserInfo = async () => {
   try {
-    const userInfo = Taro.getStorageSync('userInfo');
+    const userInfo = getStorageSync('userInfo');
     if (!userInfo) return null;
     return userInfo;
   } catch (error) {
@@ -64,7 +64,7 @@ export const getUserInfo = async () => {
 };
 export const setUserInfo = async (updatedUserInfo) => {
   try {
-    Taro.setStorageSync({
+    setStorageSync({
       key: 'userInfo',
       data: updatedUserInfo,
     });
@@ -74,13 +74,13 @@ export const setUserInfo = async (updatedUserInfo) => {
 };
 export const getUpdatedUserInfo = async () => {
   try {
-    const userInfo = Taro.getStorageSync('userInfo');
+    const userInfo = getStorageSync('userInfo');
     if (!userInfo) {
       return null;
     }
     const user = await getUser();
     userInfo.data = user;
-    Taro.setStorageSync({
+    setStorageSync({
       key: 'userInfo',
       data: userInfo,
     });
@@ -91,5 +91,5 @@ export const getUpdatedUserInfo = async () => {
 };
 
 export const clearUserInfo = async () => {
-  Taro.setStorageSync({ key: 'userInfo', data: null });
+  setStorageSync({ key: 'userInfo', data: null });
 };

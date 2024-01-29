@@ -21,7 +21,7 @@ export default ({ images }) => {
   });
 
   const fetchData = async () => {
-    const storageUserInfo = Taro.getStorageSync('userInfo');
+    const storageUserInfo = getStorageSync('userInfo');
     setUserInfo(storageUserInfo);
     if (storageUserInfo?.isLogin && storageUserInfo.data?.user_id) {
       const userInfo = {
@@ -54,19 +54,22 @@ export default ({ images }) => {
         <View
           style={{
             marginTop: '10rpx',
-          }}>
+          }}
+        >
           <FinishedTask images={allImages} />
         </View>
       ) : (
         <View
           style={{
             paddingTop: '20rpx',
-          }}>
+          }}
+        >
           <View
             style={{
               textAlign: 'center',
               fontSize: '40rpx',
-            }}>
+            }}
+          >
             您还未登陆，请先登陆
           </View>
           <Button
@@ -80,7 +83,8 @@ export default ({ images }) => {
               Taro.switchTab({
                 url: '/pages/user/index',
               });
-            }}>
+            }}
+          >
             去登陆
           </Button>
         </View>

@@ -54,7 +54,7 @@ export default ({}) => {
             isLogin: false,
             data: {},
           });
-          Taro.setStorageSync('userInfo', {
+          setStorageSync('userInfo', {
             isLogin: false,
             data: {},
           });

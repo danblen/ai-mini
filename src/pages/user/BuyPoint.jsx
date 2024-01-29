@@ -9,7 +9,7 @@
 //   const content = "成功分享给群好友也可以获得1次自定义机会哦";
 
 //   const onCheckIn = async () => {
-//     const userId = Taro.getStorageSync("userInfo").userId;
+//     const userId = getStorageSync("userInfo").userId;
 //     if (!userId) {
 //       Taro.showToast({
 //         title: "请先登录",
