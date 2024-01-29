@@ -1,7 +1,7 @@
 export default {
   pages: [
-    'pages/index/index',
     'pages/discover/index',
+    'pages/index/index',
     'pages/message/index',
     'pages/activity/Activity',
     'pages/user/index',

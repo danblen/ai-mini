@@ -18,7 +18,8 @@ export default ({ imageUrls }) => {
                   url: '/pages/faceswap/index?imageUrl=' + src,
                 });
               }}
-              src={url}></Image>
+              src={url}
+            ></Image>
 
             <View className="heat-info" style={Styles.heatInfo}>
               <View
@@ -26,14 +27,16 @@ export default ({ imageUrls }) => {
                 style={{
                   size: '20px',
                   color: '#d6d6d6',
-                }}></View>
+                }}
+              ></View>
               <Text
                 style={{
                   marginLeft: '8px',
                   color: '#e2e1e1',
                   fontSize: '14px',
                 }}
-                className="heat-value">
+                className="heat-value"
+              >
                 233
               </Text>
             </View>

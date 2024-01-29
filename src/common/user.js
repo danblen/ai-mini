@@ -39,7 +39,23 @@ export const wechatLogin = () =>
     });
   });
 export const logout = () => {
-  clearUserInfo();
+  clearStorageUserInfo();
+  clearGlobalUserInfo();
+};
+
+export const clearStorageUserInfo = async () => {
+  setStorageSync({ key: 'userInfo', data: null });
+};
+export const clearGlobalUserInfo = async () => {
+  global.userInfo = {
+    isLogin: false,
+    data: {
+      points: 0,
+      ischeck: false,
+      userId: '',
+      code: '',
+    },
+  };
 };
 export const getUser = async () => {
   try {
@@ -88,8 +104,4 @@ export const getUpdatedUserInfo = async () => {
   } catch (error) {
     console.error('Error fetching user data:', error);
   }
-};
-
-export const clearUserInfo = async () => {
-  setStorageSync({ key: 'userInfo', data: null });
 };
