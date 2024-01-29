@@ -76,8 +76,8 @@ export default () => {
 
         <View
           style={{
-            fontSize: '40rpx',
-            margin: '20rpx',
+            fontSize: '36rpx',
+            margin: '40rpx 18rpx 18rpx 18rpx ',
             display: 'flex',
             justifyContent: 'space-between',
           }}>
@@ -100,8 +100,8 @@ export default () => {
 
         <View
           style={{
-            fontSize: '40rpx',
-            margin: '30rpx 18rpx 18rpx 18rpx ',
+            fontSize: '36rpx',
+            margin: '40rpx 18rpx 18rpx 18rpx ',
             display: 'flex',
             justifyContent: 'space-between',
           }}>

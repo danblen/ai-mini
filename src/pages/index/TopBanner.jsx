@@ -4,14 +4,7 @@ import React from 'react';
 export default ({ banners }) => {
   return (
     <View style={Styles.container}>
-      <Swiper
-        className="test-h"
-        indicatorColor="#999"
-        indicatorActiveColor="#333"
-        circular
-        indicatorDots
-        autoplay
-        style={Styles.Swiper}>
+      <Swiper circular indicatorDots autoplay style={Styles.Swiper}>
         {banners?.map?.(banner => (
           <SwiperItem>
             <Image
@@ -34,14 +27,17 @@ const Styles = {
   Swiper: {
     height: '400rpx',
     width: '96%',
-    borderRadius: '15rpx',
+    borderRadius: 5,
+    backgroundColor: '#fff',
   },
   container: {
     display: 'flex',
     justifyContent: 'center',
+    backgroundColor: '#fff',
   },
   image: {
     width: '100%',
-    borderRadius: '15rpx',
+    height: '200rpx',
+    borderRadius: 5,
   },
 };

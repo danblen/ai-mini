@@ -28,7 +28,7 @@ export default ({ buttons }) => {
         marginBottom: '20px',
         marginLeft: '18rpx',
         marginRight: '18rpx',
-        borderRadius: '10rpx',
+        borderRadius: '15rpx',
         background: '#fff',
       }}>
       <View style={{ display: 'flex', justifyContent: 'space-between' }}>

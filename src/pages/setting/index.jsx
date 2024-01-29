@@ -1,40 +1,80 @@
 /**
  * 设置页
  */
-import { View } from '@tarojs/components';
+import { Text, View } from '@tarojs/components';
+import Taro from '@tarojs/taro';
 import React, { useCallback, useState } from 'react';
-import { AtList, AtListItem } from 'taro-ui';
 
 export default ({}) => {
   const [current, setCurrent] = useState(0);
   const onClick = useCallback(value => {
     setCurrent(value);
   });
+  const items = [
+    '版本更新',
+    '账户安全设置',
+    '个人信息清单',
+    '隐私协议',
+    '用户协议',
+    '消息推送设置',
+    '清除缓存',
+    '退出登录',
+  ];
   return (
-    <View>
-      <AtList>
-        <AtListItem title="版本更新" />
-        <AtListItem title="账户安全设置" onClick={() => {}} />
-        <AtListItem title="个人信息清单" arrow="right" />
-        <AtListItem title="隐私协议" arrow="right" />
-        <AtListItem title="用户协议" arrow="right" />
-        <AtListItem title="消息推送设置" />
-        <AtListItem title="清除缓存" />
-        <AtListItem title="退出登录" onClick={() => {}} />
-      </AtList>
+    <View style={Style.list}>
+      <View style={Style.item}>
+        <Text style={Style.title}>版本更新</Text>
+      </View>
+      <View style={Style.item} onClick={() => {}}>
+        账户安全设置
+      </View>
+      <View style={Style.item}>个人信息清单</View>
+      <View
+        style={Style.item}
+        onClick={() => {
+          Taro.navigateTo({ url: '/pages/user/privacy/index' });
+        }}>
+        隐私协议
+      </View>
+      <View
+        style={Style.item}
+        onClick={() => {
+          Taro.navigateTo({ url: '/pages/user/agreements/index' });
+        }}>
+        用户协议
+      </View>
+      <View style={Style.item}>消息推送设置</View>
+      <View style={Style.item}>清除缓存</View>
+      <View
+        style={Style.item}
+        onClick={() => {
+          setUserInfo({
+            isLogin: false,
+            data: {},
+          });
+          Taro.setStorageSync('userInfo', {
+            isLogin: false,
+            data: {},
+          });
+        }}>
+        退出登录
+      </View>
     </View>
   );
 };
 const Style = {
-  wrap: {
-    display: 'flex',
+  list: {
+    borderRadius: 10,
+    backgroundColor: '#fff',
+    border: '1px solid #fff',
+    paddingLeft: 20,
+    margin: 10,
   },
   item: {
-    width: '200rpx',
-    height: '50rpx',
-    border: '1px solid #aaa',
+    // backgroundColor: '#fff',
+    borderBottom: '1px solid #f9f9f9',
+    height: '80rpx',
+    lineHeight: '80rpx',
   },
-  start: {
-    width: '500rpx',
-  },
+  title: {},
 };

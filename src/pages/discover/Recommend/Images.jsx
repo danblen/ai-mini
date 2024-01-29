@@ -6,7 +6,7 @@ export default ({ imageUrls }) => {
   return (
     <View style={Styles.container}>
       <View className="" style={Styles.imageList}>
-        {imageUrls?.map?.((src, index) => (
+        {imageUrls?.map?.((url, index) => (
           <View key={index} className="" style={Styles.imageWrap}>
             <Image
               style={Styles.image}
@@ -18,7 +18,7 @@ export default ({ imageUrls }) => {
                   url: '/pages/faceswap/index?imageUrl=' + src,
                 });
               }}
-              src={src}></Image>
+              src={url}></Image>
 
             <View className="heat-info" style={Styles.heatInfo}>
               <View
@@ -61,10 +61,13 @@ const Styles = {
   },
   imageWrap: {
     width: '49%',
+    backgroundColor: '#fff',
+    marginBottom: 10,
+    borderRadius: 5,
   },
   image: {
     width: '100%',
-    borderRadius: '15rpx',
+    borderRadius: 5,
   },
   heatInfo: {
     position: 'relative',

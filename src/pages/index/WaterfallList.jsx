@@ -15,14 +15,19 @@ export default ({ imageListLeft, imageListRight }) => {
             width: '49%',
           }}>
           {imageListLeft?.map((item, index) => (
-            <View>
+            <View
+              style={{
+                backgroundColor: '#fff',
+                marginBottom: 10,
+                borderRadius: 5,
+              }}>
               <Image
                 src={item}
                 lazyLoad
                 style={{
                   width: '100%',
                   marginBottom: '10rpx',
-                  borderRadius: '15rpx',
+                  borderRadius: 5,
                 }}
               />
               desc
@@ -34,15 +39,22 @@ export default ({ imageListLeft, imageListRight }) => {
             width: '49%',
           }}>
           {imageListRight?.map((item, index) => (
-            <Image
-              lazyLoad
-              src={item}
+            <View
               style={{
-                width: '100%',
-                marginBottom: '10rpx',
-                borderRadius: '15rpx',
-              }}
-            />
+                backgroundColor: '#fff',
+                marginBottom: 10,
+                borderRadius: 5,
+              }}>
+              <Image
+                lazyLoad
+                src={item}
+                style={{
+                  width: '100%',
+                  marginBottom: '10rpx',
+                  borderRadius: 5,
+                }}
+              />
+            </View>
           ))}
         </View>
       </View>

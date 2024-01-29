@@ -4,11 +4,12 @@
 import { Image, View } from '@tarojs/components';
 import Taro, { useTabItemTap } from '@tarojs/taro';
 import React, { useState } from 'react';
-import LoginModal from './LoginModal';
 // import CheckIn from "./CheckIn";
 // import BuyPoint from "./BuyPoint";
 import { get_user_info } from '../../api';
 import { wechatLogin } from '../../common/user';
+import { AtFloatLayout } from 'taro-ui';
+import LoginView from './LoginView';
 
 export default () => {
   // const [showBuyPointPopup, setShowBuyPointPopup] = useState(false);
@@ -59,11 +60,10 @@ export default () => {
   });
   return (
     <View style={{}}>
-      {/* <NavigationBar></NavigationBar> */}
       <View
         style={{
-          backgroundColor: ' #ecf0f1',
-          height: '300rpx',
+          backgroundColor: '#f7e9e2',
+          height: '400rpx',
           paddingTop: '140rpx',
         }}>
         <View className="user-box " style={{}}>
@@ -134,132 +134,102 @@ export default () => {
               });
             }}></View>
         </View>
-        {/* {!userInfo?.isLogin && (
-          <View
-            style={{
-              paddingTop: '20rpx',
-            }}>
-            <View
-              className="at-icon at-icon-settings"
-              style={{
-                fontSize: '40rpx',
-                position: 'absolute',
-                top: '10rpx',
-                right: '10rpx',
-              }}
-              onClick={() => {
-                Taro.navigateTo({
-                  url: '/pages/setting/index',
-                });
-              }}></View>
-            <View
-              style={{
-                textAlign: 'center',
-                fontSize: '40rpx',
-              }}>
-              欢迎来到AI写真
-            </View>
-            <Button
-              type="primary"
-              style={{
-                position: 'relative',
-                width: '40%',
-                animation: 'swap 1s infinite',
-              }}
-              loading={loading}
-              onClick={() => setIsOpened(true)}>
-              微信一键登陆
-            </Button>
-          </View>
-        )} */}
       </View>
 
       <View
         style={{
-          fontSize: '40rpx',
-          height: '100rpx',
-          borderRadius: '10px',
-          backgroundColor: '#fff',
-          top: '10rpx',
-          margin: '10px',
-          right: '10rpx',
-          padding: '10rpx',
-        }}
-        onClick={() => {}}>
+          borderRadius: '18px',
+          position: 'relative',
+          backgroundColor: '#f8f8f8',
+          top: '-50rpx',
+          paddingTop: 20,
+        }}>
         <View
           style={{
-            lineHeight: '100rpx',
-          }}>
-          还没签到，去签到
-          <View className="at-icon at-icon-chevron-right" />
+            fontSize: '40rpx',
+            height: '100rpx',
+            borderRadius: '10px',
+            backgroundColor: '#fff',
+            top: '10rpx',
+            margin: '10px',
+            right: '10rpx',
+            padding: '10rpx',
+          }}
+          onClick={() => {}}>
+          <View
+            style={{
+              lineHeight: '100rpx',
+            }}>
+            还没签到，去签到
+            <View className="at-icon at-icon-chevron-right" />
+          </View>
         </View>
-      </View>
 
-      <View style={Style.gridContainerStyle}>
-        <View style={Style.gridItemStyle}>
-          <View
-            className="at-icon at-icon-settings"
-            style={{
-              fontSize: '40rpx',
-              width: '40rpx',
-              top: '10rpx',
-              right: '10rpx',
-            }}
-            onClick={() => {
-              Taro.navigateTo({ url: '/pages/album/index' });
-            }}></View>
-          <View>我的作品</View>
+        <View style={Style.gridContainerStyle}>
+          <View style={Style.gridItemStyle}>
+            <View
+              className="at-icon at-icon-settings"
+              style={{
+                fontSize: '40rpx',
+                width: '40rpx',
+                top: '10rpx',
+                right: '10rpx',
+              }}
+              onClick={() => {
+                Taro.navigateTo({ url: '/pages/album/index' });
+              }}></View>
+            <View>我的作品</View>
+          </View>
+          <View style={Style.gridItemStyle}>
+            <View
+              className="at-icon at-icon-settings"
+              style={{
+                fontSize: '40rpx',
+                width: '40rpx',
+                top: '10rpx',
+                right: '10rpx',
+              }}
+              onClick={() => {}}></View>
+            <View>我的积分</View>
+          </View>
+          <View style={Style.gridItemStyle}>
+            <View
+              className="at-icon at-icon-settings"
+              style={{
+                fontSize: '40rpx',
+                width: '40rpx',
+                top: '10rpx',
+                right: '10rpx',
+              }}
+              onClick={() => {}}></View>
+            <View>我的签到</View>
+          </View>
+          <View style={Style.gridItemStyle}>
+            <View
+              className="at-icon at-icon-settings"
+              style={{
+                fontSize: '40rpx',
+                width: '40rpx',
+                top: '10rpx',
+                right: '10rpx',
+              }}
+              onClick={() => {}}></View>
+            <View>我的签到</View>
+          </View>
+          <View style={Style.gridItemStyle}>
+            <View
+              className="at-icon at-icon-settings"
+              style={{
+                fontSize: '40rpx',
+                width: '40rpx',
+                top: '10rpx',
+                right: '10rpx',
+              }}
+              onClick={() => {}}></View>
+            <View>我的签到</View>
+          </View>
         </View>
-        <View style={Style.gridItemStyle}>
-          <View
-            className="at-icon at-icon-settings"
-            style={{
-              fontSize: '40rpx',
-              width: '40rpx',
-              top: '10rpx',
-              right: '10rpx',
-            }}
-            onClick={() => {}}></View>
-          <View>我的积分</View>
-        </View>
-        <View style={Style.gridItemStyle}>
-          <View
-            className="at-icon at-icon-settings"
-            style={{
-              fontSize: '40rpx',
-              width: '40rpx',
-              top: '10rpx',
-              right: '10rpx',
-            }}
-            onClick={() => {}}></View>
-          <View>我的签到</View>
-        </View>
-        <View style={Style.gridItemStyle}>
-          <View
-            className="at-icon at-icon-settings"
-            style={{
-              fontSize: '40rpx',
-              width: '40rpx',
-              top: '10rpx',
-              right: '10rpx',
-            }}
-            onClick={() => {}}></View>
-          <View>我的签到</View>
-        </View>
-        <View style={Style.gridItemStyle}>
-          <View
-            className="at-icon at-icon-settings"
-            style={{
-              fontSize: '40rpx',
-              width: '40rpx',
-              top: '10rpx',
-              right: '10rpx',
-            }}
-            onClick={() => {}}></View>
-          <View>我的签到</View>
-        </View>
-      </View>
-      {/* <View style={Style.cardStyle}>
+        {/* <View style={Style.cardStyle}>
         <AtList>
           <AtListItem
             title="剩余积分"
@@ -290,29 +260,32 @@ export default () => {
           />
         </AtList>
       </View> */}
-
+      </View>
       {/* <BuyPoint />
       <GetPoint /> */}
-      <LoginModal
+
+      <AtFloatLayout
         isOpened={isOpened}
-        onConfirmLogin={async () => {
-          const res = await wechatLogin();
-          if (res) {
-            setUserInfo({
-              isLogin: true,
-              data: res.data,
-            });
-            Taro.setStorageSync('userInfo', {
-              isLogin: true,
-              data: res.data,
-            });
-            setIsOpened(false);
-          }
-        }}
         onClose={() => {
           setIsOpened(false);
-        }}
-      />
+        }}>
+        <LoginView
+          onConfirmLogin={async () => {
+            const res = await wechatLogin();
+            if (res) {
+              setUserInfo({
+                isLogin: true,
+                data: res.data,
+              });
+              Taro.setStorageSync('userInfo', {
+                isLogin: true,
+                data: res.data,
+              });
+              setIsOpened(false);
+            }
+          }}
+        />
+      </AtFloatLayout>
     </View>
   );
 };
