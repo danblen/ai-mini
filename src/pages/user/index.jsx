@@ -9,7 +9,7 @@ import React, { useState } from 'react';
 import { get_user_info } from '../../api';
 import { wechatLogin } from '../../common/user';
 import { AtFloatLayout } from 'taro-ui';
-import LoginView from './LoginView';
+import LoginView from '../comps/LoginView';
 
 export default () => {
   // const [showBuyPointPopup, setShowBuyPointPopup] = useState(false);
@@ -32,12 +32,12 @@ export default () => {
         user_id: userInfo.data.user_id,
       });
       if (res) {
-        setUserInfo(pre => ({
+        setUserInfo((pre) => ({
           ...pre,
           isLogin: true,
           data: res.data,
         }));
-        Taro.setStorageSync('userInfo', {
+        setStorageSync('userInfo', {
           isLogin: true,
           data: res.data,
         });
@@ -55,7 +55,7 @@ export default () => {
     }
   };
 
-  useTabItemTap(tab => {
+  useTabItemTap((tab) => {
     fetchUserInfo();
   });
   return (
@@ -65,7 +65,8 @@ export default () => {
           backgroundColor: '#f7e9e2',
           height: '400rpx',
           paddingTop: '140rpx',
-        }}>
+        }}
+      >
         <View className="user-box " style={{}}>
           <Image
             mode="aspectFill"
@@ -86,7 +87,8 @@ export default () => {
             style={{
               display: 'inline-block',
               marginLeft: '50rpx',
-            }}>
+            }}
+          >
             {userInfo?.isLogin && (
               <View>
                 <View
@@ -94,7 +96,8 @@ export default () => {
                     fontSize: '40rpx',
                     height: '100rpx',
                     verticalAlign: 'top',
-                  }}>
+                  }}
+                >
                   微信用户
                 </View>
                 <View className=" ">
@@ -114,7 +117,8 @@ export default () => {
                   animation: 'swap 1s infinite',
                 }}
                 loading={loading}
-                onClick={() => setIsOpened(true)}>
+                onClick={() => setIsOpened(true)}
+              >
                 微信一键登陆
                 <View className="at-icon at-icon-chevron-right" />
               </View>
@@ -132,7 +136,8 @@ export default () => {
               Taro.navigateTo({
                 url: '/pages/setting/index',
               });
-            }}></View>
+            }}
+          ></View>
         </View>
       </View>
 
@@ -143,7 +148,8 @@ export default () => {
           backgroundColor: '#f8f8f8',
           top: '-50rpx',
           paddingTop: 20,
-        }}>
+        }}
+      >
         <View
           style={{
             fontSize: '40rpx',
@@ -155,11 +161,13 @@ export default () => {
             right: '10rpx',
             padding: '10rpx',
           }}
-          onClick={() => {}}>
+          onClick={() => {}}
+        >
           <View
             style={{
               lineHeight: '100rpx',
-            }}>
+            }}
+          >
             还没签到，去签到
             <View className="at-icon at-icon-chevron-right" />
           </View>
@@ -177,7 +185,8 @@ export default () => {
               }}
               onClick={() => {
                 Taro.navigateTo({ url: '/pages/album/index' });
-              }}></View>
+              }}
+            ></View>
             <View>我的作品</View>
           </View>
           <View style={Style.gridItemStyle}>
@@ -189,7 +198,8 @@ export default () => {
                 top: '10rpx',
                 right: '10rpx',
               }}
-              onClick={() => {}}></View>
+              onClick={() => {}}
+            ></View>
             <View>我的积分</View>
           </View>
           <View style={Style.gridItemStyle}>
@@ -201,7 +211,8 @@ export default () => {
                 top: '10rpx',
                 right: '10rpx',
               }}
-              onClick={() => {}}></View>
+              onClick={() => {}}
+            ></View>
             <View>我的签到</View>
           </View>
           <View style={Style.gridItemStyle}>
@@ -213,7 +224,8 @@ export default () => {
                 top: '10rpx',
                 right: '10rpx',
               }}
-              onClick={() => {}}></View>
+              onClick={() => {}}
+            ></View>
             <View>我的签到</View>
           </View>
           <View style={Style.gridItemStyle}>
@@ -225,7 +237,8 @@ export default () => {
                 top: '10rpx',
                 right: '10rpx',
               }}
-              onClick={() => {}}></View>
+              onClick={() => {}}
+            ></View>
             <View>我的签到</View>
           </View>
         </View>
@@ -268,7 +281,8 @@ export default () => {
         isOpened={isOpened}
         onClose={() => {
           setIsOpened(false);
-        }}>
+        }}
+      >
         <LoginView
           onConfirmLogin={async () => {
             const res = await wechatLogin();

@@ -17,7 +17,8 @@ export default ({ onConfirmLogin }) => {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-        }}>
+        }}
+      >
         <View style={{ fontSize: '40rpx', marginBottom: '40rpx' }}>
           欢迎登录
         </View>
@@ -46,7 +47,8 @@ export default ({ onConfirmLogin }) => {
               return;
             }
             onConfirmLogin();
-          }}>
+          }}
+        >
           微信授权登录
         </View>
 
@@ -54,7 +56,8 @@ export default ({ onConfirmLogin }) => {
           <Checkbox
             style={{ fontSize: '20rpx' }}
             checked={isCheckPolicy}
-            onClick={() => setIsCheckPolicy(!isCheckPolicy)}></Checkbox>
+            onClick={() => setIsCheckPolicy(!isCheckPolicy)}
+          ></Checkbox>
           <Text>我已阅读并同意</Text>
           <Text
             style={{ color: 'blue' }}
@@ -62,7 +65,8 @@ export default ({ onConfirmLogin }) => {
               Taro.navigateTo({
                 url: agreementsUrl,
               });
-            }}>
+            }}
+          >
             《用户协议》
           </Text>
           和
@@ -72,7 +76,8 @@ export default ({ onConfirmLogin }) => {
               Taro.navigateTo({
                 url: privacyUrl,
               });
-            }}>
+            }}
+          >
             《隐私协议》
           </Text>
         </View>

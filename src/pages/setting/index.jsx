@@ -7,7 +7,7 @@ import React, { useCallback, useState } from 'react';
 
 export default ({}) => {
   const [current, setCurrent] = useState(0);
-  const onClick = useCallback(value => {
+  const onClick = useCallback((value) => {
     setCurrent(value);
   });
   const items = [
@@ -33,14 +33,16 @@ export default ({}) => {
         style={Style.item}
         onClick={() => {
           Taro.navigateTo({ url: '/pages/user/privacy/index' });
-        }}>
+        }}
+      >
         隐私协议
       </View>
       <View
         style={Style.item}
         onClick={() => {
           Taro.navigateTo({ url: '/pages/user/agreements/index' });
-        }}>
+        }}
+      >
         用户协议
       </View>
       <View style={Style.item}>消息推送设置</View>
@@ -56,7 +58,8 @@ export default ({}) => {
             isLogin: false,
             data: {},
           });
-        }}>
+        }}
+      >
         退出登录
       </View>
     </View>

@@ -1,7 +1,7 @@
-import { View, Text, Image } from "@tarojs/components";
-import React from "react";
-import { AtIcon } from "taro-ui";
-import Taro from "@tarojs/taro";
+import { View, Text, Image } from '@tarojs/components';
+import React from 'react';
+import { AtIcon } from 'taro-ui';
+import Taro from '@tarojs/taro';
 
 export default ({ imageUrls }) => {
   return (
@@ -16,7 +16,7 @@ export default ({ imageUrls }) => {
               className=" "
               onClick={() => {
                 Taro.navigateTo({
-                  url: "/pages/faceswap/index?imageUrl=" + src,
+                  url: '/pages/faceswap/index?imageUrl=' + src,
                 });
               }}
               src={src}
@@ -26,9 +26,9 @@ export default ({ imageUrls }) => {
               <AtIcon value="eye" size="20" color="#d6d6d6"></AtIcon>
               <Text
                 style={{
-                  marginLeft: "8px",
-                  color: "#e2e1e1",
-                  fontSize: "14px",
+                  marginLeft: '8px',
+                  color: '#e2e1e1',
+                  fontSize: '14px',
                 }}
                 className="heat-value"
               >
@@ -48,38 +48,38 @@ export default ({ imageUrls }) => {
 
 const Styles = {
   image: {
-    width: "360rpx",
-    borderRadius: "10rpx",
-    position: "relative",
+    width: '360rpx',
+    borderRadius: '10rpx',
+    position: 'relative',
   },
   heatInfo: {
-    position: "relative",
-    top: "-25px",
-    right: "-135px",
-    borderRadius: "10%",
-    backgroundColor: "rgba(2, 0, 0, 0.08)",
-    width: "68px",
+    position: 'relative',
+    top: '-25px',
+    right: '-135px',
+    borderRadius: '10%',
+    backgroundColor: 'rgba(2, 0, 0, 0.08)',
+    width: '68px',
   },
   imageWrap: {
-    paddingLeft: "10rpx",
-    display: "flex",
-    flexDirection: "column",
+    paddingLeft: '10rpx',
+    display: 'flex',
+    flexDirection: 'column',
     flex: 1,
   },
   imageList: {
-    display: "flex",
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "space-between",
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
   },
   text: {
     flex: 1,
-    marginTop: "-17px",
-    marginBottom: "5px",
-    overflow: "hidden",
-    display: "-webkit-box",
-    WebkitBoxOrient: "vertical",
+    marginTop: '-17px',
+    marginBottom: '5px',
+    overflow: 'hidden',
+    display: '-webkit-box',
+    WebkitBoxOrient: 'vertical',
     WebkitLineClamp: 2, // 控制显示行数
-    color: "#868686",
+    color: '#868686',
   },
 };

@@ -10,15 +10,17 @@ export default ({ albums }) => {
       style={{
         borderRadius: '15rpx',
         marginTop: '20rpx',
-      }}>
+      }}
+    >
       <ScrollView
         style={{
           whiteSpace: 'nowrap',
           display: 'flex',
         }}
         scrollX
-        scrollWithAnimation>
-        {Object.values(albums)?.map?.(albumData => (
+        scrollWithAnimation
+      >
+        {Object.values(albums)?.map?.((albumData) => (
           <Image
             style={{
               marginLeft: '18rpx',
@@ -38,7 +40,8 @@ export default ({ albums }) => {
                 },
               });
             }}
-            src={albumData.index}></Image>
+            src={albumData.index}
+          ></Image>
         ))}
       </ScrollView>
     </View>

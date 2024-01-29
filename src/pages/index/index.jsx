@@ -21,6 +21,7 @@ export default () => {
   };
   useEffect(() => {
     getAllImages();
+    console.log(3424, global, global.isaaa);
   }, []);
   return (
     <>
@@ -29,7 +30,8 @@ export default () => {
       <View
         style={{
           marginTop: '180rpx',
-        }}>
+        }}
+      >
         <TopBanner banners={allImages?.banners} />
         <ButtonsBox
           buttons={[
@@ -80,7 +82,8 @@ export default () => {
             margin: '40rpx 18rpx 18rpx 18rpx ',
             display: 'flex',
             justifyContent: 'space-between',
-          }}>
+          }}
+        >
           <Text style={{}}>写真集</Text>
           {/* <View
           style={{
@@ -104,7 +107,8 @@ export default () => {
             margin: '40rpx 18rpx 18rpx 18rpx ',
             display: 'flex',
             justifyContent: 'space-between',
-          }}>
+          }}
+        >
           <Text style={{}}>最近热门</Text>
         </View>
         <WaterfallList

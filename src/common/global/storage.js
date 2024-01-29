@@ -3,7 +3,7 @@ userInfo = {
   data: {
     points: 0,
     ischeck: false,
-    userId: "",
-    code: "",
+    userId: '',
+    code: '',
   },
 };
