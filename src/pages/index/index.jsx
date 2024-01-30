@@ -15,6 +15,7 @@ export default () => {
   let [allImages, setAllImages] = useState({ albums: {}, tags_image: {} });
   const getAllImages = async () => {
     let allImages = await get_all_images();
+    console.log(allImages);
     if (allImages) {
       setAllImages(allImages);
     }
@@ -108,11 +109,11 @@ export default () => {
             justifyContent: 'space-between',
           }}
         >
-          <Text style={{}}>最近热门</Text>
+          {/* <Text style={{}}>最近热门</Text> */}
         </View>
         <WaterfallList
-          imageListLeft={allImages?.tags_image['古装']}
-          imageListRight={allImages?.tags_image['氛围感']}
+          imageListLeft={allImages?.activity_tags_image?.['纯欲'] || []}
+          imageListRight={allImages?.activity_tags_image?.['氛围感'] || []}
         />
       </View>
     </>
