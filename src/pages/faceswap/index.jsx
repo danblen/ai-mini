@@ -72,28 +72,28 @@ export default () => {
     // data的任何字段都要匹配数据库字段
     data.user_like_status = rating;
     data.request_id = requestId;
-    updateUserProcessInfo(data);
+    // updateUserProcessInfo(data);
   }, [rating]);
 
-  const onUpdateTaskImages = async requestId => {
+  const onUpdateTaskImages = async (requestId) => {
     const newImage = {
       src: '',
       status: 'pending',
       requestId,
     };
-    setImages(prevImages => [...prevImages, newImage]);
+    setImages((prevImages) => [...prevImages, newImage]);
 
     const res = await getTaskImage(requestId);
-    setImages(prevImages =>
-      prevImages.map(image =>
+    setImages((prevImages) =>
+      prevImages.map((image) =>
         image.requestId === requestId
           ? {
               ...image,
               src: 'data:image/png;base64,' + res.result.images[0],
               status: 'SUCCESS',
             }
-          : image,
-      ),
+          : image
+      )
     );
     setRequestId(requestId);
     Taro.getApp().globalData.updateGlobalClickCount(-1);
@@ -101,10 +101,10 @@ export default () => {
     Taro.eventCenter.trigger('globalClickCountChanged', updatedClickCount);
   };
 
-  const onTouchStart = event => {
+  const onTouchStart = (event) => {
     setStartX(event.touches[0].clientX);
   };
-  const onTouchEnd = event => {
+  const onTouchEnd = (event) => {
     const endX = event.changedTouches[0].clientX;
     const deltaX = endX - startX;
 
@@ -119,7 +119,8 @@ export default () => {
     <View
       onTouchstart={onTouchStart}
       onTouchEnd={onTouchEnd}
-      style={{ background: 'black', height: '100vh' }}>
+      style={{ background: 'black', height: '100vh' }}
+    >
       <CustomNavBar></CustomNavBar>
       <View
         style={{
@@ -129,7 +130,8 @@ export default () => {
           alignItems: 'center',
           width: '100%',
           height: '90vh',
-        }}>
+        }}
+      >
         <Image
           mode="widthFix"
           style={{
@@ -169,7 +171,8 @@ export default () => {
             display: 'flex',
             flexDirection: 'column', // 将按钮排成一列
             alignItems: 'center',
-          }}>
+          }}
+        >
           {showImageSwap && (
             <View
               style={{
@@ -177,51 +180,44 @@ export default () => {
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
-              }}>
+              }}
+            >
               <Image
                 src={rating === 1 ? IconGood : IconGood1}
                 style={{ width: '24px', height: '24px' }}
-                onClick={() => setRating(prev => (prev === 1 ? 0 : 1))}
+                onClick={() => setRating((prev) => (prev === 1 ? 0 : 1))}
               />
               <Image
                 src={rating === -1 ? IconBad : IconBad1}
                 style={{
                   width: '24px',
                   height: '24px',
-                  // marginLeft: "5px",
                   marginTop: '20px',
                 }}
-                onClick={() => setRating(prev => (prev === -1 ? 0 : -1))}
+                onClick={() => setRating((prev) => (prev === -1 ? 0 : -1))}
               />
             </View>
           )}
           {showImageSwap && (
             <View
               type="primary"
-              onClick={() => setCompareImageSwap(prev => !prev)}
+              onClick={() => setCompareImageSwap((prev) => !prev)}
               style={{
                 backgroundColor: showImageSwap ? '#ccc' : '#ccc',
                 width: '50px',
                 height: '50px',
                 borderRadius: '50%', // 圆形背景
                 marginTop: '20px',
-                // marginLeft: "20px",
-                // display: "flex",
-                // justifyContent: "center",
-                // alignItems: "center",
-              }}>
+              }}
+            >
               <Image
                 src={compareIcon}
                 mode="widthFix"
                 style={{
                   width: '50rpx',
                   height: '50rpx',
-                  // position: "absolute",
-                  // top: "25rpx",
-                  // left: "25rpx",
                   marginTop: '10px',
                   marginLeft: '10px',
-                  // filter: showImageSwap ? "grayscale(100%)" : "",
                 }}
               />
             </View>
@@ -240,7 +236,8 @@ export default () => {
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
-        }}>
+        }}
+      >
         <View
           style={{
             width: '95%',
@@ -249,10 +246,11 @@ export default () => {
             background: 'transparent', // 将背景改为透明
             opacity: 1,
             color: 'white',
-          }}>
+          }}
+        >
           <ImagePicker
-            onFilesChange={images => setUploadedFiles(images)}
-            onSelectImage={index => {
+            onFilesChange={(images) => setUploadedFiles(images)}
+            onSelectImage={(index) => {
               setSelectedIndex(index);
             }}
           />
@@ -260,13 +258,11 @@ export default () => {
         <SwapButton
           imageUrl={imageUrl}
           selectedImageUrl={
-            uploadedFiles[selectedIndex]?.compressBase64 // 检查是否存在 compressBase64 属性
-              ? uploadedFiles[selectedIndex].compressBase64 // 如果存在，使用 compressBase64
-              : uploadedFiles[selectedIndex]?.url // 否则检查是否存在 url 属性
-              ? uploadedFiles[selectedIndex].url // 如果存在，使用 url
-              : '' // 如果都不存在，设置为空字符串或者其他默认值
+            uploadedFiles[selectedIndex]?.compressBase64 ||
+            uploadedFiles[selectedIndex]?.url
           }
-          onUpdateTaskImages={onUpdateTaskImages}></SwapButton>
+          onUpdateTaskImages={onUpdateTaskImages}
+        ></SwapButton>
       </View>
 
       <AtDrawer
@@ -275,7 +271,8 @@ export default () => {
         mask
         width="80%"
         onClose={() => setShowDrawer(false)}
-        style={{ background: 'black', height: '100%' }}>
+        style={{ background: 'black', height: '100%' }}
+      >
         <TaskList images={images} />
       </AtDrawer>
     </View>

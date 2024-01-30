@@ -6,7 +6,8 @@ export default ({ tags_image }) => {
     <View
       style={{
         marginTop: '170rpx',
-      }}>
+      }}
+    >
       <TabsImageList tags_image={tags_image}></TabsImageList>
     </View>
   );

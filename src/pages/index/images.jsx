@@ -1,7 +1,6 @@
-import { View, Text, Image } from '@tarojs/components';
+import { Image, Text, View } from '@tarojs/components';
 import React from 'react';
 import { AtIcon } from 'taro-ui';
-import Taro from '@tarojs/taro';
 
 export default ({ imageUrls }) => {
   return (

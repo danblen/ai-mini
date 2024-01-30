@@ -16,11 +16,13 @@ export default ({ currentTab, onSwitchTab }) => {
         zIndex: '10',
         width: '100%',
         backgroundColor: 'white',
-      }}>
+      }}
+    >
       <View
         style={{
           display: 'flex',
-        }}>
+        }}
+      >
         <View
           className="at-icon at-icon-menu"
           style={{
@@ -31,12 +33,14 @@ export default ({ currentTab, onSwitchTab }) => {
           }}
           onClick={() => {
             setShowDrawer(true);
-          }}></View>
+          }}
+        ></View>
         <View
           style={{
             marginLeft: '180rpx',
             lineHeight: '100rpx',
-          }}>
+          }}
+        >
           <Text
             style={{
               fontSize: '30rpx',
@@ -44,7 +48,8 @@ export default ({ currentTab, onSwitchTab }) => {
             }}
             onClick={() => {
               onSwitchTab('recommend');
-            }}>
+            }}
+          >
             推荐
           </Text>
           <Text
@@ -55,7 +60,8 @@ export default ({ currentTab, onSwitchTab }) => {
             }}
             onClick={() => {
               onSwitchTab('hot');
-            }}>
+            }}
+          >
             热门
           </Text>
           <Text
@@ -66,7 +72,8 @@ export default ({ currentTab, onSwitchTab }) => {
             }}
             onClick={() => {
               onSwitchTab('new');
-            }}>
+            }}
+          >
             动态
           </Text>
         </View>

@@ -26,9 +26,10 @@ export default ({}) => {
     <View>
       <NavBar
         currentTab={currentTab}
-        onSwitchTab={tabName => {
+        onSwitchTab={(tabName) => {
           setCurrentTab(tabName);
-        }}></NavBar>
+        }}
+      ></NavBar>
 
       {currentTab === 'recommend' && (
         <Recommend tags_image={allImages?.tags_image} />

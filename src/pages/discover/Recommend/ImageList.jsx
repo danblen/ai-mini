@@ -15,7 +15,7 @@ export default ({ imageUrls }) => {
               className=" "
               onClick={() => {
                 navigateTo({
-                  url: '/pages/faceswap/index?imageUrl=' + src,
+                  url: '/pages/faceswap/index?imageUrl=' + url,
                 });
               }}
               src={url}

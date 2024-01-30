@@ -21,7 +21,6 @@ export default () => {
   };
   useEffect(() => {
     getAllImages();
-    console.log(3424, global, global.isaaa);
   }, []);
   return (
     <>
