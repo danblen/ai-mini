@@ -1,7 +1,5 @@
 import { Text, View } from '@tarojs/components';
-import Taro from '@tarojs/taro';
 import { useState } from 'react';
-import { AtDrawer } from 'taro-ui';
 import LeftDrawer from '../comps/LeftDrawer';
 
 export default () => {
