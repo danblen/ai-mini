@@ -17,12 +17,14 @@ export default () => {
         zIndex: '10',
         width: '100%',
         backgroundColor: 'white',
-      }}>
+      }}
+    >
       <View
         style={{
           display: 'flex',
           alignItems: 'center',
-        }}>
+        }}
+      >
         <View
           className="at-icon at-icon-menu"
           style={{
@@ -34,7 +36,8 @@ export default () => {
           }}
           onClick={() => {
             setShowDrawer(true);
-          }}></View>
+          }}
+        ></View>
         <View
           style={{
             width: '400rpx',
@@ -46,18 +49,21 @@ export default () => {
             backgroundColor: '#f5f5f5',
           }}
           onClick={() => {
-            Taro.navigateTo({ url: '/pages/search/index' });
-          }}>
+            navigateTo({ url: '/pages/search/index' });
+          }}
+        >
           <View
             className="at-icon at-icon-search"
             style={{
               fontSize: '30rpx',
-            }}></View>
+            }}
+          ></View>
           <Text
             style={{
               fontSize: '30rpx',
               marginLeft: '10rpx',
-            }}>
+            }}
+          >
             搜全站
           </Text>
         </View>

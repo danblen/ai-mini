@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import {
   View,
   Image,
@@ -7,8 +7,8 @@ import {
   Swiper,
   SwiperItem,
   Text,
-} from "@tarojs/components";
-import Taro from "@tarojs/taro";
+} from '@tarojs/components';
+import Taro from '@tarojs/taro';
 
 const Home = () => {
   // const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -31,12 +31,12 @@ const Home = () => {
   // };
 
   // const navigateTo = (url, src) => {
-  //   Taro.navigateTo({
+  //   navigateTo({
   //     url: url + "?src=" + src,
   //   });
   // };
   return (
-    <View style={{ marginTop: "10px" }}>
+    <View style={{ marginTop: '10px' }}>
       {/* <View
         style={{
           position: 'fixed',
@@ -57,8 +57,8 @@ const Home = () => {
         mode="aspectFill"
         src="https://danblen.github.io/static/index.jpg"
         onClick={() => {
-          Taro.navigateTo({
-            url: "/pages/faceswap/index?imageUrl=https://danblen.github.io/static/index.jpg",
+          navigateTo({
+            url: '/pages/faceswap/index?imageUrl=https://danblen.github.io/static/index.jpg',
           });
         }}
       ></Image>
@@ -114,12 +114,12 @@ const Home = () => {
 
 const styles = {
   cardStyle: {
-    borderRadius: "8px",
-    marginTop: "5px",
-    marginBottom: "10px",
-    marginLeft: "10px",
-    marginRight: "10px",
-    border: "5px solid",
+    borderRadius: '8px',
+    marginTop: '5px',
+    marginBottom: '10px',
+    marginLeft: '10px',
+    marginRight: '10px',
+    border: '5px solid',
   },
 };
 

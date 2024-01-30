@@ -62,7 +62,7 @@ export default ({ onConfirmLogin }) => {
           <Text
             style={{ color: 'blue' }}
             onClick={() => {
-              Taro.navigateTo({
+              navigateTo({
                 url: agreementsUrl,
               });
             }}
@@ -73,7 +73,7 @@ export default ({ onConfirmLogin }) => {
           <Text
             style={{ color: 'blue' }}
             onClick={() => {
-              Taro.navigateTo({
+              navigateTo({
                 url: privacyUrl,
               });
             }}

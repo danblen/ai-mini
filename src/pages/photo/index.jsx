@@ -1,12 +1,12 @@
-import { Image, View } from "@tarojs/components";
-import Taro from "@tarojs/taro";
-import React, { useEffect, useState } from "react";
-import { AtDrawer } from "taro-ui";
-import TaskList from "../comps/TaskList";
-import ActionButton from "./ActionButton";
-import { clearTimers, getTaskImage } from "../../common/getTaskImage";
-import ImagePicker from "../comps/ImagePicker";
-import CustomNavBar from "../index/CustomNavBar.jsx";
+import { Image, View } from '@tarojs/components';
+import Taro from '@tarojs/taro';
+import React, { useEffect, useState } from 'react';
+import { AtDrawer } from 'taro-ui';
+import TaskList from '../comps/TaskList';
+import ActionButton from './ActionButton';
+import { clearTimers, getTaskImage } from '../../common/getTaskImage';
+import ImagePicker from '../comps/ImagePicker';
+import CustomNavBar from '../index/CustomNavBar.jsx';
 
 export default () => {
   const [uploadedFiles, setUploadedFiles] = useState([]);
@@ -14,7 +14,7 @@ export default () => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   useEffect(() => {
     const eventChannel = Taro.getCurrentInstance().page.getOpenerEventChannel();
-    eventChannel.on("acceptDataFromOpenerPage", (data) => {
+    eventChannel.on('acceptDataFromOpenerPage', (data) => {
       const albumData = data.albumData;
       setAlbumData(albumData);
     });
@@ -28,8 +28,8 @@ export default () => {
 
   const onUpdateTaskImages = async (requestId) => {
     const newImage = {
-      src: "",
-      status: "pending",
+      src: '',
+      status: 'pending',
       requestId,
     };
     setImages((prevImages) => [...prevImages, newImage]);
@@ -40,8 +40,8 @@ export default () => {
         image.requestId === requestId
           ? {
               ...image,
-              src: "data:image/png;base64," + res.result.images[0],
-              status: "SUCCESS",
+              src: 'data:image/png;base64,' + res.result.images[0],
+              status: 'SUCCESS',
             }
           : image
       )
@@ -69,22 +69,22 @@ export default () => {
         onTouchEnd={onTouchEnd}
         className=""
         style={{
-          marginBottom: "200rpx",
+          marginBottom: '200rpx',
         }}
       >
         <View className="">
           <View
             style={{
-              height: "50vh",
-              overflow: "hidden",
-              position: "relative",
-              marginBottom: "20rpx",
+              height: '50vh',
+              overflow: 'hidden',
+              position: 'relative',
+              marginBottom: '20rpx',
             }}
           >
             <Image
               style={{
-                width: "100%",
-                position: "absolute",
+                width: '100%',
+                position: 'absolute',
                 top: 0,
                 left: 0,
               }}
@@ -99,7 +99,7 @@ export default () => {
                 className=" "
                 mode="scaleToFill"
                 // onClick={() => {
-                //   Taro.navigateTo({
+                //   navigateTo({
                 //     url: faceswapPage,
                 //   });
                 // }}
@@ -111,23 +111,23 @@ export default () => {
 
         <View
           style={{
-            position: "fixed",
-            width: "100%",
-            bottom: "60rpx",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
+            position: 'fixed',
+            width: '100%',
+            bottom: '60rpx',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
           }}
         >
           <View
             style={{
-              width: "95%",
-              marginBottom: "40rpx",
-              borderRadius: "20rpx",
-              background: "grey",
+              width: '95%',
+              marginBottom: '40rpx',
+              borderRadius: '20rpx',
+              background: 'grey',
               opacity: 0.8,
-              color: "white",
+              color: 'white',
             }}
           >
             <ImagePicker
@@ -139,7 +139,7 @@ export default () => {
           </View>
           <View
             style={{
-              width: "95%",
+              width: '95%',
             }}
           >
             <ActionButton
@@ -156,11 +156,11 @@ export default () => {
           mask
           width="80%"
           onClose={() => setShowDrawer(false)}
-          style={{ background: "black", height: "100%" }}
+          style={{ background: 'black', height: '100%' }}
         >
           <TaskList images={images} />
         </AtDrawer>
-        <View style={{ height: "200rpx" }}></View>
+        <View style={{ height: '200rpx' }}></View>
       </View>
     </>
   );
@@ -168,11 +168,11 @@ export default () => {
 const Styles = {
   indexImage: {},
   image: {
-    width: "360rpx",
-    borderRadius: "10rpx",
+    width: '360rpx',
+    borderRadius: '10rpx',
   },
   imageWrap: {
-    paddingLeft: "10rpx",
-    display: "inline-block",
+    paddingLeft: '10rpx',
+    display: 'inline-block',
   },
 };

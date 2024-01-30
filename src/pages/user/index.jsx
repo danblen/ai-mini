@@ -133,7 +133,7 @@ export default () => {
               right: '30rpx',
             }}
             onClick={() => {
-              Taro.navigateTo({
+              navigateTo({
                 url: '/pages/setting/index',
               });
             }}
@@ -184,7 +184,7 @@ export default () => {
                 right: '10rpx',
               }}
               onClick={() => {
-                Taro.navigateTo({ url: '/pages/album/index' });
+                navigateTo({ url: '/pages/album/index' });
               }}
             ></View>
             <View>我的作品</View>

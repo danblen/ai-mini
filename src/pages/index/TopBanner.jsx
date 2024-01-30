@@ -5,18 +5,19 @@ export default ({ banners }) => {
   return (
     <View style={Styles.container}>
       <Swiper circular indicatorDots autoplay style={Styles.Swiper}>
-        {banners?.map?.(banner => (
+        {banners?.map?.((banner) => (
           <SwiperItem>
             <Image
               style={Styles.image}
               className=" "
               mode="widthFix"
               onClick={() => {
-                Taro.navigateTo({
+                navigateTo({
                   url: '/pages/faceswap/index?imageUrl=' + banner,
                 });
               }}
-              src={banner}></Image>
+              src={banner}
+            ></Image>
           </SwiperItem>
         ))}
       </Swiper>

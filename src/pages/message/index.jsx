@@ -9,7 +9,7 @@ import Taro from '@tarojs/taro';
 
 export default ({}) => {
   const [current, setCurrent] = useState(0);
-  const onClick = useCallback(value => {
+  const onClick = useCallback((value) => {
     setCurrent(value);
   });
   return (
@@ -19,7 +19,7 @@ export default ({}) => {
         <AtListItem
           title="有已完成的作品"
           onClick={() => {
-            Taro.navigateTo({
+            navigateTo({
               url: '/pages/album/index',
             });
           }}

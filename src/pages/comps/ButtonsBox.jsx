@@ -15,7 +15,7 @@ export default ({ buttons }) => {
 
     const url = `${pagePath}?${encodedParams}`;
 
-    Taro.navigateTo({
+    navigateTo({
       url: url,
     });
   };
@@ -30,20 +30,23 @@ export default ({ buttons }) => {
         marginRight: '18rpx',
         borderRadius: '15rpx',
         background: '#fff',
-      }}>
+      }}
+    >
       <View style={{ display: 'flex', justifyContent: 'space-between' }}>
         {buttons.map((button, index) => (
           <View
             key={index}
             className="button-wrapper"
-            onClick={() => handleButtonClick(button.pagePath, button.params)}>
+            onClick={() => handleButtonClick(button.pagePath, button.params)}
+          >
             <View
               style={{
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
                 flex: 1,
-              }}>
+              }}
+            >
               <Image
                 src={button.imageUrl}
                 style={{ width: '50px', height: '50px' }}
@@ -54,7 +57,8 @@ export default ({ buttons }) => {
                   textAlign: 'center',
                   marginTop: '5px',
                   flex: 1,
-                }}>
+                }}
+              >
                 {button.text}
               </Text>
             </View>

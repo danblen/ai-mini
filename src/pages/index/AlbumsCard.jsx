@@ -30,7 +30,7 @@ export default ({ albums }) => {
             className=" "
             mode="widthFix"
             onClick={() => {
-              Taro.navigateTo({
+              navigateTo({
                 url: photoPage,
                 success: function (res) {
                   // 通过eventChannel向被打开页面传送数据

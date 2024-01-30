@@ -14,7 +14,7 @@ export default ({ imageUrls }) => {
               lazyLoad={true}
               className=" "
               onClick={() => {
-                Taro.navigateTo({
+                navigateTo({
                   url: '/pages/faceswap/index?imageUrl=' + src,
                 });
               }}
