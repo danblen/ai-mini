@@ -3,7 +3,7 @@ import { View, ScrollView, Image } from '@tarojs/components';
 import React, { useState, useEffect, useRef } from 'react';
 import { AtIcon } from 'taro-ui';
 
-export default () => {
+export default ({ images }) => {
   const timersRef = useRef({});
   useEffect(() => {
     return () => {
