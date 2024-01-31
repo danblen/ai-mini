@@ -96,7 +96,7 @@ export default () => {
               });
             }
           }}
-          count={6}
+          count={9}
           mode="aspectFill"
           length={3}
           showAddBtn={selectedImages.length < 9}

@@ -16,7 +16,7 @@ export default ({ imageListLeft, imageListRight }) => {
   const handleChooseImage = async () => {
     try {
       const res = await Taro.chooseImage({
-        count: 6,
+        count: 9,
         sizeType: ['original', 'compressed'],
         sourceType: ['album'],
       });
