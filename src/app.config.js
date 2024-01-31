@@ -1,6 +1,7 @@
 export default {
   pages: [
     'pages/index/index',
+    'pages/album/postNode',
     'pages/discover/index',
     'pages/message/index',
     'pages/activity/Activity',
