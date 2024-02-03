@@ -31,10 +31,12 @@ export default () => {
 
       const processedImages = await api.getUserProcessImage(userInfo).catch();
       // if (processedImages?.length > 0) {
-      let allImages = processedImages.map((image) => ({
-        url: image.outputImagePath,
-      }));
-      setAllImages(allImages);
+      if (processedImages) {
+        let allImages = processedImages.data.map((image) => ({
+          url: 'data:image/png;base64,' + image.outputImagePath,
+        }));
+        setAllImages(allImages);
+      }
       // }
     } else {
       setAllImages([]);
