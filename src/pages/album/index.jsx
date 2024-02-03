@@ -4,9 +4,8 @@
 import { Button, View } from '@tarojs/components';
 import Taro, { useDidShow, useUnload } from '@tarojs/taro';
 import { useState } from 'react';
-import FinishedTask from './FinishedTask.jsx';
-import { fetchProcessedImages } from './fetchProcessedImages.js';
 import { api } from '../../api/index.js';
+import FinishedTask from './FinishedTask.jsx';
 
 export default () => {
   const [allImages, setAllImages] = useState([]);
@@ -29,15 +28,13 @@ export default () => {
         requestStatus: 'finishing',
       };
 
-      const processedImages = await api.getUserProcessImage(userInfo).catch();
-      // if (processedImages?.length > 0) {
-      if (processedImages) {
-        let allImages = processedImages.data.map((image) => ({
+      const res = await api.getUserProcessImage(userInfo).catch();
+      if (res?.data) {
+        let allImages = res.data.map((image) => ({
           url: 'data:image/png;base64,' + image.outputImagePath,
         }));
         setAllImages(allImages);
       }
-      // }
     } else {
       setAllImages([]);
     }
@@ -48,7 +45,7 @@ export default () => {
     const interval = setInterval(fetchData, 3000);
     setIntervalVlu(interval);
   });
-  // useUnload 钩子，在页面隐藏时执行
+  // useUnload 钩子，在页面卸载时执行，清除定时器
   useUnload(() => {
     clearInterval(interval);
   });

@@ -10,23 +10,28 @@ import request from './request.js';
 import { uploadFile } from './upload.js';
 export { URL_BACK, URL_SD };
 
-const api = {
-  login: (data) => {
-    return request.post('/login', data);
-  },
-  storeImages: (data) => {
-    return request.post('/storeImages', data);
-  },
-  getBanners: (data) => {
-    return request.post('/getBanners', data);
-  },
-  uploadImages: (data) => {
-    return request.post('/uploadImages', data);
-  },
-  getUserProcessImage: (data) => {
-    return request.post('/getUserProcessImage', data);
-  },
+const api = {};
+// 登陆接口
+api.login = (data) => {
+  return request.post('/login', data);
 };
+// 获取banner图
+api.getBanners = (data) => {
+  return request.post('/getBanners', data);
+};
+// 用来开发使用的，存储数据到数据库表中
+api.storeImages = (data) => {
+  return request.post('/storeImages', data);
+};
+// 创作页上传图片接口
+api.uploadImages = (data) => {
+  return request.post('/uploadImages', data);
+};
+// 获取用户换脸的所有图片，作品页
+api.getUserProcessImage = (data) => {
+  return request.post('/getUserProcessImage', data);
+};
+
 export { api };
 
 export function storeImages(data) {

@@ -48,8 +48,7 @@ export default () => {
             backgroundColor: '#f5f5f5',
           }}
           onClick={() => {
-            storeImages();
-            // navigateTo({ url: '/pages/search/index' });
+            navigateTo({ url: '/pages/search/index' });
           }}
         >
           <View
