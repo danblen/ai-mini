@@ -4,7 +4,7 @@
 
 import { Text, View } from '@tarojs/components';
 import React, { useEffect, useState } from 'react';
-import { get_all_images } from '../../api/index.js';
+import { api, get_all_images } from '../../api/index.js';
 import ButtonsBox from '../comps/ButtonsBox.jsx';
 import AlbumsCard from './AlbumsCard';
 import NavBar from './NavBar.jsx';
@@ -13,14 +13,19 @@ import WaterfallList from './WaterfallList.jsx';
 
 export default () => {
   let [allImages, setAllImages] = useState({ albums: {}, tags_image: {} });
+  let [banners, setBanners] = useState([]);
   const getAllImages = async () => {
-    let allImages = await get_all_images();
-    console.log(allImages);
-    if (allImages) {
-      setAllImages(allImages);
+    let res = await get_all_images();
+    if (res?.data) {
+      setAllImages(res.data);
     }
   };
+  const getBanners = async () => {
+    let res = await api.getBanners();
+    setBanners(res.data);
+  };
   useEffect(() => {
+    getBanners();
     getAllImages();
   }, []);
   return (
@@ -32,7 +37,7 @@ export default () => {
           marginTop: '180rpx',
         }}
       >
-        <TopBanner banners={allImages?.banners} />
+        <TopBanner banners={banners} />
         <ButtonsBox
           buttons={[
             {
@@ -112,8 +117,8 @@ export default () => {
           {/* <Text style={{}}>最近热门</Text> */}
         </View>
         <WaterfallList
-          imageListLeft={allImages?.activity_tags_image?.['纯欲'] || []}
-          imageListRight={allImages?.activity_tags_image?.['氛围感'] || []}
+          imageListLeft={allImages?.activityTagsImage?.['chunyu'] || []}
+          imageListRight={allImages?.activityTagsImage?.['fenweigan'] || []}
         />
       </View>
     </>

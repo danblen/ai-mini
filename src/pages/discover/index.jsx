@@ -12,11 +12,11 @@ import Recommend from './Recommend';
 
 export default ({}) => {
   const [currentTab, setCurrentTab] = useState('recommend');
-  let [allImages, setAllImages] = useState({ albums: {}, tags_image: {} });
+  let [allImages, setAllImages] = useState({ albums: {}, tagsImage: {} });
   const getAllImages = async () => {
-    let allImages = await get_all_images();
-    if (allImages) {
-      setAllImages(allImages);
+    let res = await get_all_images();
+    if (res?.data) {
+      setAllImages(res.data);
     }
   };
   useEffect(() => {
@@ -32,7 +32,7 @@ export default ({}) => {
       ></NavBar>
 
       {currentTab === 'recommend' && (
-        <Recommend tags_image={allImages?.tags_image} />
+        <Recommend tags_image={allImages?.tagsImage} />
       )}
       {currentTab === 'hot' && <Hot />}
       {currentTab === 'new' && <New />}

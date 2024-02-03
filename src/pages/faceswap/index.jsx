@@ -42,6 +42,7 @@ export default () => {
     const params = Taro.getCurrentInstance().router.params;
     let ignore = false;
     if (params && params.imageUrl) {
+      // 先把图片下载下来，并展示出来
       down();
     }
     return () => {
@@ -89,7 +90,7 @@ export default () => {
         image.requestId === requestId
           ? {
               ...image,
-              src: 'data:image/png;base64,' + res.result.images[0],
+              src: 'data:image/png;base64,' + res.data.result.images[0],
               status: 'SUCCESS',
             }
           : image
@@ -114,7 +115,6 @@ export default () => {
       setShowDrawer(false);
     }
   };
-
   return (
     <View
       onTouchstart={onTouchStart}

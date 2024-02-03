@@ -1,8 +1,8 @@
-import { AtImagePicker } from "taro-ui";
-import { View, Image } from "@tarojs/components";
-import React, { useRef, useState, useEffect } from "react";
-import Taro from "@tarojs/taro";
-import { wxPathToBase64 } from "../../utils/imageTools";
+import { AtImagePicker } from 'taro-ui';
+import { View, Image } from '@tarojs/components';
+import React, { useRef, useState, useEffect } from 'react';
+import Taro from '@tarojs/taro';
+import { wxPathToBase64 } from '../../utils/imageTools';
 
 export default function ImagePicker({ onFilesChange, onSelectImage }) {
   const [files, setFiles] = useState([]);
@@ -18,7 +18,7 @@ export default function ImagePicker({ onFilesChange, onSelectImage }) {
   useEffect(() => {
     // 获取本地缓存数据
     wx.getStorage({
-      key: "filesData",
+      key: 'filesData',
       success: function (res) {
         const storedFiles = res.data;
         if (storedFiles && storedFiles.files) {
@@ -29,7 +29,7 @@ export default function ImagePicker({ onFilesChange, onSelectImage }) {
         }
       },
       fail: function (err) {
-        console.log("本地缓存数据无数据", err);
+        console.log('本地缓存数据无数据', err);
       },
     });
     return () => {
@@ -38,13 +38,13 @@ export default function ImagePicker({ onFilesChange, onSelectImage }) {
         selectedIndex: selectedIndexRef.current, // 将 selectedIndex 存储为当前选中的索引
       };
       wx.setStorage({
-        key: "filesData", // 设置存储的key，用于后续获取数据
+        key: 'filesData', // 设置存储的key，用于后续获取数据
         data: dataToStore, // 要保存的数据
         // success: function (res) {
         //   console.log("数据保存成功");
         // },
         fail: function (err) {
-          console.error("数据保存失败", err);
+          console.error('数据保存失败', err);
         },
       });
     };
@@ -60,7 +60,7 @@ export default function ImagePicker({ onFilesChange, onSelectImage }) {
       // 当文件大于200KB时循环压缩
       if (quality < 0) quality = 5;
       while (src_size > 200 * 1024 && quality > 0) {
-        console.log("src_size", src_size, quality);
+        console.log('src_size', src_size, quality);
         compressedFile = await Taro.compressImage({
           src: file.url,
           quality,
@@ -75,14 +75,14 @@ export default function ImagePicker({ onFilesChange, onSelectImage }) {
         if (quality > 99) {
           quality = 99;
         }
-        console.log("compressed siez", src_size);
+        console.log('compressed siez', src_size);
       }
 
       return {
         base64: srcBase64,
       };
     } catch (error) {
-      console.error("图片压缩失败：", error);
+      console.error('图片压缩失败：', error);
       return file;
     }
   };
@@ -107,13 +107,13 @@ export default function ImagePicker({ onFilesChange, onSelectImage }) {
         selectedIndex: curIndex, // 将 selectedIndex 存储为当前选中的索引
       };
       wx.setStorage({
-        key: "filesData", // 设置存储的key，用于后续获取数据
+        key: 'filesData', // 设置存储的key，用于后续获取数据
         data: dataToStore, // 要保存的数据
         // success: function (res) {
         //   console.log("数据保存成功");
         // },
         fail: function (err) {
-          console.error("数据保存失败", err);
+          console.error('数据保存失败', err);
         },
       });
       setFiles(updatedFiles);
@@ -125,16 +125,16 @@ export default function ImagePicker({ onFilesChange, onSelectImage }) {
       //   icon: "none",
       // });
     } catch (error) {
-      console.error("处理图片失败：", error);
+      console.error('处理图片失败：', error);
     }
   };
 
   return (
     <View
       style={{
-        display: "flex",
-        flexDirection: "row",
-        alignItems: "center",
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
       }}
     >
       <View style={{ flex: 1 }}>
@@ -144,31 +144,31 @@ export default function ImagePicker({ onFilesChange, onSelectImage }) {
               <View
                 key={index}
                 style={{
-                  position: "relative",
-                  margin: "5px",
-                  marginRight: "20px", // 间距以确保三角形与 AtImagePicker 有一定距离
+                  position: 'relative',
+                  margin: '5px',
+                  marginRight: '20px', // 间距以确保三角形与 AtImagePicker 有一定距离
                 }}
               >
                 <Image
                   src={file.url}
                   style={{
-                    width: "100px",
-                    height: "100px",
-                    border: "2px solid #06638e", // 图像边框样式
+                    width: '100px',
+                    height: '100px',
+                    border: '2px solid #06638e', // 图像边框样式
                   }}
                 />
                 {/* 添加倒三角形 */}
                 <View
                   style={{
-                    position: "absolute",
-                    top: "50%", // 上下居中
-                    right: "-20px", // 贴近图像右侧
-                    transform: "translateY(-50%)", // 上下居中
+                    position: 'absolute',
+                    top: '50%', // 上下居中
+                    right: '-20px', // 贴近图像右侧
+                    transform: 'translateY(-50%)', // 上下居中
                     width: 0,
                     height: 0,
-                    borderTop: "8px solid transparent",
-                    borderBottom: "8px solid transparent",
-                    borderRight: "8px solid #06638e", // 右侧三角形指向 AtImagePicker
+                    borderTop: '8px solid transparent',
+                    borderBottom: '8px solid transparent',
+                    borderRight: '8px solid #06638e', // 右侧三角形指向 AtImagePicker
                   }}
                 />
               </View>
@@ -178,13 +178,13 @@ export default function ImagePicker({ onFilesChange, onSelectImage }) {
       <AtImagePicker
         length={5}
         count={2}
-        style={{ height: "100rpx" }}
+        style={{ height: '100rpx' }}
         files={files}
         onChange={handleImageChange}
         onFail={(mes) => {}}
         onImageClick={(index, file) => {
           setSelectedIndex(index);
-          Taro.showToast({ title: `当前选择第${index + 1}张`, icon: "none" });
+          Taro.showToast({ title: `当前选择第${index + 1}张`, icon: 'none' });
           onSelectImage(index);
         }}
       />

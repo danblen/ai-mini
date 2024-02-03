@@ -13,10 +13,10 @@ export default ({ banners }) => {
               mode="widthFix"
               onClick={() => {
                 navigateTo({
-                  url: '/pages/faceswap/index?imageUrl=' + banner,
+                  url: '/pages/faceswap/index?imageUrl=' + banner.imageUrl,
                 });
               }}
-              src={banner}
+              src={banner.imageUrl}
             ></Image>
           </SwiperItem>
         ))}

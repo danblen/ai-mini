@@ -1,17 +1,5 @@
-import { HEADER, URL_BACK, URL_SD } from "./config";
-// import utils from './utils';
-// import store from '../store';
-import Taro from "@tarojs/taro";
-// import { urlToHttpOptions } from 'url';
-
-function toLogin() {
-  // store.commit('LOGOUT');
-  Taro.showToast({
-    title: "请登录",
-    icon: "none",
-    duration: 1000,
-  });
-}
+import { HEADER, URL_BACK, URL_SD } from './config';
+import Taro from '@tarojs/taro';
 
 /**
  * 发送请求
@@ -22,14 +10,14 @@ function baseRequest(
   data,
   { noAuth = true, noVerify = false, noAlert = false }
 ) {
-  let Url = "",
+  let Url = '',
     header = HEADER;
 
   // 请求地址处理
-  if (url.startsWith("/sdapi") > 0) {
+  if (url.startsWith('/sdapi') > 0) {
     Url = URL_SD + url;
   } else {
-    Url = URL_BACK + url;
+    Url = URL_BACK + '/v1' + url;
   }
   if (!noAuth) {
     //登录过期自动登录
@@ -46,10 +34,10 @@ function baseRequest(
   // }
   // if (store.state.app.uid) {
   //   if (data) {
-  //     data.user_id = store.state.app.uid;
+  //     data.userId = store.state.app.uid;
   //   } else {
   //     data = {
-  //       user_id: store.state.app.uid,
+  //       userId: store.state.app.uid,
   //     };
   //   }
   // }
@@ -57,7 +45,7 @@ function baseRequest(
   return new Promise((reslove, reject) => {
     Taro.request({
       url: Url,
-      method: method || "GET",
+      method: method || 'GET',
       timeout: 600000,
       header: header,
       // header: {
@@ -90,7 +78,7 @@ function baseRequest(
 
 const request = {};
 
-["options", "get", "post", "put", "head", "delete", "trace", "connect"].forEach(
+['options', 'get', 'post', 'put', 'head', 'delete', 'trace', 'connect'].forEach(
   (method) => {
     request[method] = (api, data, opt) =>
       baseRequest(api, method, data, opt || {});

@@ -12,7 +12,7 @@ export default ({ showDrawer, onClose }) => {
       onClose={onClose}
       style={{ background: 'black', height: '100%' }}
     >
-      <List />;
+      <List />
     </AtDrawer>
   );
 };

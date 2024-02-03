@@ -66,14 +66,14 @@ export default ({ imageUrl, selectedImageUrl, onUpdateTaskImages }) => {
         const srcBase64 = await wxPathToBase64(imageUrl);
         const tarBase64 = await wxPathToBase64(selectedImageUrl);
         const storageUserInfo = getStorageSync('userInfo');
-        data.user_id = storageUserInfo.data.user_id;
+        data.userId = storageUserInfo.data.userId;
         data.init_images = [srcBase64];
         data.alwayson_scripts.roop.args[0] = tarBase64;
 
         // 异步操作
         let res = await faceSwap(data);
-        if (res.status === 'pending') {
-          onUpdateTaskImages(res.request_id);
+        if (res.data?.status === 'pending') {
+          onUpdateTaskImages(res.data.requestId);
         } else {
           Taro.showToast({
             title: res.error_message,

@@ -1,37 +1,37 @@
 /**
  * 用户页
  */
-import { Image, View } from '@tarojs/components';
-import Taro, { useTabItemTap } from '@tarojs/taro';
+import { Image, View, Text } from '@tarojs/components';
+import { useTabItemTap } from '@tarojs/taro';
 import React, { useState } from 'react';
-// import CheckIn from "./CheckIn";
-// import BuyPoint from "./BuyPoint";
-import { get_user_info } from '../../api';
-import { wechatLogin } from '../../common/user';
 import { AtFloatLayout } from 'taro-ui';
+import { get_user_info } from '../../api';
+import { saveUserInfo, wechatLogin } from '../../common/user';
 import LoginView from '../comps/LoginView';
 
 export default () => {
-  // const [showBuyPointPopup, setShowBuyPointPopup] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isOpened, setIsOpened] = useState(false);
+  // 用户信息数据结构，和storage中存储的一致
   const [userInfo, setUserInfo] = useState({
     isLogin: false,
     data: {
       points: 0,
-      user_id: '',
-      is_check: false,
-      avatarUrl: 'https://danblen.github.io/static/index.jpg',
+      userId: '',
+      isChecked: false,
+      avatarUrl: '',
     },
   });
-
+  // 获取用户信息
   const fetchUserInfo = async () => {
     let userInfo = getStorageSync('userInfo');
-    if (userInfo?.isLogin && userInfo.data?.user_id) {
+    // storage中有数据表示用户已经登陆
+    if (userInfo?.isLogin && userInfo.data?.userId) {
       let res = await get_user_info({
-        user_id: userInfo.data.user_id,
+        userId: userInfo.data.userId,
       });
-      if (res) {
+      // 所有接口都可通过这种方式判断调用成功与否
+      if (res?.data) {
         setUserInfo((pre) => ({
           ...pre,
           isLogin: true,
@@ -42,19 +42,21 @@ export default () => {
           data: res.data,
         });
       } else {
+        // 获取用户数据失败
         setUserInfo({
           isLogin: false,
           data: {},
         });
       }
     } else {
+      // 用户未登陆
       setUserInfo({
         isLogin: false,
         data: {},
       });
     }
   };
-
+  // 每次点击到tabbar 我的 都会触发，更新用户信息并刷新页面
   useTabItemTap((tab) => {
     fetchUserInfo();
   });
@@ -94,15 +96,29 @@ export default () => {
                 <View
                   style={{
                     fontSize: '40rpx',
-                    height: '100rpx',
+                    height: '70rpx',
                     verticalAlign: 'top',
                   }}
                 >
                   微信用户
                 </View>
                 <View className=" ">
-                  ID: {userInfo?.data?.user_id?.slice(0, 6) + '****'}
+                  ID: {userInfo?.data?.userId?.slice(0, 6) + '****'}
                   <View className="at-icon at-icon-chevron-right" />
+                </View>
+                <View
+                  style={{
+                    fontSize: '24rpx',
+                  }}
+                >
+                  <Text
+                    style={{
+                      marginRight: 20,
+                    }}
+                  >
+                    积分：{userInfo?.data?.points}
+                  </Text>
+                  等级：{userInfo?.data?.level}
                 </View>
               </View>
             )}
@@ -242,40 +258,7 @@ export default () => {
             <View>我的签到</View>
           </View>
         </View>
-        {/* <View style={Style.cardStyle}>
-        <AtList>
-          <AtListItem
-            title="剩余积分"
-            extraText={
-              userInfo?.data?.points !== undefined ? userInfo.data.points : 0
-            }
-          />
-          <AtListItem
-            title="签到"
-            extraText={userInfo?.data.is_check ? '已签到' : '点击签到'}
-            onClick={() => {}}
-          />
-          <AtListItem title="购买次卡" arrow="right" />
-          <AtListItem title="问题反馈" />
-          <AtListItem title="联系我们" />
-          <AtListItem
-            title="退出登录"
-            onClick={() => {
-              setUserInfo({
-                isLogin: false,
-                data: {},
-              });
-              setStorageSync('userInfo', {
-                isLogin: false,
-                data: {},
-              });
-            }}
-          />
-        </AtList>
-      </View> */}
       </View>
-      {/* <BuyPoint />
-      <GetPoint /> */}
 
       <AtFloatLayout
         isOpened={isOpened}
@@ -291,7 +274,7 @@ export default () => {
                 isLogin: true,
                 data: res.data,
               });
-              setStorageSync('userInfo', {
+              saveUserInfo({
                 isLogin: true,
                 data: res.data,
               });

@@ -28,7 +28,7 @@
 //       return;
 //     }
 
-//     const res = await getPointsByCheck({ user_id: userId });
+//     const res = await getPointsByCheck({ userId: userId });
 //     if (res) {
 //       onCheckUserInfoChange({
 //         isCheck: true,

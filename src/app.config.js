@@ -1,11 +1,12 @@
 export default {
   pages: [
     'pages/index/index',
+    'pages/create/index',
+    'pages/user/index',
     'pages/album/postNode',
     'pages/discover/index',
     'pages/message/index',
     'pages/activity/Activity',
-    'pages/user/index',
     'pages/setting/index',
     'pages/search/index',
     'pages/faceswap/index',
@@ -33,6 +34,12 @@ export default {
         iconPath: './static/image/tabbar/icons8-图片编辑器-100.png',
         selectedIconPath: './static/image/tabbar/icons8-图片编辑器-100 (1).png',
         text: '发现',
+      },
+      {
+        pagePath: 'pages/create/index',
+        iconPath: './static/image/tabbar/icons8-图片编辑器-100.png',
+        selectedIconPath: './static/image/tabbar/icons8-图片编辑器-100 (1).png',
+        text: '创作',
       },
       {
         pagePath: 'pages/message/index',

@@ -66,7 +66,7 @@ const ImageList = ({ images, loadMore }) => {
             try {
               let userInfo = getStorageSync('userInfo');
               const response = await delete_all_images({
-                user_id: userInfo.data.user_id,
+                userId: userInfo.data.userId,
               });
               setSelectedImages([]);
               setShowImages([]);

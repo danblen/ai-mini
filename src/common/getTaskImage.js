@@ -1,20 +1,20 @@
-import { getSwapQueueResult } from "../api/index.js";
+import { getSwapQueueResult } from '../api/index.js';
 let timers = {};
 export const getTaskImage = async (requestId) => {
   return new Promise((resolve, reject) => {
     const requestData = {
-      user_id: "",
-      request_id: requestId,
+      userId: '',
+      requestId: requestId,
       sql_query: {
-        request_status: "",
-        user_id: "",
+        request_status: '',
+        userId: '',
       },
     };
 
     const checkStatus = async () => {
       try {
         let res = await getSwapQueueResult(requestData);
-        if (res.status === "finishing") {
+        if (res.data.status === 'finishing') {
           clearInterval(timers[requestId]);
           resolve(res);
         }

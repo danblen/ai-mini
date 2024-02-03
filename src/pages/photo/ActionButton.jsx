@@ -30,8 +30,8 @@ export default ({ albumUrls, selfUrl, onUpdateTaskImages }) => {
     const originBase64 = await wxPathToBase64(originUrl);
     const selfBase64 = await wxPathToBase64(selfUrl);
     const storageUserInfo = getStorageSync('userInfo');
-    if (storageUserInfo?.data?.user_id) {
-      data.user_id = storageUserInfo?.data?.user_id;
+    if (storageUserInfo?.data?.userId) {
+      data.userId = storageUserInfo?.data?.userId;
     }
     data.init_images = [originBase64];
     data.alwayson_scripts.roop.args[0] = selfBase64;
@@ -57,6 +57,7 @@ export default ({ albumUrls, selfUrl, onUpdateTaskImages }) => {
       shape="circle"
       loading={loading}
       onClick={async () => {
+        // 有上传的图片，且未换脸
         if (selfUrl && albumUrls?.length && !isSwaped) {
           isSwaped = true;
           setLoading(true);

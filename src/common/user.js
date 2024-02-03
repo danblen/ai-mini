@@ -1,5 +1,5 @@
 import Taro from '@tarojs/taro';
-import { wechat_login, get_user } from '../api';
+import { api } from '../api';
 
 export const wechatLogin = () =>
   new Promise((resolve, reject) => {
@@ -11,7 +11,8 @@ export const wechatLogin = () =>
             if (loginRes.code) {
               // 登录成功，获取到用户的 code
               // 向服务器发送 code
-              let wechatRes = await wechat_login({ code: loginRes.code });
+              let wechatRes = await api.login({ code: loginRes.code });
+              // let wechatRes = await wechat_login({ code: loginRes.code });
               // let userInfo = {
               //   code: loginRes.code,
               //   data: wechatRes.data,
@@ -42,9 +43,8 @@ export const logout = () => {
   clearStorageUserInfo();
   clearGlobalUserInfo();
 };
-
 export const clearStorageUserInfo = async () => {
-  setStorageSync({ key: 'userInfo', data: null });
+  setStorageSync('userInfo', null);
 };
 export const clearGlobalUserInfo = async () => {
   global.userInfo = {
@@ -57,51 +57,56 @@ export const clearGlobalUserInfo = async () => {
     },
   };
 };
-export const getUser = async () => {
-  try {
-    const userInfo = getStorageSync('userInfo');
-    if (!userInfo) {
-      return null;
-    }
-    const response = await get_user(userInfo.userId);
-    return response.data;
-  } catch (error) {
-    console.error('Error fetching user data:', error);
-  }
+
+export const saveUserInfo = async (userInfo) => {
+  setStorageSync('userInfo', userInfo);
+  global.userInfo = userInfo;
 };
-export const getUserInfo = async () => {
-  try {
-    const userInfo = getStorageSync('userInfo');
-    if (!userInfo) return null;
-    return userInfo;
-  } catch (error) {
-    console.error('Error fetching user data:', error);
-  }
-};
-export const setUserInfo = async (updatedUserInfo) => {
-  try {
-    setStorageSync({
-      key: 'userInfo',
-      data: updatedUserInfo,
-    });
-  } catch (error) {
-    console.error('Error fetching user data:', error);
-  }
-};
-export const getUpdatedUserInfo = async () => {
-  try {
-    const userInfo = getStorageSync('userInfo');
-    if (!userInfo) {
-      return null;
-    }
-    const user = await getUser();
-    userInfo.data = user;
-    setStorageSync({
-      key: 'userInfo',
-      data: userInfo,
-    });
-    return userInfo;
-  } catch (error) {
-    console.error('Error fetching user data:', error);
-  }
-};
+// export const getUser = async () => {
+//   try {
+//     const userInfo = getStorageSync('userInfo');
+//     if (!userInfo) {
+//       return null;
+//     }
+//     const response = await get_user(userInfo.userId);
+//     return response.data;
+//   } catch (error) {
+//     console.error('Error fetching user data:', error);
+//   }
+// };
+// export const getUserInfo = async () => {
+//   try {
+//     const userInfo = getStorageSync('userInfo');
+//     if (!userInfo) return null;
+//     return userInfo;
+//   } catch (error) {
+//     console.error('Error fetching user data:', error);
+//   }
+// };
+// export const setUserInfo = async (updatedUserInfo) => {
+//   try {
+//     setStorageSync({
+//       key: 'userInfo',
+//       data: updatedUserInfo,
+//     });
+//   } catch (error) {
+//     console.error('Error fetching user data:', error);
+//   }
+// };
+// export const getUpdatedUserInfo = async () => {
+//   try {
+//     const userInfo = getStorageSync('userInfo');
+//     if (!userInfo) {
+//       return null;
+//     }
+//     const user = await getUser();
+//     userInfo.data = user;
+//     setStorageSync({
+//       key: 'userInfo',
+//       data: userInfo,
+//     });
+//     return userInfo;
+//   } catch (error) {
+//     console.error('Error fetching user data:', error);
+//   }
+// };

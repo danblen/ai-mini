@@ -2,36 +2,39 @@
  * 作品页
  */
 import { Button, View } from '@tarojs/components';
-import Taro, { useDidHide, useDidShow } from '@tarojs/taro';
+import Taro, { useDidShow, useUnload } from '@tarojs/taro';
 import { useState } from 'react';
 import FinishedTask from './FinishedTask.jsx';
 import { fetchProcessedImages } from './fetchProcessedImages.js';
+import { api } from '../../api/index.js';
 
-export default ({ images }) => {
-  const [current, setCurrent] = useState(0);
+export default () => {
   const [allImages, setAllImages] = useState([]);
   const [interval, setIntervalVlu] = useState(false);
   const [userInfo, setUserInfo] = useState({
     isLogin: false,
     data: {
       points: 0,
-      user_id: '',
-      is_check: false,
+      userId: '',
+      isChecked: false,
     },
   });
 
   const fetchData = async () => {
     const storageUserInfo = getStorageSync('userInfo');
     setUserInfo(storageUserInfo);
-    if (storageUserInfo?.isLogin && storageUserInfo.data?.user_id) {
+    if (storageUserInfo?.isLogin && storageUserInfo.data?.userId) {
       const userInfo = {
-        user_id: storageUserInfo.data.user_id,
-        request_status: 'finishing',
+        userId: storageUserInfo.data.userId,
+        requestStatus: 'finishing',
       };
 
-      const processedImages = await fetchProcessedImages(userInfo).catch();
+      const processedImages = await api.getUserProcessImage(userInfo).catch();
       // if (processedImages?.length > 0) {
-      setAllImages(processedImages);
+      let allImages = processedImages.map((image) => ({
+        url: image.outputImagePath,
+      }));
+      setAllImages(allImages);
       // }
     } else {
       setAllImages([]);
@@ -43,9 +46,8 @@ export default ({ images }) => {
     const interval = setInterval(fetchData, 3000);
     setIntervalVlu(interval);
   });
-
-  // useDidHide 钩子，在页面隐藏时执行
-  useDidHide(() => {
+  // useUnload 钩子，在页面隐藏时执行
+  useUnload(() => {
     clearInterval(interval);
   });
   return (

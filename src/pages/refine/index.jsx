@@ -322,7 +322,7 @@ export default ({}) => {
     const storageUserInfo = getStorageSync('userInfo');
 
     data.init_images = [srcBase64];
-    data.user_id = storageUserInfo.data.user_id;
+    data.userId = storageUserInfo.data.userId;
 
     const res1 = await faceSwap(data);
     if (res1.status === 'pending') {
