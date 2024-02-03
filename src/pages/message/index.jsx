@@ -13,7 +13,7 @@ export default ({}) => {
   });
   return (
     <View>
-      <NavigationBar></NavigationBar>
+      {/* <NavigationBar></NavigationBar> */}
       <List></List>
     </View>
   );

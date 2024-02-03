@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Image, Text, Input, Button } from '@tarojs/components';
 import { AtImagePicker } from 'taro-ui';
+import CustomNavBar from '../index/CustomNavBar.jsx';
 
 import Taro, { useRouter } from '@tarojs/taro'; // 导入 useRouter
 import { Textarea } from '@tarojs/components';
@@ -39,6 +40,7 @@ export default () => {
 
   return (
     <View>
+      <CustomNavBar></CustomNavBar>
       {/* <View
         style={{
           display: 'flex',
@@ -57,7 +59,7 @@ export default () => {
         ))}
       </View> */}
 
-      <View>
+      <View style={{ paddingTop: '80px' }}>
         <AtImagePicker
           files={selectedImages.map((image, index) => ({ url: image }))}
           onChange={(files, operationType, index) => {

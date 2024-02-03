@@ -4,6 +4,7 @@ import CustomNavBar from '../index/CustomNavBar.jsx';
 import { getPhotoPath, URL_BACK, get_all_images } from '../../api/index.js';
 import React, { useState, useEffect, useRef } from 'react';
 import TabsImageList from '../index/TabsImageList';
+import WaterfallList from '../index/WaterfallList';
 
 const ActivityPage = () => {
   const { title, description } = Taro.getCurrentInstance().router.params;
@@ -25,30 +26,41 @@ const ActivityPage = () => {
   return (
     <>
       <CustomNavBar></CustomNavBar>
-      <View
-        style={{
-          background: '#f567028a',
-          paddingTop: '50px',
-          position: 'relative',
-          // height: "100vh",
-        }}
-      >
-        {/* 上半部分：真实标题和文案 */}
+      <View>
         <View
-          style={{ padding: '20px', flexDirection: 'column', display: 'flex' }}
+          style={{
+            background: '#f567028a',
+            paddingTop: '50px',
+            position: 'relative',
+            // height: "100vh",
+          }}
         >
-          <Text
+          {/* 上半部分：真实标题和文案 */}
+          <View
             style={{
-              fontSize: '24px',
-              fontWeight: 'bold',
-              marginBottom: '10px',
+              padding: '20px',
+              flexDirection: 'column',
+              display: 'flex',
             }}
           >
-            {decodedTitle}
-          </Text>
-          <Text style={{ color: '#666' }}>{decodedDescription}</Text>
+            <Text
+              style={{
+                fontSize: '24px',
+                fontWeight: 'bold',
+                marginBottom: '10px',
+              }}
+            >
+              {decodedTitle}
+            </Text>
+            <Text style={{ color: '#666' }}>{decodedDescription}</Text>
+          </View>
         </View>
-        <View className="" style={Styles.container}>
+        <View
+          style={{
+            marginTop: '50px',
+            borderRadius: '50px',
+          }}
+        >
           <TabsImageList tags_image={allImages?.activityTagsImage} />
         </View>
       </View>

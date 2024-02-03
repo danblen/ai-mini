@@ -5,7 +5,7 @@ import { AtIcon } from 'taro-ui';
 import { View, Image, ScrollView, Text } from '@tarojs/components';
 import { delete_all_images, delete_select_images } from '../../api';
 
-const ImageList = ({ images, loadMore }) => {
+const ImageList = ({ images, loadMore, onFetchData }) => {
   const [showImages, setShowImages] = useState([]);
   const [selectedImages, setSelectedImages] = useState([]);
   const [selectedMode, setSelectedMode] = useState(false);
@@ -161,13 +161,19 @@ const ImageList = ({ images, loadMore }) => {
       <View
         style={{
           position: 'fixed',
-          top: '40px',
+          top: '60px',
           left: '20px',
           display: 'flex',
-          backgroundColor: 'rgba(255, 255, 255, 0)',
+          backgroundColor: 'rgb(255 255 255 / 51%)',
+          borderRadius: '10%',
         }}
       >
-        <View style={{ textAlign: 'center' }}>
+        <View
+          style={{
+            textAlign: 'center',
+            display: 'flex',
+          }}
+        >
           <AtIcon
             value="list"
             size="24"
@@ -175,6 +181,15 @@ const ImageList = ({ images, loadMore }) => {
             onClick={handleToggleMode} // 点击选择按钮时切换模式
           />
           {selectedMode ? '取消' : '选择'}
+          <AtIcon
+            value="reload"
+            size="24"
+            color="#054622"
+            onClick={() => {
+              onFetchData(); // 调用fetchData函数
+            }}
+          />
+          刷新
         </View>
         {selectedMode && (
           <View style={{ textAlign: 'center' }}>

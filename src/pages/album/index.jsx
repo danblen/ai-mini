@@ -2,14 +2,13 @@
  * 作品页
  */
 import { Button, View } from '@tarojs/components';
-import Taro, { useDidShow, useUnload } from '@tarojs/taro';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { api } from '../../api/index.js';
 import FinishedTask from './FinishedTask.jsx';
 
-export default () => {
+export default ({ images }) => {
   const [allImages, setAllImages] = useState([]);
-  const [interval, setIntervalVlu] = useState(false);
   const [userInfo, setUserInfo] = useState({
     isLogin: false,
     data: {
@@ -18,37 +17,40 @@ export default () => {
       isChecked: false,
     },
   });
-
   const fetchData = async () => {
-    const storageUserInfo = getStorageSync('userInfo');
+    const storageUserInfo = Taro.getStorageSync('userInfo');
     setUserInfo(storageUserInfo);
-    if (storageUserInfo?.isLogin && storageUserInfo.data?.userId) {
+    console.log(storageUserInfo);
+    let processedImages = Taro.getStorageSync('processedImages') || [];
+
+    console.log(processedImages);
+    if (storageUserInfo?.isLogin && storageUserInfo.data?.user_id) {
       const userInfo = {
         userId: storageUserInfo.data.userId,
         requestStatus: 'finishing',
       };
 
-      const res = await api.getUserProcessImage(userInfo).catch();
-      if (res?.data) {
-        let allImages = res.data.map((image) => ({
-          url: 'data:image/png;base64,' + image.outputImagePath,
-        }));
-        setAllImages(allImages);
+      if (processedImages.length === 0) {
+        // 从缓存中未获取到数据，进行网络请求
+        processedImages = await api.getUserProcessImage(userInfo).catch();
+        if (processedImages?.length > 0) {
+          // 将请求到的数据缓存到本地存储
+          Taro.setStorageSync('processedImages', processedImages);
+        }
       }
+
+      setAllImages(processedImages);
     } else {
+      // 用户未登录或获取用户信息失败时，清空数据
       setAllImages([]);
+      // 清空本地存储中的数据
+      Taro.removeStorageSync('processedImages');
     }
   };
 
-  useDidShow(() => {
+  useEffect(() => {
     fetchData();
-    const interval = setInterval(fetchData, 3000);
-    setIntervalVlu(interval);
-  });
-  // useUnload 钩子，在页面卸载时执行，清除定时器
-  useUnload(() => {
-    clearInterval(interval);
-  });
+  }, []);
   return (
     <View>
       {userInfo.isLogin ? (
@@ -57,7 +59,7 @@ export default () => {
             marginTop: '10rpx',
           }}
         >
-          <FinishedTask images={allImages} />
+          <FinishedTask images={allImages} onFetchData={fetchData} />
         </View>
       ) : (
         <View

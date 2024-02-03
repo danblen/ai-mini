@@ -47,7 +47,7 @@ export default {
         pagePath: 'pages/message/index',
         iconPath: './static/image/tabbar/icons8-ios的照片-100.png',
         selectedIconPath: './static/image/tabbar/icons8-ios的照片-100 (1).png',
-        text: '消息',
+        text: '作品',
       },
       {
         pagePath: 'pages/user/index',
@@ -59,10 +59,9 @@ export default {
   },
   // 全局配置
   window: {
-    navigationBarBackgroundColor: '#fff',
-    navigationBarTitleText: 'AI写真',
-    navigationBarTextStyle: 'black',
     backgroundTextStyle: 'light',
-    backgroundColor: '#f9f9f9',
+    navigationBarBackgroundColor: '#fff',
+    navigationBarTextStyle: 'black',
+    navigationStyle: 'custom',
   },
 };

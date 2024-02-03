@@ -1,6 +1,6 @@
 import { Image, View, Text } from '@tarojs/components';
 import React from 'react';
-import compareIcon from '../../static/image/my/go.png';
+import compareIcon from '../../static/image/login/bg_login.png';
 import ImageList from '../discover/Recommend/ImageList';
 import Taro, { useState, useEffect } from '@tarojs/taro';
 const PostNodePages = '/pages/album/postNode';
@@ -55,6 +55,7 @@ export default ({ imageListLeft, imageListRight }) => {
                 position: 'relative',
                 height: '150px',
                 marginBottom: '20px',
+                marginLeft: '5px',
               }}
               onClick={handleChooseImage}
             >
@@ -70,6 +71,7 @@ export default ({ imageListLeft, imageListRight }) => {
                   borderRadius: 5,
                   objectFit: 'cover',
                 }}
+                mode="aspectFill"
               />
               <Text
                 style={{
@@ -79,7 +81,7 @@ export default ({ imageListLeft, imageListRight }) => {
                   display: '-webkit-box',
                   WebkitBoxOrient: 'vertical',
                   WebkitLineClamp: 2, // 控制显示行数
-                  color: '#334561',
+                  color: '#ffffff',
                   fontSize: '26px',
                   zIndex: 1,
                   position: 'relative',

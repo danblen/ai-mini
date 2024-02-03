@@ -16,7 +16,7 @@ const NavigationBar = () => {
           justifyContent: 'center',
         }}
       >
-        <View style={{ marginTop: '110rpx' }}>消息</View>
+        <View style={{ marginTop: '110rpx' }}>作品</View>
       </View>
 
       <LeftDrawer></LeftDrawer>
