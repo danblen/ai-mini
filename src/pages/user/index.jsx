@@ -49,7 +49,7 @@ export default () => {
         });
       }
     } else {
-      // 用户未登陆
+      // 用户未登陆，清空
       setUserInfo({
         isLogin: false,
         data: {},

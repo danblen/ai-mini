@@ -1,16 +1,21 @@
+/**
+ * 创作页
+ * 用户发布作品
+ */
+
 import { Input, View } from '@tarojs/components';
-import NavBar from './NavBar';
-import ImagePicker from '../comps/ImagePicker';
+import Taro, { getStorageSync, setStorageSync } from '@tarojs/taro';
 import { useEffect, useState } from 'react';
 import { AtImagePicker } from 'taro-ui';
-import Taro, { getStorageSync, setStorageSync } from '@tarojs/taro';
-import { wxPathToBase64 } from '../../utils/imageTools';
 import { api } from '../../api';
+import { wxPathToBase64 } from '../../utils/imageTools';
+import NavBar from './NavBar';
 
 export default () => {
   const [uploadedFiles, setUploadedFiles] = useState([]);
 
   useEffect(() => {
+    // 从storage中获取已经在本地存储的用户图片
     const createImages = getStorageSync('createImages');
     if (createImages) {
       setUploadedFiles(createImages);
@@ -27,7 +32,6 @@ export default () => {
       // 当文件大于200KB时循环压缩
       if (quality < 0) quality = 5;
       while (src_size > 200 * 1024 && quality > 0) {
-        console.log('src_size', src_size, quality);
         compressedFile = await Taro.compressImage({
           src: file.url,
           quality,
@@ -144,9 +148,6 @@ export default () => {
               });
             } else {
             }
-            // api.uploadImages(uploadedFiles[0].url, {
-            //   tag: 'gufeng',
-            // });
           }}
         >
           上传

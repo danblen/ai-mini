@@ -2,10 +2,80 @@ import { Input, Text, View } from '@tarojs/components';
 import Taro from '@tarojs/taro';
 import { useState } from 'react';
 import { AtDrawer } from 'taro-ui';
-
+import LeftDrawer from '../comps/LeftDrawer';
+const PAGES = [
+  'pages/index/index',
+  'pages/create/index',
+  'pages/user/index',
+  'pages/album/postNode',
+  'pages/discover/index',
+  'pages/message/index',
+  'pages/activity/Activity',
+  'pages/setting/index',
+  'pages/search/index',
+  'pages/faceswap/index',
+  'pages/refine/index',
+  'pages/album/index',
+  'pages/photo/index',
+  'pages/gen/index',
+  'pages/user/agreements/index',
+  'pages/user/privacy/index',
+];
+const PAGE_INFO = {
+  index: {
+    url: 'pages/index/index',
+    meta: 'index, home',
+    name: '首页',
+  },
+  create: {
+    url: 'pages/create/index',
+    name: '创作',
+  },
+  user: {
+    url: 'pages/user/index',
+    name: '用户',
+  },
+  album: {
+    url: 'pages/album/index',
+    name: '作品',
+  },
+  discover: {
+    url: 'pages/discover/index',
+    name: '发现',
+  },
+  message: {
+    url: 'pages/message/index',
+    name: '消息',
+  },
+  refine: {
+    url: 'pages/refine/index',
+    name: '修图',
+  },
+  activity: {
+    url: 'pages/activity/index',
+    name: '反派挑战',
+  },
+  fix: {
+    url: 'pages/fix/index',
+    name: '老照片修复',
+  },
+};
 export default () => {
   const [showDrawer, setShowDrawer] = useState(false);
+  const [searchKeyword, setSearchKeyword] = useState('');
+  const handleSearchChange = (value) => {
+    setSearchKeyword(value);
+  };
+  const searchResults = '';
 
+  // 展示匹配项的界面组件
+  const SearchResultList = () => (
+    <ul>
+      {searchResults.map((result) => (
+        <li key={result.id}>{result.name}</li>
+      ))}
+    </ul>
+  );
   return (
     <>
       <View
@@ -14,7 +84,8 @@ export default () => {
           width: '100%',
           display: 'flex',
           paddingTop: '100rpx',
-        }}>
+        }}
+      >
         <View
           className="at-icon at-icon-chevron-left"
           style={{
@@ -24,7 +95,8 @@ export default () => {
           }}
           onClick={() => {
             Taro.navigateBack();
-          }}></View>
+          }}
+        ></View>
         <Input
           style={{
             width: '400rpx',
@@ -36,23 +108,17 @@ export default () => {
             lineHeight: '60rpx',
           }}
           placeholder="搜索全站"
-          onClick={() => {}}></Input>
+          onInput={() => {}}
+          onClick={() => {}}
+        ></Input>
       </View>
 
-      <AtDrawer
-        show={showDrawer}
-        left
-        mask
-        width="80%"
-        onClose={() => setShowDrawer(false)}
-        style={{ background: 'black', height: '100%' }}>
-        <View style={{ marginTop: '200rpx' }}>
-          <View>微信用户</View>
-          <View>设置</View>
-          <View>深色模式</View>
-          <View>退出登陆</View>
-        </View>
-      </AtDrawer>
+      <LeftDrawer
+        showDrawer={showDrawer}
+        onClose={() => {
+          setShowDrawer(false);
+        }}
+      />
     </>
   );
 };

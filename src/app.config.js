@@ -1,4 +1,5 @@
 export default {
+  // 所有的页面，新增页面需要在这里加上才能用
   pages: [
     'pages/index/index',
     'pages/create/index',
@@ -17,6 +18,7 @@ export default {
     'pages/user/agreements/index',
     'pages/user/privacy/index',
   ],
+  // 底部导航tabbar
   tabBar: {
     backgroundColor: '#fafafa',
     borderStyle: 'white',
@@ -55,6 +57,7 @@ export default {
       },
     ],
   },
+  // 全局配置
   window: {
     navigationBarBackgroundColor: '#fff',
     navigationBarTitleText: 'AI写真',
