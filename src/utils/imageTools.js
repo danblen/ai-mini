@@ -1,23 +1,23 @@
-import Taro from "@tarojs/taro";
+import Taro from '@tarojs/taro';
 
-import { QueryUserDataAPI } from "../api/index.js";
+import { QueryUserDataAPI } from '../api/index.js';
 
 function getLocalFilePath(path) {
   if (
-    path.indexOf("_www") === 0 ||
-    path.indexOf("_doc") === 0 ||
-    path.indexOf("_documents") === 0 ||
-    path.indexOf("_downloads") === 0
+    path.indexOf('_www') === 0 ||
+    path.indexOf('_doc') === 0 ||
+    path.indexOf('_documents') === 0 ||
+    path.indexOf('_downloads') === 0
   ) {
     return path;
   }
-  if (path.indexOf("file://") === 0) {
+  if (path.indexOf('file://') === 0) {
     return path;
   }
-  if (path.indexOf("/storage/emulated/0/") === 0) {
+  if (path.indexOf('/storage/emulated/0/') === 0) {
     return path;
   }
-  if (path.indexOf("/") === 0) {
+  if (path.indexOf('/') === 0) {
     var localFilePath = plus.io.convertAbsoluteFileSystem(path);
     if (localFilePath !== path) {
       return localFilePath;
@@ -25,11 +25,11 @@ function getLocalFilePath(path) {
       path = path.substr(1);
     }
   }
-  return "_www/" + path;
+  return '_www/' + path;
 }
 
 function dataUrlToBase64(str) {
-  var array = str.split(",");
+  var array = str.split(',');
   return array[array.length - 1];
 }
 
@@ -39,8 +39,8 @@ function getNewFileId() {
 }
 
 function biggerThan(v1, v2) {
-  var v1Array = v1.split(".");
-  var v2Array = v2.split(".");
+  var v1Array = v1.split('.');
+  var v2Array = v2.split('.');
   var update = false;
   for (var index = 0; index < v2Array.length; index++) {
     var diff = v1Array[index] - v2Array[index];
@@ -59,7 +59,7 @@ export function downloadImages(imageUrl) {
         if (res.statusCode === 200) {
           resolve(res.tempFilePath);
         } else {
-          reject(new Error("Download failed, status code is not 200"));
+          reject(new Error('Download failed, status code is not 200'));
         }
       },
       fail: (error) => {
@@ -71,10 +71,10 @@ export function downloadImages(imageUrl) {
 // 浏览器环境下的函数
 export function browserPathToBase64(path) {
   return new Promise(function (resolve, reject) {
-    if (typeof FileReader === "function") {
+    if (typeof FileReader === 'function') {
       var xhr = new XMLHttpRequest();
-      xhr.open("GET", path, true);
-      xhr.responseType = "blob";
+      xhr.open('GET', path, true);
+      xhr.responseType = 'blob';
       xhr.onload = function () {
         if (this.status === 200) {
           let fileReader = new FileReader();
@@ -88,8 +88,8 @@ export function browserPathToBase64(path) {
       xhr.onerror = reject;
       xhr.send();
     } else {
-      var canvas = document.createElement("canvas");
-      var c2x = canvas.getContext("2d");
+      var canvas = document.createElement('canvas');
+      var c2x = canvas.getContext('2d');
       var img = new Image();
       img.onload = function () {
         canvas.width = img.width;
@@ -108,20 +108,24 @@ export function browserPathToBase64(path) {
 export function wxPathToBase64(path) {
   return new Promise(function (resolve, reject) {
     // 判断路径是否为 URL
-    if (path.startsWith("http://") || path.startsWith("https://")) {
-      if (typeof wx === "object" && wx.canIUse("getFileSystemManager")) {
+    if (
+      path.startsWith('http://') ||
+      path.startsWith('https://') ||
+      path.startsWith('wxfile://')
+    ) {
+      if (typeof wx === 'object' && wx.canIUse('getFileSystemManager')) {
         wx.getFileSystemManager().readFile({
           filePath: path,
-          encoding: "base64",
+          encoding: 'base64',
           success: function (res) {
-            resolve("data:image/png;base64," + res.data);
+            resolve('data:image/png;base64,' + res.data);
           },
           fail: function (error) {
             reject(error);
           },
         });
       } else {
-        reject(new Error("not supported in this environment"));
+        reject(new Error('not supported in this environment'));
       }
     } else {
       resolve(path); // 如果不是 URL，直接返回原始路径
@@ -159,8 +163,8 @@ export function plusPathToBase64(path) {
 
 export function base64ToPath(base64) {
   return new Promise(function (resolve, reject) {
-    if (typeof window === "object" && "document" in window) {
-      base64 = base64.split(",");
+    if (typeof window === 'object' && 'document' in window) {
+      base64 = base64.split(',');
       var type = base64[0].match(/:(.*?);/)[1];
       var str = atob(base64[1]);
       var n = str.length;
@@ -174,20 +178,20 @@ export function base64ToPath(base64) {
         )
       );
     }
-    var extName = base64.split(",")[0].match(/data\:\S+\/(\S+);/);
+    var extName = base64.split(',')[0].match(/data\:\S+\/(\S+);/);
     if (extName) {
       extName = extName[1];
     } else {
-      reject(new Error("base64 error"));
+      reject(new Error('base64 error'));
     }
-    var fileName = getNewFileId() + "." + extName;
-    if (typeof plus === "object") {
-      var basePath = "_doc";
-      var dirPath = "uniapp_temp";
-      var filePath = basePath + "/" + dirPath + "/" + fileName;
+    var fileName = getNewFileId() + '.' + extName;
+    if (typeof plus === 'object') {
+      var basePath = '_doc';
+      var dirPath = 'uniapp_temp';
+      var filePath = basePath + '/' + dirPath + '/' + fileName;
       if (
         !biggerThan(
-          plus.os.name === "Android" ? "1.9.9.80627" : "1.9.9.80472",
+          plus.os.name === 'Android' ? '1.9.9.80627' : '1.9.9.80472',
           plus.runtime.innerVersion
         )
       ) {
@@ -251,12 +255,12 @@ export function base64ToPath(base64) {
       );
       return;
     }
-    if (typeof wx === "object" && wx.canIUse("getFileSystemManager")) {
-      var filePath = wx.env.USER_DATA_PATH + "/" + fileName;
+    if (typeof wx === 'object' && wx.canIUse('getFileSystemManager')) {
+      var filePath = wx.env.USER_DATA_PATH + '/' + fileName;
       wx.getFileSystemManager().writeFile({
         filePath: filePath,
         data: dataUrlToBase64(base64),
-        encoding: "base64",
+        encoding: 'base64',
         success: function () {
           resolve(filePath);
         },
@@ -266,6 +270,6 @@ export function base64ToPath(base64) {
       });
       return;
     }
-    reject(new Error("not support"));
+    reject(new Error('not support'));
   });
 }
