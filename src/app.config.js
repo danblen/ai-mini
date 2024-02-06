@@ -31,18 +31,18 @@ export default {
         selectedIconPath: './static/image/tabbar/icons8-r2-d2-100 (1).png',
         text: '首页',
       },
-      {
-        pagePath: 'pages/discover/index',
-        iconPath: './static/image/tabbar/icons8-图片编辑器-100.png',
-        selectedIconPath: './static/image/tabbar/icons8-图片编辑器-100 (1).png',
-        text: '发现',
-      },
-      {
-        pagePath: 'pages/create/index',
-        iconPath: './static/image/tabbar/icons8-图片编辑器-100.png',
-        selectedIconPath: './static/image/tabbar/icons8-图片编辑器-100 (1).png',
-        text: '创作',
-      },
+      // {
+      //   pagePath: 'pages/discover/index',
+      //   iconPath: './static/image/tabbar/icons8-图片编辑器-100.png',
+      //   selectedIconPath: './static/image/tabbar/icons8-图片编辑器-100 (1).png',
+      //   text: '发现',
+      // },
+      // {
+      //   pagePath: 'pages/create/index',
+      //   iconPath: './static/image/tabbar/icons8-图片编辑器-100.png',
+      //   selectedIconPath: './static/image/tabbar/icons8-图片编辑器-100 (1).png',
+      //   text: '创作',
+      // },
       {
         pagePath: 'pages/message/index',
         iconPath: './static/image/tabbar/icons8-ios的照片-100.png',

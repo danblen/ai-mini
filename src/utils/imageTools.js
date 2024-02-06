@@ -104,6 +104,41 @@ export function browserPathToBase64(path) {
   });
 }
 
+export const compressInputImage = async (file) => {
+  try {
+    let compressedFile;
+    let srcBase64;
+    let src_size = file.file.size;
+
+    let quality = Math.floor((-0.0738 * src_size) / 1024 + 113.75);
+    // 当文件大于200KB时循环压缩
+    if (quality < 0) quality = 5;
+    while (src_size > 200 * 1024 && quality > 0) {
+      compressedFile = await Taro.compressImage({
+        src: file.url,
+        quality,
+      });
+      srcBase64 = await wxPathToBase64(compressedFile.tempFilePath);
+      src_size = srcBase64.length;
+      // 根据线性关系调整压缩质量
+
+      quality = Math.floor(-0.0738 * src_size + 113.75); // 动态调整压缩质量
+
+      // 防止负数或过大的压缩质量值
+      if (quality > 99) {
+        quality = 99;
+      }
+      console.log('compressed size', src_size);
+    }
+
+    return {
+      base64: srcBase64,
+    };
+  } catch (error) {
+    console.error('图片压缩失败：', error);
+    return file;
+  }
+};
 // 小程序（微信小程序）环境下的函数
 export function wxPathToBase64(path) {
   return new Promise(function (resolve, reject) {

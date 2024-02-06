@@ -1,9 +1,9 @@
 import { Text, View } from '@tarojs/components';
 import { useState } from 'react';
+import { AtDrawer } from 'taro-ui';
 import LeftDrawer from '../comps/LeftDrawer';
-import { login, storeImages } from '../../api';
 
-export default () => {
+export default ({ currentTab, onSwitchTab }) => {
   const [showDrawer, setShowDrawer] = useState(false);
 
   return (
@@ -21,17 +21,15 @@ export default () => {
       <View
         style={{
           display: 'flex',
-          alignItems: 'center',
         }}
       >
         <View
           className="at-icon at-icon-menu"
           style={{
-            height: '100rpx',
-            lineHeight: '98rpx',
             marginLeft: '20rpx',
             fontSize: '50rpx',
             color: 'black',
+            lineHeight: '100rpx',
           }}
           onClick={() => {
             setShowDrawer(true);
@@ -39,41 +37,54 @@ export default () => {
         ></View>
         <View
           style={{
-            width: '400rpx',
-            height: '62rpx',
-            lineHeight: '62rpx',
-            borderRadius: '50rpx',
-            marginLeft: '30rpx',
-            paddingLeft: '30rpx',
-            backgroundColor: '#f5f5f5',
-          }}
-          onClick={() => {
-            navigateTo({ url: '/pages/search/index' });
+            marginLeft: '180rpx',
+            lineHeight: '100rpx',
           }}
         >
-          <View
-            className="at-icon at-icon-search"
-            style={{
-              fontSize: '30rpx',
-            }}
-          ></View>
           <Text
             style={{
               fontSize: '30rpx',
-              marginLeft: '10rpx',
+              fontWeight: currentTab === 'hot' ? 'bold' : 'normal',
+            }}
+            onClick={() => {
+              onSwitchTab('hot');
             }}
           >
-            搜全站
+            热门
+          </Text>
+          <Text
+            style={{
+              fontSize: '30rpx',
+              marginLeft: '40rpx',
+              fontWeight: currentTab === 'recommend' ? 'bold' : 'normal',
+            }}
+            onClick={() => {
+              onSwitchTab('recommend');
+            }}
+          >
+            推荐
+          </Text>
+          <Text
+            style={{
+              fontSize: '30rpx',
+              marginLeft: '40rpx',
+              fontWeight: currentTab === 'new' ? 'bold' : 'normal',
+            }}
+            onClick={() => {
+              onSwitchTab('new');
+            }}
+          >
+            动态
           </Text>
         </View>
-      </View>
 
-      <LeftDrawer
-        showDrawer={showDrawer}
-        onClose={() => {
-          setShowDrawer(false);
-        }}
-      />
+        <LeftDrawer
+          showDrawer={showDrawer}
+          onClose={() => {
+            setShowDrawer(false);
+          }}
+        />
+      </View>
     </View>
   );
 };

@@ -10,6 +10,14 @@ export default ({}) => {
   const onClick = useCallback((value) => {
     setCurrent(value);
   });
+  const [userInfo, setUserInfo] = useState({
+    isLogin: false,
+    data: {
+      points: 0,
+      userId: '',
+      isChecked: false,
+    },
+  });
   const items = [
     '版本更新',
     '账户安全设置',
@@ -33,7 +41,6 @@ export default ({}) => {
         style={Style.item}
         onClick={() => {
           navigateTo({ url: '/pages/user/privacy/index' });
-          navigateTo({ url: '/pages/user/privacy/index' });
         }}
       >
         隐私协议
@@ -55,7 +62,7 @@ export default ({}) => {
             isLogin: false,
             data: {},
           });
-          setStorageSync('userInfo', {
+          Taro.setStorageSync('userInfo', {
             isLogin: false,
             data: {},
           });

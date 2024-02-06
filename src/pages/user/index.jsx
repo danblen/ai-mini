@@ -8,6 +8,7 @@ import { AtFloatLayout } from 'taro-ui';
 import { get_user_info } from '../../api';
 import { saveUserInfo, wechatLogin } from '../../common/user';
 import LoginView from '../comps/LoginView';
+import Taro from '@tarojs/taro';
 
 export default () => {
   const [loading, setLoading] = useState(false);
@@ -37,7 +38,11 @@ export default () => {
           isLogin: true,
           data: res.data,
         }));
-        setStorageSync('userInfo', {
+        Taro.setStorageSync('userInfo', {
+          isLogin: true,
+          data: res.data,
+        });
+        saveUserInfo({
           isLogin: true,
           data: res.data,
         });
@@ -135,7 +140,7 @@ export default () => {
                 loading={loading}
                 onClick={() => setIsOpened(true)}
               >
-                微信一键登陆
+                微信一键登录
                 <View className="at-icon at-icon-chevron-right" />
               </View>
             )}

@@ -6,6 +6,7 @@ import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { api } from '../../api/index.js';
 import FinishedTask from './FinishedTask.jsx';
+import Taro from '@tarojs/taro';
 
 export default ({ images }) => {
   const [allImages, setAllImages] = useState([]);

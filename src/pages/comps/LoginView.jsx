@@ -6,7 +6,7 @@ const agreementsUrl = '/pages/user/agreements/index';
 const privacyUrl = '/pages/user/privacy/index';
 
 export default ({ onConfirmLogin }) => {
-  const [isCheckPolicy, setIsCheckPolicy] = useState(false);
+  const [isCheckPolicy, setIsCheckPolicy] = useState(true);
   const [loading, setLoading] = useState(false);
 
   return (

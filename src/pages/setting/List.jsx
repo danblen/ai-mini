@@ -2,13 +2,21 @@
  * 设置页
  */
 import { Text, View } from '@tarojs/components';
-import Taro from '@tarojs/taro';
 import React, { useCallback, useState } from 'react';
+import Taro, { getStorageSync, setStorageSync } from '@tarojs/taro';
 
 export default ({}) => {
   const [current, setCurrent] = useState(0);
   const onClick = useCallback((value) => {
     setCurrent(value);
+  });
+  const [userInfo, setUserInfo] = useState({
+    isLogin: false,
+    data: {
+      points: 0,
+      userId: '',
+      isChecked: false,
+    },
   });
   const items = [
     '版本更新',
@@ -46,7 +54,6 @@ export default ({}) => {
       >
         用户协议
       </View>
-      <View style={Style.item}>消息推送设置</View>
       <View style={Style.item}>清除缓存</View>
       <View
         style={Style.item}

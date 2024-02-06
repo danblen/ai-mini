@@ -1,6 +1,14 @@
 import { View } from '@tarojs/components';
-import ButtonsBox from '../../comps/ButtonsBox';
+import TabsImageList from './TabsImageList';
 
-export default () => {
-  return <View></View>;
+export default ({ tags_image }) => {
+  return (
+    <View
+      style={{
+        marginTop: '170rpx',
+      }}
+    >
+      <TabsImageList tags_image={tags_image}></TabsImageList>
+    </View>
+  );
 };

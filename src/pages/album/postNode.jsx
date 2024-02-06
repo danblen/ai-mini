@@ -2,37 +2,56 @@ import React, { useEffect, useState } from 'react';
 import { View, Image, Text, Input, Button } from '@tarojs/components';
 import { AtImagePicker } from 'taro-ui';
 import CustomNavBar from '../index/CustomNavBar.jsx';
-
-import Taro, { useRouter } from '@tarojs/taro'; // 导入 useRouter
+import { wxPathToBase64, compressInputImage } from '../../utils/imageTools';
+import { api } from '../../api';
+import { AtFloatLayout } from 'taro-ui';
+import Taro, { useRouter, getStorageSync } from '@tarojs/taro'; // 导入 useRouter
 import { Textarea } from '@tarojs/components';
+import LoginView from '../comps/LoginView';
+import { saveUserInfo, wechatLogin } from '../../common/user';
 
 export default () => {
-  const router = useRouter();
   const [selectedImages, setSelectedImages] = useState([]);
   const [title, setTitle] = useState('');
-
-  useEffect(() => {
-    // 在这里可以处理页面初始化时的逻辑，比如获取服务端数据等
-
-    // 获取传递过来的图片信息
-    const images = JSON.parse(router.params.images || '[]');
-    setSelectedImages(images);
-  }, []);
+  const [isOpened, setIsOpened] = useState(false);
+  const [userInfo, setUserInfo] = useState({
+    isLogin: false,
+    data: {
+      points: 0,
+      userId: '',
+      isChecked: false,
+      avatarUrl: '',
+    },
+  });
 
   const handlePublish = async () => {
-    // 在这里可以向服务端发送请求，上传图片和标题等信息
-    // 你需要替换下面的示例代码为实际的服务端请求逻辑
     try {
-      const res = await Taro.request({
-        url: '你的服务端接口地址',
-        method: 'POST',
-        data: {
-          images: selectedImages,
-          title: title,
-        },
-      });
+      const storageUserInfo = getStorageSync('userInfo');
+      if (storageUserInfo && storageUserInfo.isLogin) {
+        const compressBase64Array = selectedImages.map(
+          (image) => image.compressBase64
+        );
 
-      console.log('发布成功:', res.data);
+        api.uploadImages({
+          userId: storageUserInfo.data.userId,
+          tag: 'gufeng',
+          image: compressBase64Array,
+          description: title,
+        });
+        Taro.showToast({
+          title: '发布成功',
+          icon: 'none',
+          duration: 2000,
+        });
+        if (Taro.getCurrentPages().length > 1) {
+          Taro.navigateBack();
+        }
+      } else {
+        // Taro.switchTab({
+        //   url: '/pages/user/index',
+        // });
+        setIsOpened(true);
+      }
     } catch (error) {
       console.error('发布失败:', error);
     }
@@ -61,32 +80,45 @@ export default () => {
 
       <View style={{ paddingTop: '80px' }}>
         <AtImagePicker
-          files={selectedImages.map((image, index) => ({ url: image }))}
-          onChange={(files, operationType, index) => {
-            const newImages = files
-              .slice(selectedImages.length)
-              .map((file) => file.url);
+          files={selectedImages.map((image, index) => ({
+            ...image,
+            url: image.url,
+          }))}
+          onChange={async (files, operationType, index) => {
+            const newImages = files.slice(selectedImages.length);
 
             // 判断是否为添加图片操作
-            console.log(operationType, files);
             if (operationType === 'add') {
-              // 计算当前已选择的图片数量
-              const totalImages = selectedImages.length + newImages.length;
+              try {
+                // 计算当前已选择的图片数量
+                const totalImages = selectedImages.length + newImages.length;
 
-              // 设置允许的最大图片数量
-              const maxImages = 9;
-
-              if (totalImages <= maxImages) {
-                setSelectedImages((prevImages) => [
-                  ...prevImages,
-                  ...newImages,
-                ]);
-              } else {
-                Taro.showToast({
-                  title: '最多选择9张图~',
-                  icon: 'none',
-                  duration: 2000,
-                });
+                // 设置允许的最大图片数量
+                const maxImages = 9;
+                if (totalImages <= maxImages) {
+                  // 压缩输入的图片
+                  for (let i = 0; i < newImages.length; i++) {
+                    const compressedFile = await compressInputImage(
+                      newImages[i]
+                    );
+                    // 压缩成功后添加base64数据
+                    newImages[i].compressBase64 = compressedFile.base64
+                      ? compressedFile.base64
+                      : null;
+                  }
+                  setSelectedImages((prevImages) => [
+                    ...prevImages,
+                    ...newImages,
+                  ]);
+                } else {
+                  Taro.showToast({
+                    title: '最多选择9张图~',
+                    icon: 'none',
+                    duration: 2000,
+                  });
+                }
+              } catch (error) {
+                console.error('处理图片失败：', error);
               }
             } else if (operationType === 'remove') {
               // 使用 index 参数确定被移除的图片
@@ -138,6 +170,29 @@ export default () => {
           发布
         </Button>
       </View>
+      <AtFloatLayout
+        isOpened={isOpened}
+        onClose={() => {
+          setIsOpened(false);
+        }}
+      >
+        <LoginView
+          onConfirmLogin={async () => {
+            const res = await wechatLogin();
+            if (res) {
+              setUserInfo({
+                isLogin: true,
+                data: res.data,
+              });
+              saveUserInfo({
+                isLogin: true,
+                data: res.data,
+              });
+              setIsOpened(false);
+            }
+          }}
+        />
+      </AtFloatLayout>
     </View>
   );
 };
