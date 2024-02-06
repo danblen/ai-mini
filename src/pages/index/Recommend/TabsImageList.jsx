@@ -1,21 +1,39 @@
 import { ScrollView, Text, View } from '@tarojs/components';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { AtFloatLayout } from 'taro-ui';
 import ImageList from './ImageList';
+const HotPages = '/pages/index/Hot/index';
 
-export default ({ tags_image }) => {
+export default ({ tags_image, onNavigateToHot }) => {
+  const [imageUrlsMap, setImageUrlsMap] = useState({});
   const [imageUrls, setImageUrls] = useState([]);
   const [tabList, setTabList] = useState([]);
   const [current, setCurrent] = useState('古装');
   const [showDrawer, setShowDrawer] = useState(false);
+  const startXRef = useRef(0);
+  const endXRef = useRef(0);
+
   useEffect(() => {
     if (tags_image) {
       const tabList = Object.keys(tags_image).map((key) => ({ title: key }));
       setTabList(tabList);
-      console.log(tabList);
-      setImageUrls(tags_image[tabList[0]?.title]);
+      const initialTab = tabList[0]?.title || '';
+      setCurrent(initialTab);
+      if (!imageUrlsMap[initialTab]) {
+        setImageUrlsMap({
+          ...imageUrlsMap,
+          [initialTab]: tags_image[initialTab],
+        });
+      }
     }
   }, [tags_image]);
+
+  const handleTabClick = (tabTitle) => {
+    setCurrent(tabTitle);
+    if (!imageUrlsMap[tabTitle]) {
+      setImageUrlsMap({ ...imageUrlsMap, [tabTitle]: tags_image[tabTitle] });
+    }
+  };
   return (
     <View style={Styles.container}>
       <View
@@ -30,9 +48,8 @@ export default ({ tags_image }) => {
       >
         <ScrollView
           scrollX
-          scrollWithAnimation
           style={{
-            width: '90%',
+            width: '87%',
             whiteSpace: 'nowrap',
           }}
         >
@@ -40,18 +57,15 @@ export default ({ tags_image }) => {
             <View
               style={{
                 fontSize: '30rpx',
-                marginRight: '20rpx',
+                marginRight: '5rpx',
                 display: 'inline-block',
-                backgroundColor: current === tab.title ? '#eee' : '#fff',
+                backgroundColor: current === tab.title ? '#59a2dc' : '#fff',
                 width: '100rpx',
                 borderRadius: '30rpx',
                 lineHeight: '60rpx',
                 textAlign: 'center',
               }}
-              onClick={() => {
-                setCurrent(tab.title);
-                setImageUrls(tags_image[current]);
-              }}
+              onClick={() => handleTabClick(tab.title)}
             >
               {tab.title}
             </View>
@@ -60,9 +74,11 @@ export default ({ tags_image }) => {
         <View
           className="at-icon at-icon-chevron-down"
           style={{
-            width: '10%',
+            width: '9%',
             textAlign: 'center',
             lineHeight: '60rpx',
+            background: '#bbb5b58c',
+            borderRadius: '90px',
           }}
           onClick={() => {
             setShowDrawer(true);
@@ -70,8 +86,40 @@ export default ({ tags_image }) => {
         ></View>
       </View>
 
-      <View style={{ paddingTop: '100rpx' }}>
-        <ImageList imageUrls={imageUrls} />
+      <View
+        style={{ paddingTop: '100rpx' }}
+        onTouchStart={(e) => {
+          startXRef.current = e.touches[0].clientX;
+        }}
+        onTouchMove={(e) => {
+          endXRef.current = e.touches[0].clientX;
+        }}
+        onTouchEnd={() => {
+          const distance = endXRef.current - startXRef.current;
+          console.log(distance);
+          if (distance > 20) {
+            // 设置一个阈值，例如50px，表示滑动距离超过50px才切换tab
+            // 向右滑动，切换到前一个tab
+            const tab = tabList.findIndex((tab) => tab.title === current) - 1;
+            const index = Math.max(tab, 0);
+            if (tab < 0) {
+              console.log(tab);
+              onNavigateToHot();
+            }
+            handleTabClick(tabList[index].title);
+          } else if (distance < -10) {
+            // 向左滑动，切换到下一个tab
+            const index = Math.min(
+              tabList.findIndex((tab) => tab.title === current) + 1,
+              tabList.length - 1
+            );
+            handleTabClick(tabList[index].title);
+          }
+        }}
+      >
+        {imageUrlsMap[current] && (
+          <ImageList imageUrls={imageUrlsMap[current]} />
+        )}
       </View>
 
       <AtFloatLayout isOpened={showDrawer} onClose={() => setShowDrawer(false)}>

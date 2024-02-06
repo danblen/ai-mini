@@ -10,6 +10,7 @@ import AlbumsCard from '../AlbumsCard.jsx';
 import NavBar from '../NavBar.jsx';
 import TopBanner from '../TopBanner.jsx';
 import WaterfallList from '../WaterfallList.jsx';
+import Taro from '@tarojs/taro';
 
 export default () => {
   let [allImages, setAllImages] = useState({ albums: {}, tags_image: {} });
@@ -18,6 +19,7 @@ export default () => {
     let res = await get_all_images();
     if (res?.data) {
       setAllImages(res.data);
+      Taro.setStorageSync('tmpAllimages', res.data);
     }
   };
   const getBanners = async () => {
@@ -26,7 +28,15 @@ export default () => {
   };
   useEffect(() => {
     getBanners();
-    getAllImages();
+    const tmpAllimages = getStorageSync('tmpAllimages');
+    if (!tmpAllimages) {
+      getAllImages();
+    } else {
+      setAllImages(tmpAllimages);
+    }
+    const timer = setInterval(() => {
+      getAllImages();
+    }, 10 * 60 * 1000); // 10分钟
   }, []);
   return (
     <>

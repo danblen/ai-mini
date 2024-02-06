@@ -24,6 +24,9 @@ export default () => {
   useEffect(() => {
     getAllImages();
   }, []);
+  const navigateToHot = () => {
+    setCurrentTab('hot');
+  };
   return (
     <View>
       <NavBar
@@ -35,7 +38,10 @@ export default () => {
 
       {currentTab === 'hot' && <Hot />}
       {currentTab === 'recommend' && (
-        <Recommend tags_image={allImages?.tagsImage} />
+        <Recommend
+          tags_image={allImages?.tagsImage}
+          onNavigateToHot={navigateToHot}
+        />
       )}
       {currentTab === 'new' && <New />}
     </View>
