@@ -3,10 +3,11 @@
  */
 import { Button, View } from '@tarojs/components';
 import React, { useEffect } from 'react';
+import Taro, { useDidShow } from '@tarojs/taro';
 import { useState } from 'react';
-import { api } from '../../api/index.js';
+import { fetchProcessedImages } from './fetchProcessedImages.js';
 import FinishedTask from './FinishedTask.jsx';
-import Taro from '@tarojs/taro';
+// import Taro from '@tarojs/taro';
 
 export default ({ images }) => {
   const [allImages, setAllImages] = useState([]);
@@ -18,22 +19,22 @@ export default ({ images }) => {
       isChecked: false,
     },
   });
-  const fetchData = async () => {
+  const fetchData = async (refresh) => {
+    console.log('refresh', refresh);
     const storageUserInfo = Taro.getStorageSync('userInfo');
     setUserInfo(storageUserInfo);
-    console.log(storageUserInfo);
     let processedImages = Taro.getStorageSync('processedImages') || [];
 
-    console.log(processedImages);
-    if (storageUserInfo?.isLogin && storageUserInfo.data?.user_id) {
+    if (storageUserInfo?.isLogin && storageUserInfo.data?.userId) {
       const userInfo = {
         userId: storageUserInfo.data.userId,
         requestStatus: 'finishing',
       };
 
-      if (processedImages.length === 0) {
+      if (refresh === true || processedImages.length === 0) {
         // 从缓存中未获取到数据，进行网络请求
-        processedImages = await api.getUserProcessImage(userInfo).catch();
+        processedImages = await fetchProcessedImages(userInfo);
+
         if (processedImages?.length > 0) {
           // 将请求到的数据缓存到本地存储
           Taro.setStorageSync('processedImages', processedImages);
@@ -49,7 +50,7 @@ export default ({ images }) => {
     }
   };
 
-  useEffect(() => {
+  useDidShow(() => {
     fetchData();
   }, []);
   return (
@@ -65,7 +66,7 @@ export default ({ images }) => {
       ) : (
         <View
           style={{
-            paddingTop: '20rpx',
+            paddingTop: '300rpx',
           }}
         >
           <View

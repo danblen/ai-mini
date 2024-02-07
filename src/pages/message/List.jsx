@@ -28,9 +28,10 @@ export default ({ images }) => {
         request_status: 'finishing',
       };
       const processedImages = await api.getUserProcessImage(userInfo).catch();
+      console.log('processedImages', processedImages);
       if (processedImages?.data) {
         let allImages = processedImages.data.map((image) => ({
-          url: 'data:image/png;base64,' + image.outputImagePath,
+          url: image.outputImagePath,
         }));
         setAllImages(allImages);
       }
@@ -59,7 +60,7 @@ export default ({ images }) => {
       ) : (
         <View
           style={{
-            paddingTop: '20rpx',
+            paddingTop: '300rpx',
           }}
         >
           <View

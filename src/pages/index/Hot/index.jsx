@@ -14,7 +14,6 @@ import Taro from '@tarojs/taro';
 
 export default () => {
   let [allImages, setAllImages] = useState({ albums: {}, tags_image: {} });
-  let [banners, setBanners] = useState([]);
   const getAllImages = async () => {
     let res = await get_all_images();
     if (res?.data) {
@@ -22,12 +21,8 @@ export default () => {
       Taro.setStorageSync('tmpAllimages', res.data);
     }
   };
-  const getBanners = async () => {
-    let res = await api.getBanners();
-    setBanners(res.data);
-  };
   useEffect(() => {
-    getBanners();
+    // getBanners();
     const tmpAllimages = getStorageSync('tmpAllimages');
     if (!tmpAllimages) {
       getAllImages();
@@ -36,7 +31,7 @@ export default () => {
     }
     const timer = setInterval(() => {
       getAllImages();
-    }, 10 * 60 * 1000); // 10分钟
+    }, 1 * 60 * 1000); // 10分钟
   }, []);
   return (
     <>
@@ -47,7 +42,7 @@ export default () => {
           marginTop: '180rpx',
         }}
       >
-        <TopBanner banners={banners} />
+        <TopBanner banners={allImages?.bannerImage?.['首页日更']} />
         <ButtonsBox
           buttons={[
             {

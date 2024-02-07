@@ -88,7 +88,7 @@ const ImageList = ({ images, loadMore, onFetchData }) => {
   };
 
   return (
-    <View style={{ position: 'relative' }}>
+    <View style={{ position: 'relative', top: '100px' }}>
       <ScrollView
         scrollY
         style={{ height: '100vh' }}
@@ -186,7 +186,7 @@ const ImageList = ({ images, loadMore, onFetchData }) => {
             size="24"
             color="#054622"
             onClick={() => {
-              onFetchData(); // 调用fetchData函数
+              onFetchData(true); // 调用fetchData函数
             }}
           />
           刷新

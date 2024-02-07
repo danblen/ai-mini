@@ -1,21 +1,22 @@
 import { Image, Swiper, SwiperItem, View } from '@tarojs/components';
 import React from 'react';
+
 export default ({ banners }) => {
   return (
     <View style={Styles.container}>
       <Swiper circular indicatorDots autoplay style={Styles.Swiper}>
-        {banners?.map?.((banner) => (
-          <SwiperItem>
+        {banners?.map?.((url, index) => (
+          <SwiperItem key={index}>
             <Image
               style={Styles.image}
               className=" "
               mode="widthFix"
               onClick={() => {
                 navigateTo({
-                  url: '/pages/faceswap/index?imageUrl=' + banner.imageUrl,
+                  url: '/pages/faceswap/index?imageUrl=' + url,
                 });
               }}
-              src={banner.imageUrl}
+              src={url}
             ></Image>
           </SwiperItem>
         ))}
@@ -23,6 +24,7 @@ export default ({ banners }) => {
     </View>
   );
 };
+
 const Styles = {
   Swiper: {
     height: '400rpx',

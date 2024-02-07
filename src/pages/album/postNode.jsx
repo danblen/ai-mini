@@ -26,23 +26,40 @@ export default () => {
 
   const handlePublish = async () => {
     try {
+      if (selectedImages.length === 0) {
+        Taro.showToast({
+          title: '请选择发布模板',
+          icon: 'none',
+          duration: 2000,
+        });
+        return;
+      }
+      if (title === '') {
+        Taro.showToast({
+          title: '请输入模板标题',
+          icon: 'none',
+          duration: 2000,
+        });
+        return;
+      }
       const storageUserInfo = getStorageSync('userInfo');
       if (storageUserInfo && storageUserInfo.isLogin) {
         const compressBase64Array = selectedImages.map(
           (image) => image.compressBase64
         );
 
-        api.uploadImages({
+        await api.uploadImages({
           userId: storageUserInfo.data.userId,
           tag: 'gufeng',
           image: compressBase64Array,
-          description: title,
+          description: title ? title : '这是没有标题的模板',
         });
         Taro.showToast({
           title: '发布成功',
           icon: 'none',
           duration: 2000,
         });
+        await new Promise((resolve) => setTimeout(resolve, 1000));
         if (Taro.getCurrentPages().length > 1) {
           Taro.navigateBack();
         }

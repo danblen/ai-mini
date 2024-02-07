@@ -44,7 +44,7 @@ export default {
       //   text: '创作',
       // },
       {
-        pagePath: 'pages/message/index',
+        pagePath: 'pages/album/index',
         iconPath: './static/image/tabbar/icons8-ios的照片-100.png',
         selectedIconPath: './static/image/tabbar/icons8-ios的照片-100 (1).png',
         text: '作品',

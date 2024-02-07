@@ -4,10 +4,15 @@ import { AtButton } from 'taro-ui';
 import { faceSwap } from '../../api/index.js';
 import { data } from '../../const/sdApiParams.js';
 import { downloadImages, wxPathToBase64 } from '../../utils/imageTools.js';
+
 let isSwaped = false;
+
 export default ({ albumUrls, selfUrl, onUpdateTaskImages }) => {
   const [loading, setLoading] = useState(false);
   const [imageUrls, setImageUrls] = useState([]);
+
+  console.log('albumUrls', albumUrls);
+  console.log('selfUrl', selfUrl);
   useEffect(() => {
     const down = async (urls) => {
       if (urls?.length) {
@@ -20,6 +25,7 @@ export default ({ albumUrls, selfUrl, onUpdateTaskImages }) => {
       }
     };
     down(albumUrls);
+    console.log('downm', albumUrls);
     let ignore = false;
     return () => {
       ignore = true;
@@ -27,24 +33,36 @@ export default ({ albumUrls, selfUrl, onUpdateTaskImages }) => {
   }, [albumUrls]);
 
   const swapOneFace = async (originUrl) => {
+    console.log('originUrl', originUrl);
     const originBase64 = await wxPathToBase64(originUrl);
     const selfBase64 = await wxPathToBase64(selfUrl);
     const storageUserInfo = getStorageSync('userInfo');
+    console.log('storageUserInfo', storageUserInfo);
     if (storageUserInfo?.data?.userId) {
       data.userId = storageUserInfo?.data?.userId;
     }
     data.init_images = [originBase64];
     data.alwayson_scripts.roop.args[0] = selfBase64;
     let res = await faceSwap(data).catch((err) => {});
+    console.log('faceSwap ok');
     if (res?.status === 'pending') {
       onUpdateTaskImages(res.request_id);
     } else {
-      Taro.showToast({
-        title: res?.error_message,
-        icon: 'none',
-      });
+      console.log('error_message', res);
+      if (typeof res?.error_message === 'string') {
+        Taro.showToast({
+          title: res.error_message,
+          icon: 'none',
+        });
+      } else {
+        Taro.showToast({
+          title: 'Unknown error occurred',
+          icon: 'none',
+        });
+      }
     }
   };
+
   return (
     <AtButton
       type="primary"
@@ -57,11 +75,11 @@ export default ({ albumUrls, selfUrl, onUpdateTaskImages }) => {
       shape="circle"
       loading={loading}
       onClick={async () => {
-        // 有上传的图片，且未换脸
         if (selfUrl && albumUrls?.length && !isSwaped) {
           isSwaped = true;
           setLoading(true);
-          imageUrls.forEach((albumUrl) => swapOneFace(albumUrl));
+          swapOneFace(imageUrls[0]);
+          // await Promise.all(imageUrls.map((albumUrl) => swapOneFace(albumUrl)));
           setLoading(false);
         }
       }}

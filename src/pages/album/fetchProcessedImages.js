@@ -1,15 +1,14 @@
-import { QueryUserDataAPI } from '../../api/index.js';
+import { api } from '../../api/index.js';
 export async function fetchProcessedImages(userInfo) {
   try {
     if (userInfo) {
-      let downLoadUserImages = await QueryUserDataAPI(userInfo);
-
-      if (downLoadUserImages) {
+      let downLoadUserImages = await api.getUserProcessImage(userInfo);
+      if (downLoadUserImages.data) {
         let processedImages = [];
-        for (let i = 0; i < downLoadUserImages.length; i++) {
-          let entry = downLoadUserImages[i];
-          let pathParts = entry['output_image_path'].split(
-            '/home/ubuntu/code/ai-flask/sd_make_images/'
+        for (let i = 0; i < downLoadUserImages.data.length; i++) {
+          let entry = downLoadUserImages.data[i];
+          let pathParts = entry['outputImagePath'].split(
+            '/home/ubuntu/code/server/sd_make_images/'
           );
           let fileName = pathParts[pathParts.length - 1];
           let imageInfo = {

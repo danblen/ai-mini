@@ -1,9 +1,12 @@
 import { getSwapQueueResult } from '../api/index.js';
+import Taro from '@tarojs/taro';
+
 let timers = {};
 export const getTaskImage = async (requestId) => {
   return new Promise((resolve, reject) => {
+    const storageUserInfo = getStorageSync('userInfo');
     const requestData = {
-      userId: '',
+      userId: storageUserInfo?.data?.userId,
       requestId: requestId,
       sql_query: {
         request_status: '',

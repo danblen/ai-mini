@@ -110,6 +110,14 @@ export const compressInputImage = async (file) => {
     let srcBase64;
     let src_size = file.file.size;
 
+    // 如果文件小于200KB，直接转换为base64
+    if (src_size <= 200 * 1024) {
+      srcBase64 = await wxPathToBase64(file.url);
+      return {
+        base64: srcBase64,
+      };
+    }
+
     let quality = Math.floor((-0.0738 * src_size) / 1024 + 113.75);
     // 当文件大于200KB时循环压缩
     if (quality < 0) quality = 5;
