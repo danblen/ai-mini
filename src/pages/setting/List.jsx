@@ -4,19 +4,12 @@
 import { Text, View } from '@tarojs/components';
 import React, { useCallback, useState } from 'react';
 import Taro, { getStorageSync, setStorageSync } from '@tarojs/taro';
+import { clearUserInfo } from '../../common/user';
 
 export default ({}) => {
   const [current, setCurrent] = useState(0);
   const onClick = useCallback((value) => {
     setCurrent(value);
-  });
-  const [userInfo, setUserInfo] = useState({
-    isLogin: false,
-    data: {
-      points: 0,
-      userId: '',
-      isChecked: false,
-    },
   });
   const items = [
     '版本更新',
@@ -58,14 +51,7 @@ export default ({}) => {
       <View
         style={Style.item}
         onClick={() => {
-          setUserInfo({
-            isLogin: false,
-            data: {},
-          });
-          setStorageSync('userInfo', {
-            isLogin: false,
-            data: {},
-          });
+          clearUserInfo();
         }}
       >
         退出登录

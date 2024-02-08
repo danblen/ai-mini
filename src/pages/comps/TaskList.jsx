@@ -1,5 +1,5 @@
-import Taro from '@tarojs/taro';
 import { View, ScrollView, Image } from '@tarojs/components';
+import Taro from '@tarojs/taro';
 import React, { useState, useEffect, useRef } from 'react';
 import { AtIcon } from 'taro-ui';
 

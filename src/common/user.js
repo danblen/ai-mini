@@ -57,6 +57,10 @@ export const clearGlobalUserInfo = async () => {
     },
   };
 };
+export const clearUserInfo = () => {
+  clearGlobalUserInfo();
+  clearStorageUserInfo();
+};
 
 export const saveUserInfo = async (userInfo) => {
   setStorageSync('userInfo', userInfo);

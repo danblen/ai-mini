@@ -64,11 +64,7 @@ export default ({ images }) => {
           <FinishedTask images={allImages} onFetchData={fetchData} />
         </View>
       ) : (
-        <View
-          style={{
-            paddingTop: '300rpx',
-          }}
-        >
+        <View style={{}}>
           <View
             style={{
               textAlign: 'center',

@@ -88,7 +88,7 @@ const ImageList = ({ images, loadMore, onFetchData }) => {
   };
 
   return (
-    <View style={{ position: 'relative', top: '100px' }}>
+    <View style={{ marginTop: 50 }}>
       <ScrollView
         scrollY
         style={{ height: '100vh' }}
@@ -161,7 +161,7 @@ const ImageList = ({ images, loadMore, onFetchData }) => {
       <View
         style={{
           position: 'fixed',
-          top: '60px',
+          top: 10,
           left: '20px',
           display: 'flex',
           backgroundColor: 'rgb(255 255 255 / 51%)',

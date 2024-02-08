@@ -2,9 +2,11 @@ import Taro from '@tarojs/taro';
 import { faceSwap } from '../../api';
 import { useState, useEffect, useRef } from 'react';
 import { View, Text } from '@tarojs/components';
-import { AtButton, AtActivityIndicator } from 'taro-ui';
+import { AtButton, AtActivityIndicator, AtFloatLayout } from 'taro-ui';
 import { wxPathToBase64 } from '../../utils/imageTools';
 import { data } from '../../const/sdApiParams.js';
+import { saveUserInfo, wechatLogin } from '../../common/user.js';
+import LoginView from '../comps/LoginView.jsx';
 const SwapCount = ({ clickCount }) => (
   <View
     style={{
@@ -37,6 +39,7 @@ const SwapCount = ({ clickCount }) => (
 export default ({ imageUrl, selectedImageUrl, onUpdateTaskImages }) => {
   const [loading, setLoading] = useState(false);
   const clickCount = useRef(Taro.getApp().globalData.clickCount);
+  const [isOpened, setIsOpened] = useState(false);
   const [updateTrigger, forceUpdate] = useState({});
 
   useEffect(() => {
@@ -60,6 +63,10 @@ export default ({ imageUrl, selectedImageUrl, onUpdateTaskImages }) => {
   }, []);
 
   const handleClick = async () => {
+    if (!global.userInfo.isLogin) {
+      setIsOpened(true);
+      return;
+    }
     if (imageUrl && selectedImageUrl) {
       setLoading(true);
       try {
@@ -119,6 +126,25 @@ export default ({ imageUrl, selectedImageUrl, onUpdateTaskImages }) => {
       >
         一键换脸
       </AtButton>
+      <AtFloatLayout
+        isOpened={isOpened}
+        onClose={() => {
+          setIsOpened(false);
+        }}
+      >
+        <LoginView
+          onConfirmLogin={async () => {
+            const res = await wechatLogin();
+            if (res?.data) {
+              saveUserInfo({
+                isLogin: true,
+                data: res.data,
+              });
+              setIsOpened(false);
+            }
+          }}
+        />
+      </AtFloatLayout>
     </View>
   );
 };

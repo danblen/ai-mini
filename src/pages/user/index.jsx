@@ -1,14 +1,13 @@
 /**
  * 用户页
  */
-import { Image, View, Text } from '@tarojs/components';
-import { useTabItemTap } from '@tarojs/taro';
+import { Image, Text, View } from '@tarojs/components';
+import { useDidShow, useTabItemTap } from '@tarojs/taro';
 import React, { useState } from 'react';
 import { AtFloatLayout } from 'taro-ui';
 import { get_user_info } from '../../api';
-import { saveUserInfo, wechatLogin } from '../../common/user';
+import { clearUserInfo, saveUserInfo, wechatLogin } from '../../common/user';
 import LoginView from '../comps/LoginView';
-import Taro from '@tarojs/taro';
 
 export default () => {
   const [loading, setLoading] = useState(false);
@@ -38,10 +37,6 @@ export default () => {
           isLogin: true,
           data: res.data,
         }));
-        Taro.setStorageSync('userInfo', {
-          isLogin: true,
-          data: res.data,
-        });
         saveUserInfo({
           isLogin: true,
           data: res.data,
@@ -62,7 +57,8 @@ export default () => {
     }
   };
   // 每次点击到tabbar 我的 都会触发，更新用户信息并刷新页面
-  useTabItemTap((tab) => {
+  useTabItemTap((tab) => {});
+  useDidShow(() => {
     fetchUserInfo();
   });
   return (
@@ -249,7 +245,16 @@ export default () => {
             ></View>
             <View>我的签到</View>
           </View>
-          <View style={Style.gridItemStyle}>
+          <View
+            style={Style.gridItemStyle}
+            onClick={() => {
+              clearUserInfo();
+              setUserInfo({
+                isLogin: false,
+                data: null,
+              });
+            }}
+          >
             <View
               className="at-icon at-icon-settings"
               style={{
@@ -258,9 +263,8 @@ export default () => {
                 top: '10rpx',
                 right: '10rpx',
               }}
-              onClick={() => {}}
             ></View>
-            <View>我的签到</View>
+            <View>退出登陆</View>
           </View>
         </View>
       </View>
