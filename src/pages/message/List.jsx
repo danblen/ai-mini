@@ -1,93 +1,40 @@
 /**
- * 作品页
+ * 消息列表
  */
-import { Button, View } from '@tarojs/components';
-import React, { useEffect } from 'react';
-import Taro, { useDidShow } from '@tarojs/taro';
-import { useState } from 'react';
-import FinishedTask from '../album/FinishedTask.jsx';
-import { api } from '../../api/index.js';
+import { Text, View } from '@tarojs/components';
+import React from 'react';
 
-export default ({ images }) => {
-  const [allImages, setAllImages] = useState([]);
-  const [userInfo, setUserInfo] = useState({
-    isLogin: false,
-    data: {
-      points: 0,
-      user_id: '',
-      is_check: false,
-    },
-  });
-
-  const fetchData = async () => {
-    const storageUserInfo = getStorageSync('userInfo');
-    setUserInfo(storageUserInfo);
-    if (storageUserInfo?.isLogin && storageUserInfo.data?.userId) {
-      const userInfo = {
-        userId: storageUserInfo.data.userId,
-        request_status: 'finishing',
-      };
-      const processedImages = await api.getUserProcessImage(userInfo).catch();
-      console.log('processedImages', processedImages);
-      if (processedImages?.data) {
-        let allImages = processedImages.data.map((image) => ({
-          url: image.outputImagePath,
-        }));
-        setAllImages(allImages);
-      }
-      // if (processedImages?.length > 0) {
-      // }
-    } else {
-      setAllImages([]);
-    }
-  };
-  useDidShow(() => {
-    fetchData();
-  });
-  // useEffect(() => {
-  //   fetchData();
-  // }, []);
+export default ({}) => {
   return (
-    <View>
-      {userInfo.isLogin ? (
-        <View
-          style={{
-            marginTop: '10rpx',
-          }}
-        >
-          <FinishedTask images={allImages} onFetchData={fetchData} />
-        </View>
-      ) : (
-        <View
-          style={{
-            paddingTop: '300rpx',
-          }}
-        >
-          <View
-            style={{
-              textAlign: 'center',
-              fontSize: '40rpx',
-            }}
-          >
-            您还未登陆，请先登陆
-          </View>
-          <Button
-            type="primary"
-            style={{
-              position: 'relative',
-              width: '40%',
-              animation: 'swap 1s infinite',
-            }}
-            onClick={() => {
-              Taro.switchTab({
-                url: '/pages/user/index',
-              });
-            }}
-          >
-            去登陆
-          </Button>
-        </View>
-      )}
+    <View style={Style.list}>
+      <View
+        style={Style.item}
+        onClick={() => {
+          navigateTo({
+            url: '/pages/album/index',
+          });
+        }}
+      >
+        <Text style={Style.title}>有已完成的作品</Text>
+      </View>
+      <View style={Style.item} onClick={() => {}}>
+        账户安全设置
+      </View>
+      <View style={Style.item}>进行中的作品</View>
+      <View style={Style.item} onClick={() => {}}>
+        通知
+      </View>
     </View>
   );
+};
+const Style = {
+  list: {
+    backgroundColor: '#fff',
+    paddingLeft: 20,
+  },
+  item: {
+    height: '80rpx',
+    lineHeight: '80rpx',
+  },
+  title: {},
 };
