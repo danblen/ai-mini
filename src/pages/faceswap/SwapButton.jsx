@@ -67,6 +67,13 @@ export default ({ imageUrl, selectedImageUrl, onUpdateTaskImages }) => {
       setIsOpened(true);
       return;
     }
+    if (global.userInfo.data.points < 1) {
+      Taro.showToast({
+        title: `积分为0，请先获取积分`,
+        icon: 'none',
+      });
+      return;
+    }
     if (imageUrl && selectedImageUrl) {
       setLoading(true);
       try {
