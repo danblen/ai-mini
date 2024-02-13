@@ -17,6 +17,7 @@ export const getTaskImage = async (requestId) => {
     const checkStatus = async () => {
       try {
         let res = await getSwapQueueResult(requestData);
+
         if (res.data.status === 'finishing') {
           clearInterval(timers[requestId]);
           resolve(res);

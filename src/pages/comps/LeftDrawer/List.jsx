@@ -4,8 +4,12 @@
 import { Text, View } from '@tarojs/components';
 import Taro from '@tarojs/taro';
 import React, { useCallback, useState } from 'react';
+import {
+  clearStorageUserInfo,
+  clearGlobalUserInfo,
+} from '../../../common/user.js';
 
-export default ({}) => {
+export default ({ onClose }) => {
   const [current, setCurrent] = useState(0);
   const onClick = useCallback((value) => {
     setCurrent(value);
@@ -30,13 +34,13 @@ export default ({}) => {
   ];
   return (
     <View style={Style.list}>
-      <View style={Style.item}>
+      {/* <View style={Style.item}>
         <Text style={Style.title}>版本更新</Text>
-      </View>
-      <View style={Style.item} onClick={() => {}}>
+      </View> */}
+      {/* <View style={Style.item} onClick={() => {}}>
         账户安全设置
-      </View>
-      <View style={Style.item}>个人信息清单</View>
+      </View> */}
+      {/* <View style={Style.item}>个人信息清单</View> */}
       <View
         style={Style.item}
         onClick={() => {
@@ -53,8 +57,25 @@ export default ({}) => {
       >
         用户协议
       </View>
-      <View style={Style.item}>消息推送设置</View>
-      <View style={Style.item}>清除缓存</View>
+      {/* <View style={Style.item}>消息推送设置</View> */}
+      <View
+        style={Style.item}
+        onClick={async () => {
+          console.log('清除缓存');
+          // setStorageSync('userInfo', null);
+          setStorageSync('filesData', null);
+          setStorageSync('tmpAllimages', null);
+          setStorageSync('processedImages', null);
+
+          Taro.showToast({
+            title: '已清除缓存',
+            icon: 'none',
+            duration: 2000,
+          });
+        }}
+      >
+        清除缓存
+      </View>
       <View
         style={Style.item}
         onClick={() => {
@@ -66,6 +87,13 @@ export default ({}) => {
             isLogin: false,
             data: {},
           });
+
+          Taro.showToast({
+            title: '已退出',
+            icon: 'none',
+            duration: 2000,
+          });
+          onClose();
         }}
       >
         退出登录

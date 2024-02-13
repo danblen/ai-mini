@@ -86,7 +86,7 @@ export default ({ images }) => {
               });
             }}
           >
-            去登陆
+            去登录
           </Button>
         </View>
       )}

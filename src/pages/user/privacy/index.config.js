@@ -1,3 +1,5 @@
 export default {
-  navigationBarTitleText: "隐私政策",
+  navigationBarTitleText: '隐私协议',
+  navigationStyle: 'default',
+  enableShareAppMessage: true,
 };
