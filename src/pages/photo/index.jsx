@@ -27,6 +27,7 @@ export default () => {
   const [images, setImages] = useState([]);
 
   const onUpdateTaskImages = async (requestId) => {
+    console.log('requestId', requestId);
     const newImage = {
       src: '',
       status: 'pending',
@@ -35,12 +36,13 @@ export default () => {
     setImages((prevImages) => [...prevImages, newImage]);
 
     const res = await getTaskImage(requestId);
+    console.log('res', res);
     setImages((prevImages) =>
       prevImages.map((image) =>
         image.requestId === requestId
           ? {
               ...image,
-              src: 'data:image/png;base64,' + res.result.images[0],
+              src: 'data:image/png;base64,' + res.data.result.images[0],
               status: 'SUCCESS',
             }
           : image
@@ -63,7 +65,7 @@ export default () => {
   };
   return (
     <>
-      <CustomNavBar></CustomNavBar>
+      {/* <CustomNavBar></CustomNavBar> */}
       <View
         onTouchstart={onTouchStart}
         onTouchEnd={onTouchEnd}

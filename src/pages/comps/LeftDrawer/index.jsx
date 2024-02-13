@@ -8,11 +8,11 @@ export default ({ showDrawer, onClose }) => {
       show={showDrawer}
       left
       mask
-      width="80%"
+      width="45%"
       onClose={onClose}
       style={{ background: 'black', height: '100%' }}
     >
-      <List />
+      <List onClose={onClose} />
     </AtDrawer>
   );
 };

@@ -12,6 +12,8 @@ export default ({ tags_image, onNavigateToHot }) => {
   const [showDrawer, setShowDrawer] = useState(false);
   const startXRef = useRef(0);
   const endXRef = useRef(0);
+  const startYRef = useRef(0);
+  const endYRef = useRef(0);
 
   useEffect(() => {
     if (tags_image) {
@@ -90,14 +92,19 @@ export default ({ tags_image, onNavigateToHot }) => {
         style={{ paddingTop: '100rpx' }}
         onTouchStart={(e) => {
           startXRef.current = e.touches[0].clientX;
+          startYRef.current = e.touches[0].clientY;
         }}
         onTouchMove={(e) => {
           endXRef.current = e.touches[0].clientX;
+          endYRef.current = e.touches[0].clientY;
         }}
         onTouchEnd={() => {
-          const distance = endXRef.current - startXRef.current;
-          console.log(distance);
-          if (distance > 20) {
+          const distanceX = endXRef.current - startXRef.current;
+          // console.log('startYRef', endYRef, startYRef);
+          const distanceY = endYRef.current - startYRef.current;
+          // console.log('123123111', distanceX, distanceY);
+          const flags = distanceY < -10 || distanceY > 10;
+          if (flags && distanceX > 100) {
             // 设置一个阈值，例如50px，表示滑动距离超过50px才切换tab
             // 向右滑动，切换到前一个tab
             const tab = tabList.findIndex((tab) => tab.title === current) - 1;
@@ -107,7 +114,7 @@ export default ({ tags_image, onNavigateToHot }) => {
               onNavigateToHot();
             }
             handleTabClick(tabList[index].title);
-          } else if (distance < -10) {
+          } else if (flags && distanceX < -10) {
             // 向左滑动，切换到下一个tab
             const index = Math.min(
               tabList.findIndex((tab) => tab.title === current) + 1,
