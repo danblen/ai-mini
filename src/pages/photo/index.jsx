@@ -3,6 +3,7 @@ import Taro from '@tarojs/taro';
 import React, { useEffect, useState } from 'react';
 import { AtDrawer } from 'taro-ui';
 import TaskList from '../comps/TaskList';
+import TaskListTip from '../faceswap/TaskListTip.jsx';
 import ActionButton from './ActionButton';
 import { clearTimers, getTaskImage } from '../../common/getTaskImage';
 import ImagePicker from '../comps/ImagePicker';
@@ -74,6 +75,8 @@ export default () => {
           marginBottom: '200rpx',
         }}
       >
+        <TaskListTip onClick={() => setShowDrawer(true)}></TaskListTip>
+
         <View className="">
           <View
             style={{
@@ -158,7 +161,7 @@ export default () => {
           mask
           width="80%"
           onClose={() => setShowDrawer(false)}
-          style={{ background: 'black', height: '100%' }}
+          style={{ background: 'black', height: '100%', zIndex: 10 }}
         >
           <TaskList images={images} />
         </AtDrawer>

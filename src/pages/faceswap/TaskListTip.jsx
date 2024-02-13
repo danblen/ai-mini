@@ -1,5 +1,5 @@
-import { View } from "@tarojs/components";
-import { AtIcon } from "taro-ui";
+import { View } from '@tarojs/components';
+import { AtIcon } from 'taro-ui';
 
 export default ({ onClick }) => {
   return (
@@ -14,6 +14,7 @@ export default ({ onClick }) => {
         color: white;
         background: black;
         border-radius: 10rpx 0 0 10rpx;
+        zIndex:20;
       "
       onClick={onClick}
     >
