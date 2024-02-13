@@ -120,10 +120,6 @@ export default function ImagePicker({ onFilesChange, onSelectImage }) {
       setSelectedIndex(curIndex);
       onFilesChange(updatedFiles);
       onSelectImage(updatedFiles.length - 1);
-      // Taro.showToast({
-      //   title: `当前选择第${curIndex + 1}张`,
-      //   icon: "none",
-      // });
     } catch (error) {
       console.error('处理图片失败：', error);
     }

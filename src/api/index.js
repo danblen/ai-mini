@@ -4,10 +4,8 @@
  * 所有接口都用post
  */
 
-import { data } from '../const/sdApiParams.js';
 import { URL_BACK, URL_SD } from './config.js';
 import request from './request.js';
-import { uploadFile } from './upload.js';
 export { URL_BACK, URL_SD };
 
 const api = {};
@@ -31,17 +29,17 @@ api.uploadImages = (data) => {
 api.getUserProcessImage = (data) => {
   return request.post('/getUserProcessImage', data);
 };
+api.imageIncreaseResolution = (data) => {
+  return request.post('/imageIncreaseResolution', data);
+};
+api.img2img = (data) => {
+  return request.post('/img2img', data);
+};
+api.addPoints = (data) => {
+  return request.post('/addPoints', data);
+};
 
 export { api };
-
-export function storeImages(data) {
-  return request.post('/storeImages', data);
-}
-
-// 微信登录接口
-export function wechat_login(data) {
-  return request.post('/login', data);
-}
 
 // 换脸接口
 export function faceSwap(data) {

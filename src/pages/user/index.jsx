@@ -5,7 +5,7 @@ import { Image, Text, View } from '@tarojs/components';
 import { useDidShow, useTabItemTap } from '@tarojs/taro';
 import React, { useState } from 'react';
 import { AtFloatLayout } from 'taro-ui';
-import { get_user_info } from '../../api';
+import { api, get_user_info } from '../../api';
 import { clearUserInfo, saveUserInfo, wechatLogin } from '../../common/user';
 import LoginView from '../comps/LoginView';
 
@@ -178,7 +178,9 @@ export default () => {
             right: '10rpx',
             padding: '10rpx',
           }}
-          onClick={() => {}}
+          onClick={async () => {
+            await api.addPoints({ userId: global.userInfo.data.userId });
+          }}
         >
           <View
             style={{

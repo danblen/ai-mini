@@ -7,7 +7,6 @@ import Taro, { useDidShow } from '@tarojs/taro';
 import { useState } from 'react';
 import { fetchProcessedImages } from './fetchProcessedImages.js';
 import FinishedTask from './FinishedTask.jsx';
-// import Taro from '@tarojs/taro';
 
 export default ({ images }) => {
   const [allImages, setAllImages] = useState([]);
