@@ -5,9 +5,10 @@ import { Image, Text, View } from '@tarojs/components';
 import { useDidShow, useTabItemTap } from '@tarojs/taro';
 import React, { useState } from 'react';
 import { AtFloatLayout } from 'taro-ui';
-import { api, get_user_info } from '../../api';
+import { get_user_info } from '../../api';
 import { clearUserInfo, saveUserInfo, wechatLogin } from '../../common/user';
 import LoginView from '../comps/LoginView';
+import CheckIn from './CheckIn';
 
 export default () => {
   const [loading, setLoading] = useState(false);
@@ -167,30 +168,14 @@ export default () => {
           paddingTop: 20,
         }}
       >
-        <View
-          style={{
-            fontSize: '40rpx',
-            height: '100rpx',
-            borderRadius: '10px',
-            backgroundColor: '#fff',
-            top: '10rpx',
-            margin: '10px',
-            right: '10rpx',
-            padding: '10rpx',
-          }}
-          onClick={async () => {
-            await api.addPoints({ userId: global.userInfo.data.userId });
-          }}
-        >
-          <View
-            style={{
-              lineHeight: '100rpx',
+        {userInfo.isLogin && !userInfo.data.isChecked && (
+          <CheckIn
+            onCheck={async () => {
+              await api.checkIn({ userId: global.userInfo.data.userId });
+              fetchUserInfo();
             }}
-          >
-            还没签到，去签到
-            <View className="at-icon at-icon-chevron-right" />
-          </View>
-        </View>
+          />
+        )}
 
         <View style={Style.gridContainerStyle}>
           <View style={Style.gridItemStyle}>

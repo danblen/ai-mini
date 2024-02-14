@@ -1,62 +1,31 @@
-// import React, { useState } from "react";
-// import Taro from "@tarojs/taro";
-// import { View, RichText, Modal } from "@tarojs/components";
-// import { getPointsByCheck } from "../../api";
-// import "./style.scss"; // 确保您的样式文件与此路径匹配
+import { View } from '@tarojs/components';
+import React from 'react';
 
-// export default ({ isCheck, onCheckUserInfoChange }) => {
-//   const [showModal, setShowModal] = useState(false);
-//   const content = "成功分享给群好友也可以获得1次自定义机会哦";
+export default ({ onCheck }) => {
+  const content = '成功分享给群好友也可以获得1次自定义机会哦';
 
-//   const onGetPoint = async () => {
-//     const userId = getStorageSync("userInfo").userId;
-//     if (!userId) {
-//       Taro.showToast({
-//         title: "请先登录",
-//         icon: "none",
-//         duration: 2000,
-//       });
-//       return;
-//     }
-
-//     if (isCheck) {
-//       Taro.showToast({
-//         title: "今日已签到啦~",
-//         icon: "none",
-//         duration: 2000,
-//       });
-//       return;
-//     }
-
-//     const res = await getPointsByCheck({ userId: userId });
-//     if (res) {
-//       onCheckUserInfoChange({
-//         isCheck: true,
-//         points: res.user.points,
-//       });
-//       setShowModal(true);
-//     }
-//   };
-
-//   return (
-//     <View>
-//       <CellItem
-//         title="点击签到"
-//         icon="star"
-//         value={isCheck ? "已签到" : ""}
-//         onClick={onGetPoint}
-//       />
-//       <Modal
-//         isOpened={showModal}
-//         title="恭喜你，获得1次自定义机会"
-//         content={content}
-//         showCancel={false}
-//         onClose={() => setShowModal(false)}
-//       >
-//         <View className="slot-content">
-//           <RichText nodes={content} />
-//         </View>
-//       </Modal>
-//     </View>
-//   );
-// };
+  return (
+    <View
+      style={{
+        fontSize: '40rpx',
+        height: '100rpx',
+        borderRadius: '10px',
+        backgroundColor: '#fff',
+        top: '10rpx',
+        margin: '10px',
+        right: '10rpx',
+        padding: '10rpx',
+      }}
+      onClick={onCheck}
+    >
+      <View
+        style={{
+          lineHeight: '100rpx',
+        }}
+      >
+        还没签到，去签到
+        <View className="at-icon at-icon-chevron-right" />
+      </View>
+    </View>
+  );
+};

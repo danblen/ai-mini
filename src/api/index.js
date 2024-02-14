@@ -35,8 +35,8 @@ api.imageIncreaseResolution = (data) => {
 api.img2img = (data) => {
   return request.post('/img2img', data);
 };
-api.addPoints = (data) => {
-  return request.post('/addPoints', data);
+api.checkIn = (data) => {
+  return request.post('/checkIn', data);
 };
 
 export { api };
