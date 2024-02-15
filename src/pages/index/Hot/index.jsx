@@ -7,6 +7,7 @@ import React, { useEffect, useState } from 'react';
 import { api, get_all_images } from '../../../api/index.js';
 import ButtonsBox from '../../comps/ButtonsBox.jsx';
 import AlbumsCard from '../AlbumsCard.jsx';
+import PopularTemplate from '../PopularTemplate.jsx';
 import NavBar from '../NavBar.jsx';
 import TopBanner from '../TopBanner.jsx';
 import WaterfallList from '../WaterfallList.jsx';
@@ -85,6 +86,7 @@ export default () => {
             },
           ]}
         />
+        <PopularTemplate></PopularTemplate>
 
         <View
           style={{
