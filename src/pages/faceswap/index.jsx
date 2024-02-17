@@ -84,19 +84,28 @@ export default () => {
     };
     setImages((prevImages) => [...prevImages, newImage]);
 
-    const res = await getTaskImage(requestId);
-    setImages((prevImages) =>
-      prevImages.map((image) =>
-        image.requestId === requestId
-          ? {
-              ...image,
-              src: 'data:image/png;base64,' + res.data.result.images[0],
-              status: 'SUCCESS',
-            }
-          : image
-      )
-    );
-    setRequestId(requestId);
+    try {
+      const res = await getTaskImage(requestId);
+      setImages((prevImages) =>
+        prevImages.map((image) =>
+          image.requestId === requestId
+            ? {
+                ...image,
+                src: 'data:image/png;base64,' + res.data.result.images[0],
+                status: 'SUCCESS',
+              }
+            : image
+        )
+      );
+      setRequestId(requestId);
+    } catch (error) {
+      // 在这里处理异常情况，比如超时或其他错误
+      console.error('Task error:', error);
+      Taro.showToast({
+        title: `请求超时,请重试`,
+        icon: 'none',
+      });
+    }
     Taro.getApp().globalData.updateGlobalClickCount(-1);
     const updatedClickCount = Taro.getApp().globalData.clickCount;
     Taro.eventCenter.trigger('globalClickCountChanged', updatedClickCount);

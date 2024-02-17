@@ -63,23 +63,24 @@ export default ({ imageUrl, selectedImageUrl, onUpdateTaskImages }) => {
   }, []);
 
   const handleClick = async () => {
-    if (!global.userInfo.isLogin) {
-      setIsOpened(true);
-      return;
-    }
-    if (global.userInfo.data.points < 1) {
-      Taro.showToast({
-        title: `积分为0，请先获取积分`,
-        icon: 'none',
-      });
-      return;
-    }
     if (imageUrl && selectedImageUrl) {
       setLoading(true);
       try {
+        const storageUserInfo = getStorageSync('userInfo');
+        console.log('stor', storageUserInfo);
+        if (!storageUserInfo.isLogin) {
+          setIsOpened(true);
+          return;
+        }
+        if (storageUserInfo.data.points < 1) {
+          Taro.showToast({
+            title: `积分为0，请先获取积分`,
+            icon: 'none',
+          });
+          return;
+        }
         const srcBase64 = await wxPathToBase64(imageUrl);
         const tarBase64 = await wxPathToBase64(selectedImageUrl);
-        const storageUserInfo = getStorageSync('userInfo');
         data.userId = storageUserInfo.data.userId;
         data.init_images = [srcBase64];
         data.alwayson_scripts.roop.args[0] = tarBase64;
