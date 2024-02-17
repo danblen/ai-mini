@@ -86,7 +86,7 @@ export default () => {
             },
           ]}
         />
-        <PopularTemplate></PopularTemplate>
+        <PopularTemplate activityTagsImage={allImages?.activityTagsImage} />
 
         <View
           style={{

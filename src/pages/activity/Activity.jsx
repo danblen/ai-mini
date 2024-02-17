@@ -57,11 +57,15 @@ const ActivityPage = () => {
         </View>
         <View
           style={{
-            marginTop: '50px',
+            marginTop: '10px',
             borderRadius: '50px',
           }}
         >
-          <TabsImageList tags_image={allImages?.activityTagsImage} />
+          <WaterfallList
+            imageListLeft={allImages?.activityTagsImage?.[decodedTitle] || []}
+            imageListRight={allImages?.activityTagsImage?.[decodedTitle] || []}
+          />
+          {/* <TabsImageList tags_image={allImages?.activityTagsImage} /> */}
         </View>
       </View>
     </>
