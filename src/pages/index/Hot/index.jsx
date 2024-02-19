@@ -49,11 +49,13 @@ export default () => {
             {
               imageUrl: require('../../../static/image/my/icons8-joker-dc-200.png'),
               pagePath: '/pages/activity/Activity',
-              text: '#反派挑战',
+              text: '#影楼风格',
               params: {
-                title: '#反派挑战',
-                description:
-                  '分享你当反派能活到第几集\n参与活动，获取丰富奖励~',
+                imageUrl: allImages?.activityTagsImage?.['影楼风格'],
+                title: '影楼',
+                description: '影楼风格',
+                pagePath: '/pages/activity/Activity',
+                text: '影楼风格',
               },
             },
             {
@@ -61,8 +63,11 @@ export default () => {
               pagePath: '/pages/activity/Activity',
               text: '#繁花专场',
               params: {
-                title: '#繁花专场',
+                imageUrl: allImages?.activityTagsImage?.['繁花专场'],
+                title: '繁花专场',
                 description: '繁花专场\n参与活动，获取丰富奖励~',
+                pagePath: '/pages/activity/Activity',
+                text: '繁花专场',
               },
             },
             {
@@ -86,18 +91,35 @@ export default () => {
             },
           ]}
         />
-        <PopularTemplate activityTagsImage={allImages?.activityTagsImage} />
 
         <View
           style={{
-            fontSize: '36rpx',
-            margin: '40rpx 18rpx 18rpx 18rpx ',
-            display: 'flex',
-            justifyContent: 'space-between',
+            padding: '8px',
+            marginTop: '20px',
+            marginBottom: '20px',
+            marginLeft: '10rpx',
+            marginRight: '10rpx',
+            borderRadius: '8rpx',
+            background: '#dcdadacf',
           }}
         >
-          <Text style={{}}>写真集</Text>
-          {/* <View
+          <View
+            style={{
+              fontSize: '36rpx',
+              display: 'flex',
+              justifyContent: 'space-between',
+            }}
+          >
+            <Text
+              style={{
+                marginLeft: '10px',
+                fontSize: '18px',
+                fontWeight: 'bold',
+              }}
+            >
+              写真集
+            </Text>
+            {/* <View
           style={{
             display: 'flex',
             color: 'grey',
@@ -110,8 +132,11 @@ export default () => {
               fontSize: '50rpx',
             }}></View>
         </View> */}
+          </View>
+          <AlbumsCard albums={allImages?.albums} />
         </View>
-        <AlbumsCard albums={allImages?.albums} />
+
+        <PopularTemplate activityTagsImage={allImages?.activityTagsImage} />
 
         <View
           style={{

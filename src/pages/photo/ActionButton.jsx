@@ -82,7 +82,7 @@ export default ({ albumUrls, selfUrl, onUpdateTaskImages }) => {
         }
       }}
     >
-      一键换脸
+      多张制作
     </AtButton>
   );
 };

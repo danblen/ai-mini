@@ -29,7 +29,7 @@ const ActivityPage = () => {
       <View>
         <View
           style={{
-            background: '#f567028a',
+            background: '#0066ffa6',
             paddingTop: '50px',
             position: 'relative',
             // height: "100vh",
@@ -62,8 +62,12 @@ const ActivityPage = () => {
           }}
         >
           <WaterfallList
-            imageListLeft={allImages?.activityTagsImage?.[decodedTitle] || []}
-            imageListRight={allImages?.activityTagsImage?.[decodedTitle] || []}
+            imageListLeft={
+              allImages?.activityTagsImage?.[decodedTitle + '0'] || []
+            }
+            imageListRight={
+              allImages?.activityTagsImage?.[decodedTitle + '1'] || []
+            }
           />
           {/* <TabsImageList tags_image={allImages?.activityTagsImage} /> */}
         </View>

@@ -8,6 +8,7 @@ import { useState } from 'react';
 import { fetchProcessedImages } from './fetchProcessedImages.js';
 import FinishedTask from './FinishedTask.jsx';
 
+let lastPicCount = 0;
 export default ({ images }) => {
   const [allImages, setAllImages] = useState([]);
   const [userInfo, setUserInfo] = useState({
@@ -30,11 +31,16 @@ export default ({ images }) => {
         requestStatus: 'finishing',
       };
 
-      if (refresh === true || processedImages.length === 0) {
+      if (
+        refresh === true ||
+        processedImages.length === 0 ||
+        processedImages.length === lastPicCount
+      ) {
         // 从缓存中未获取到数据，进行网络请求
         processedImages = await fetchProcessedImages(userInfo);
 
         if (processedImages?.length > 0) {
+          lastPicCount = processedImages.length;
           // 将请求到的数据缓存到本地存储
           Taro.setStorageSync('processedImages', processedImages);
         }

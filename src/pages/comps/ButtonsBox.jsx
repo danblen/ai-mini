@@ -29,7 +29,7 @@ export default ({ buttons }) => {
         marginLeft: '18rpx',
         marginRight: '18rpx',
         borderRadius: '15rpx',
-        background: '#fff',
+        background: '#dcdadacf',
       }}
     >
       <View style={{ display: 'flex', justifyContent: 'space-between' }}>

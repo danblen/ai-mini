@@ -6,6 +6,7 @@ import { useDidShow, useTabItemTap } from '@tarojs/taro';
 import React, { useState } from 'react';
 import { AtFloatLayout } from 'taro-ui';
 import { get_user_info } from '../../api';
+import { api } from '../../api';
 import { clearUserInfo, saveUserInfo, wechatLogin } from '../../common/user';
 import LoginView from '../comps/LoginView';
 import CheckIn from './CheckIn';
