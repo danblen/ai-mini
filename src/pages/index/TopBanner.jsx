@@ -11,11 +11,11 @@ export default ({ banners }) => {
               style={Styles.image}
               className=" "
               mode="widthFix"
-              onClick={() => {
-                navigateTo({
-                  url: '/pages/faceswap/index?imageUrl=' + url,
-                });
-              }}
+              // onClick={() => {
+              //   navigateTo({
+              //     url: '/pages/faceswap/index?imageUrl=' + url,
+              //   });
+              // }}
               src={url}
             ></Image>
           </SwiperItem>

@@ -64,11 +64,10 @@ export default ({ imageUrl, selectedImageUrl, onUpdateTaskImages }) => {
 
   const handleClick = async () => {
     if (imageUrl && selectedImageUrl) {
-      setLoading(true);
       try {
         const storageUserInfo = getStorageSync('userInfo');
         console.log('stor', storageUserInfo);
-        if (!storageUserInfo.isLogin) {
+        if (storageUserInfo === null || !storageUserInfo.isLogin) {
           setIsOpened(true);
           return;
         }
@@ -79,6 +78,7 @@ export default ({ imageUrl, selectedImageUrl, onUpdateTaskImages }) => {
           });
           return;
         }
+        setLoading(true);
         const srcBase64 = await wxPathToBase64(imageUrl);
         const tarBase64 = await wxPathToBase64(selectedImageUrl);
         data.userId = storageUserInfo.data.userId;
@@ -95,12 +95,12 @@ export default ({ imageUrl, selectedImageUrl, onUpdateTaskImages }) => {
             icon: 'none',
           });
         }
-      } catch (error) {
-        console.error(error);
-      } finally {
+
         setLoading(false);
         Taro.getApp().globalData.updateGlobalClickCount(1); // 减少全局变量中的点击次数
         clickCount.current = Taro.getApp().globalData.clickCount;
+      } catch (error) {
+        console.error(error);
       }
     } else {
       Taro.showToast({

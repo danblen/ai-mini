@@ -97,6 +97,11 @@ export default () => {
             : image
         )
       );
+
+      Taro.showToast({
+        title: '已处理完成，在作品页查看~',
+        icon: 'none',
+      });
       setRequestId(requestId);
     } catch (error) {
       // 在这里处理异常情况，比如超时或其他错误
