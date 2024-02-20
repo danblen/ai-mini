@@ -57,11 +57,11 @@ export function get_all_images() {
 }
 // 删除用户所有作品图片
 export function delete_all_images(data) {
-  return request.post('/delete-all-images', data);
+  return request.post('/deleteAllImages', data);
 }
 // 删除用户选中作品图片
 export function delete_select_images(data) {
-  return request.post('/delete-select-images', data);
+  return request.post('/deleteSelectImages', data);
 }
 export function getPhotoData(data) {
   return request.post('/sdapi/v1/query-photo-image-sql-data-by-dict', data);

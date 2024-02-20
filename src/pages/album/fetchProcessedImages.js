@@ -13,7 +13,7 @@ export async function fetchProcessedImages(userInfo) {
           let fileName = pathParts[pathParts.length - 1];
           let imageInfo = {
             url: 'https://facei.top/user-pic/' + fileName,
-            request_id: entry['request_id'],
+            requestId: entry['requestId'],
           };
           processedImages.push(imageInfo);
         }

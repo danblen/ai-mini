@@ -216,7 +216,7 @@ export default ({}) => {
         image.requestId === requestId
           ? {
               ...image,
-              src: 'data:image/png;base64,' + res.result.images[0],
+              src: 'data:image/png;base64,' + res.data.result.images[0],
               status: 'SUCCESS',
             }
           : image
@@ -325,15 +325,17 @@ export default ({}) => {
     data.userId = storageUserInfo.data.userId;
 
     const res1 = await faceSwap(data);
-    if (res1.status === 'pending') {
+    if (res1.data?.status === 'pending') {
       initCanvas();
-      onUpdateTaskImages(res1.request_id);
+      onUpdateTaskImages(res1.data.requestId);
     } else {
       Taro.hideLoading();
-      Taro.showToast({
-        title: res1.error_message,
-        icon: 'none',
-      });
+      if (res1) {
+        Taro.showToast({
+          title: res1?.error_message,
+          icon: 'none',
+        });
+      }
     }
   };
   const handleUploadOptionClick = async (index) => {

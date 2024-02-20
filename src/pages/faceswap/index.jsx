@@ -72,7 +72,7 @@ export default () => {
     const data = {};
     // data的任何字段都要匹配数据库字段
     data.user_like_status = rating;
-    data.request_id = requestId;
+    data.requestId = requestId;
     // updateUserProcessInfo(data);
   }, [rating]);
 
