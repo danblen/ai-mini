@@ -4,6 +4,8 @@ import { AtButton } from 'taro-ui';
 import { faceSwap } from '../../api/index.js';
 import { data } from '../../const/sdApiParams.js';
 import { downloadImages, wxPathToBase64 } from '../../utils/imageTools.js';
+import { deepCopy } from '../../utils/object.js';
+const SD_PARAMS = deepCopy(data);
 
 export default ({ albumUrls, selfUrl, onUpdateTaskImages }) => {
   const [loading, setLoading] = useState(false);
@@ -32,12 +34,13 @@ export default ({ albumUrls, selfUrl, onUpdateTaskImages }) => {
     const selfBase64 = await wxPathToBase64(selfUrl);
     const storageUserInfo = getStorageSync('userInfo');
     if (storageUserInfo?.data?.userId) {
-      data.userId = storageUserInfo?.data?.userId;
+      SD_PARAMS.userId = storageUserInfo?.data?.userId;
     }
-    data.init_images = [originBase64];
-    data.alwayson_scripts.roop.args[0] = selfBase64;
-    let res = await faceSwap(data).catch((err) => {});
-    if (res?.data?.status === 'pending') {
+    SD_PARAMS.init_images = [originBase64];
+    SD_PARAMS.alwayson_scripts.roop.args[0] = selfBase64;
+    let res = await faceSwap(SD_PARAMS).catch((err) => {});
+    console.log('faceSwap ok');
+    if (res?.status === 'pending') {
       onUpdateTaskImages(res.data.requestId);
     } else {
       if (typeof res?.error === 'string') {

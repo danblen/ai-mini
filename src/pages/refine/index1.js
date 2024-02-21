@@ -1,18 +1,17 @@
 /**
  * 修图页
  */
-import Taro, { useRouter } from '@tarojs/taro';
-import React, { useCallback, useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
+import Taro, { useReady, useRouter } from '@tarojs/taro';
 
-import { Button, Canvas, Image, View } from '@tarojs/components';
-import { AtIcon } from 'taro-ui';
-import { faceSwap } from '../../api';
-import { getTaskImage } from '../../common/getTaskImage.js';
+import { View, Canvas, Text, Image, Button } from '@tarojs/components';
+import CustomNavBar from '../index/CustomNavBar.jsx';
+import { AtTabs, AtIcon } from 'taro-ui';
 import { mask_data, scale_data } from '../../const/sdApiParams.js';
-import defaultPic from '../../static/image/my/icons8-上传-64.png';
 import { wxPathToBase64 } from '../../utils/imageTools';
-import ImagePicker from '../comps/ImagePicker.jsx';
-import NavBar from './NavBar.jsx';
+import { getTaskImage } from '../../common/getTaskImage.js';
+import { faceSwap } from '../../api';
+import defaultPic from '../../static/image/my/icons8-上传-64.png';
 
 export default ({}) => {
   const router = useRouter();
@@ -23,8 +22,7 @@ export default ({}) => {
     screenWidth: '',
     screenHeight: '',
   });
-  const [uploadedFiles, setUploadedFiles] = useState([]);
-  const [selectedIndex, setSelectedIndex] = useState(0);
+
   const [ouputImage, setOuputImage] = useState([]);
   const [srcImage, setSrcImage] = useState(null);
   const [currentTab, setCurrentTab] = useState(0);
@@ -151,6 +149,10 @@ export default ({}) => {
       // ad_denoising_strength:Range[0-1],
       data.denoising_strength = 0; //图像变化幅度
       data.script_args[data.script_args.length - 1] = scaleFactor;
+      Taro.showLoading({
+        title: '预计5秒,加载中...',
+        mask: true,
+      });
       requestSdTransform(data);
     }
   };
@@ -162,35 +164,14 @@ export default ({}) => {
       // ad_denoising_strength:Range[0-1],
       data.denoising_strength = 0.4; //图像变化幅度
       data.script_args[data.script_args.length - 1] = scaleFactor;
-      // Taro.showLoading({
-      //   title: '预计5秒,加载中...',
-      //   mask: true,
-      // });
+      Taro.showLoading({
+        title: '预计5秒,加载中...',
+        mask: true,
+      });
       requestSdTransform(data);
     }
   };
-  const requestSdTransform = async (data) => {
-    // 将原图转为base64
-    const srcBase64 = await wxPathToBase64(srcImage);
 
-    const storageUserInfo = getStorageSync('userInfo');
-
-    data.init_images = [srcBase64];
-    data.userId = storageUserInfo.data.userId;
-
-    debugger;
-    const res1 = await faceSwap(data);
-    if (res1.status === 'pending') {
-      // initCanvas();
-      onUpdateTaskImages(res1.request_id);
-    } else {
-      Taro.hideLoading();
-      Taro.showToast({
-        title: res1.error_message,
-        icon: 'none',
-      });
-    }
-  };
   const touchStart = (event) => {
     if (isExpanded) {
       Ctx.beginPath();
@@ -228,6 +209,7 @@ export default ({}) => {
       requestId,
     };
     setOuputImage((prevImages) => [...prevImages, newImage]);
+
     const res = await getTaskImage(requestId);
     setOuputImage((prevImages) =>
       prevImages.map((image) =>
@@ -332,6 +314,10 @@ export default ({}) => {
       console.error(error);
     }
   };
+  const requestSdTransform = async (data) => {
+    // 将原图转为base64
+    const srcBase64 = await wxPathToBase64(srcImage);
+    console.log('srcBase64 success');
 
     const storageUserInfo = getStorageSync('userInfo');
 
@@ -370,7 +356,7 @@ export default ({}) => {
         }
         setHasLoadSrcImage(true);
       } catch (error) {
-        // console.error('Failed to choose image:', error);
+        console.error('Failed to choose image:', error);
       }
     }
   };
@@ -391,7 +377,7 @@ export default ({}) => {
   };
   return (
     <View>
-      <NavBar></NavBar>
+      <CustomNavBar></CustomNavBar>
       <View style={{ top: '50px', position: 'relative' }}>
         {hasLoadSrcImage && (
           <AtIcon
@@ -419,19 +405,24 @@ export default ({}) => {
           )}
       </View>
       <View
-      // style={{ margin: '30px', marginTop: '100px', position: 'relative' }}
+        style={{ margin: '30px', marginTop: '100px', position: 'relative' }}
       >
-        <ImagePicker
-          onFilesChange={(images) => setUploadedFiles(images)}
-          onSelectImage={(index) => {
-            setSelectedIndex(index);
-          }}
-        />
         <Image
           mode="widthFix"
           style={{ width: '100%', height: '100%', verticalAlign: 'middle' }}
-          src={uploadedFiles[selectedIndex]?.url}
-          onClick={() => {}}
+          src={
+            ouputImage &&
+            ouputImage.length > 0 &&
+            ouputImage[ouputImage.length - 1].status === 'SUCCESS'
+              ? ouputImage[ouputImage.length - 1].src
+              : srcImage
+              ? srcImage
+              : defaultPic
+          }
+          onClick={() => {
+            console.log('Image clicked');
+            uploadSrcImage();
+          }}
         />
 
         {hasLoadSrcImage && (
@@ -455,6 +446,14 @@ export default ({}) => {
       </View>
 
       <View>
+        <AtTabs
+          current={currentTab}
+          tabList={[{ title: '老旧照片变高清' }, { title: '局部重绘' }]}
+          swipeable={true}
+          scroll
+          onClick={onClick}
+        ></AtTabs>
+
         {currentTab === 0 && (
           <View>
             <Button
@@ -516,34 +515,6 @@ export default ({}) => {
             </Button>
           </View>
         )}
-        <View
-          style={{
-            position: 'absolute',
-            bottom: 10,
-            display: 'flex',
-          }}
-        >
-          <View
-            style={{
-              marginLeft: 20,
-            }}
-            onClick={() => {
-              setCurrentTab(0);
-            }}
-          >
-            老旧照片变高清
-          </View>
-          <View
-            style={{
-              marginLeft: 20,
-            }}
-            onClick={() => {
-              setCurrentTab(1);
-            }}
-          >
-            局部重绘
-          </View>
-        </View>
       </View>
     </View>
   );

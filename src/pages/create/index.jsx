@@ -4,11 +4,11 @@
  */
 
 import { Input, View } from '@tarojs/components';
-import Taro, { getStorageSync, setStorageSync } from '@tarojs/taro';
+import { getStorageSync, setStorageSync } from '@tarojs/taro';
 import { useEffect, useState } from 'react';
 import { AtImagePicker } from 'taro-ui';
 import { api } from '../../api';
-import { wxPathToBase64, compressInputImage } from '../../utils/imageTools';
+import { compressInputImage } from '../../utils/imageTools';
 import NavBar from './NavBar';
 
 export default () => {
@@ -79,6 +79,24 @@ export default () => {
           onClick={() => {}}
         ></Input>
       </View>
+      <View
+        style={{
+          margin: 20,
+        }}
+      >
+        添加标题
+        <Input
+          style={{
+            height: '60rpx',
+            borderRadius: '50rpx',
+            paddingLeft: '30rpx',
+            backgroundColor: '#f1f1f1',
+            lineHeight: '60rpx',
+          }}
+          placeholder="请输入标题"
+          onClick={() => {}}
+        ></Input>
+      </View>
 
       <View
         style={{
@@ -105,7 +123,6 @@ export default () => {
           shape="circle"
           className="swap"
           onClick={() => {
-            console.log(global.userInfo);
             if (global.userInfo) {
               api.uploadImages({
                 userId: global.userInfo.data.userId,
