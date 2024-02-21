@@ -17,7 +17,7 @@ import ImagePicker from '../comps/ImagePicker.jsx';
 import SwapButton from './SwapButton.jsx';
 import TaskListTip from './TaskListTip.jsx';
 import { clearTimers, getTaskImage } from '../../common/getTaskImage.js';
-import { updateUserProcessInfo } from '../../api';
+import { api } from '../../api';
 import CustomNavBar from '../index/CustomNavBar.jsx';
 export default () => {
   const [showDrawer, setShowDrawer] = useState(false);
@@ -71,9 +71,9 @@ export default () => {
   useEffect(() => {
     const data = {};
     // data的任何字段都要匹配数据库字段
-    data.user_like_status = rating;
+    data.userLikeStatus = rating;
     data.requestId = requestId;
-    // updateUserProcessInfo(data);
+    api.updateUserProcessInfo(data);
   }, [rating]);
 
   const onUpdateTaskImages = async (requestId) => {

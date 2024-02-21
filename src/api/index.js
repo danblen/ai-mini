@@ -38,6 +38,10 @@ api.img2img = (data) => {
 api.checkIn = (data) => {
   return request.post('/checkIn', data);
 };
+// 通过requestId匹配，可传入任意参数
+api.updateUserProcessInfo = (data) => {
+  return request.post('/updateUserProcessInfo', data);
+};
 
 export { api };
 
