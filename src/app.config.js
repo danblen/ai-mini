@@ -2,6 +2,7 @@ export default {
   // 所有的页面，新增页面需要在这里加上才能用
   pages: [
     'pages/index/index',
+    'pages/refine/index',
     'pages/create/index',
     'pages/user/index',
     'pages/album/postNode',
@@ -11,10 +12,8 @@ export default {
     'pages/setting/index',
     'pages/search/index',
     'pages/faceswap/index',
-    'pages/refine/index',
     'pages/album/index',
     'pages/photo/index',
-    'pages/gen/index',
     'pages/user/agreements/index',
     'pages/user/privacy/index',
   ],
