@@ -169,28 +169,6 @@ export default ({}) => {
       requestSdTransform(data);
     }
   };
-  const requestSdTransform = async (data) => {
-    // 将原图转为base64
-    const srcBase64 = await wxPathToBase64(srcImage);
-
-    const storageUserInfo = getStorageSync('userInfo');
-
-    data.init_images = [srcBase64];
-    data.userId = storageUserInfo.data.userId;
-
-    debugger;
-    const res1 = await faceSwap(data);
-    if (res1.status === 'pending') {
-      // initCanvas();
-      onUpdateTaskImages(res1.request_id);
-    } else {
-      Taro.hideLoading();
-      Taro.showToast({
-        title: res1.error_message,
-        icon: 'none',
-      });
-    }
-  };
   const touchStart = (event) => {
     if (isExpanded) {
       Ctx.beginPath();
@@ -332,6 +310,11 @@ export default ({}) => {
       console.error(error);
     }
   };
+
+  const requestSdTransform = async (data) => {
+    // 将原图转为base64
+    const srcBase64 = await wxPathToBase64(srcImage);
+    console.log('srcBase64 success');
 
     const storageUserInfo = getStorageSync('userInfo');
 
