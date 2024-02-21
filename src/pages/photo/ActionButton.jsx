@@ -40,7 +40,7 @@ export default ({ albumUrls, selfUrl, onUpdateTaskImages }) => {
     SD_PARAMS.alwayson_scripts.roop.args[0] = selfBase64;
     let res = await faceSwap(SD_PARAMS).catch((err) => {});
     console.log('faceSwap ok');
-    if (res?.status === 'pending') {
+    if (res?.data?.status === 'pending') {
       onUpdateTaskImages(res.data.requestId);
     } else {
       if (typeof res?.error === 'string') {

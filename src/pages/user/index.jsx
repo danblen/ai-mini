@@ -28,35 +28,35 @@ export default () => {
   const fetchUserInfo = async () => {
     let userInfo = getStorageSync('userInfo');
     // storage中有数据表示用户已经登陆
-    if (userInfo?.isLogin && userInfo.data?.userId) {
-      let res = await get_user_info({
-        userId: userInfo.data.userId,
+    // if (userInfo?.isLogin && userInfo.data?.userId) {
+    let res = await get_user_info({
+      userId: userInfo.data.userId,
+    });
+    // 所有接口都可通过这种方式判断调用成功与否
+    if (res?.data) {
+      setUserInfo((pre) => ({
+        ...pre,
+        isLogin: true,
+        data: res.data,
+      }));
+      saveUserInfo({
+        isLogin: true,
+        data: res.data,
       });
-      // 所有接口都可通过这种方式判断调用成功与否
-      if (res?.data) {
-        setUserInfo((pre) => ({
-          ...pre,
-          isLogin: true,
-          data: res.data,
-        }));
-        saveUserInfo({
-          isLogin: true,
-          data: res.data,
-        });
-      } else {
-        // 获取用户数据失败
-        setUserInfo({
-          isLogin: false,
-          data: {},
-        });
-      }
     } else {
-      // 用户未登陆，清空
+      // 获取用户数据失败
       setUserInfo({
         isLogin: false,
         data: {},
       });
     }
+    // } else {
+    //   // 用户未登陆，清空
+    //   setUserInfo({
+    //     isLogin: false,
+    //     data: {},
+    //   });
+    // }
   };
   // 每次点击到tabbar 我的 都会触发，更新用户信息并刷新页面
   useTabItemTap((tab) => {});
@@ -172,7 +172,20 @@ export default () => {
         {userInfo.isLogin && !userInfo.data.isChecked && (
           <CheckIn
             onCheck={async () => {
-              await api.checkIn({ userId: global.userInfo.data.userId });
+              const res = await api.checkIn({
+                userId: global.userInfo.data.userId,
+              });
+              if (res?.data) {
+                setUserInfo((pre) => ({
+                  ...pre,
+                  isLogin: true,
+                  data: res.data,
+                }));
+                saveUserInfo({
+                  isLogin: true,
+                  data: res.data,
+                });
+              }
               fetchUserInfo();
             }}
           />
