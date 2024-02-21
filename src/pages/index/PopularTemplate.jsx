@@ -127,13 +127,12 @@ const CardItem = ({ imageUrl, iconUrl, title, hotness, onClick }) => {
         <Image
           src={imageUrl ? imageUrl[0] : null}
           style={{
-            width: '100px',
-            height: '100px',
-            marginLeft: '30px',
-            marginRight: '10px',
+            width: 80,
+            marginLeft: 30,
+            marginRight: 10,
             clipPath: 'inset(0 0 auto 0)', // 通过裁剪实现只显示顶部部分
           }}
-          mode="aspectFill"
+          mode="widthFix"
         />
         <Text style={{ marginLeft: '10px' }}>{title}</Text>
       </View>
