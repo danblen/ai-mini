@@ -12,7 +12,7 @@ export async function fetchProcessedImages(userInfo) {
           );
           let fileName = pathParts[pathParts.length - 1];
           let imageInfo = {
-            url: 'https://facei.top/static/' + fileName,
+            url: 'https://facei.top/' + fileName,
             requestId: entry['requestId'],
           };
           processedImages.push(imageInfo);
