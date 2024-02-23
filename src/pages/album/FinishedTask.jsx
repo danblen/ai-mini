@@ -111,7 +111,6 @@ const ImageList = ({ images, loadMore, onFetchData }) => {
         ) : (
           <View className="image-list" style={{ position: 'relative' }}>
             {showImages
-              .slice() // 复制数组
               .reverse() // 反转数组
               .map((image, index) => (
                 <View
@@ -162,6 +161,7 @@ const ImageList = ({ images, loadMore, onFetchData }) => {
           </View>
         )}
       </ScrollView>
+
       <View
         style={{
           position: 'fixed',
