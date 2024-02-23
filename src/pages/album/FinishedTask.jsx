@@ -70,6 +70,7 @@ const ImageList = ({ images, loadMore, onFetchData }) => {
               });
               setSelectedImages([]);
               setShowImages([]);
+              setSelectedMode(!selectedMode);
             } catch (error) {
               console.error('删除全部作品失败', error);
             }
@@ -109,49 +110,52 @@ const ImageList = ({ images, loadMore, onFetchData }) => {
           </View>
         ) : (
           <View className="image-list" style={{ position: 'relative' }}>
-            {showImages?.map((image, index) => (
-              <View
-                key={index}
-                style={{
-                  position: 'relative',
-                  paddingLeft: '10rpx',
-                  display: 'inline-block',
-                  marginBottom: '20px', // 图片间距
-                }}
-              >
-                <Image
-                  className="image"
-                  src={image.url}
-                  mode="widthFix"
+            {showImages
+              .slice() // 复制数组
+              .reverse() // 反转数组
+              .map((image, index) => (
+                <View
+                  key={index}
                   style={{
-                    width: '360rpx',
-                    borderRadius: '10rpx',
-                    border: selectedImages.includes(index)
-                      ? '2px solid red'
-                      : '', // 根据选中状态添加边框
+                    position: 'relative',
+                    paddingLeft: '10rpx',
+                    display: 'inline-block',
+                    marginBottom: '20px', // 图片间距
                   }}
-                  lazyLoad={true}
-                  onClick={() => toggleSelectImage(index)} // 根据模式执行不同的操作
-                />
-                {selectedImages.includes(index) && (
-                  <View
+                >
+                  <Image
+                    className="image"
+                    src={image.url}
+                    mode="widthFix"
                     style={{
-                      position: 'absolute',
-                      top: '5px',
-                      right: '5px',
-                      zIndex: '10',
+                      width: '360rpx',
+                      borderRadius: '10rpx',
+                      border: selectedImages.includes(index)
+                        ? '2px solid red'
+                        : '', // 根据选中状态添加边框
                     }}
-                  >
-                    <AtIcon
-                      value="close-circle"
-                      size="20"
-                      color="#e80505"
-                      onClick={() => null}
-                    />
-                  </View>
-                )}
-              </View>
-            ))}
+                    lazyLoad={true}
+                    onClick={() => toggleSelectImage(index)} // 根据模式执行不同的操作
+                  />
+                  {selectedImages.includes(index) && (
+                    <View
+                      style={{
+                        position: 'absolute',
+                        top: '5px',
+                        right: '5px',
+                        zIndex: '10',
+                      }}
+                    >
+                      <AtIcon
+                        value="close-circle"
+                        size="20"
+                        color="#e80505"
+                        onClick={() => null}
+                      />
+                    </View>
+                  )}
+                </View>
+              ))}
             {showImages.length === 0 && (
               <View style={{ textAlign: 'center' }}>没有作品可显示</View>
             )}
