@@ -148,10 +148,12 @@ export default function ImagePicker({ onFilesChange, onSelectImage }) {
                 <Image
                   src={file.url}
                   style={{
-                    width: '100px',
-                    height: '100px',
+                    width: 80,
+                    height: 80,
                     border: '2px solid #06638e', // 图像边框样式
+                    borderRadius: 5,
                   }}
+                  mode="aspectFill"
                 />
                 {/* 添加倒三角形 */}
                 <View
@@ -180,7 +182,6 @@ export default function ImagePicker({ onFilesChange, onSelectImage }) {
         onFail={(mes) => {}}
         onImageClick={(index, file) => {
           setSelectedIndex(index);
-          Taro.showToast({ title: `当前选择第${index + 1}张`, icon: 'none' });
           onSelectImage(index);
         }}
       />

@@ -8,11 +8,11 @@ export async function fetchProcessedImages(userInfo) {
         for (let i = 0; i < downLoadUserImages.data.length; i++) {
           let entry = downLoadUserImages.data[i];
           let pathParts = entry['outputImagePath'].split(
-            '/home/ubuntu/code/server/sd_make_images/'
+            '/home/ubuntu/code/server/'
           );
           let fileName = pathParts[pathParts.length - 1];
           let imageInfo = {
-            url: 'https://facei.top/user-pic/' + fileName,
+            url: 'https://facei.top/static/' + fileName,
             requestId: entry['requestId'],
           };
           processedImages.push(imageInfo);
