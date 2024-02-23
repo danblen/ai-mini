@@ -2,7 +2,7 @@
  * 换脸页面
  */
 
-import { Image, View } from '@tarojs/components';
+import { Image, View, Text } from '@tarojs/components';
 import Taro from '@tarojs/taro';
 import React, { useEffect, useState } from 'react';
 import { AtDrawer, AtIcon } from 'taro-ui';
@@ -19,6 +19,15 @@ import TaskListTip from './TaskListTip.jsx';
 import { clearTimers, getTaskImage } from '../../common/getTaskImage.js';
 import { api } from '../../api';
 import CustomNavBar from '../index/CustomNavBar.jsx';
+import { AtButton, AtActionSheet, AtActionSheetItem } from 'taro-ui';
+import { deepCopy } from '../../utils/object.js';
+import {
+  data,
+  swap_face_and_add_detail_data,
+} from '../../const/sdApiParams.js';
+const sdFaceSwapAddDetailParam = deepCopy(swap_face_and_add_detail_data);
+const sdFaceSwapParam = deepCopy(data);
+
 export default () => {
   const [showDrawer, setShowDrawer] = useState(false);
   const [startX, setStartX] = useState(0);
@@ -33,6 +42,23 @@ export default () => {
   const [rating, setRating] = useState(0);
   const [requestId, setRequestId] = useState(0);
 
+  const [showOptions, setShowOptions] = useState(false);
+  const [selectedOption, setSelectedOption] = useState('快速模式'); // 用于存储选中的选项
+  const [faceSwapParam, setFaceSwapParam] = useState(sdFaceSwapParam);
+
+  const handleClick = () => {
+    setShowOptions(!showOptions); // 切换下拉选项的显示状态
+  };
+
+  const handleOptionSelect = (option) => {
+    setSelectedOption(option); // 设置选中的选项
+    setShowOptions(false);
+    if (option === '快速模式') {
+      setFaceSwapParam(sdFaceSwapParam);
+    } else {
+      setFaceSwapParam(sdFaceSwapAddDetailParam);
+    }
+  };
   useEffect(() => {
     const down = async () => {
       const tempFilePath = await downloadImages(params.imageUrl);
@@ -133,9 +159,91 @@ export default () => {
     <View
       onTouchstart={onTouchStart}
       onTouchEnd={onTouchEnd}
-      style={{ background: 'black', height: '100vh' }}
+      style={{ background: 'black', height: '100vh', position: 'relative' }}
     >
       <CustomNavBar></CustomNavBar>
+      <View
+        style={{
+          position: 'absolute',
+          top: '50px',
+          left: '50%',
+          transform: 'translateX(-50%)',
+        }}
+      >
+        <View style={{ position: 'relative', display: 'inline-block' }}>
+          <AtButton
+            type="primary"
+            style={{
+              background: 'linear-gradient(to right, #00467f, #a5cc82)',
+              animation: 'swap 1s infinite',
+              opacity: 0.8,
+              fontWeight: 'bold',
+              zIndex: 10,
+              display: 'flex',
+              alignItems: 'center',
+              flexDirection: 'column', // 设置按钮内容竖向排列
+            }}
+            shape="circle"
+            onClick={handleClick} // 点击按钮时触发handleClick
+          >
+            {selectedOption}
+            <AtIcon
+              value={showOptions ? 'chevron-up' : 'chevron-down'}
+              size="18"
+              color="#FFF"
+            ></AtIcon>
+          </AtButton>
+        </View>
+      </View>
+
+      <AtActionSheet
+        isOpened={showOptions}
+        cancelText="取消"
+        onClose={() => setShowOptions(false)}
+      >
+        <AtActionSheetItem onClick={() => handleOptionSelect('快速模式')}>
+          <View
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <AtIcon
+              value={
+                selectedOption === '快速模式' ? 'check-circle' : 'close-circle'
+              }
+              size="18"
+              color={selectedOption === '快速模式' ? '#6190E8' : '#666'}
+              style={{ marginRight: '10px' }}
+            />
+            <Text style={{ color: selectedOption === 0 ? '#6190E8' : '#666' }}>
+              快速模式(1积分)
+            </Text>
+          </View>
+        </AtActionSheetItem>
+        <AtActionSheetItem onClick={() => handleOptionSelect('精修模式')}>
+          <View
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <AtIcon
+              value={
+                selectedOption === '精修模式' ? 'check-circle' : 'close-circle'
+              }
+              size="18"
+              color={selectedOption === '精修模式' ? '#6190E8' : '#666'}
+              style={{ marginRight: '10px' }}
+            />
+            <Text style={{ color: selectedOption === 1 ? '#6190E8' : '#666' }}>
+              精修模式(3积分)
+            </Text>
+          </View>
+        </AtActionSheetItem>
+      </AtActionSheet>
       <View
         style={{
           overflow: 'hidden',
@@ -167,6 +275,7 @@ export default () => {
             right: 0, // 设置初始位置在屏幕右侧
             opacity: compareImageSwap ? 1 : 0, // 根据条件设置透明度
             transition: 'opacity 1s',
+            zIndex: 1,
           }}
           src={
             showImageSwap && images[images.length - 1].status === 'SUCCESS'
@@ -276,6 +385,7 @@ export default () => {
             uploadedFiles[selectedIndex]?.url
           }
           onUpdateTaskImages={onUpdateTaskImages}
+          sdparam={faceSwapParam}
         ></SwapButton>
       </View>
 

@@ -4,11 +4,8 @@ import { useState, useEffect, useRef } from 'react';
 import { View, Text } from '@tarojs/components';
 import { AtButton, AtActivityIndicator, AtFloatLayout } from 'taro-ui';
 import { wxPathToBase64 } from '../../utils/imageTools';
-import { data } from '../../const/sdApiParams.js';
 import { saveUserInfo, wechatLogin } from '../../common/user.js';
 import LoginView from '../comps/LoginView.jsx';
-import { deepCopy } from '../../utils/object.js';
-const SD_PARAMS = deepCopy(data);
 const SwapCount = ({ clickCount }) => (
   <View
     style={{
@@ -38,7 +35,12 @@ const SwapCount = ({ clickCount }) => (
   </View>
 );
 
-export default ({ imageUrl, selectedImageUrl, onUpdateTaskImages }) => {
+export default ({
+  imageUrl,
+  selectedImageUrl,
+  onUpdateTaskImages,
+  sdparam,
+}) => {
   const [loading, setLoading] = useState(false);
   const clickCount = useRef(Taro.getApp().globalData.clickCount);
   const [isOpened, setIsOpened] = useState(false);
@@ -83,12 +85,12 @@ export default ({ imageUrl, selectedImageUrl, onUpdateTaskImages }) => {
         setLoading(true);
         const srcBase64 = await wxPathToBase64(imageUrl);
         const tarBase64 = await wxPathToBase64(selectedImageUrl);
-        SD_PARAMS.userId = storageUserInfo.data.userId;
-        SD_PARAMS.init_images = [srcBase64];
-        SD_PARAMS.alwayson_scripts.roop.args[0] = tarBase64;
+        sdparam.userId = storageUserInfo.data.userId;
+        sdparam.init_images = [srcBase64];
+        sdparam.alwayson_scripts.roop.args[0] = tarBase64;
 
         // 异步操作
-        let res = await faceSwap(SD_PARAMS);
+        let res = await faceSwap(sdparam);
         if (res.data?.status === 'pending') {
           onUpdateTaskImages(res.data.requestId);
         } else {
