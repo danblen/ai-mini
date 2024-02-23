@@ -12,6 +12,7 @@ import NavBar from '../NavBar.jsx';
 import TopBanner from '../TopBanner.jsx';
 import WaterfallList from '../WaterfallList.jsx';
 import Taro from '@tarojs/taro';
+import { AtNoticebar, AtIcon } from 'taro-ui';
 
 export default () => {
   let [allImages, setAllImages] = useState({ albums: {}, tags_image: {} });
@@ -34,6 +35,24 @@ export default () => {
       getAllImages();
     }, 1 * 60 * 1000); // 10分钟
   }, []);
+  const notices = [
+    '每日签到即可加积分💕',
+    '换脸精修模式更好看🥰',
+    '别人使用你发布的模板，你也会得到积分✌',
+  ];
+
+  const [currentNoticeIndex, setCurrentNoticeIndex] = useState(0);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      // 切换到下一条通知
+      setCurrentNoticeIndex((prevIndex) => (prevIndex + 1) % notices.length);
+    }, 5000); // 设置每条通知显示的时间，这里设置为1秒
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [currentNoticeIndex]);
   return (
     <>
       {/* <NavBar></NavBar> */}
@@ -44,6 +63,11 @@ export default () => {
         }}
       >
         <TopBanner banners={allImages?.bannerImage?.['首页日更']} />
+        <View style={{ marginTop: '5px' }}>
+          <AtNoticebar icon="volume-plus">
+            {notices[currentNoticeIndex]}
+          </AtNoticebar>
+        </View>
         <ButtonsBox
           buttons={[
             {
