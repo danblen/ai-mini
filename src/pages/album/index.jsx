@@ -42,8 +42,8 @@ export default ({ images }) => {
         if (processedImages?.length > 0) {
           lastPicCount = processedImages.length;
           // 将请求到的数据缓存到本地存储
-          Taro.setStorageSync('processedImages', processedImages);
         }
+        Taro.setStorageSync('processedImages', processedImages);
       }
 
       setAllImages(processedImages);
