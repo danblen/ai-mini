@@ -5,7 +5,7 @@ import ImageList from '../discover/Recommend/ImageList';
 import Taro, { useState, useEffect } from '@tarojs/taro';
 const PostNodePages = '/pages/album/postNode';
 
-export default ({ imageListLeft, imageListRight }) => {
+export default ({ imageListLeft, imageListRight, curTagPage }) => {
   return (
     <View style={{ display: 'flex', justifyContent: 'center' }}>
       <View
@@ -35,7 +35,9 @@ export default ({ imageListLeft, imageListRight }) => {
                 marginLeft: '5px',
               }}
               onClick={() => {
-                navigateTo({ url: PostNodePages });
+                // 标记哪个页面发出的post
+                const urlWithParams = `${PostNodePages}?tagName=${curTagPage}`;
+                navigateTo({ url: urlWithParams });
               }}
             >
               {/* Background image for "每日打卡" */}

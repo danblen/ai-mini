@@ -11,6 +11,9 @@ import LoginView from '../comps/LoginView';
 import { saveUserInfo, wechatLogin } from '../../common/user';
 
 export default () => {
+  const router = useRouter();
+  // 从 URL 查询参数中获取参数值
+  const tagName = router.params.tagName;
   const [selectedImages, setSelectedImages] = useState([]);
   const [title, setTitle] = useState('');
   const [isOpened, setIsOpened] = useState(false);
@@ -50,9 +53,9 @@ export default () => {
 
         await api.uploadImages({
           userId: storageUserInfo.data.userId,
-          tag: 'gufeng',
-          image: compressBase64Array,
-          description: title ? title : '这是没有标题的模板',
+          tagName: tagName,
+          momentPics: compressBase64Array,
+          momentTitle: title ? title : '这是没有标题的模板',
         });
         Taro.showToast({
           title: '发布成功',
@@ -60,9 +63,9 @@ export default () => {
           duration: 2000,
         });
         await new Promise((resolve) => setTimeout(resolve, 1000));
-        if (Taro.getCurrentPages().length > 1) {
-          Taro.navigateBack();
-        }
+        // if (Taro.getCurrentPages().length > 1) {
+        //   Taro.navigateBack();
+        // }
       } else {
         // Taro.switchTab({
         //   url: '/pages/user/index',

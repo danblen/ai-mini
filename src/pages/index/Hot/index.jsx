@@ -16,11 +16,21 @@ import { AtNoticebar, AtIcon } from 'taro-ui';
 
 export default () => {
   let [allImages, setAllImages] = useState({ albums: {}, tags_image: {} });
+  const [leftHalf, setLeftHalf] = useState();
+  const [rightHalf, setRightHalf] = useState();
+  const setLRHalfPic = async (originalImageArray) => {
+    // 计算数组长度的一半
+    const halfLength = Math.ceil(originalImageArray.length / 2 - 1);
+    // 将原始数组切割成两半
+    setLeftHalf(originalImageArray.slice(0, halfLength));
+    setRightHalf(originalImageArray.slice(halfLength));
+  };
   const getAllImages = async () => {
     let res = await get_all_images();
     if (res?.data) {
       setAllImages(res.data);
       Taro.setStorageSync('tmpAllimages', res.data);
+      setLRHalfPic(res.data?.activityTagsImage?.['fenweigan']);
     }
   };
   useEffect(() => {
@@ -30,6 +40,7 @@ export default () => {
       getAllImages();
     } else {
       setAllImages(tmpAllimages);
+      setLRHalfPic(tmpAllimages?.activityTagsImage?.['fenweigan']);
     }
     const timer = setInterval(() => {
       getAllImages();
@@ -173,8 +184,9 @@ export default () => {
           {/* <Text style={{}}>最近热门</Text> */}
         </View>
         <WaterfallList
-          imageListLeft={allImages?.activityTagsImage?.['chunyu'] || []}
-          imageListRight={allImages?.activityTagsImage?.['fenweigan'] || []}
+          imageListLeft={leftHalf || []}
+          imageListRight={rightHalf || []}
+          curTagPage="Hot"
         />
       </View>
     </>

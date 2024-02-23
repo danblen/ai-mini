@@ -10,12 +10,21 @@ const ActivityPage = () => {
   const { title, description } = Taro.getCurrentInstance().router.params;
   const decodedTitle = decodeURIComponent(title);
   const decodedDescription = decodeURIComponent(description);
+  const [leftHalf, setLeftHalf] = useState();
+  const [rightHalf, setRightHalf] = useState();
   let [allImages, setAllImages] = useState({ albums: {}, tags_image: {} });
-
+  const setLRHalfPic = async (originalImageArray) => {
+    // 计算数组长度的一半
+    const halfLength = Math.ceil(originalImageArray.length / 2 - 1);
+    // 将原始数组切割成两半
+    setLeftHalf(originalImageArray.slice(0, halfLength));
+    setRightHalf(originalImageArray.slice(halfLength));
+  };
   const getAllImages = async () => {
     let res = await get_all_images();
     if (res?.data) {
       setAllImages(res.data);
+      setLRHalfPic(res.data?.activityTagsImage?.[decodedTitle]);
     }
   };
 
@@ -62,12 +71,9 @@ const ActivityPage = () => {
           }}
         >
           <WaterfallList
-            imageListLeft={
-              allImages?.activityTagsImage?.[decodedTitle + '0'] || []
-            }
-            imageListRight={
-              allImages?.activityTagsImage?.[decodedTitle + '1'] || []
-            }
+            imageListLeft={leftHalf || []}
+            imageListRight={rightHalf || []}
+            curTagPage={decodedTitle}
           />
           {/* <TabsImageList tags_image={allImages?.activityTagsImage} /> */}
         </View>

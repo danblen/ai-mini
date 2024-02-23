@@ -50,13 +50,13 @@ const PopularTemplate = ({ activityTagsImage }) => {
         }}
       >
         <CardItem
-          imageUrl={activityTagsImage?.['水果裙0']}
+          imageUrl={activityTagsImage?.['水果裙']}
           iconUrl={IconGood1}
           title="#水果裙"
           hotness={798}
           onClick={() =>
             handleItemClick(
-              activityTagsImage?.['水果裙0'],
+              activityTagsImage?.['水果裙'],
               '水果裙',
               '奇装异服系列<原创:白泽MARS>'
             )
@@ -64,13 +64,13 @@ const PopularTemplate = ({ activityTagsImage }) => {
         />
         <LineSeparator />
         <CardItem
-          imageUrl={activityTagsImage?.['焱落纱0']}
+          imageUrl={activityTagsImage?.['焱落纱']}
           iconUrl={IconGood2}
           title="#焱落纱"
           hotness={562}
           onClick={() =>
             handleItemClick(
-              activityTagsImage?.['焱落纱0'],
+              activityTagsImage?.['焱落纱'],
               '焱落纱',
               '焱落纱系列<原创:麦橘MERJIC>'
             )
@@ -78,12 +78,12 @@ const PopularTemplate = ({ activityTagsImage }) => {
         />
         <LineSeparator />
         <CardItem
-          imageUrl={activityTagsImage?.['港风0']}
+          imageUrl={activityTagsImage?.['港风']}
           iconUrl={IconGood3}
           title="#港风"
           hotness={323}
           onClick={() =>
-            handleItemClick(activityTagsImage?.['港风0'], '港风', '港风系列')
+            handleItemClick(activityTagsImage?.['港风'], '港风', '港风系列')
           }
         />
       </View>
