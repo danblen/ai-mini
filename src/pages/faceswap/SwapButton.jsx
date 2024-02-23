@@ -10,7 +10,7 @@ const SwapCount = ({ clickCount }) => (
   <View
     style={{
       position: 'fixed',
-      top: '70px',
+      top: '45px',
       right: '60%',
       transform: 'translate(50%, -50%)', // 将元素居中
       display: clickCount > 0 ? 'block' : 'none',

@@ -24,7 +24,7 @@ export default ({ buttons }) => {
     <View
       style={{
         padding: '10px',
-        marginTop: '20px',
+        marginTop: '8px',
         marginBottom: '20px',
         marginLeft: '18rpx',
         marginRight: '18rpx',

@@ -20,31 +20,32 @@ export default ({ images }) => {
     },
   });
   const fetchData = async (refresh) => {
-    console.log('refresh', refresh);
     const storageUserInfo = Taro.getStorageSync('userInfo');
     setUserInfo(storageUserInfo);
     let processedImages = Taro.getStorageSync('processedImages') || [];
 
+    lastPicCount = processedImages.length;
     if (storageUserInfo?.isLogin && storageUserInfo.data?.userId) {
       const userInfo = {
         userId: storageUserInfo.data.userId,
         requestStatus: 'finishing',
       };
+      console.log('refresh', processedImages.length, lastPicCount);
 
-      if (
-        refresh === true ||
-        processedImages.length === 0 ||
-        processedImages.length === lastPicCount
-      ) {
-        // 从缓存中未获取到数据，进行网络请求
-        processedImages = await fetchProcessedImages(userInfo);
+      // if (
+      //   refresh === true ||
+      //   processedImages.length === 0 ||
+      //   processedImages.length === lastPicCount
+      // ) {
+      // 从缓存中未获取到数据，进行网络请求
+      processedImages = await fetchProcessedImages(userInfo);
 
-        if (processedImages?.length > 0) {
-          lastPicCount = processedImages.length;
-          // 将请求到的数据缓存到本地存储
-        }
-        Taro.setStorageSync('processedImages', processedImages);
-      }
+      // if (processedImages?.length > 0) {
+      lastPicCount = processedImages.length;
+      // 将请求到的数据缓存到本地存储
+      Taro.setStorageSync('processedImages', processedImages);
+      // }
+      // }
 
       setAllImages(processedImages);
     } else {
