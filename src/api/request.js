@@ -1,6 +1,5 @@
 import { HEADER, URL_BACK, URL_SD } from './config';
 import Taro from '@tarojs/taro';
-
 /**
  * 发送请求
  */
@@ -17,7 +16,7 @@ function baseRequest(
   if (url.startsWith('/sdapi') > 0) {
     Url = URL_SD + url;
   } else {
-    Url = URL_BACK + '/v1' + url;
+    Url = URL_BACK + url;
   }
   if (!noAuth) {
     //登录过期自动登录
