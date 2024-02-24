@@ -45,6 +45,7 @@ export default () => {
   const [showOptions, setShowOptions] = useState(false);
   const [selectedOption, setSelectedOption] = useState('快速模式'); // 用于存储选中的选项
   const [faceSwapParam, setFaceSwapParam] = useState(sdFaceSwapParam);
+  const [MomentId, setMomentId] = useState(MomentId);
 
   const handleClick = () => {
     setShowOptions(!showOptions); // 切换下拉选项的显示状态
@@ -74,6 +75,7 @@ export default () => {
         momentId: params.momentId,
         viewCount: 1,
       });
+      setMomentId(params.momentId);
     }
     return () => {
       ignore = true;
@@ -391,6 +393,8 @@ export default () => {
           }
           onUpdateTaskImages={onUpdateTaskImages}
           sdparam={faceSwapParam}
+          momentId={MomentId}
+          usePoint={faceSwapParam === sdFaceSwapParam ? 1 : 3}
         ></SwapButton>
       </View>
 

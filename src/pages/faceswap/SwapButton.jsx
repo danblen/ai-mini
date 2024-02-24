@@ -40,6 +40,8 @@ export default ({
   selectedImageUrl,
   onUpdateTaskImages,
   sdparam,
+  momentId,
+  usePoint,
 }) => {
   const [loading, setLoading] = useState(false);
   const clickCount = useRef(Taro.getApp().globalData.clickCount);
@@ -86,6 +88,8 @@ export default ({
         const srcBase64 = await wxPathToBase64(imageUrl);
         const tarBase64 = await wxPathToBase64(selectedImageUrl);
         sdparam.userId = storageUserInfo.data.userId;
+        sdparam.momentId = momentId;
+        sdparam.usePoint = usePoint;
         sdparam.init_images = [srcBase64];
         sdparam.alwayson_scripts.roop.args[0] = tarBase64;
 
@@ -95,7 +99,7 @@ export default ({
           onUpdateTaskImages(res.data.requestId);
         } else {
           Taro.showToast({
-            title: res.error_message,
+            title: res,
             icon: 'none',
           });
         }
