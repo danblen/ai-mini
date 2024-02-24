@@ -76,7 +76,7 @@ export default ({ imageUrls }) => {
                     display: '-webkit-box',
                     WebkitBoxOrient: 'vertical',
                     WebkitLineClamp: 1, // 控制显示行数
-                    maxWidth: '105px',
+                    maxWidth: '21%',
                     color: '#9c9494',
                   }}
                 >
@@ -145,5 +145,6 @@ const Styles = {
     WebkitBoxOrient: 'vertical',
     WebkitLineClamp: 2, // 控制显示行数
     color: '#000000',
+    maxWidth: '50%',
   },
 };
