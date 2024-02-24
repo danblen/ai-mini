@@ -40,7 +40,9 @@ export default ({ images }) => {
       // 从缓存中未获取到数据，进行网络请求
       processedImages = await fetchProcessedImages(userInfo);
 
-      // if (processedImages?.length > 0) {
+      if (processedImages?.length > 0) {
+        processedImages.reverse();
+      }
       lastPicCount = processedImages.length;
       // 将请求到的数据缓存到本地存储
       Taro.setStorageSync('processedImages', processedImages);

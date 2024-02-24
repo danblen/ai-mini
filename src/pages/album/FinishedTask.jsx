@@ -79,7 +79,37 @@ const ImageList = ({ images, loadMore, onFetchData }) => {
       });
     }
   };
-
+  const handlSaveImages = async () => {
+    if (selectedImages.length) {
+      Taro.showModal({
+        title: '保存文件',
+        content: '确定要保存选中的作品吗？',
+        success: async (res) => {
+          if (res.confirm) {
+            try {
+              for (const index of selectedImages) {
+                const imageUrl = showImages[index].url; // 获取选中作品的图片链接
+                // 将图片下载到本地
+                const { tempFilePath } = await Taro.downloadFile({
+                  url: imageUrl,
+                });
+                // 保存图片到相册
+                await Taro.saveImageToPhotosAlbum({ filePath: tempFilePath });
+              }
+              // 清空选中的图片
+              setSelectedImages([]);
+              // 提示保存成功
+              Taro.showToast({ title: '保存成功', icon: 'success' });
+            } catch (error) {
+              console.error('保存作品失败', error);
+              // 提示保存失败
+              Taro.showToast({ title: '保存失败', icon: 'none' });
+            }
+          }
+        },
+      });
+    }
+  };
   const handleToggleMode = () => {
     if (selectedMode) {
       // 如果是从选择模式切换到预览模式，清空已选择的图片数组
@@ -110,51 +140,49 @@ const ImageList = ({ images, loadMore, onFetchData }) => {
           </View>
         ) : (
           <View className="image-list" style={{ position: 'relative' }}>
-            {showImages
-              .reverse() // 反转数组
-              .map((image, index) => (
-                <View
-                  key={index}
+            {showImages.map((image, index) => (
+              <View
+                key={index}
+                style={{
+                  position: 'relative',
+                  paddingLeft: '10rpx',
+                  display: 'inline-block',
+                  marginBottom: '20px', // 图片间距
+                }}
+              >
+                <Image
+                  className="image"
+                  src={image.url}
+                  mode="widthFix"
                   style={{
-                    position: 'relative',
-                    paddingLeft: '10rpx',
-                    display: 'inline-block',
-                    marginBottom: '20px', // 图片间距
+                    width: '360rpx',
+                    borderRadius: '10rpx',
+                    border: selectedImages.includes(index)
+                      ? '2px solid red'
+                      : '', // 根据选中状态添加边框
                   }}
-                >
-                  <Image
-                    className="image"
-                    src={image.url}
-                    mode="widthFix"
+                  lazyLoad={true}
+                  onClick={() => toggleSelectImage(index)} // 根据模式执行不同的操作
+                />
+                {selectedImages.includes(index) && (
+                  <View
                     style={{
-                      width: '360rpx',
-                      borderRadius: '10rpx',
-                      border: selectedImages.includes(index)
-                        ? '2px solid red'
-                        : '', // 根据选中状态添加边框
+                      position: 'absolute',
+                      top: '5px',
+                      right: '5px',
+                      zIndex: '10',
                     }}
-                    lazyLoad={true}
-                    onClick={() => toggleSelectImage(index)} // 根据模式执行不同的操作
-                  />
-                  {selectedImages.includes(index) && (
-                    <View
-                      style={{
-                        position: 'absolute',
-                        top: '5px',
-                        right: '5px',
-                        zIndex: '10',
-                      }}
-                    >
-                      <AtIcon
-                        value="close-circle"
-                        size="20"
-                        color="#e80505"
-                        onClick={() => null}
-                      />
-                    </View>
-                  )}
-                </View>
-              ))}
+                  >
+                    <AtIcon
+                      value="close-circle"
+                      size="20"
+                      color="#e80505"
+                      onClick={() => null}
+                    />
+                  </View>
+                )}
+              </View>
+            ))}
             {showImages.length === 0 && (
               <View style={{ textAlign: 'center' }}>没有作品可显示</View>
             )}
@@ -195,6 +223,17 @@ const ImageList = ({ images, loadMore, onFetchData }) => {
           />
           刷新
         </View>
+        {selectedMode && (
+          <View style={{ textAlign: 'center' }}>
+            <AtIcon
+              value="trash"
+              size="24"
+              color="#054622"
+              onClick={handlSaveImages}
+            />
+            保存选中
+          </View>
+        )}
         {selectedMode && (
           <View style={{ textAlign: 'center' }}>
             <AtIcon
