@@ -168,6 +168,7 @@ export default () => {
           top: '50px',
           left: '50%',
           transform: 'translateX(-50%)',
+          zIndex: 99,
         }}
       >
         <View style={{ position: 'relative', display: 'inline-block' }}>

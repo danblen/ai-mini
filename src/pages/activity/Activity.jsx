@@ -1,7 +1,7 @@
 import Taro from '@tarojs/taro';
 import { View, Text, Image } from '@tarojs/components';
 import CustomNavBar from '../index/CustomNavBar.jsx';
-import { getPhotoPath, URL_BACK, get_all_images } from '../../api/index.js';
+import { getPhotoPath, URL_BACK, api } from '../../api/index.js';
 import React, { useState, useEffect, useRef } from 'react';
 import TabsImageList from '../index/TabsImageList';
 import WaterfallList from '../index/WaterfallList';
@@ -21,10 +21,10 @@ const ActivityPage = () => {
     setRightHalf(originalImageArray.slice(halfLength));
   };
   const getAllImages = async () => {
-    let res = await get_all_images();
+    let res = await api.getTagImages({ tagName: decodedTitle });
     if (res?.data) {
       setAllImages(res.data);
-      setLRHalfPic(res.data?.activityTagsImage?.[decodedTitle]);
+      setLRHalfPic(res.data);
     }
   };
 

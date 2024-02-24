@@ -87,7 +87,7 @@ export default () => {
               width: '150rpx',
               height: '150rpx',
             }}
-            src={'https://facei.top/static/pic/123.png'}
+            src={userInfo?.data?.userHeadPic}
           />
           <View
             className=""

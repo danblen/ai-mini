@@ -25,6 +25,9 @@ api.storeImages = (data) => {
 api.uploadImages = (data) => {
   return request.post('/uploadImages', data);
 };
+api.getTagImages = (data) => {
+  return request.post('/getTagImages', data);
+};
 // 获取用户换脸的所有图片，作品页
 api.getUserProcessImage = (data) => {
   return request.post('/getUserProcessImage', data);

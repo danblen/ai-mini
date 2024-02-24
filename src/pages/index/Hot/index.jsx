@@ -14,6 +14,7 @@ import WaterfallList from '../WaterfallList.jsx';
 import Taro from '@tarojs/taro';
 import { AtNoticebar, AtIcon } from 'taro-ui';
 
+let firstGetImages = 0;
 export default () => {
   let [allImages, setAllImages] = useState({ albums: {}, tags_image: {} });
   const [leftHalf, setLeftHalf] = useState();
@@ -30,20 +31,36 @@ export default () => {
     if (res?.data) {
       setAllImages(res.data);
       Taro.setStorageSync('tmpAllimages', res.data);
-      setLRHalfPic(res.data?.activityTagsImage?.['fenweigan']);
     }
   };
+  const getTagImages = async () => {
+    let res = await api.getTagImages({ tagName: 'Hot' });
+    if (res?.data) {
+      Taro.setStorageSync('tmpHotTagimages', res.data);
+      setLRHalfPic(res.data);
+    }
+  };
+  if (!firstGetImages) {
+    firstGetImages = 1;
+    getAllImages();
+    getTagImages();
+  }
   useEffect(() => {
-    // getBanners();
     const tmpAllimages = getStorageSync('tmpAllimages');
     if (!tmpAllimages) {
       getAllImages();
     } else {
       setAllImages(tmpAllimages);
-      setLRHalfPic(tmpAllimages?.activityTagsImage?.['fenweigan']);
+    }
+    const tmpHotTagimages = getStorageSync('tmpHotTagimages');
+    if (!tmpHotTagimages) {
+      getTagImages();
+    } else {
+      setLRHalfPic(tmpHotTagimages);
     }
     const timer = setInterval(() => {
       getAllImages();
+      getTagImages();
     }, 1 * 60 * 1000); // 10分钟
   }, []);
   const notices = [
