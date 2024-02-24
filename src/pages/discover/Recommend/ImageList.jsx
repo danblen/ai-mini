@@ -35,7 +35,11 @@ export default ({ imageUrls }) => {
                 className=" "
                 onClick={() => {
                   navigateTo({
-                    url: '/pages/faceswap/index?imageUrl=' + src,
+                    url:
+                      '/pages/faceswap/index?imageUrl=' +
+                      src +
+                      '&momentId=' +
+                      image.momentId,
                   });
                 }}
                 src={src}

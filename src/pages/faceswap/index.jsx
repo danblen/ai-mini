@@ -70,6 +70,10 @@ export default () => {
     if (params && params.imageUrl) {
       // 先把图片下载下来，并展示出来
       down();
+      api.updateImageUserUploadInfo({
+        momentId: params.momentId,
+        viewCount: 1,
+      });
     }
     return () => {
       ignore = true;

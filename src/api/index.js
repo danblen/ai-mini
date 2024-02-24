@@ -45,6 +45,10 @@ api.checkIn = (data) => {
 api.updateUserProcessInfo = (data) => {
   return request.post('/updateUserProcessInfo', data);
 };
+// 通过monentId匹配，可传入任意参数
+api.updateImageUserUploadInfo = (data) => {
+  return request.post('/updateImageUserUploadInfo', data);
+};
 
 export { api };
 
