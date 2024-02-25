@@ -2,7 +2,7 @@
 
 # 安装工具
 
-node 版本 16.xx.xx
+node 版本 16.14.0
 
 npm i -g @tarojs/cli
 
