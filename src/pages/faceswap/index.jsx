@@ -25,6 +25,7 @@ import {
   data,
   swap_face_and_add_detail_data,
 } from '../../const/sdApiParams.js';
+import { URL_STATIC } from '../../api/config.js';
 const sdFaceSwapAddDetailParam = deepCopy(swap_face_and_add_detail_data);
 const sdFaceSwapParam = deepCopy(data);
 
@@ -123,7 +124,7 @@ export default () => {
           image.requestId === requestId
             ? {
                 ...image,
-                src: 'data:image/png;base64,' + res.data.result.images[0],
+                src: URL_STATIC + res.data.imageUrl,
                 status: 'SUCCESS',
               }
             : image
