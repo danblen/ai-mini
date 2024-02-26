@@ -10,7 +10,7 @@ import AlbumsCard from '../AlbumsCard.jsx';
 import PopularTemplate from '../PopularTemplate.jsx';
 import NavBar from '../NavBar.jsx';
 import TopBanner from '../TopBanner.jsx';
-import WaterfallList from '../WaterfallList.jsx';
+import WaterfallList from '../../comps/WaterfallList.jsx';
 import Taro from '@tarojs/taro';
 import { AtNoticebar, AtIcon } from 'taro-ui';
 
@@ -147,7 +147,7 @@ export default () => {
 
         <View
           style={{
-            padding: '8px',
+            padding: 5,
             marginTop: '20px',
             marginBottom: '20px',
             marginLeft: '10rpx',

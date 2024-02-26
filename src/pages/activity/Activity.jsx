@@ -1,10 +1,9 @@
+import { Text, View } from '@tarojs/components';
 import Taro from '@tarojs/taro';
-import { View, Text, Image } from '@tarojs/components';
+import React, { useEffect, useState } from 'react';
+import { api } from '../../api/index.js';
+import WaterfallList from '../comps/WaterfallList.jsx';
 import CustomNavBar from '../index/CustomNavBar.jsx';
-import { getPhotoPath, URL_BACK, api } from '../../api/index.js';
-import React, { useState, useEffect, useRef } from 'react';
-import TabsImageList from '../index/TabsImageList';
-import WaterfallList from '../index/WaterfallList';
 
 const ActivityPage = () => {
   const { title, description } = Taro.getCurrentInstance().router.params;

@@ -96,7 +96,6 @@ const CardItem = ({ imageUrl, iconUrl, title, hotness, onClick }) => {
     <View
       style={{
         display: 'flex',
-        flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
         position: 'relative',

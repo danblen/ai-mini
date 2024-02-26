@@ -28,7 +28,7 @@ export default () => {
     setCurrentTab('hot');
   };
   return (
-    <View>
+    <>
       <NavBar
         currentTab={currentTab}
         onSwitchTab={(tabName) => {
@@ -44,7 +44,7 @@ export default () => {
         />
       )}
       {currentTab === 'new' && <New />}
-    </View>
+    </>
   );
 };
 const Style = {};

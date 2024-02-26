@@ -23,12 +23,11 @@ export default ({ buttons }) => {
   return (
     <View
       style={{
-        padding: '10px',
+        margin: 8,
+        padding: 5,
         marginTop: '8px',
         marginBottom: '20px',
-        marginLeft: '18rpx',
-        marginRight: '18rpx',
-        borderRadius: '15rpx',
+        borderRadius: 5,
         background: '#dcdadacf',
       }}
     >

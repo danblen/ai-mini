@@ -1,16 +1,21 @@
-import { Image, View, Text } from '@tarojs/components';
+import { Image, Text, View } from '@tarojs/components';
 import React from 'react';
 import compareIcon from '../../static/image/login/bg_login.png';
-import ImageList from '../discover/Recommend/ImageList';
-import Taro, { useState, useEffect } from '@tarojs/taro';
+import SingleColumnImageList from './SingleColumnImageList';
 const PostNodePages = '/pages/album/postNode';
 
 export default ({ imageListLeft, imageListRight, curTagPage }) => {
   return (
-    <View style={{ display: 'flex', justifyContent: 'center' }}>
+    <View
+      style={{
+        display: 'flex',
+        justifyContent: 'center',
+        width: '100%',
+      }}
+    >
       <View
         style={{
-          width: '100%',
+          width: '96%',
           display: 'flex',
           justifyContent: 'space-between',
         }}
@@ -73,12 +78,12 @@ export default ({ imageListLeft, imageListRight, curTagPage }) => {
                 发布模板
               </Text>
             </View>
-            <ImageList imageUrls={imageListLeft} />
+            <SingleColumnImageList imageUrls={imageListLeft} />
           </View>
         </View>
         <View
           style={{
-            width: '50%',
+            width: '49%',
           }}
         >
           <View
@@ -88,7 +93,7 @@ export default ({ imageListLeft, imageListRight, curTagPage }) => {
               borderRadius: 5,
             }}
           >
-            <ImageList imageUrls={imageListRight} />
+            <SingleColumnImageList imageUrls={imageListRight} />
           </View>
         </View>
       </View>
