@@ -27,69 +27,72 @@ export default ({ imageUrls }) => {
           const randomHeatValue = Math.floor(Math.random() * 500) + 1;
 
           return (
-            <View key={index} className="" style={Styles.imageWrap}>
-              <Image
-                style={Styles.image}
-                mode="aspectFill"
-                lazyLoad={true}
-                className=" "
-                onClick={() => {
-                  navigateTo({
-                    url:
-                      '/pages/faceswap/index?imageUrl=' +
-                      src +
-                      '&momentId=' +
-                      image.momentId,
-                  });
-                }}
-                src={src}
-              ></Image>
-
-              {/* Displaying file name dynamically */}
-              <Text className="ellipsis" style={Styles.text}>
-                {image.momentTitle}
-              </Text>
-              <View
-                style={{
-                  display: 'flex',
-                  marginBottom: '20px',
-                  alignItems: 'center',
-                }}
-              >
+            <View>
+              <View key={index} className="" style={Styles.imageWrap}>
                 <Image
+                  style={Styles.image}
                   mode="aspectFill"
-                  src={image.userHeadPic}
-                  style={{
-                    width: '30px', // 调整为适当的宽度
-                    height: '30px', // 调整为适当的高度
-                    borderRadius: '50%', // 设置为圆形
+                  lazyLoad={true}
+                  className=" "
+                  onClick={() => {
+                    navigateTo({
+                      url:
+                        '/pages/faceswap/index?imageUrl=' +
+                        src +
+                        '&momentId=' +
+                        image.momentId,
+                    });
                   }}
-                />
-                <Text
-                  className="ellipsis"
-                  style={{
-                    flex: 1,
-                    marginLeft: '10px',
-                    marginRight: '5px',
-                    marginBottom: '5px',
-                    overflow: 'hidden',
-                    display: '-webkit-box',
-                    WebkitBoxOrient: 'vertical',
-                    WebkitLineClamp: 1, // 控制显示行数
-                    maxWidth: '21%',
-                    color: '#9c9494',
-                  }}
-                >
-                  {image.userName}
+                  src={src}
+                ></Image>
+
+                {/* Displaying file name dynamically */}
+                <Text className="ellipsis" style={Styles.text}>
+                  {image.momentTitle}
                 </Text>
+              </View>
+              <View>
                 <View
-                  className="heat-info"
                   style={{
-                    borderRadius: '10%',
-                    backgroundColor: 'rgba(2, 0, 0, 0.08)',
-                    width: '68px',
+                    display: 'flex',
+                    marginBottom: '20px',
+                    alignItems: 'center',
                   }}
                 >
+                  <Image
+                    mode="aspectFill"
+                    src={image.userHeadPic}
+                    style={{
+                      width: '30px', // 调整为适当的宽度
+                      height: '30px', // 调整为适当的高度
+                      borderRadius: '50%', // 设置为圆形
+                    }}
+                  />
+                  <View
+                    className="heat-info"
+                    style={{
+                      borderRadius: '10%',
+                      backgroundColor: 'rgba(2, 0, 0, 0.08)',
+                      width: '100px',
+                    }}
+                  >
+                    <Text
+                      style={{
+                        flex: 1,
+                        marginLeft: '10px',
+                        marginRight: '5px',
+                        marginBottom: '5px',
+                        overflow: 'hidden',
+                        display: '-webkit-box',
+                        WebkitBoxOrient: 'vertical',
+                        WebkitLineClamp: 1, // 控制显示行数
+                        // maxWidth: '95px',
+                        color: '#9c9494',
+                      }}
+                    >
+                      {image.userName}
+                    </Text>
+                  </View>
                   <AtIcon value="eye" size="20" color="#9c9494"></AtIcon>
                   <Text
                     style={{
@@ -145,6 +148,6 @@ const Styles = {
     WebkitBoxOrient: 'vertical',
     WebkitLineClamp: 2, // 控制显示行数
     color: '#000000',
-    maxWidth: '50%',
+    // maxWidth: '50%',
   },
 };
