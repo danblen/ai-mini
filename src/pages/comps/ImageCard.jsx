@@ -13,7 +13,7 @@ export default ({ image }) => {
           className=" "
           onClick={() => {
             navigateTo({
-              url: url + '?imageUrl=' + src + '&momentId=' + image.momentId,
+              url: url + '?imageUrl=' + image.momentPics + '&momentId=' + image.momentId,
             });
           }}
           src={image.momentPics}
