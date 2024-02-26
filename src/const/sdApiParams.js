@@ -53,16 +53,16 @@ export const swap_face_and_add_detail_data = {
   userId: '123456',
   init_images: [], // Original image address
   denoising_strength: 0, // Range 0-1, smaller value closer to original image. Larger value more likely to let imagination fly
-  prompt: '',
-  negative_prompt: '',
+  prompt: '<lora:pytorch_lora_weights:1>',
+  negative_prompt: 'EasyNegative',
   seed: -1, // Initial seed
   batch_size: 1, // How many images generated each time
   n_iter: 1, // number of iterations
-  steps: 1, // Number of runs, this value can be fine tuned, converging when too high, max 150 in webui, maybe can go higher here?
+  steps: 5, // Number of runs, this value can be fine tuned, converging when too high, max 150 in webui, maybe can go higher here?
   cfg_scale: 1, // Influence of prompt text on image, usually 5-15, max 30 in webui, can fine tune
   restore_faces: false, // Whether to correct faces, for 3D, test later if open or not. Suggest false for now
-  sampler_name: 'DPM++ 2M Karras',
-  sampler_index: 'DPM++ 2M Karras', // or "DPM++ 2M Karras"
+  sampler_name: 'Euler a',
+  sampler_index: 'Euler a', // or "DPM++ 2M Karras"
   override_settings: {
     sd_model_checkpoint: 'majicmixRealistic_v6.safetensors',
   },
@@ -91,8 +91,8 @@ export const swap_face_and_add_detail_data = {
         true,
         {
           ad_model: 'mediapipe_face_full',
-          ad_prompt: '<lora:more_details:1>, <lora:pytorch_lora_weights:1>',
-          ad_negative_prompt: 'EasyNegative',
+          ad_prompt: '',
+          ad_negative_prompt: '',
           ad_confidence: 0.3,
           ad_mask_k_largest: 0,
           ad_mask_min_ratio: 0.0,
@@ -104,16 +104,16 @@ export const swap_face_and_add_detail_data = {
           ad_mask_blur: 4,
           ad_denoising_strength: 0.4, //增加的细节幅度，最大为1
           ad_inpaint_only_masked: true,
-          ad_inpaint_only_masked_padding: 0,
+          ad_inpaint_only_masked_padding: 32,
           ad_use_inpaint_width_height: false,
           ad_inpaint_width: 512,
           ad_inpaint_height: 512,
-          ad_use_steps: true,
+          ad_use_steps: false,
           ad_steps: 5,
-          ad_use_cfg_scale: true,
+          ad_use_cfg_scale: false,
           ad_cfg_scale: 1.5,
-          ad_use_sampler: true,
-          ad_sampler: 'DPM++ 2M Karras',
+          ad_use_sampler: false,
+          ad_sampler: 'Euler a',
           ad_use_noise_multiplier: false,
           ad_noise_multiplier: 1.0,
           ad_use_clip_skip: false,

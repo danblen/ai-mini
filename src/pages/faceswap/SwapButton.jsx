@@ -72,7 +72,6 @@ export default ({
     if (imageUrl && selectedImageUrl) {
       try {
         const storageUserInfo = getStorageSync('userInfo');
-        console.log('stor', storageUserInfo);
         if (storageUserInfo === null || !storageUserInfo.isLogin) {
           setIsOpened(true);
           return;
