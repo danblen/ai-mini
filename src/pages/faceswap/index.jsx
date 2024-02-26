@@ -53,7 +53,11 @@ export default () => {
   };
 
   const handleOptionSelect = (option) => {
+    const storageUserInfo = Taro.getStorageSync('userInfo');
     setSelectedOption(option); // 设置选中的选项
+    storageUserInfo.swapMode = option; // 你可以根据需要设置默认值
+    // 保存更新后的 storageUserInfo
+    Taro.setStorageSync('userInfo', storageUserInfo);
     setShowOptions(false);
     if (option === '快速模式') {
       setFaceSwapParam(sdFaceSwapParam);
@@ -62,6 +66,31 @@ export default () => {
     }
   };
   useEffect(() => {
+    const storageUserInfo = Taro.getStorageSync('userInfo');
+
+    console.log(storageUserInfo);
+    if (storageUserInfo) {
+      // 检查 swapMode 是否存在
+      if (!storageUserInfo.hasOwnProperty('swapMode')) {
+        // 如果 swapMode 不存在，则添加
+        storageUserInfo.swapMode = '快速模式'; // 你可以根据需要设置默认值
+        // 保存更新后的 storageUserInfo
+        Taro.setStorageSync('userInfo', storageUserInfo);
+      } else {
+        // 如果 swapMode 存在，则执行相应操作
+        setSelectedOption(storageUserInfo.swapMode);
+        if (storageUserInfo.swapMode === '快速模式') {
+          setFaceSwapParam(sdFaceSwapParam);
+        } else {
+          setFaceSwapParam(sdFaceSwapAddDetailParam);
+        }
+      }
+    }
+    Taro.getStorageSync('userInfo', {
+      isLogin: false,
+      data: {},
+    });
+
     const down = async () => {
       const tempFilePath = await downloadImages(params.imageUrl);
       if (!ignore) setImageUrl(tempFilePath);
