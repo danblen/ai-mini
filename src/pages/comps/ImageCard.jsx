@@ -103,6 +103,5 @@ const Styles = {
     WebkitBoxOrient: 'vertical',
     WebkitLineClamp: 2, // 控制显示行数
     color: '#000000',
-    maxWidth: '50%',
   },
 };
