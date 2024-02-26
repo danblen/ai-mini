@@ -12,7 +12,6 @@ import LoginView from '../comps/LoginView';
 import CheckIn from './CheckIn';
 
 export default () => {
-  const [loading, setLoading] = useState(false);
   const [isOpened, setIsOpened] = useState(false);
   // 用户信息数据结构，和storage中存储的一致
   const [userInfo, setUserInfo] = useState({
@@ -137,7 +136,6 @@ export default () => {
                   fontSize: '40rpx',
                   animation: 'swap 1s infinite',
                 }}
-                loading={loading}
                 onClick={() => setIsOpened(true)}
               >
                 微信一键登录
@@ -281,7 +279,7 @@ export default () => {
         <LoginView
           onConfirmLogin={async () => {
             const res = await wechatLogin();
-            if (res) {
+            if (res?.data) {
               setUserInfo({
                 isLogin: true,
                 data: res.data,
