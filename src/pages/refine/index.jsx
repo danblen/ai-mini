@@ -4,15 +4,19 @@
 import Taro, { useRouter } from '@tarojs/taro';
 import React, { useCallback, useState } from 'react';
 
-import { Button, Canvas, Image, View } from '@tarojs/components';
-import { AtIcon } from 'taro-ui';
+import { Canvas, Image, View } from '@tarojs/components';
+import { AtFloatLayout } from 'taro-ui';
 import { faceSwap } from '../../api';
+import { URL_STATIC } from '../../api/config.js';
+import { getStorageSync } from '../../base/global.js';
 import { getTaskImage } from '../../common/getTaskImage.js';
 import { mask_data, scale_data } from '../../const/sdApiParams.js';
-import defaultPic from '../../static/image/my/icons8-上传-64.png';
+import compareIcon from '../../static/image/my/icons8-compare-64.png';
 import { wxPathToBase64 } from '../../utils/imageTools';
 import ImagePicker from '../comps/ImagePicker.jsx';
+import IncreaseResolution from './IncreaseResolution.jsx';
 import NavBar from './NavBar.jsx';
+import TopButtons from './TopButtons.jsx';
 
 export default ({}) => {
   const router = useRouter();
@@ -23,8 +27,15 @@ export default ({}) => {
     screenWidth: '',
     screenHeight: '',
   });
-  const [uploadedFiles, setUploadedFiles] = useState([]);
+
+  const [uploadedImages, setUploadedImages] = useState([]);
+  const [editHistoryImagesArray, setEditHistoryImagesArray] = useState([]);
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const [curImageIndex, setCurImageIndex] = useState(0);
+  const [isShowOriginImage, setIsShowOriginImage] = useState(true);
+
+  const [isOpened, setIsOpened] = useState(false);
+
   const [ouputImage, setOuputImage] = useState([]);
   const [srcImage, setSrcImage] = useState(null);
   const [currentTab, setCurrentTab] = useState(0);
@@ -145,7 +156,11 @@ export default ({}) => {
   };
 
   const sdWith2KParams = async () => {
-    if (hasLoadSrcImage) {
+    if (uploadedImages[selectedIndex]) {
+      Taro.showLoading({
+        title: '预计5秒,加载中...',
+        mask: true,
+      });
       const data = scale_data;
       const scaleFactor = 1.5; //放大倍数
       // ad_denoising_strength:Range[0-1],
@@ -156,7 +171,7 @@ export default ({}) => {
   };
 
   const sdWith4KParams = () => {
-    if (hasLoadSrcImage) {
+    if (uploadedImages[selectedIndex]) {
       const data = scale_data;
       const scaleFactor = 2; //放大倍数
       // ad_denoising_strength:Range[0-1],
@@ -200,25 +215,43 @@ export default ({}) => {
   };
 
   const onUpdateTaskImages = async (requestId) => {
-    const newImage = {
-      src: '',
-      status: 'pending',
-      requestId,
-    };
-    setOuputImage((prevImages) => [...prevImages, newImage]);
     const res = await getTaskImage(requestId);
-    setOuputImage((prevImages) =>
-      prevImages.map((image) =>
-        image.requestId === requestId
-          ? {
-              ...image,
-              src: 'data:image/png;base64,' + res.data.result.images[0],
-              status: 'SUCCESS',
-            }
-          : image
-      )
-    );
-    Taro.hideLoading();
+    setEditHistoryImagesArray((prevArray) => {
+      const newEditArray = prevArray.map((row, rowIndex) => {
+        if (rowIndex === selectedIndex) {
+          if (curImageIndex === row.length - 1) {
+            row.push({
+              url: URL_STATIC + res.data.imageUrl,
+            });
+          } else {
+            row.slice(0, curImageIndex + 1).map((item, columnIndex) => {
+              return columnIndex <= curImageIndex
+                ? item
+                : { url: URL_STATIC + res.data.imageUrl };
+            });
+          }
+        }
+        return row;
+      });
+
+      setCurImageIndex(curImageIndex + 1);
+      Taro.hideLoading();
+
+      return newEditArray;
+    });
+
+    // setOuputImage((prevImages) =>
+    //   prevImages.map((image) =>
+    //     image.requestId === requestId
+    //       ? {
+    //           ...image,
+    //           src: 'data:image/png;base64,' + res.data.result.images[0],
+    //           status: 'SUCCESS',
+    //         }
+    //       : image
+    //   )
+    // );
+    // Taro.hideLoading();
   };
 
   const downloadImage = (url) => {
@@ -293,7 +326,6 @@ export default ({}) => {
         info.width,
         info.height
       );
-      console.log('canvasToTempFile success');
 
       // 将canvas转为base64用于请求server
       let canvasBase64 = await readFileAsBase64(canvasTempFile);
@@ -301,7 +333,6 @@ export default ({}) => {
       while (canvasBase64Pad.length % 4 !== 0) {
         canvasBase64Pad += '=';
       }
-      console.log('canvasBase64 success');
 
       const data = mask_data;
       data.mask = canvasBase64Pad;
@@ -313,8 +344,7 @@ export default ({}) => {
 
   const requestSdTransform = async (data) => {
     // 将原图转为base64
-    const srcBase64 = await wxPathToBase64(srcImage);
-    console.log('srcBase64 success');
+    const srcBase64 = await wxPathToBase64(uploadedImages[selectedIndex].url);
 
     const storageUserInfo = getStorageSync('userInfo');
 
@@ -335,174 +365,160 @@ export default ({}) => {
       }
     }
   };
-  const handleUploadOptionClick = async (index) => {
-    // 打开本地相册选择图片
-    if (index === 0) {
-      try {
-        const result = await Taro.chooseImage({
-          count: 1, // 可选择的图片数量，这里设置为 1
-          sizeType: ['compressed'], // 压缩图片
-          sourceType: ['album'], // 从相册选择
-        });
 
-        const tempFilePath = result.tempFilePaths[0];
-
-        setSrcImage(tempFilePath);
-        if (currentTab === 1) {
-          toggleCollapse();
-        }
-        setHasLoadSrcImage(true);
-      } catch (error) {
-        // console.error('Failed to choose image:', error);
-      }
-    }
-  };
-
-  const uploadSrcImage = () => {
-    wx.showActionSheet({
-      itemList: ['选择图片'],
-      success: (res) => {
-        console.log('res:', res);
-        if (res.tapIndex !== undefined && !res.cancel) {
-          handleUploadOptionClick(res.tapIndex);
-        }
-      },
-      fail: (error) => {
-        setHasLoadSrcImage(false);
-      },
-    });
-  };
   return (
-    <View>
+    <View
+      style={{
+        background: '#eee',
+      }}
+    >
       <NavBar></NavBar>
-      <View style={{ top: '50px', position: 'relative' }}>
-        {hasLoadSrcImage && (
-          <AtIcon
-            value="close"
-            size="30"
-            color="#000"
-            onClick={() => {
-              setSrcImage(null);
-              setOuputImage([]);
-              setHasLoadSrcImage(false);
-            }}
-          />
-        )}
-        {ouputImage &&
-          ouputImage.length > 0 &&
-          ouputImage[ouputImage.length - 1].status === 'SUCCESS' && (
-            <AtIcon
-              value="download"
-              size="30"
-              color="#000"
-              onClick={() => {
-                saveOutputImageToAlbum(ouputImage[ouputImage.length - 1].src);
-              }}
-            />
-          )}
-      </View>
-      <View
-      // style={{ margin: '30px', marginTop: '100px', position: 'relative' }}
-      >
-        <ImagePicker
-          onFilesChange={(images) => setUploadedFiles(images)}
-          onSelectImage={(index) => {
-            setSelectedIndex(index);
-          }}
-        />
-        <Image
-          mode="widthFix"
-          style={{ width: '100%', height: '100%', verticalAlign: 'middle' }}
-          src={uploadedFiles[selectedIndex]?.url}
-          onClick={() => {}}
-        />
 
-        {hasLoadSrcImage && (
-          <Canvas
-            type="2d"
-            onTouchStart={touchStart}
-            onTouchMove={move}
-            onTouchEnd={touchEnd}
-            style={{
-              width: '100%',
-              height: '100%',
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              zIndex: 2,
-            }}
-            canvasId="canvas123"
-            id="canvas123"
-          ></Canvas>
-        )}
-      </View>
+      <ImagePicker
+        onFilesChange={(updatedImages) => {
+          setUploadedImages(updatedImages);
+          editHistoryImagesArray.filter((images) => images[0].find);
+          setEditHistoryImagesArray((imagesArray) => {
+            imagesArray = imagesArray.filter((images) =>
+              updatedImages.some((image) => image.id === images[0].id)
+            );
+            if (
+              !imagesArray.some(
+                (images) =>
+                  images[0].id === updatedImages[updatedImages.length - 1].id
+              )
+            ) {
+              imagesArray.push(updatedImages[updatedImages.length - 1]);
+            }
+            return imagesArray;
+          });
+        }}
+        onSelectImage={(index) => {
+          setSelectedIndex(index);
+          setEditHistoryImagesArray(uploadedImages.map((item) => [item]));
+          if (editHistoryImagesArray.length) {
+            setCurImageIndex(editHistoryImagesArray[index].length - 1);
+          }
+        }}
+      />
+
+      <TopButtons
+        onBack={() => {
+          if (curImageIndex > 0) {
+            setCurImageIndex(curImageIndex - 1);
+          }
+        }}
+        onForward={() => {
+          if (
+            curImageIndex <
+            editHistoryImagesArray[selectedIndex].length - 1
+          ) {
+            setCurImageIndex(curImageIndex + 1);
+          }
+        }}
+        onSave={() => {
+          saveOutputImageToAlbum(ouputImage[ouputImage.length - 1].src);
+        }}
+      />
+      <Image
+        src={compareIcon}
+        style={{
+          position: 'absolute',
+          right: 10,
+          top: 160,
+          width: '50rpx',
+          height: '50rpx',
+        }}
+        onClick={() => {}}
+        onTouchStart={() => setIsShowOriginImage(true)}
+        onTouchEnd={() => setIsShowOriginImage(false)}
+      />
+      {isShowOriginImage && (
+        <View
+          style={{
+            position: 'absolute',
+            left: 10,
+            top: 160,
+          }}
+        >
+          原图
+        </View>
+      )}
+      <Image
+        mode="widthFix"
+        style={{
+          width: '100%',
+          height: '100%',
+          verticalAlign: 'middle',
+          transition: 'opacity 0.5s ease', // 添加淡入淡出的动画效果
+          opacity: 1,
+        }}
+        src={
+          isShowOriginImage
+            ? editHistoryImagesArray[selectedIndex]?.[0]?.url
+            : editHistoryImagesArray[selectedIndex]?.[curImageIndex]?.url
+        }
+      />
+
+      {hasLoadSrcImage && (
+        <Canvas
+          type="2d"
+          onTouchStart={touchStart}
+          onTouchMove={move}
+          onTouchEnd={touchEnd}
+          style={{
+            width: '100%',
+            height: '100%',
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            zIndex: 2,
+          }}
+          canvasId="canvas123"
+          id="canvas123"
+        ></Canvas>
+      )}
 
       <View>
-        {currentTab === 0 && (
-          <View>
-            <Button
-              onClick={async () => {
-                sdWith2KParams();
-              }}
-            >
-              高清画质
-            </Button>
-            <Button
-              onClick={async () => {
-                sdWith4KParams();
-              }}
-            >
-              超清画质
-            </Button>
-          </View>
-        )}
-        {currentTab === 1 && (
-          <View>
-            <Button
+        <AtFloatLayout
+          isOpened={isOpened}
+          onClose={() => {
+            setIsOpened(false);
+          }}
+        >
+          {currentTab === 0 && (
+            <IncreaseResolution
+              sdWith2KParams={sdWith2KParams}
+              sdWith4KParams={sdWith4KParams}
+            />
+          )}
+          {/* {currentTab === 1 && (
+            <Repaint
               onClick={async () => {
                 console.log(lineWidth);
                 if (lineWidth >= 40) setlineWidth(lineWidth);
                 else setlineWidth(lineWidth + 5);
               }}
-            >
-              笔画+
-            </Button>
-            <Button
-              onClick={async () => {
-                if (lineWidth <= 5) setlineWidth(5);
-                else setlineWidth(lineWidth - 5);
-              }}
-            >
-              笔画-
-            </Button>
-            <Button
-              onClick={async () => {
-                initCanvas();
-              }}
-            >
-              清屏
-            </Button>
-            <Button
-              onClick={async () => {
-                setIsEraserActivated(!isEraserActivated);
-              }}
-            >
-              {isEraserActivated ? '取消橡皮擦' : '橡皮擦'}
-            </Button>
-            <Button onClick={async () => {}}>比较</Button>
-            <Button
-              onClick={async () => {
-                inpaitUseSD();
-              }}
-            >
-              开始重绘
-            </Button>
-          </View>
-        )}
+              // onClick={async () => {
+              //   if (lineWidth <= 5) setlineWidth(5);
+              //   else setlineWidth(lineWidth - 5);
+              // }}
+              // onClick={async () => {
+              //   initCanvas();
+              // }}
+              // onClick={async () => {
+              //   setIsEraserActivated(!isEraserActivated);
+              // }}
+              // onClick={async () => {
+              //   inpaitUseSD();
+              // }}
+            />
+          )} */}
+        </AtFloatLayout>
         <View
           style={{
             position: 'absolute',
-            bottom: 10,
+            bottom: 30,
             display: 'flex',
           }}
         >
@@ -511,10 +527,11 @@ export default ({}) => {
               marginLeft: 20,
             }}
             onClick={() => {
+              setIsOpened(true);
               setCurrentTab(0);
             }}
           >
-            老旧照片变高清
+            清晰化
           </View>
           <View
             style={{
@@ -522,6 +539,7 @@ export default ({}) => {
             }}
             onClick={() => {
               setCurrentTab(1);
+              setIsOpened(true);
             }}
           >
             局部重绘
