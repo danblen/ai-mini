@@ -1,5 +1,4 @@
 import { Image, Text, View } from '@tarojs/components';
-import Taro from '@tarojs/taro';
 
 export default ({ buttons }) => {
   const handleButtonClick = (pagePath, params) => {
@@ -23,19 +22,17 @@ export default ({ buttons }) => {
   return (
     <View
       style={{
-        margin: 8,
-        padding: 5,
-        marginTop: '8px',
-        marginBottom: '20px',
+        paddingTop: 10,
+        paddingBottom: 10,
         borderRadius: 5,
         background: '#dcdadacf',
+        width: '96%',
       }}
     >
-      <View style={{ display: 'flex', justifyContent: 'space-between' }}>
+      <View style={{ display: 'flex', justifyContent: 'space-around' }}>
         {buttons.map((button, index) => (
           <View
             key={index}
-            className="button-wrapper"
             onClick={() => handleButtonClick(button.pagePath, button.params)}
           >
             <View
@@ -43,19 +40,20 @@ export default ({ buttons }) => {
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
-                flex: 1,
               }}
             >
               <Image
+                style={{
+                  width: 40,
+                  height: 40,
+                }}
                 src={button.imageUrl}
-                style={{ width: '50px', height: '50px' }}
-                className="button-image"
               />
               <Text
                 style={{
                   textAlign: 'center',
                   marginTop: '5px',
-                  flex: 1,
+                  fontSize: 12,
                 }}
               >
                 {button.text}

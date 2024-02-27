@@ -122,7 +122,7 @@ const ImageList = ({ images, loadMore, onFetchData }) => {
     <View style={{ marginTop: 50 }}>
       <ScrollView
         scrollY
-        style={{ height: '100vh' }}
+        // style={{ height: '100vh' }}
         onScrollToLower={loadMore}
       >
         {showImages.length === 0 ? (
@@ -131,7 +131,7 @@ const ImageList = ({ images, loadMore, onFetchData }) => {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              height: '100vh',
+              // height: '100vh',
             }}
           >
             <Text style={{ textAlign: 'center' }}>

@@ -84,13 +84,19 @@ export default () => {
   }, [currentNoticeIndex]);
   return (
     <>
-
-        <TopBanner banners={allImages?.bannerImage?.['首页日更']} />
-        <View style={{ marginTop: '5px' }}>
-          <AtNoticebar icon="volume-plus">
-            {notices[currentNoticeIndex]}
-          </AtNoticebar>
-        </View>
+      <TopBanner banners={allImages?.bannerImage?.['首页日更']} />
+      <View style={{ marginTop: '5px' }}>
+        <AtNoticebar icon="volume-plus">
+          {notices[currentNoticeIndex]}
+        </AtNoticebar>
+      </View>
+      <View
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          marginTop: 10,
+        }}
+      >
         <ButtonsBox
           buttons={[
             {
@@ -138,35 +144,36 @@ export default () => {
             },
           ]}
         />
+      </View>
 
+      <View
+        style={{
+          marginTop: '20px',
+          paddingTop: 10,
+          marginBottom: '20px',
+          marginLeft: '18rpx',
+          marginRight: '18rpx',
+          borderRadius: '8rpx',
+          background: '#dcdadacf',
+        }}
+      >
         <View
           style={{
-            padding: 5,
-            marginTop: '20px',
-            marginBottom: '20px',
-            marginLeft: '10rpx',
-            marginRight: '10rpx',
-            borderRadius: '8rpx',
-            background: '#dcdadacf',
+            fontSize: '36rpx',
+            display: 'flex',
+            justifyContent: 'space-between',
           }}
         >
-          <View
+          <Text
             style={{
-              fontSize: '36rpx',
-              display: 'flex',
-              justifyContent: 'space-between',
+              marginLeft: '10px',
+              fontSize: '18px',
+              fontWeight: 'bold',
             }}
           >
-            <Text
-              style={{
-                marginLeft: '10px',
-                fontSize: '18px',
-                fontWeight: 'bold',
-              }}
-            >
-              写真集
-            </Text>
-            {/* <View
+            写真集
+          </Text>
+          {/* <View
               style={{
                 display: 'flex',
                 color: 'grey',
@@ -181,27 +188,27 @@ export default () => {
                 }}
               ></View>
             </View> */}
-          </View>
-          <AlbumsCard albums={allImages?.albums} />
         </View>
+        <AlbumsCard albums={allImages?.albums} />
+      </View>
 
-        <PopularTemplate activityTagsImage={allImages?.activityTagsImage} />
+      <PopularTemplate activityTagsImage={allImages?.activityTagsImage} />
 
-        <View
-          style={{
-            fontSize: '36rpx',
-            margin: '40rpx 18rpx 18rpx 18rpx ',
-            display: 'flex',
-            justifyContent: 'space-between',
-          }}
-        >
-          {/* <Text style={{}}>最近热门</Text> */}
-        </View>
-        <WaterfallList
-          imageListLeft={leftHalf || []}
-          imageListRight={rightHalf || []}
-          LeftTop={<CustomTop curTagPage="Hot" />}
-        />
+      {/* <View
+        style={{
+          fontSize: '36rpx',
+          margin: '40rpx 18rpx 18rpx 18rpx ',
+          display: 'flex',
+          justifyContent: 'space-between',
+        }}
+      >
+        <Text style={{}}>最近热门</Text>
+      </View> */}
+      <WaterfallList
+        imageListLeft={leftHalf || []}
+        imageListRight={rightHalf || []}
+        LeftTop={<CustomTop curTagPage="Hot" />}
+      />
     </>
   );
 };

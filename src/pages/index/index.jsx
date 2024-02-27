@@ -11,7 +11,7 @@ import New from './New';
 import Recommend from './Recommend';
 
 export default () => {
-  const [currentTab, setCurrentTab] = useState('recommend');
+  const [currentTab, setCurrentTab] = useState('hot');
   // 获取推荐tab页的图片，需要优化
   let [allImages, setAllImages] = useState({ albums: {}, tagsImage: {} });
   const getAllImages = async () => {
