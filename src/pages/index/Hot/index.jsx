@@ -13,6 +13,7 @@ import TopBanner from '../TopBanner.jsx';
 import WaterfallList from '../../comps/WaterfallList.jsx';
 import Taro from '@tarojs/taro';
 import { AtNoticebar, AtIcon } from 'taro-ui';
+import CustomTop from '../../comps/CustomTop.jsx';
 
 let firstGetImages = 0;
 export default () => {
@@ -204,7 +205,7 @@ export default () => {
         <WaterfallList
           imageListLeft={leftHalf || []}
           imageListRight={rightHalf || []}
-          curTagPage="Hot"
+          LeftTop={<CustomTop curTagPage="Hot" />}
         />
       </View>
     </>

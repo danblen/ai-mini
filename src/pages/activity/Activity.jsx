@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { api } from '../../api/index.js';
 import WaterfallList from '../comps/WaterfallList.jsx';
 import CustomNavBar from '../index/CustomNavBar.jsx';
+import CustomTop from '../comps/CustomTop.jsx';
 
 const ActivityPage = () => {
   const { title, description } = Taro.getCurrentInstance().router.params;
@@ -72,7 +73,7 @@ const ActivityPage = () => {
           <WaterfallList
             imageListLeft={leftHalf || []}
             imageListRight={rightHalf || []}
-            curTagPage={decodedTitle}
+            LeftTop={<CustomTop curTagPage={decodedTitle} />}
           />
           {/* <TabsImageList tags_image={allImages?.activityTagsImage} /> */}
         </View>
