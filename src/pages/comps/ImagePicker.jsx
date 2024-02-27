@@ -86,12 +86,17 @@ export default function ImagePicker({ onFilesChange, onSelectImage }) {
       return file;
     }
   };
-
+  function generateUniqueId() {
+    const timestamp = Date.now();
+    const randomString = Math.random().toString(36).substring(2, 8);
+    return `${timestamp}-${randomString}`;
+  }
   const handleImageChange = async (newFiles) => {
     try {
       let curIndex = newFiles.length - 1;
       const compressedFile = await compressInputImage(newFiles[curIndex]);
       const updatedFiles = newFiles.map((file, index) => {
+        file.id = file.id ?? generateUniqueId();
         if (index === curIndex) {
           return {
             ...file,

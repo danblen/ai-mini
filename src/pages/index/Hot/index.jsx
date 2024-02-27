@@ -150,11 +150,11 @@ export default () => {
         style={{
           marginTop: '20px',
           paddingTop: 10,
-          marginBottom: '20px',
           marginLeft: '18rpx',
           marginRight: '18rpx',
           borderRadius: '8rpx',
           background: '#dcdadacf',
+          // background:'#fff'
         }}
       >
         <View
