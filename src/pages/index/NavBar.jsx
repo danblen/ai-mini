@@ -10,40 +10,45 @@ export default ({ currentTab, onSwitchTab }) => {
     <View
       style={{
         position: 'fixed',
-        top: '0rpx',
-        height: '100rpx',
-        paddingTop: '80rpx',
-        zIndex: '10',
+        top: 0,
+        height: 90,
         width: '100%',
+        zIndex: '10',
         backgroundColor: 'white',
+        display: 'flex',
+        alignItems: 'flex-end',
       }}
     >
       <View
         style={{
           display: 'flex',
+          alignItems: 'center',
+          height: 50,
+          width: '100%',
         }}
       >
+        <View style={{ flex: 1 }}>
+          <View
+            className="at-icon at-icon-menu"
+            style={{
+              fontSize: '50rpx',
+              paddingLeft: 10,
+            }}
+            onClick={() => {
+              setShowDrawer(true);
+            }}
+          ></View>
+        </View>
         <View
-          className="at-icon at-icon-menu"
           style={{
-            marginLeft: '20rpx',
-            fontSize: '50rpx',
-            color: 'black',
-            lineHeight: '100rpx',
-          }}
-          onClick={() => {
-            setShowDrawer(true);
-          }}
-        ></View>
-        <View
-          style={{
-            marginLeft: '180rpx',
-            lineHeight: '100rpx',
+            width: '40%',
+            display: 'flex',
+            justifyContent: 'space-around',
+            fontSize: '30rpx',
           }}
         >
           <Text
             style={{
-              fontSize: '30rpx',
               fontWeight: currentTab === 'hot' ? 'bold' : 'normal',
             }}
             onClick={() => {
@@ -54,8 +59,6 @@ export default ({ currentTab, onSwitchTab }) => {
           </Text>
           <Text
             style={{
-              fontSize: '30rpx',
-              marginLeft: '40rpx',
               fontWeight: currentTab === 'recommend' ? 'bold' : 'normal',
             }}
             onClick={() => {
@@ -66,8 +69,6 @@ export default ({ currentTab, onSwitchTab }) => {
           </Text>
           <Text
             style={{
-              fontSize: '30rpx',
-              marginLeft: '40rpx',
               fontWeight: currentTab === 'new' ? 'bold' : 'normal',
             }}
             onClick={() => {
@@ -77,14 +78,14 @@ export default ({ currentTab, onSwitchTab }) => {
             动态
           </Text>
         </View>
-
-        <LeftDrawer
-          showDrawer={showDrawer}
-          onClose={() => {
-            setShowDrawer(false);
-          }}
-        />
+        <View style={{ flex: 1 }}></View>
       </View>
+      <LeftDrawer
+        showDrawer={showDrawer}
+        onClose={() => {
+          setShowDrawer(false);
+        }}
+      />
     </View>
   );
 };

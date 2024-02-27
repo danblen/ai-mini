@@ -1,8 +1,7 @@
 import { ScrollView, Text, View } from '@tarojs/components';
-import React, { useEffect, useState, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { AtFloatLayout } from 'taro-ui';
 import ImageList from './ImageList';
-const HotPages = '/pages/index/Hot/index';
 
 export default ({ tags_image, onNavigateToHot }) => {
   const [imageUrlsMap, setImageUrlsMap] = useState({});
@@ -37,12 +36,13 @@ export default ({ tags_image, onNavigateToHot }) => {
     }
   };
   return (
-    <View style={Styles.container}>
+    <>
       <View
         style={{
           width: '100%',
-          padding: '20rpx',
           display: 'flex',
+          height: 40,
+          alignItems: 'center',
           position: 'fixed',
           backgroundColor: 'white',
           zIndex: '5',
@@ -51,21 +51,22 @@ export default ({ tags_image, onNavigateToHot }) => {
         <ScrollView
           scrollX
           style={{
-            width: '87%',
+            width: '90%',
             whiteSpace: 'nowrap',
+            boxSizing: 'border-box',
+            paddingLeft: 10,
           }}
         >
           {tabList?.map((tab) => (
             <View
               style={{
                 fontSize: '30rpx',
-                marginRight: '5rpx',
                 display: 'inline-block',
                 backgroundColor: current === tab.title ? '#59a2dc' : '#fff',
-                width: '100rpx',
-                borderRadius: '30rpx',
+                paddingLeft: 8,
+                paddingRight: 8,
+                borderRadius: 20,
                 lineHeight: '60rpx',
-                textAlign: 'center',
               }}
               onClick={() => handleTabClick(tab.title)}
             >
@@ -74,14 +75,14 @@ export default ({ tags_image, onNavigateToHot }) => {
           ))}
         </ScrollView>
         <View
-          className="at-icon at-icon-chevron-down"
           style={{
-            width: '9%',
-            textAlign: 'center',
-            lineHeight: '60rpx',
+            width: '10%',
             background: '#bbb5b58c',
             borderRadius: '90px',
+            textAlign: 'center',
+            lineHeight: '60rpx',
           }}
+          className="at-icon at-icon-chevron-down"
           onClick={() => {
             setShowDrawer(true);
           }}
@@ -89,7 +90,6 @@ export default ({ tags_image, onNavigateToHot }) => {
       </View>
 
       <View
-        style={{ paddingTop: '100rpx' }}
         onTouchStart={(e) => {
           startXRef.current = e.touches[0].clientX;
           startYRef.current = e.touches[0].clientY;
@@ -156,7 +156,7 @@ export default ({ tags_image, onNavigateToHot }) => {
           </View>
         ))}
       </AtFloatLayout>
-    </View>
+    </>
   );
 };
 
@@ -192,9 +192,3 @@ const Title = () => (
     </View>
   </>
 );
-const Styles = {
-  container: {
-    borderRadius: '10rpx',
-    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-  },
-};

@@ -51,7 +51,6 @@ export default ({ image }) => {
           />
         </View>
         <View
-          className="heat-info"
           style={{
             flex: 1,
             padding: 5,

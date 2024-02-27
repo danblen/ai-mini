@@ -11,7 +11,7 @@ import New from './New';
 import Recommend from './Recommend';
 
 export default () => {
-  const [currentTab, setCurrentTab] = useState('hot');
+  const [currentTab, setCurrentTab] = useState('recommend');
   // 获取推荐tab页的图片，需要优化
   let [allImages, setAllImages] = useState({ albums: {}, tagsImage: {} });
   const getAllImages = async () => {
@@ -35,15 +35,16 @@ export default () => {
           setCurrentTab(tabName);
         }}
       ></NavBar>
-
-      {currentTab === 'hot' && <Hot />}
-      {currentTab === 'recommend' && (
-        <Recommend
-          tags_image={allImages?.tagsImage}
-          onNavigateToHot={navigateToHot}
-        />
-      )}
-      {currentTab === 'new' && <New />}
+      <View style={{ marginTop: 90 }}>
+        {currentTab === 'hot' && <Hot />}
+        {currentTab === 'recommend' && (
+          <Recommend
+            tags_image={allImages?.tagsImage}
+            onNavigateToHot={navigateToHot}
+          />
+        )}
+        {currentTab === 'new' && <New />}
+      </View>
     </>
   );
 };

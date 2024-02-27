@@ -3,17 +3,16 @@
  */
 
 import { Text, View } from '@tarojs/components';
+import Taro from '@tarojs/taro';
 import React, { useEffect, useState } from 'react';
+import { AtNoticebar } from 'taro-ui';
 import { api, get_all_images } from '../../../api/index.js';
 import ButtonsBox from '../../comps/ButtonsBox.jsx';
+import CustomTop from '../../comps/CustomTop.jsx';
+import WaterfallList from '../../comps/WaterfallList.jsx';
 import AlbumsCard from '../AlbumsCard.jsx';
 import PopularTemplate from '../PopularTemplate.jsx';
-import NavBar from '../NavBar.jsx';
 import TopBanner from '../TopBanner.jsx';
-import WaterfallList from '../../comps/WaterfallList.jsx';
-import Taro from '@tarojs/taro';
-import { AtNoticebar, AtIcon } from 'taro-ui';
-import CustomTop from '../../comps/CustomTop.jsx';
 
 let firstGetImages = 0;
 export default () => {
@@ -85,13 +84,7 @@ export default () => {
   }, [currentNoticeIndex]);
   return (
     <>
-      {/* <NavBar></NavBar> */}
 
-      <View
-        style={{
-          marginTop: '180rpx',
-        }}
-      >
         <TopBanner banners={allImages?.bannerImage?.['首页日更']} />
         <View style={{ marginTop: '5px' }}>
           <AtNoticebar icon="volume-plus">
@@ -174,18 +167,20 @@ export default () => {
               写真集
             </Text>
             {/* <View
-          style={{
-            display: 'flex',
-            color: 'grey',
-            justifyContent: 'space-between',
-          }}>
-          <View style={{}}>更多</View>
-          <View
-            className="at-icon at-icon-chevron-right"
-            style={{
-              fontSize: '50rpx',
-            }}></View>
-        </View> */}
+              style={{
+                display: 'flex',
+                color: 'grey',
+                justifyContent: 'space-between',
+              }}
+            >
+              <View style={{}}>更多</View>
+              <View
+                className="at-icon at-icon-chevron-right"
+                style={{
+                  fontSize: '50rpx',
+                }}
+              ></View>
+            </View> */}
           </View>
           <AlbumsCard albums={allImages?.albums} />
         </View>
@@ -207,7 +202,6 @@ export default () => {
           imageListRight={rightHalf || []}
           LeftTop={<CustomTop curTagPage="Hot" />}
         />
-      </View>
     </>
   );
 };
