@@ -43,6 +43,7 @@ export default ({ tags_image, onNavigateToHot }) => {
           display: 'flex',
           height: 40,
           alignItems: 'center',
+          justifyContent: 'space-between',
           position: 'fixed',
           backgroundColor: 'white',
           zIndex: '5',
@@ -53,20 +54,19 @@ export default ({ tags_image, onNavigateToHot }) => {
           style={{
             width: '90%',
             whiteSpace: 'nowrap',
-            boxSizing: 'border-box',
-            paddingLeft: 10,
           }}
         >
           {tabList?.map((tab) => (
             <View
               style={{
-                fontSize: '30rpx',
+                fontSize: 12,
                 display: 'inline-block',
                 backgroundColor: current === tab.title ? '#59a2dc' : '#fff',
+                marginLeft: 8,
                 paddingLeft: 8,
                 paddingRight: 8,
                 borderRadius: 20,
-                lineHeight: '60rpx',
+                lineHeight: '50rpx',
               }}
               onClick={() => handleTabClick(tab.title)}
             >
@@ -74,13 +74,30 @@ export default ({ tags_image, onNavigateToHot }) => {
             </View>
           ))}
         </ScrollView>
+        {/* <View
+          style={{
+            // flex: 1,
+            width:20,
+            background: `linear-gradient(to left, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0))`,
+            opacity:1,
+            position: 'absolute',
+            right: 20,
+            // borderRadius: '90px',
+            // textAlign: 'center',
+            lineHeight: '60rpx',
+          }}
+          // className="at-icon at-icon-chevron-down"
+          onClick={() => {
+            setShowDrawer(true);
+          }}
+        ></View> */}
         <View
           style={{
             width: '10%',
             background: '#bbb5b58c',
             borderRadius: '90px',
             textAlign: 'center',
-            lineHeight: '60rpx',
+            lineHeight: '50rpx',
           }}
           className="at-icon at-icon-chevron-down"
           onClick={() => {
@@ -90,6 +107,9 @@ export default ({ tags_image, onNavigateToHot }) => {
       </View>
 
       <View
+        style={{
+          paddingTop: 50,
+        }}
         onTouchStart={(e) => {
           startXRef.current = e.touches[0].clientX;
           startYRef.current = e.touches[0].clientY;
