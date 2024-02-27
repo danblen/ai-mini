@@ -1,5 +1,5 @@
 import { getSwapQueueResult } from '../api/index.js';
-import Taro from '@tarojs/taro';
+import { getStorageSync } from '../base/global.js';
 
 let timers = {};
 export const getTaskImage = async (requestId) => {

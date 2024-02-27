@@ -5,6 +5,7 @@ import { faceSwap } from '../../api/index.js';
 import { data } from '../../const/sdApiParams.js';
 import { downloadImages, wxPathToBase64 } from '../../utils/imageTools.js';
 import { deepCopy } from '../../utils/object.js';
+import { getStorageSync } from '../../base/global.js';
 const SD_PARAMS = deepCopy(data);
 
 export default ({ albumUrls, selfUrl, onUpdateTaskImages }) => {

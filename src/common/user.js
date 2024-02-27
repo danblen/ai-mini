@@ -1,5 +1,6 @@
 import Taro from '@tarojs/taro';
 import { api } from '../api';
+import { getStorage, setStorage, setStorageSync } from '../base/global';
 
 export const wechatLogin = () =>
   new Promise((resolve, reject) => {
@@ -39,10 +40,7 @@ export const wechatLogin = () =>
       },
     });
   });
-export const logout = () => {
-  clearStorageUserInfo();
-  clearGlobalUserInfo();
-};
+
 export const clearStorageUserInfo = async () => {
   setStorageSync('userInfo', null);
 };
@@ -61,10 +59,13 @@ export const clearUserInfo = () => {
   clearGlobalUserInfo();
   clearStorageUserInfo();
 };
-
+export const updateUserInfoFromStorage = async () => {
+  const userInfo = await getStorage('userInfo');
+  saveUserInfo(userInfo);
+};
 export const saveUserInfo = async (userInfo) => {
-  setStorageSync('userInfo', userInfo);
   global.userInfo = userInfo;
+  await setStorage('userInfo', userInfo);
 };
 // export const getUser = async () => {
 //   try {

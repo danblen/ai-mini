@@ -1,4 +1,5 @@
 import { Image, Text, View } from '@tarojs/components';
+import { navigateTo } from '../../base/global';
 
 export default ({ buttons }) => {
   const handleButtonClick = (pagePath, params) => {

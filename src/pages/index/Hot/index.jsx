@@ -2,7 +2,7 @@
  * 首页
  */
 
-import { Text, View } from '@tarojs/components';
+import { ScrollView, Text, View } from '@tarojs/components';
 import Taro from '@tarojs/taro';
 import React, { useEffect, useState } from 'react';
 import { AtNoticebar } from 'taro-ui';
@@ -13,6 +13,7 @@ import WaterfallList from '../../comps/WaterfallList.jsx';
 import AlbumsCard from '../AlbumsCard.jsx';
 import PopularTemplate from '../PopularTemplate.jsx';
 import TopBanner from '../TopBanner.jsx';
+import { getStorageSync, setStorageSync } from '../../../base/global.js';
 
 let firstGetImages = 0;
 export default () => {
@@ -30,13 +31,13 @@ export default () => {
     let res = await get_all_images();
     if (res?.data) {
       setAllImages(res.data);
-      Taro.setStorageSync('tmpAllimages', res.data);
+       setStorageSync('tmpAllimages', res.data);
     }
   };
   const getTagImages = async () => {
     let res = await api.getTagImages({ tagName: 'Hot' });
     if (res?.data) {
-      Taro.setStorageSync('tmpHotTagimages', res.data);
+       setStorageSync('tmpHotTagimages', res.data);
       setLRHalfPic(res.data);
     }
   };
@@ -83,7 +84,10 @@ export default () => {
     };
   }, [currentNoticeIndex]);
   return (
-    <>
+    <ScrollView
+      enhanced
+      showScrollbar={false} scroll-y
+    >
       <TopBanner banners={allImages?.bannerImage?.['首页日更']} />
       <View style={{ marginTop: '5px' }}>
         <AtNoticebar icon="volume-plus">
@@ -209,6 +213,6 @@ export default () => {
         imageListRight={rightHalf || []}
         LeftTop={<CustomTop curTagPage="Hot" />}
       />
-    </>
+    </ScrollView>
   );
 };

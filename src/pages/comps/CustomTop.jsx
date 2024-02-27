@@ -1,5 +1,6 @@
 import { Image, Text, View } from '@tarojs/components';
 import compareIcon from '../../static/image/login/bg_login.png';
+import { navigateTo } from '../../base/global';
 const PostNodePages = '/pages/album/postNode';
 
 export default ({ curTagPage }) => {

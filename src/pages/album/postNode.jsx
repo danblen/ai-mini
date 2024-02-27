@@ -1,14 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { View, Image, Text, Input, Button } from '@tarojs/components';
-import { AtImagePicker } from 'taro-ui';
-import CustomNavBar from '../index/CustomNavBar.jsx';
-import { wxPathToBase64, compressInputImage } from '../../utils/imageTools';
+import { Button, Textarea, View } from '@tarojs/components';
+import Taro, { useRouter } from '@tarojs/taro'; // 导入 useRouter
+import React, { useState } from 'react';
+import { AtFloatLayout, AtImagePicker } from 'taro-ui';
 import { api } from '../../api';
-import { AtFloatLayout } from 'taro-ui';
-import Taro, { useRouter, getStorageSync } from '@tarojs/taro'; // 导入 useRouter
-import { Textarea } from '@tarojs/components';
-import LoginView from '../comps/LoginView';
+import { getStorageSync } from '../../base/global.js';
 import { saveUserInfo, wechatLogin } from '../../common/user';
+import { compressInputImage } from '../../utils/imageTools';
+import LoginView from '../comps/LoginView';
+import CustomNavBar from '../index/CustomNavBar.jsx';
 
 export default () => {
   const router = useRouter();

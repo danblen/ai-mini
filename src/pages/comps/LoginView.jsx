@@ -1,6 +1,7 @@
 import { Checkbox, Button, Text, View } from '@tarojs/components';
 import Taro from '@tarojs/taro';
 import React, { useState } from 'react';
+import { navigateTo } from '../../base/global';
 // 必须要有/开头
 const agreementsUrl = '/pages/user/agreements/index';
 const privacyUrl = '/pages/user/privacy/index';

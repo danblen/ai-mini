@@ -4,6 +4,7 @@ import Taro from '@tarojs/taro';
 import { AtIcon } from 'taro-ui';
 import { View, Image, ScrollView, Text } from '@tarojs/components';
 import { delete_all_images, delete_select_images } from '../../api';
+import { getStorageSync } from '../../base/global';
 
 const ImageList = ({ images, loadMore, onFetchData }) => {
   const [showImages, setShowImages] = useState([]);

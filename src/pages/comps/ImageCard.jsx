@@ -1,4 +1,5 @@
 import { Image, Text, View } from '@tarojs/components';
+import { navigateTo } from '../../base/global';
 const url = '/pages/faceswap/index';
 export default ({ image }) => {
   return (

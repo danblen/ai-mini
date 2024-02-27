@@ -6,6 +6,7 @@ import { AtButton, AtActivityIndicator, AtFloatLayout } from 'taro-ui';
 import { wxPathToBase64 } from '../../utils/imageTools';
 import { saveUserInfo, wechatLogin } from '../../common/user.js';
 import LoginView from '../comps/LoginView.jsx';
+import { getStorageSync } from '../../base/global.js';
 const SwapCount = ({ clickCount }) => (
   <View
     style={{

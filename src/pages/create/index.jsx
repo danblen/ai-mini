@@ -4,10 +4,10 @@
  */
 
 import { Input, View } from '@tarojs/components';
-import { getStorageSync, setStorageSync } from '@tarojs/taro';
 import { useEffect, useState } from 'react';
 import { AtImagePicker } from 'taro-ui';
 import { api } from '../../api';
+import { getStorageSync, setStorageSync } from '../../base/global';
 import { compressInputImage } from '../../utils/imageTools';
 import NavBar from './NavBar';
 

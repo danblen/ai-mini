@@ -1,12 +1,19 @@
 import Taro from '@tarojs/taro';
 
-export const initPlatformApi = () => {
-  global.setStorageSync = Taro.setStorageSync;
-  global.getStorageSync = Taro.getStorageSync;
-  global.getStorage = Taro.getStorage;
-  global.setStorage = Taro.setStorage;
-  global.navigateTo = Taro.navigateTo;
-};
+export const setStorageSync = Taro.setStorageSync;
+export const getStorageSync = Taro.getStorageSync;
+export const getStorage = (key) =>
+  new Promise((resolve) => {
+    Taro.getStorage({
+      key,
+      success: (res) => {
+        resolve(res.data);
+      },
+    });
+  });
+export const setStorage = (key, data) => Taro.setStorage({ key, data });
+export const navigateTo = Taro.navigateTo;
+export const initPlatformApi = () => {};
 
 export const initParams = () => {
   global.isMini = true;

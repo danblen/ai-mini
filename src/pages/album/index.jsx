@@ -2,11 +2,11 @@
  * 作品页
  */
 import { Button, View } from '@tarojs/components';
-import React, { useEffect } from 'react';
 import Taro, { useDidShow } from '@tarojs/taro';
-import { useState } from 'react';
-import { fetchProcessedImages } from './fetchProcessedImages.js';
+import React, { useState } from 'react';
+import { getStorageSync, setStorageSync } from '../../base/global.js';
 import FinishedTask from './FinishedTask.jsx';
+import { fetchProcessedImages } from './fetchProcessedImages.js';
 
 let lastPicCount = 0;
 export default ({ images }) => {
@@ -20,9 +20,9 @@ export default ({ images }) => {
     },
   });
   const fetchData = async (refresh) => {
-    const storageUserInfo = Taro.getStorageSync('userInfo');
+    const storageUserInfo = getStorageSync('userInfo');
     setUserInfo(storageUserInfo);
-    let processedImages = Taro.getStorageSync('processedImages') || [];
+    let processedImages = getStorageSync('processedImages') || [];
 
     lastPicCount = processedImages.length;
     if (storageUserInfo?.isLogin && storageUserInfo.data?.userId) {
@@ -45,7 +45,7 @@ export default ({ images }) => {
       }
       lastPicCount = processedImages.length;
       // 将请求到的数据缓存到本地存储
-      Taro.setStorageSync('processedImages', processedImages);
+      setStorageSync('processedImages', processedImages);
       // }
       // }
 

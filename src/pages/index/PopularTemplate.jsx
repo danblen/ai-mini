@@ -1,9 +1,9 @@
 import { Image, Text, View } from '@tarojs/components';
-import Taro from '@tarojs/taro';
-import IconGood1 from '../../static/image/my/icons8-奥运奖牌金牌-48.png';
-import IconGood2 from '../../static/image/my/icons8-奥运奖牌银牌-48.png';
-import IconGood3 from '../../static/image/my/icons8-奥运奖牌铜牌-48.png';
 import { AtIcon } from 'taro-ui';
+import { navigateTo } from '../../base/global';
+import IconGood1 from '../../static/image/my/icons8-奥运奖牌金牌-48.png';
+import IconGood3 from '../../static/image/my/icons8-奥运奖牌铜牌-48.png';
+import IconGood2 from '../../static/image/my/icons8-奥运奖牌银牌-48.png';
 
 const PopularTemplate = ({ activityTagsImage }) => {
   const handleItemClick = (imageUrl, title, description) => {
@@ -22,8 +22,7 @@ const PopularTemplate = ({ activityTagsImage }) => {
 
     const url = `${params.pagePath}?${encodedParams}`;
 
-    // 使用 Taro.navigateTo 函数
-    Taro.navigateTo({
+    navigateTo({
       url: url,
     });
   };

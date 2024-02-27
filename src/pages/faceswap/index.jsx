@@ -2,30 +2,30 @@
  * 换脸页面
  */
 
-import { Image, View, Text } from '@tarojs/components';
+import { Image, Text, View } from '@tarojs/components';
 import Taro from '@tarojs/taro';
 import React, { useEffect, useState } from 'react';
-import { AtDrawer, AtIcon } from 'taro-ui';
-import compareIcon from '../../static/image/my/icons8-compare-64.png';
-import IconGood from '../../static/image/my/icons-good.png';
-import IconGood1 from '../../static/image/my/icons-good1.png';
-import IconBad from '../../static/image/my/icons-bad.png';
-import IconBad1 from '../../static/image/my/icons-bad1.png';
-import { downloadImages } from '../../utils/imageTools.js';
-import TaskList from '../comps/TaskList.jsx';
-import ImagePicker from '../comps/ImagePicker.jsx';
-import SwapButton from './SwapButton.jsx';
-import TaskListTip from './TaskListTip.jsx';
-import { clearTimers, getTaskImage } from '../../common/getTaskImage.js';
+import { AtActionSheet, AtActionSheetItem, AtButton, AtDrawer, AtIcon } from 'taro-ui';
 import { api } from '../../api';
-import CustomNavBar from '../index/CustomNavBar.jsx';
-import { AtButton, AtActionSheet, AtActionSheetItem } from 'taro-ui';
-import { deepCopy } from '../../utils/object.js';
+import { URL_STATIC } from '../../api/config.js';
+import { getStorageSync, setStorageSync } from '../../base/global.js';
+import { getTaskImage } from '../../common/getTaskImage.js';
 import {
   data,
   swap_face_and_add_detail_data,
 } from '../../const/sdApiParams.js';
-import { URL_STATIC } from '../../api/config.js';
+import IconBad from '../../static/image/my/icons-bad.png';
+import IconBad1 from '../../static/image/my/icons-bad1.png';
+import IconGood from '../../static/image/my/icons-good.png';
+import IconGood1 from '../../static/image/my/icons-good1.png';
+import compareIcon from '../../static/image/my/icons8-compare-64.png';
+import { downloadImages } from '../../utils/imageTools.js';
+import { deepCopy } from '../../utils/object.js';
+import ImagePicker from '../comps/ImagePicker.jsx';
+import TaskList from '../comps/TaskList.jsx';
+import CustomNavBar from '../index/CustomNavBar.jsx';
+import SwapButton from './SwapButton.jsx';
+import TaskListTip from './TaskListTip.jsx';
 const sdFaceSwapAddDetailParam = deepCopy(swap_face_and_add_detail_data);
 const sdFaceSwapParam = deepCopy(data);
 
@@ -57,7 +57,7 @@ export default () => {
     setSelectedOption(option); // 设置选中的选项
     storageUserInfo.swapMode = option; // 你可以根据需要设置默认值
     // 保存更新后的 storageUserInfo
-    Taro.setStorageSync('userInfo', storageUserInfo);
+    setStorageSync('userInfo', storageUserInfo);
     setShowOptions(false);
     if (option === '快速模式') {
       setFaceSwapParam(sdFaceSwapParam);
@@ -75,7 +75,7 @@ export default () => {
         // 如果 swapMode 不存在，则添加
         storageUserInfo.swapMode = '快速模式'; // 你可以根据需要设置默认值
         // 保存更新后的 storageUserInfo
-        Taro.setStorageSync('userInfo', storageUserInfo);
+         setStorageSync('userInfo', storageUserInfo);
       } else {
         // 如果 swapMode 存在，则执行相应操作
         setSelectedOption(storageUserInfo.swapMode);
@@ -86,7 +86,7 @@ export default () => {
         }
       }
     }
-    Taro.getStorageSync('userInfo', {
+    getStorageSync('userInfo', {
       isLogin: false,
       data: {},
     });

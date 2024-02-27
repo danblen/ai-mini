@@ -1,10 +1,12 @@
 /**
- * 发现页
+ * 首页
  */
 
-import { View } from '@tarojs/components';
+import { ScrollView } from '@tarojs/components';
+import Taro, { usePullDownRefresh } from '@tarojs/taro';
 import React, { useEffect, useState } from 'react';
 import { get_all_images } from '../../api';
+import { updateUserInfoFromStorage } from '../../common/user';
 import Hot from './Hot';
 import NavBar from './NavBar';
 import New from './New';
@@ -23,19 +25,30 @@ export default () => {
   };
   useEffect(() => {
     getAllImages();
+    updateUserInfoFromStorage();
   }, []);
   const navigateToHot = () => {
     setCurrentTab('hot');
   };
+  usePullDownRefresh(() => {
+    //调用Taro.stopPullDownRefresh 停止下拉效果
+    getAllImages().then(() => Taro.stopPullDownRefresh());
+  });
+
   return (
-    <>
+    <ScrollView enhanced showScrollbar={false} scroll-y>
       <NavBar
         currentTab={currentTab}
         onSwitchTab={(tabName) => {
           setCurrentTab(tabName);
         }}
       ></NavBar>
-      <View style={{ marginTop: 90 }}>
+      <ScrollView
+        scroll-y
+        enhanced
+        showScrollbar={false}
+        style={{ marginTop: 90 }}
+      >
         {currentTab === 'hot' && <Hot />}
         {currentTab === 'recommend' && (
           <Recommend
@@ -44,8 +57,8 @@ export default () => {
           />
         )}
         {currentTab === 'new' && <New />}
-      </View>
-    </>
+      </ScrollView>
+    </ScrollView>
   );
 };
 const Style = {};

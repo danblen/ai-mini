@@ -5,11 +5,12 @@ import { Image, Text, View } from '@tarojs/components';
 import { useDidShow, useTabItemTap } from '@tarojs/taro';
 import React, { useState } from 'react';
 import { AtFloatLayout } from 'taro-ui';
-import { get_user_info } from '../../api';
-import { api } from '../../api';
+import { api, get_user_info } from '../../api';
+import { getStorageSync, navigateTo } from '../../base/global';
 import { clearUserInfo, saveUserInfo, wechatLogin } from '../../common/user';
 import LoginView from '../comps/LoginView';
 import CheckIn from './CheckIn';
+import iconwechat from '../../static/image/share/icon_wechat.png';
 
 export default () => {
   const [isOpened, setIsOpened] = useState(false);
@@ -86,7 +87,7 @@ export default () => {
               width: '150rpx',
               height: '150rpx',
             }}
-            src={userInfo?.data?.userHeadPic}
+            src={userInfo?.data?.userHeadPic || iconwechat}
           />
           <View
             className=""

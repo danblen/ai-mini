@@ -3,6 +3,7 @@
  */
 import { Text, View } from '@tarojs/components';
 import React from 'react';
+import { navigateTo } from '../../base/global';
 
 export default ({}) => {
   return (

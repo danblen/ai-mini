@@ -3,8 +3,8 @@
  */
 import { Text, View } from '@tarojs/components';
 import React, { useCallback, useState } from 'react';
-import Taro, { getStorageSync, setStorageSync } from '@tarojs/taro';
 import { clearUserInfo } from '../../common/user';
+import { navigateTo } from '../../base/global';
 
 export default ({}) => {
   const [current, setCurrent] = useState(0);

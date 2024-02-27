@@ -1,4 +1,4 @@
 export default {
   enableShareAppMessage: true,
-  navigationStyle: 'custom',
+  navigationStyle: 'default',
 };
