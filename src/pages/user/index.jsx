@@ -26,10 +26,10 @@ export default () => {
   });
   // 获取用户信息
   const fetchUserInfo = async () => {
-    let userInfo = getStorageSync('userInfo');
-    // storage中有数据表示用户已经登陆
-    // if (userInfo?.isLogin && userInfo.data?.userId) {
-    if (userInfo) {
+    let userInfo = global.userInfo;
+    // storage或global中有数据表示用户已经登陆
+    if (userInfo?.isLogin && userInfo.data?.userId) {
+      // if (userInfo) {
       let res = await get_user_info({
         userId: userInfo.data.userId,
       });
@@ -51,14 +51,13 @@ export default () => {
           data: {},
         });
       }
+    } else {
+      // 用户未登陆，清空
+      setUserInfo({
+        isLogin: false,
+        data: {},
+      });
     }
-    // } else {
-    //   // 用户未登陆，清空
-    //   setUserInfo({
-    //     isLogin: false,
-    //     data: {},
-    //   });
-    // }
   };
   // 每次点击到tabbar 我的 都会触发，更新用户信息并刷新页面
   useTabItemTap((tab) => {});
