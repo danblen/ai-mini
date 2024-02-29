@@ -5,7 +5,13 @@
 import { Image, Text, View } from '@tarojs/components';
 import Taro from '@tarojs/taro';
 import React, { useEffect, useState } from 'react';
-import { AtActionSheet, AtActionSheetItem, AtButton, AtDrawer, AtIcon } from 'taro-ui';
+import {
+  AtActionSheet,
+  AtActionSheetItem,
+  AtButton,
+  AtDrawer,
+  AtIcon,
+} from 'taro-ui';
 import { api } from '../../api';
 import { URL_STATIC } from '../../api/config.js';
 import { getStorageSync, setStorageSync } from '../../base/global.js';
@@ -75,7 +81,7 @@ export default () => {
         // 如果 swapMode 不存在，则添加
         storageUserInfo.swapMode = '快速模式'; // 你可以根据需要设置默认值
         // 保存更新后的 storageUserInfo
-         setStorageSync('userInfo', storageUserInfo);
+        setStorageSync('userInfo', storageUserInfo);
       } else {
         // 如果 swapMode 存在，则执行相应操作
         setSelectedOption(storageUserInfo.swapMode);
@@ -396,6 +402,7 @@ export default () => {
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
+          zIndex: 99,
         }}
       >
         <View
