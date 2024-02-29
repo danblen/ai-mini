@@ -98,10 +98,27 @@ export default ({
         if (res.data?.status === 'pending') {
           onUpdateTaskImages(res.data.requestId);
         } else {
-          Taro.showToast({
-            title: res,
-            icon: 'none',
-          });
+          if (typeof res?.error === 'string') {
+            console.log('res', res);
+            if (res.error === 'no points') {
+              Taro.showToast({
+                title: '积分不足',
+                icon: 'none',
+              });
+            } else {
+              Taro.showToast({
+                title: res.error,
+                icon: 'none',
+              });
+            }
+          } else {
+            Taro.showToast({
+              title: 'Unknown error occurred',
+              icon: 'none',
+            });
+          }
+          setLoading(false);
+          return;
         }
 
         setLoading(false);
