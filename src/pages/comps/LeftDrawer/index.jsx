@@ -7,7 +7,7 @@ import { clearUserInfo } from '../../../common/user';
 
 export default ({ showDrawer, onClose }) => {
   const [userInfo, setUserInfo] = useState(global.userInfo);
-  
+
   useEffect(() => {
     setUserInfo(global.userInfo);
   }, [global.userInfo]);
@@ -32,6 +32,7 @@ export default ({ showDrawer, onClose }) => {
                 data: {},
               });
               clearUserInfo();
+              onClose();
             }}
           />
         </View>

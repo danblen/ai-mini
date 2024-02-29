@@ -6,11 +6,11 @@ import { useDidShow, useTabItemTap } from '@tarojs/taro';
 import React, { useState } from 'react';
 import { AtFloatLayout } from 'taro-ui';
 import { api, get_user_info } from '../../api';
-import { getStorageSync, navigateTo } from '../../base/global';
+import { navigateTo } from '../../base/global';
 import { clearUserInfo, saveUserInfo, wechatLogin } from '../../common/user';
+import iconwechat from '../../static/image/share/icon_wechat.png';
 import LoginView from '../comps/LoginView';
 import CheckIn from './CheckIn';
-import iconwechat from '../../static/image/share/icon_wechat.png';
 
 export default () => {
   const [isOpened, setIsOpened] = useState(false);

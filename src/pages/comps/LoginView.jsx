@@ -1,10 +1,8 @@
-import { Checkbox, Button, Text, View } from '@tarojs/components';
+import { Button, Checkbox, Text, View } from '@tarojs/components';
 import Taro from '@tarojs/taro';
 import React, { useState } from 'react';
 import { navigateTo } from '../../base/global';
-// 必须要有/开头
-const agreementsUrl = '/pages/user/agreements/index';
-const privacyUrl = '/pages/user/privacy/index';
+import { PAGES } from '../../const/app';
 
 export default ({ onConfirmLogin }) => {
   const [loading, setLoading] = useState(false);
@@ -23,13 +21,14 @@ export default ({ onConfirmLogin }) => {
         style={{
           position: 'relative',
           animation: 'swap 1s infinite',
-          backgroundColor: 'skyblue',
           width: '90%',
           height: '40px',
           borderRadius: '20px',
           textAlign: 'center',
           lineHeight: '40px',
         }}
+        full
+        type="primary"
         loading={loading}
         onClick={async () => {
           if (!isCheckPolicy) {
@@ -41,8 +40,9 @@ export default ({ onConfirmLogin }) => {
             return;
           }
           setLoading(true);
-          await onConfirmLogin();
-          setLoading(false);
+          await onConfirmLogin().finally(() => {
+            setLoading(false);
+          });
         }}
       >
         微信授权登录
@@ -59,7 +59,7 @@ export default ({ onConfirmLogin }) => {
           style={{ color: 'blue' }}
           onClick={() => {
             navigateTo({
-              url: agreementsUrl,
+              url: PAGES.userAgreements,
             });
           }}
         >
@@ -70,7 +70,7 @@ export default ({ onConfirmLogin }) => {
           style={{ color: 'blue' }}
           onClick={() => {
             navigateTo({
-              url: privacyUrl,
+              url: PAGES.userPrivacy,
             });
           }}
         >
