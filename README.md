@@ -11,6 +11,9 @@ npm i -g yarn
 # 启动项目
 
 安装依赖 yarn
+
+启动项目首先要添加.env 文件
+
 启动项目 yarn dev:weapp
 备注：(如果 package.json 文件有更新依赖需要重新运行这两个命令)
 
