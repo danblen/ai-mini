@@ -4,9 +4,9 @@
  * 所有接口都用post
  */
 
-import { URL_BACK, URL_SD } from './config.js';
+import { URL_BACK } from './config.js';
 import request from './request.js';
-export { URL_BACK, URL_SD };
+export { URL_BACK };
 
 const api = {};
 // 登陆接口
