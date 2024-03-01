@@ -26,9 +26,9 @@ export default {
     list: [
       {
         pagePath: 'pages/index/index',
-        iconPath: './static/image/tabbar/icons8-r2-d2-100.png',
-        selectedIconPath: './static/image/tabbar/icons8-r2-d2-100 (1).png',
-        text: '首页',
+        iconPath: './static/image/tabbar/home.png',
+        selectedIconPath: './static/image/tabbar/home-sel.png',
+        // text: '首页',
       },
       // {
       //   pagePath: 'pages/discover/index',
@@ -44,15 +44,15 @@ export default {
       // },
       {
         pagePath: 'pages/album/index',
-        iconPath: './static/image/tabbar/icons8-ios的照片-100.png',
-        selectedIconPath: './static/image/tabbar/icons8-ios的照片-100 (1).png',
-        text: '作品',
+        iconPath: './static/image/tabbar/picture.png',
+        selectedIconPath: './static/image/tabbar/picture-sel.png',
+        // text: '作品',
       },
       {
         pagePath: 'pages/user/index',
-        iconPath: './static/image/tabbar/icons8-蝙蝠侠-200.png',
-        selectedIconPath: './static/image/tabbar/icons8-蝙蝠侠-100 (2).png',
-        text: '我的',
+        iconPath: './static/image/tabbar/user.png',
+        selectedIconPath: './static/image/tabbar/user-sel.png',
+        // text: '我的',
       },
     ],
   },
