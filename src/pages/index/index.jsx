@@ -2,16 +2,36 @@
  * 首页
  */
 
-import { ScrollView } from '@tarojs/components';
+import { ScrollView, View } from '@tarojs/components';
 import Taro, { usePullDownRefresh } from '@tarojs/taro';
-import React, { useEffect, useState } from 'react';
+import React, { Suspense, lazy, useEffect, useState } from 'react';
 import { get_all_images } from '../../api';
-import { updateUserInfoFromStorage } from '../../common/user';
-import Hot from './Hot';
+import {
+  updateUserInfoFromStorage,
+  updateUserTokenFromStorage,
+} from '../../common/user';
 import NavBar from './NavBar';
-import New from './New';
-import Recommend from './Recommend';
 
+const Hot = lazy(() => import('./Hot'));
+const Recommend = lazy(() => import('./Recommend'));
+const New = lazy(() => import('./New'));
+
+
+function TabContent({ currentTab, allImages, navigateToHot }) {
+  const tabComponents = {
+    hot: <Hot />,
+    recommend: (
+      <Recommend
+        tags_image={allImages?.tagsImage}
+        onNavigateToHot={navigateToHot}
+      />
+    ),
+    new: <New />,
+  };
+  const TabComponent = tabComponents[currentTab];
+
+  return <Suspense fallback={<View>Loading...</View>}>{TabComponent}</Suspense>;
+}
 export default () => {
   const [currentTab, setCurrentTab] = useState('hot');
   // 获取推荐tab页的图片，需要优化
@@ -26,9 +46,9 @@ export default () => {
   useEffect(() => {
     getAllImages();
     updateUserInfoFromStorage();
+    updateUserTokenFromStorage();
   }, []);
   const navigateToHot = () => {
-    setCurrentTab('hot');
   };
   usePullDownRefresh(() => {
     //调用Taro.stopPullDownRefresh 停止下拉效果
@@ -49,14 +69,11 @@ export default () => {
         showScrollbar={false}
         style={{ marginTop: 90 }}
       >
-        {currentTab === 'hot' && <Hot />}
-        {currentTab === 'recommend' && (
-          <Recommend
-            tags_image={allImages?.tagsImage}
-            onNavigateToHot={navigateToHot}
-          />
-        )}
-        {currentTab === 'new' && <New />}
+        <TabContent
+          currentTab={currentTab}
+          allImages={allImages}
+          navigateToHot={navigateToHot}
+        />
       </ScrollView>
     </ScrollView>
   );

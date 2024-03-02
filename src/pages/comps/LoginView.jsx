@@ -2,6 +2,7 @@ import { Button, Checkbox, Text, View } from '@tarojs/components';
 import Taro from '@tarojs/taro';
 import React, { useState } from 'react';
 import { navigateTo } from '../../base/global';
+import { saveUserInfo, saveUserToken, wechatLogin } from '../../common/user';
 import { PAGES } from '../../const/app';
 
 export default ({ onConfirmLogin }) => {
@@ -40,9 +41,17 @@ export default ({ onConfirmLogin }) => {
             return;
           }
           setLoading(true);
-          await onConfirmLogin().finally(() => {
+          const res = await wechatLogin().finally(() => {
             setLoading(false);
           });
+          if (res?.data) {
+            saveUserInfo({
+              isLogin: true,
+              data: res.data,
+            });
+            saveUserToken(res?.data?.token);
+            onConfirmLogin(res);
+          }
         }}
       >
         微信授权登录

@@ -7,14 +7,13 @@ function baseRequest(
   url,
   method,
   data,
-  { noAuth = true, noVerify = false, noAlert = false }
+  { auth = false, noVerify = false, noAlert = false }
 ) {
-  let Url = '',
-    header = HEADER;
-
+  let Url = URL_BACK + url;
+  let header = HEADER;
   // 请求地址处理
-  Url = URL_BACK + url;
-  if (!noAuth) {
+  if (auth) {
+    header.Authorization = `${global.userToken}`;
     //登录过期自动登录
     // if (!store.state.app.token) {
     //   toLogin();
@@ -75,8 +74,9 @@ const request = {};
 
 ['options', 'get', 'post', 'put', 'head', 'delete', 'trace', 'connect'].forEach(
   (method) => {
-    request[method] = (api, data, opt) =>
-      baseRequest(api, method, data, opt || {});
+    request[method] = (api, data, opt) => {
+      return baseRequest(api, method, data, opt || {});
+    };
   }
 );
 

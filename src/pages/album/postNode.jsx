@@ -196,19 +196,16 @@ export default () => {
         }}
       >
         <LoginView
-          onConfirmLogin={async () => {
-            const res = await wechatLogin();
-            if (res) {
-              setUserInfo({
-                isLogin: true,
-                data: res.data,
-              });
-              saveUserInfo({
-                isLogin: true,
-                data: res.data,
-              });
-              setIsOpened(false);
-            }
+          onConfirmLogin={async (res) => {
+            setUserInfo({
+              isLogin: true,
+              data: res.data,
+            });
+            saveUserInfo({
+              isLogin: true,
+              data: res.data,
+            });
+            setIsOpened(false);
           }}
         />
       </AtFloatLayout>

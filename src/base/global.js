@@ -9,6 +9,9 @@ export const getStorage = (key) =>
       success: (res) => {
         resolve(res.data);
       },
+      fail: (err) => {
+        reject(err);
+      },
     });
   });
 export const setStorage = (key, data) => Taro.setStorage({ key, data });

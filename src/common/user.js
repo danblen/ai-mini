@@ -67,6 +67,14 @@ export const saveUserInfo = async (userInfo) => {
   global.userInfo = userInfo;
   await setStorage('userInfo', userInfo);
 };
+export const updateUserTokenFromStorage = async () => {
+  const userToken = await getStorage('userToken');
+  saveUserInfo(userToken);
+};
+export const saveUserToken = async (userToken) => {
+  global.userToken = userToken;
+  await setStorage('userToken', userToken);
+};
 // export const getUser = async () => {
 //   try {
 //     const userInfo = getStorageSync('userInfo');
