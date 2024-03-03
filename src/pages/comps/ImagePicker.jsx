@@ -138,7 +138,7 @@ export default function ImagePicker({ onFilesChange, onSelectImage }) {
         alignItems: 'center',
       }}
     >
-      <View style={{ flex: 1 }}>
+      <View>
         {files.map(
           (file, index) =>
             index === selectedIndex && (
@@ -179,9 +179,8 @@ export default function ImagePicker({ onFilesChange, onSelectImage }) {
         )}
       </View>
       <AtImagePicker
-        length={5}
+        length={4}
         count={2}
-        style={{ height: '100rpx' }}
         files={files}
         onChange={handleImageChange}
         onFail={(mes) => {}}
