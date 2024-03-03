@@ -1,4 +1,4 @@
-import { Image, View } from "@tarojs/components";
+import { Image, Text, View } from '@tarojs/components';
 
 export default () => {
   return (
@@ -17,7 +17,12 @@ export default () => {
         }}
       >
         {/* 左边大图 */}
-        <View style={{ width: '49%' }}>
+        <View
+          style={{
+            width: '49%',
+            position: 'relative',
+          }}
+        >
           <Image
             src="https://facei.top/static/allImages/activity_tags/%E6%B8%AF%E9%A3%8E/lszu7ifdfwjkb-1.jpg"
             style={{
@@ -26,6 +31,15 @@ export default () => {
               borderRadius: 10,
             }}
           />
+          <Text
+            style={{
+              position: 'absolute',
+              bottom: 13,
+              right: 0,
+            }}
+          >
+            sadads
+          </Text>
         </View>
         {/* 右侧布局 */}
         <View
