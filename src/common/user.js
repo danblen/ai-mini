@@ -1,6 +1,6 @@
 import Taro from '@tarojs/taro';
 import { api } from '../api';
-import { getStorage, setStorage, setStorageSync } from '../base/global';
+import { getStorage, setStorage } from '../base/global';
 
 export const wechatLogin = () =>
   new Promise((resolve, reject) => {
@@ -13,15 +13,6 @@ export const wechatLogin = () =>
               // 登录成功，获取到用户的 code
               // 向服务器发送 code
               let wechatRes = await api.login({ code: loginRes.code });
-              // let wechatRes = await wechat_login({ code: loginRes.code });
-              // let userInfo = {
-              //   code: loginRes.code,
-              //   data: wechatRes.data,
-              // isLogin: true,
-              // };
-              // setStorageSync("userInfo", userInfo);
-              // userInfo = getStorageSync("userInfo");
-              // console.log(111, userInfo);
               resolve(wechatRes);
             } else {
               // 登录失败
@@ -42,9 +33,17 @@ export const wechatLogin = () =>
   });
 
 export const clearStorageUserInfo = async () => {
-  setStorageSync('userInfo', null);
+  await setStorage('userInfo', {
+    isLogin: false,
+    data: {
+      points: 0,
+      ischeck: false,
+      userId: '',
+      code: '',
+    },
+  });
 };
-export const clearGlobalUserInfo = async () => {
+export const clearGlobalUserInfo = () => {
   global.userInfo = {
     isLogin: false,
     data: {
@@ -61,7 +60,7 @@ export const clearUserInfo = () => {
 };
 export const updateUserInfoFromStorage = async () => {
   const userInfo = await getStorage('userInfo');
-  saveUserInfo(userInfo);
+  await saveUserInfo(userInfo);
 };
 export const saveUserInfo = async (userInfo) => {
   global.userInfo = userInfo;
@@ -69,7 +68,7 @@ export const saveUserInfo = async (userInfo) => {
 };
 export const updateUserTokenFromStorage = async () => {
   const userToken = await getStorage('userToken');
-  saveUserInfo(userToken);
+  await saveUserToken(userToken);
 };
 export const saveUserToken = async (userToken) => {
   global.userToken = userToken;
@@ -92,16 +91,6 @@ export const saveUserToken = async (userToken) => {
 //     const userInfo = getStorageSync('userInfo');
 //     if (!userInfo) return null;
 //     return userInfo;
-//   } catch (error) {
-//     console.error('Error fetching user data:', error);
-//   }
-// };
-// export const setUserInfo = async (updatedUserInfo) => {
-//   try {
-//     setStorageSync({
-//       key: 'userInfo',
-//       data: updatedUserInfo,
-//     });
 //   } catch (error) {
 //     console.error('Error fetching user data:', error);
 //   }
