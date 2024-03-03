@@ -15,6 +15,7 @@ import AlbumsCard from '../AlbumsCard.jsx';
 // import tabSelect from '../tabSelect.jsx';
 import PopularTemplate from '../PopularTemplate.jsx';
 import TopBanner from '../TopBanner.jsx';
+import CardView from './CardView.jsx';
 
 let firstGetImages = 0;
 export default () => {
@@ -92,67 +93,8 @@ export default () => {
           {notices[currentNoticeIndex]}
         </AtNoticebar>
       </View>
-
-      <View
-        style={{
-          display: 'flex',
-          flexDirection: 'row',
-          // alignItems: 'flex-start',
-          justifyContent: 'space-between',
-        }}
-      >
-        {/* 左边大图 */}
-        <View style={{ width: '49%' }}>
-          <Image
-            src="https://facei.top/static/allImages/activity_tags/%E6%B8%AF%E9%A3%8E/lszu7ifdfwjkb-1.jpg"
-            style={{ width: '100%', maxHeight: '100vh', objectFit: 'cover' }}
-          />
-          <Image
-            src="https://facei.top/static/allImages/activity_tags/%E6%B8%AF%E9%A3%8E/lszu7ifdfwjkb-1.jpg"
-            style={{ width: '100%', maxHeight: '100vh', objectFit: 'cover' }}
-          />
-        </View>
-        {/* 右侧布局 */}
-        <View
-          style={{
-            // flex: 1,
-            width: '49%',
-            // marginLeft: '5px',
-            // display: 'flex',
-            // flexDirection: 'column',
-            overflow: 'hidden', // 设置容器的 overflow 属性为 hidden
-          }}
-        >
-          {/* 上半部分两个小图 */}
-          <View style={{ display: 'flex', flexDirection: 'row', flex: 1 }}>
-            <View style={{ flex: 1 }}>
-              <Image
-                mode="widthFix"
-                src="https://facei.top/static/allImages/activity_tags/%E6%B8%AF%E9%A3%8E/lszu7ifdfwjkb-1.jpg"
-                style={{ width: '100%' }}
-              />
-            </View>
-            <View style={{ flex: 1 }}>
-              <Image
-                mode="widthFix"
-                src="https://facei.top/static/allImages/activity_tags/%E6%B8%AF%E9%A3%8E/lszu7ifdfwjkb-1.jpg"
-                style={{ width: '100%' }}
-              />
-            </View>
-          </View>
-          <View>
-            {/* 下半部分长方形图 */}
-            <Image
-              src="https://facei.top/static/allImages/activity_tags/%E6%B8%AF%E9%A3%8E/lszu7ifdfwjkb-1.jpg"
-              style={{
-                width: '100%',
-                marginTop: '5px',
-                objectFit: 'cover',
-              }}
-            />
-          </View>
-        </View>
-      </View>
+      
+      <CardView />
 
       <View
         style={{
