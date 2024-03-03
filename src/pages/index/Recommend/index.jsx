@@ -1,4 +1,3 @@
-import { View } from '@tarojs/components';
 import TabsImageList from './TabsImageList';
 
 export default ({ tags_image, onNavigateToHot }) => {

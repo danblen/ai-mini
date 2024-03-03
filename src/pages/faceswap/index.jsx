@@ -14,8 +14,9 @@ import {
 } from 'taro-ui';
 import { api } from '../../api';
 import { URL_STATIC } from '../../api/config.js';
-import { getStorageSync, setStorageSync } from '../../base/global.js';
+import { getStorage } from '../../base/global.js';
 import { getTaskImage } from '../../common/getTaskImage.js';
+import { saveUserInfo } from '../../common/user.js';
 import {
   data,
   swap_face_and_add_detail_data,
@@ -54,16 +55,12 @@ export default () => {
   const [faceSwapParam, setFaceSwapParam] = useState(sdFaceSwapParam);
   const [MomentId, setMomentId] = useState(MomentId);
 
-  const handleClick = () => {
-    setShowOptions(!showOptions); // 切换下拉选项的显示状态
-  };
-
-  const handleOptionSelect = (option) => {
-    const storageUserInfo = Taro.getStorageSync('userInfo');
+  const handleOptionSelect = async (option) => {
+    const storageUserInfo = await getStorage('userInfo');
     setSelectedOption(option); // 设置选中的选项
     storageUserInfo.swapMode = option; // 你可以根据需要设置默认值
     // 保存更新后的 storageUserInfo
-    setStorageSync('userInfo', storageUserInfo);
+    saveUserInfo(storageUserInfo);
     setShowOptions(false);
     if (option === '快速模式') {
       setFaceSwapParam(sdFaceSwapParam);
@@ -81,7 +78,7 @@ export default () => {
         // 如果 swapMode 不存在，则添加
         storageUserInfo.swapMode = '快速模式'; // 你可以根据需要设置默认值
         // 保存更新后的 storageUserInfo
-        setStorageSync('userInfo', storageUserInfo);
+        saveUserInfo(storageUserInfo);
       } else {
         // 如果 swapMode 存在，则执行相应操作
         setSelectedOption(storageUserInfo.swapMode);
@@ -92,10 +89,6 @@ export default () => {
         }
       }
     }
-    getStorageSync('userInfo', {
-      isLogin: false,
-      data: {},
-    });
 
     const down = async () => {
       const tempFilePath = await downloadImages(params.imageUrl);
@@ -227,7 +220,7 @@ export default () => {
               flexDirection: 'column', // 设置按钮内容竖向排列
             }}
             shape="circle"
-            onClick={handleClick} // 点击按钮时触发handleClick
+            onClick={() => setShowOptions(!showOptions)} // 点击按钮时触发handleClick
           >
             {selectedOption}
             <AtIcon

@@ -16,7 +16,6 @@ const Hot = lazy(() => import('./Hot'));
 const Recommend = lazy(() => import('./Recommend'));
 const New = lazy(() => import('./New'));
 
-
 function TabContent({ currentTab, allImages, navigateToHot }) {
   const tabComponents = {
     hot: <Hot />,
@@ -48,8 +47,6 @@ export default () => {
     updateUserInfoFromStorage();
     updateUserTokenFromStorage();
   }, []);
-  const navigateToHot = () => {
-  };
   usePullDownRefresh(() => {
     //调用Taro.stopPullDownRefresh 停止下拉效果
     getAllImages().then(() => Taro.stopPullDownRefresh());
@@ -72,7 +69,7 @@ export default () => {
         <TabContent
           currentTab={currentTab}
           allImages={allImages}
-          navigateToHot={navigateToHot}
+          navigateToHot={() => setCurrentTab('hot')}
         />
       </ScrollView>
     </ScrollView>
