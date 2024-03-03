@@ -7,14 +7,14 @@ import Taro from '@tarojs/taro';
 import React, { useEffect, useState } from 'react';
 import { AtNoticebar } from 'taro-ui';
 import { api, get_all_images } from '../../../api/index.js';
+import { getStorageSync, setStorageSync } from '../../../base/global.js';
 import ButtonsBox from '../../comps/ButtonsBox.jsx';
 import CustomTop from '../../comps/CustomTop.jsx';
 import WaterfallList from '../../comps/WaterfallList.jsx';
 import AlbumsCard from '../AlbumsCard.jsx';
-import tabSelect from '../tabSelect.jsx';
+// import tabSelect from '../tabSelect.jsx';
 import PopularTemplate from '../PopularTemplate.jsx';
 import TopBanner from '../TopBanner.jsx';
-import { getStorageSync, setStorageSync } from '../../../base/global.js';
 
 let firstGetImages = 0;
 export default () => {
@@ -60,10 +60,10 @@ export default () => {
     } else {
       setLRHalfPic(tmpHotTagimages);
     }
-    const timer = setInterval(() => {
-      getAllImages();
-      getTagImages();
-    }, 1 * 60 * 1000); // 10分钟
+    // const timer = setInterval(() => {
+    //   getAllImages();
+    //   getTagImages();
+    // }, 1 * 60 * 1000); // 1分钟
   }, []);
   const notices = [
     '每日签到即可加积分💕',
@@ -97,36 +97,46 @@ export default () => {
         style={{
           display: 'flex',
           flexDirection: 'row',
-          alignItems: 'flex-start',
+          // alignItems: 'flex-start',
+          justifyContent: 'space-between',
         }}
       >
         {/* 左边大图 */}
-        <Image
-          src="https://facei.top/static/allImages/activity_tags/%E6%B8%AF%E9%A3%8E/lszu7ifdfwjkb-1.jpg"
-          style={{ width: '50%', maxHeight: '100vh', objectFit: 'cover' }}
-        />
+        <View style={{ width: '49%' }}>
+          <Image
+            src="https://facei.top/static/allImages/activity_tags/%E6%B8%AF%E9%A3%8E/lszu7ifdfwjkb-1.jpg"
+            style={{ width: '100%', maxHeight: '100vh', objectFit: 'cover' }}
+          />
+          <Image
+            src="https://facei.top/static/allImages/activity_tags/%E6%B8%AF%E9%A3%8E/lszu7ifdfwjkb-1.jpg"
+            style={{ width: '100%', maxHeight: '100vh', objectFit: 'cover' }}
+          />
+        </View>
         {/* 右侧布局 */}
         <View
           style={{
-            flex: 1,
-            marginLeft: '5px',
-            display: 'flex',
-            flexDirection: 'column',
+            // flex: 1,
+            width: '49%',
+            // marginLeft: '5px',
+            // display: 'flex',
+            // flexDirection: 'column',
             overflow: 'hidden', // 设置容器的 overflow 属性为 hidden
           }}
         >
           {/* 上半部分两个小图 */}
           <View style={{ display: 'flex', flexDirection: 'row', flex: 1 }}>
-            <View style={{ flex: 1, marginRight: '5px' }}>
+            <View style={{ flex: 1 }}>
               <Image
+                mode="widthFix"
                 src="https://facei.top/static/allImages/activity_tags/%E6%B8%AF%E9%A3%8E/lszu7ifdfwjkb-1.jpg"
-                style={{ width: '100%', maxHeight: '50%', objectFit: 'cover' }}
+                style={{ width: '100%' }}
               />
             </View>
-            <View style={{ flex: 1, marginLeft: '5px' }}>
+            <View style={{ flex: 1 }}>
               <Image
+                mode="widthFix"
                 src="https://facei.top/static/allImages/activity_tags/%E6%B8%AF%E9%A3%8E/lszu7ifdfwjkb-1.jpg"
-                style={{ width: '100%', maxHeight: '50%', objectFit: 'cover' }}
+                style={{ width: '100%' }}
               />
             </View>
           </View>
