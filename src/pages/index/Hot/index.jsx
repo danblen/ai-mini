@@ -2,7 +2,7 @@
  * 首页
  */
 
-import { ScrollView, Text, View } from '@tarojs/components';
+import { ScrollView, Text, View, Image } from '@tarojs/components';
 import Taro from '@tarojs/taro';
 import React, { useEffect, useState } from 'react';
 import { AtNoticebar } from 'taro-ui';
@@ -11,6 +11,7 @@ import ButtonsBox from '../../comps/ButtonsBox.jsx';
 import CustomTop from '../../comps/CustomTop.jsx';
 import WaterfallList from '../../comps/WaterfallList.jsx';
 import AlbumsCard from '../AlbumsCard.jsx';
+import tabSelect from '../tabSelect.jsx';
 import PopularTemplate from '../PopularTemplate.jsx';
 import TopBanner from '../TopBanner.jsx';
 import { getStorageSync, setStorageSync } from '../../../base/global.js';
@@ -31,13 +32,13 @@ export default () => {
     let res = await get_all_images();
     if (res?.data) {
       setAllImages(res.data);
-       setStorageSync('tmpAllimages', res.data);
+      setStorageSync('tmpAllimages', res.data);
     }
   };
   const getTagImages = async () => {
     let res = await api.getTagImages({ tagName: 'Hot' });
     if (res?.data) {
-       setStorageSync('tmpHotTagimages', res.data);
+      setStorageSync('tmpHotTagimages', res.data);
       setLRHalfPic(res.data);
     }
   };
@@ -84,16 +85,65 @@ export default () => {
     };
   }, [currentNoticeIndex]);
   return (
-    <ScrollView
-      enhanced
-      showScrollbar={false} scroll-y
-    >
+    <ScrollView enhanced showScrollbar={false} scroll-y>
       <TopBanner banners={allImages?.bannerImage?.['首页日更']} />
       <View style={{ marginTop: '5px' }}>
         <AtNoticebar icon="volume-plus">
           {notices[currentNoticeIndex]}
         </AtNoticebar>
       </View>
+
+      <View
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: 'flex-start',
+        }}
+      >
+        {/* 左边大图 */}
+        <Image
+          src="https://facei.top/static/allImages/activity_tags/%E6%B8%AF%E9%A3%8E/lszu7ifdfwjkb-1.jpg"
+          style={{ width: '50%', maxHeight: '100vh', objectFit: 'cover' }}
+        />
+        {/* 右侧布局 */}
+        <View
+          style={{
+            flex: 1,
+            marginLeft: '5px',
+            display: 'flex',
+            flexDirection: 'column',
+            overflow: 'hidden', // 设置容器的 overflow 属性为 hidden
+          }}
+        >
+          {/* 上半部分两个小图 */}
+          <View style={{ display: 'flex', flexDirection: 'row', flex: 1 }}>
+            <View style={{ flex: 1, marginRight: '5px' }}>
+              <Image
+                src="https://facei.top/static/allImages/activity_tags/%E6%B8%AF%E9%A3%8E/lszu7ifdfwjkb-1.jpg"
+                style={{ width: '100%', maxHeight: '50%', objectFit: 'cover' }}
+              />
+            </View>
+            <View style={{ flex: 1, marginLeft: '5px' }}>
+              <Image
+                src="https://facei.top/static/allImages/activity_tags/%E6%B8%AF%E9%A3%8E/lszu7ifdfwjkb-1.jpg"
+                style={{ width: '100%', maxHeight: '50%', objectFit: 'cover' }}
+              />
+            </View>
+          </View>
+          <View>
+            {/* 下半部分长方形图 */}
+            <Image
+              src="https://facei.top/static/allImages/activity_tags/%E6%B8%AF%E9%A3%8E/lszu7ifdfwjkb-1.jpg"
+              style={{
+                width: '100%',
+                marginTop: '5px',
+                objectFit: 'cover',
+              }}
+            />
+          </View>
+        </View>
+      </View>
+
       <View
         style={{
           display: 'flex',
@@ -195,7 +245,6 @@ export default () => {
         </View>
         <AlbumsCard albums={allImages?.albums} />
       </View>
-
       <PopularTemplate activityTagsImage={allImages?.activityTagsImage} />
 
       {/* <View
