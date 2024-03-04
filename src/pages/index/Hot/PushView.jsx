@@ -1,6 +1,7 @@
 import { Image, ScrollView, Text, View } from '@tarojs/components';
 import React from 'react';
 import { navigateTo } from '../../../base/global';
+import TitleView from './TitleView';
 const photoPage = '/pages/photo/index';
 export default ({ albums }) => {
   return (
@@ -10,54 +11,11 @@ export default ({ albums }) => {
         marginTop: '20rpx',
       }}
     >
-      <View
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-          height: 40,
-        }}
-      >
-        <View
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            width: '96%',
-          }}
-        >
-          <View
-            style={{
-              display: 'flex',
-            }}
-          >
-            <Image
-              style={{
-                width: 20,
-                height: 20,
-                marginRight: 10,
-              }}
-              src="https://facei.top/static/allImages/activity_tags/%E6%B8%AF%E9%A3%8E/lszu7ifdfwjkb-1.jpg"
-            ></Image>
-            <Text
-              style={{
-                fontSize: 16,
-                fontWeight: 'bold',
-              }}
-            >
-              写真集
-            </Text>
-          </View>
-          <View
-            style={{
-              color: 'grey',
-              fontSize: 12,
-            }}
-            onClick={() => {}}
-          >
-            查看全部
-          </View>
-        </View>
-      </View>
+      <TitleView
+        imageUrl="https://facei.top/static/allImages/activity_tags/%E6%B8%AF%E9%A3%8E/lszu7ifdfwjkb-1.jpg"
+        title="写真集"
+        rightText="查看全部"
+      />
 
       <ScrollView
         style={{

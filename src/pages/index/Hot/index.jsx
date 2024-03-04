@@ -102,7 +102,7 @@ export default () => {
         </AtNoticebar>
       </View>
 
-      {/* <PushView albums={allImages?.albums} /> */}
+      <PushView albums={allImages?.albums} />
 
       {/* <ButtonView allImages={allImages} /> */}
       <CardView
