@@ -10,7 +10,6 @@ export default ({ albums }) => {
     <View
       style={{
         borderRadius: '15rpx',
-        marginTop: '20rpx',
       }}
     >
       <ScrollView

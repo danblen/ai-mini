@@ -6,7 +6,7 @@ export default ({ allImages }) => {
     <View
       style={{
         // marginTop: '20px',
-        paddingTop: 10,
+        // paddingTop: 10,
         marginLeft: '18rpx',
         marginRight: '18rpx',
         borderRadius: '8rpx',
@@ -16,34 +16,42 @@ export default ({ allImages }) => {
     >
       <View
         style={{
-          fontSize: '36rpx',
           display: 'flex',
-          justifyContent: 'space-between',
+          justifyContent: 'center',
+          height: 40,
         }}
       >
-        <Text
-          style={{
-            marginLeft: '10px',
-            fontSize: '18px',
-            fontWeight: 'bold',
-          }}
-        >
-          写真集
-        </Text>
         <View
           style={{
             display: 'flex',
-            color: 'grey',
             justifyContent: 'space-between',
+            alignItems: 'center',
+            width: '96%',
           }}
         >
-          <View style={{}}>更多</View>
           <View
-            className="at-icon at-icon-chevron-right"
             style={{
-              fontSize: '50rpx',
+              display: 'flex',
             }}
-          ></View>
+          >
+            <Text
+              style={{
+                fontSize: 16,
+                fontWeight: 'bold',
+              }}
+            >
+              写真集
+            </Text>
+          </View>
+          <View
+            style={{
+              color: 'grey',
+              fontSize: 12,
+            }}
+            onClick={() => {}}
+          >
+            查看全部
+          </View>
         </View>
       </View>
       <AlbumsCard albums={allImages?.albums} />
