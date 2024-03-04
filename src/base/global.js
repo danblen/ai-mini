@@ -3,14 +3,14 @@ import Taro from '@tarojs/taro';
 export const setStorageSync = Taro.setStorageSync;
 export const getStorageSync = Taro.getStorageSync;
 export const getStorage = (key) =>
-  new Promise((resolve) => {
+  new Promise((resolve, reject) => {
     Taro.getStorage({
       key,
       success: (res) => {
         resolve(res.data);
       },
       fail: (err) => {
-        reject(err);
+        console.log(err);
       },
     });
   });
