@@ -4,9 +4,13 @@ export default () => {
   return (
     <View
       style={{
-        background: `url(${iconwechat})`, // 使用 backgroundImage
+        background: '#efeeee', //`url(${iconwechat})`, // 使用 backgroundImage
         backgroundSize: 'cover',
-        height: 240,
+        // height: 240,
+        borderRadius: '10rpx',
+        marginTop: '20px',
+        marginLeft: '18rpx',
+        marginRight: '18rpx',
       }}
     >
       <View
@@ -21,6 +25,8 @@ export default () => {
             flexDirection: 'row',
             width: '96%',
             justifyContent: 'space-between',
+            marginTop: '10px',
+            marginBottom: '10px',
           }}
         >
           {/* 左边大图 */}

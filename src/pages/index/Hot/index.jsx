@@ -88,13 +88,22 @@ export default () => {
   return (
     <ScrollView enhanced showScrollbar={false} scroll-y>
       <TopBanner banners={allImages?.bannerImage?.['首页日更']} />
-      <View style={{ marginTop: '5px' }}>
+      {/* <View
+        style={{ position: 'absolute', left: '2%', width: '96%', top: '3%' }}
+      >
+        <CardView />
+      </View> */}
+
+      <View
+        style={{
+          marginTop: '5px',
+          // marginTop: '200px'
+        }}
+      >
         <AtNoticebar icon="volume-plus">
           {notices[currentNoticeIndex]}
         </AtNoticebar>
       </View>
-      
-      {/* <CardView /> */}
 
       <View
         style={{
