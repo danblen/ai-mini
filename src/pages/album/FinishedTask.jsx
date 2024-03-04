@@ -121,6 +121,55 @@ const ImageList = ({ images, loadMore, onFetchData }) => {
 
   return (
     <View style={{ marginTop: 50 }}>
+      <View
+        style={{
+          position: 'fixed',
+          top: 10,
+          left: 10,
+          display: 'flex',
+          justifyContent: 'space-between',
+          width: '95%',
+          backgroundColor: 'rgb(255 255 255 / 51%)',
+          borderRadius: '10%',
+        }}
+      >
+        {!selectedMode ? (
+          <View
+            className="at-icon at-icon-reload"
+            onClick={() => {
+              onFetchData(true); // 调用fetchData函数
+            }}
+          >
+            刷新
+          </View>
+        ) : (
+          <View></View>
+        )}
+        <View style={{ display: 'flex' }}>
+          {selectedMode && (
+            <View style={{ display: 'flex' }}>
+              <View className="at-icon at-icon-trash" onClick={handlSaveImages}>
+                保存选中
+              </View>
+              <View
+                className="at-icon at-icon-trash"
+                onClick={handleDeleteAllImages}
+              >
+                删除全部
+              </View>
+              <View
+                className="at-icon at-icon-trash"
+                onClick={handleDeleteSelectedImages}
+              >
+                删除选中
+              </View>
+            </View>
+          )}
+          <View className="at-icon at-icon-list" onClick={handleToggleMode}>
+            {selectedMode ? '取消' : '选择'}
+          </View>
+        </View>
+      </View>
       <ScrollView
         scrollY
         // style={{ height: '100vh' }}
@@ -132,7 +181,6 @@ const ImageList = ({ images, loadMore, onFetchData }) => {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              // height: '100vh',
             }}
           >
             <Text style={{ textAlign: 'center' }}>
@@ -140,124 +188,88 @@ const ImageList = ({ images, loadMore, onFetchData }) => {
             </Text>
           </View>
         ) : (
-          <View className="image-list" style={{ position: 'relative' }}>
-            {showImages.map((image, index) => (
-              <View
-                key={index}
-                style={{
-                  position: 'relative',
-                  paddingLeft: '10rpx',
-                  display: 'inline-block',
-                  marginBottom: '20px', // 图片间距
-                }}
-              >
-                <Image
-                  className="image"
-                  src={image.url}
-                  mode="widthFix"
-                  style={{
-                    width: '360rpx',
-                    borderRadius: '10rpx',
-                    border: selectedImages.includes(index)
-                      ? '2px solid red'
-                      : '', // 根据选中状态添加边框
-                  }}
-                  lazyLoad={true}
-                  onClick={() => toggleSelectImage(index)} // 根据模式执行不同的操作
-                />
-                {selectedImages.includes(index) && (
+          <View
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+            }}
+          >
+            <View
+              className=""
+              style={{
+                display: 'flex',
+                flexWrap: 'wrap',
+                justifyContent: 'space-between',
+                width: '96%',
+              }}
+            >
+              {showImages?.map?.((image, index) => {
+                return (
                   <View
                     style={{
-                      position: 'absolute',
-                      top: '5px',
-                      right: '5px',
-                      zIndex: '10',
+                      display: 'inline-flex',
+                      width: '49%',
+                      position: 'relative',
                     }}
                   >
-                    <AtIcon
-                      value="close-circle"
-                      size="20"
-                      color="#e80505"
-                      onClick={() => null}
-                    />
+                    <Image
+                      key={index}
+                      style={{
+                        width: '100%',
+                        borderRadius: 5,
+                        marginBottom: 8,
+                      }}
+                      mode="aspectFill"
+                      lazyLoad={true}
+                      className=" "
+                      src={image.url}
+                      onClick={() => {}}
+                    ></Image>
+                    {selectedMode && (
+                      <View
+                        style={{
+                          opacity: selectedImages.includes(index) ? 0 : 1,
+                          width: 20,
+                          height: 20,
+                          border: '2px solid #fff',
+                          borderRadius: '50%',
+                          position: 'absolute',
+                          color: 'white',
+                          right: 10,
+                          top: 10,
+                        }}
+                        onClick={(e) => {
+                          // e.stopPropagation();
+                          toggleSelectImage(index);
+                        }}
+                      ></View>
+                    )}
+                    {selectedMode && (
+                      <View
+                        style={{
+                          opacity: selectedImages.includes(index) ? 1 : 0,
+                          // width: 20,
+                          // height: 20,
+                          color: 'white',
+                          position: 'absolute',
+                          top: 10,
+                          right: 10,
+                          fontSize: 24,
+                        }}
+                        className="at-icon at-icon-check-circle"
+                        onClick={(e) => {
+                          // e.stopPropagation();
+                          toggleSelectImage(index);
+                        }}
+                      ></View>
+                    )}
                   </View>
-                )}
-              </View>
-            ))}
-            {showImages.length === 0 && (
-              <View style={{ textAlign: 'center' }}>没有作品可显示</View>
-            )}
+                );
+              })}
+            </View>
           </View>
         )}
       </ScrollView>
-
-      <View
-        style={{
-          position: 'fixed',
-          top: 10,
-          left: '20px',
-          display: 'flex',
-          backgroundColor: 'rgb(255 255 255 / 51%)',
-          borderRadius: '10%',
-        }}
-      >
-        <View
-          style={{
-            textAlign: 'center',
-            display: 'flex',
-          }}
-        >
-          <AtIcon
-            value="list"
-            size="24"
-            color="#054622"
-            onClick={handleToggleMode} // 点击选择按钮时切换模式
-          />
-          {selectedMode ? '取消' : '选择'}
-          <AtIcon
-            value="reload"
-            size="24"
-            color="#054622"
-            onClick={() => {
-              onFetchData(true); // 调用fetchData函数
-            }}
-          />
-          刷新
-        </View>
-        {selectedMode && (
-          <View style={{ textAlign: 'center' }}>
-            <AtIcon
-              value="trash"
-              size="24"
-              color="#054622"
-              onClick={handlSaveImages}
-            />
-            保存选中
-          </View>
-        )}
-        {selectedMode && (
-          <View style={{ textAlign: 'center' }}>
-            <AtIcon
-              value="trash"
-              size="24"
-              color="#054622"
-              onClick={handleDeleteAllImages}
-            />
-            删除全部
-          </View>
-        )}
-        {selectedMode && (
-          <View style={{ textAlign: 'center' }}>
-            <AtIcon
-              value="trash"
-              size="24"
-              color="#054622"
-              onClick={handleDeleteSelectedImages}
-            />
-            删除选中
-          </View>
-        )}
-      </View>
     </View>
   );
 };
