@@ -11,7 +11,6 @@ import {
   updateUserTokenFromStorage,
 } from '../../common/user';
 import NavBar from './NavBar';
-
 const Hot = lazy(() => import('./Hot'));
 const Recommend = lazy(() => import('./Recommend'));
 const New = lazy(() => import('./New'));

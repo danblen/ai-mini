@@ -54,9 +54,14 @@ export const clearGlobalUserInfo = () => {
     },
   };
 };
+export const clearUserToken = async () => {
+  global.userToken = null;
+  await setStorage('userToken', null);
+};
 export const clearUserInfo = () => {
   clearGlobalUserInfo();
   clearStorageUserInfo();
+  clearUserToken();
 };
 export const updateUserInfoFromStorage = async () => {
   const userInfo = await getStorage('userInfo');

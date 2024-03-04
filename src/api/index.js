@@ -1,7 +1,6 @@
 /**
  * 接口定义文件
  * post data必须为对象比如{userId:''}，否则发不出请求
- * 所有接口都用post
  */
 
 import { URL_BACK } from './config.js';
@@ -54,7 +53,7 @@ export { api };
 
 // 换脸接口
 export function faceSwap(data) {
-  return request.post('/queueProcess', data);
+  return request.post('/queueProcess', data, { auth: true });
 }
 
 // 获取换脸结果
@@ -64,7 +63,7 @@ export function getSwapQueueResult(data) {
 
 // 获取首页所有图片
 export function get_all_images() {
-  return request.post('/getAllImages');
+  return request.post('/getAllImages', null, { auth: true });
 }
 // 删除用户所有作品图片
 export function delete_all_images(data) {

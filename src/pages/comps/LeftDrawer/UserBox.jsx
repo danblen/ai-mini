@@ -1,4 +1,4 @@
-import { Image, View } from '@tarojs/components';
+import { Image, Text, View } from '@tarojs/components';
 import Taro from '@tarojs/taro';
 import { PAGES } from '../../../const/app';
 import iconwechat from '../../../static/image/share/icon_wechat.png';
@@ -28,9 +28,11 @@ export default ({ userInfo }) => {
           Taro.switchTab({ url: PAGES.user });
         }}
       >
-        {userInfo?.isLogin
-          ? userInfo?.data?.userId?.slice(0, 6) + '****'
-          : '去登陆'}
+        {userInfo?.isLogin ? (
+          <Text> ID: {userInfo?.data?.userId}</Text>
+        ) : (
+          '去登陆'
+        )}
         <View className="at-icon at-icon-chevron-right" />
       </View>
     </View>

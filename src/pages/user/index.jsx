@@ -7,7 +7,7 @@ import React, { useState } from 'react';
 import { AtFloatLayout } from 'taro-ui';
 import { api, get_user_info } from '../../api';
 import { navigateTo } from '../../base/global';
-import { clearUserInfo, saveUserInfo, wechatLogin } from '../../common/user';
+import { clearUserInfo, saveUserInfo } from '../../common/user';
 import iconwechat from '../../static/image/share/icon_wechat.png';
 import LoginView from '../comps/LoginView';
 import CheckIn from './CheckIn';
@@ -64,55 +64,71 @@ export default () => {
   useDidShow(() => {
     fetchUserInfo();
   });
+
   return (
     <View style={{}}>
       <View
         style={{
           backgroundColor: '#f7e9e2',
           height: '400rpx',
-          paddingTop: '140rpx',
+          paddingTop: 90,
         }}
       >
-        <View className="user-box " style={{}}>
-          <Image
-            mode="aspectFill"
-            className="avatar"
-            style={{
-              display: 'inline-block',
-              position: 'relative',
-              top: '10rpx',
-              marginLeft: '30rpx',
-              borderRadius: '10%',
-              width: '150rpx',
-              height: '150rpx',
-            }}
-            src={userInfo?.data?.userHeadPic || iconwechat}
-          />
+        <View
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+          }}
+        >
+          <View>
+            <Image
+              mode="aspectFill"
+              className="avatar"
+              style={{
+                flex: 1,
+                marginLeft: '30rpx',
+                borderRadius: '10%',
+                width: '150rpx',
+                height: '150rpx',
+              }}
+              src={userInfo?.data?.userHeadPic || iconwechat}
+            />
+          </View>
           <View
             className=""
             style={{
-              display: 'inline-block',
+              flex: 3,
               marginLeft: '50rpx',
             }}
           >
             {userInfo?.isLogin && (
-              <View>
+              <View
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'space-between',
+                  flex: 1,
+                  height: '150rpx',
+                }}
+              >
                 <View
                   style={{
                     fontSize: '40rpx',
-                    height: '70rpx',
-                    verticalAlign: 'top',
                   }}
                 >
                   微信用户
                 </View>
-                <View className=" ">
-                  ID: {userInfo?.data?.userId?.slice(0, 6) + '****'}
-                  <View className="at-icon at-icon-chevron-right" />
-                </View>
+                <Text
+                  style={{
+                    borderRadius: 10,
+                    fontSize: 12,
+                  }}
+                >
+                  <Text>ID: {userInfo?.data?.userId}</Text>
+                </Text>
                 <View
                   style={{
-                    fontSize: '24rpx',
+                    fontSize: 12,
                   }}
                 >
                   <Text
@@ -130,15 +146,19 @@ export default () => {
               <View
                 type="primary"
                 style={{
-                  position: 'relative',
-                  top: '-50rpx',
-                  width: '400rpx',
-                  fontSize: '40rpx',
-                  animation: 'swap 1s infinite',
+                  display: 'flex',
+                  alignItems: 'center',
+                  fontSize: 24,
                 }}
                 onClick={() => setIsOpened(true)}
               >
-                微信一键登录
+                <Text
+                  style={{
+                    fontSize: 18,
+                  }}
+                >
+                  微信一键登录
+                </Text>
                 <View className="at-icon at-icon-chevron-right" />
               </View>
             )}
@@ -146,10 +166,9 @@ export default () => {
           <View
             className="at-icon at-icon-settings"
             style={{
+              flex: 1,
               fontSize: '48rpx',
-              position: 'absolute',
-              top: '200rpx',
-              right: '30rpx',
+              marginLeft: 80,
             }}
             onClick={() => {
               navigateTo({

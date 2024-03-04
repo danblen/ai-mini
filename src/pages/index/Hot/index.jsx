@@ -94,7 +94,7 @@ export default () => {
         </AtNoticebar>
       </View>
       
-      <CardView />
+      {/* <CardView /> */}
 
       <View
         style={{

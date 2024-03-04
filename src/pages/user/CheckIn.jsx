@@ -23,7 +23,7 @@ export default ({ onCheck }) => {
           lineHeight: '100rpx',
         }}
       >
-        还没签到，去签到
+        签到领积分
         <View className="at-icon at-icon-chevron-right" />
       </View>
     </View>
