@@ -1,7 +1,5 @@
 import { Image, ScrollView, Text, View } from '@tarojs/components';
-import Taro from '@tarojs/taro';
 import React from 'react';
-import { AtIcon } from 'taro-ui';
 import { navigateTo } from '../../../base/global';
 const photoPage = '/pages/photo/index';
 export default ({ albums }) => {
@@ -75,23 +73,21 @@ export default ({ albums }) => {
         {Object.values(albums)?.map?.((albumData) => (
           <View
             style={{
-              display: 'flex',
+              display: 'inline-flex',
               flexDirection: 'column',
               justifyContent: 'center',
-              width: 200,
-              height: 200,
+              position: 'relative',
+              height: 120,
             }}
           >
             <Image
               style={{
-                display: 'inline-block',
                 marginLeft: '18rpx',
                 width: 100,
                 height: 100,
                 borderRadius: 10,
               }}
               className=" "
-              mode="widthFix"
               onClick={() => {
                 navigateTo({
                   url: photoPage,
@@ -100,7 +96,29 @@ export default ({ albums }) => {
               }}
               src={albumData.index}
             ></Image>
-            <Text>asd</Text>
+            <View
+              style={{
+                position: 'absolute',
+                bottom: 20,
+                opacity: 0.5,
+                left: 10,
+                borderRadius: 5,
+                background: 'gray',
+                fontSize: 12,
+                paddingLeft: 5,
+                paddingRight: 5,
+              }}
+            >
+              <View className="at-icon at-icon-eye"></View>
+              {123}
+            </View>
+            <View
+              style={{
+                marginLeft: '18rpx',
+              }}
+            >
+              {343242}
+            </View>
           </View>
         ))}
       </ScrollView>
