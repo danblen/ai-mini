@@ -11,13 +11,13 @@ import { getStorageSync, setStorageSync } from '../../../base/global.js';
 import ButtonsBox from '../../comps/ButtonsBox.jsx';
 import CustomTop from '../../comps/CustomTop.jsx';
 import WaterfallList from '../../comps/WaterfallList.jsx';
-import AlbumsCard from '../AlbumsCard.jsx';
 // import tabSelect from '../tabSelect.jsx';
 import PopularTemplate from '../PopularTemplate.jsx';
 import TopBanner from '../TopBanner.jsx';
 import CardView from './CardView.jsx';
 import PushView from './PushView.jsx';
 import ButtonView from './ButtonView.jsx';
+import CardPhotoView from './CardPhotoView.jsx';
 
 let firstGetImages = 0;
 export default () => {
@@ -90,75 +90,66 @@ export default () => {
   return (
     <ScrollView enhanced showScrollbar={false} scroll-y>
       <TopBanner banners={allImages?.bannerImage?.['首页日更']} />
-      {/* <View
-        style={{ position: 'absolute', left: '2%', width: '96%', top: '3%' }}
-      >
-        <CardView />
-      </View> */}
 
       <View
         style={{
           marginTop: '5px',
-          // marginTop: '200px'
+          // marginTop: '200px',
         }}
       >
         <AtNoticebar icon="volume-plus">
           {notices[currentNoticeIndex]}
         </AtNoticebar>
       </View>
-      
-      {/* <PushView  albums={allImages?.albums}/> */}
 
-      <ButtonView allImages={allImages} />
+      {/* <PushView albums={allImages?.albums} /> */}
 
-      <View
-        style={{
-          marginTop: '20px',
-          paddingTop: 10,
-          marginLeft: '18rpx',
-          marginRight: '18rpx',
-          borderRadius: '8rpx',
-          background: '#dcdadacf',
-          // background:'#fff'
+      {/* <ButtonView allImages={allImages} /> */}
+      <CardView
+        infoLeftImage={{
+          pagePath: '/pages/activity/Activity',
+          params: {
+            imageUrl: allImages?.activityTagsImage?.['影楼'],
+            title: '影楼',
+            description: '影楼风格',
+            pagePath: '/pages/activity/Activity',
+            text: '影楼风格',
+          },
         }}
-      >
-        <View
-          style={{
-            fontSize: '36rpx',
-            display: 'flex',
-            justifyContent: 'space-between',
-          }}
-        >
-          <Text
-            style={{
-              marginLeft: '10px',
-              fontSize: '18px',
-              fontWeight: 'bold',
-            }}
-          >
-            写真集
-          </Text>
-          {/* <View
-              style={{
-                display: 'flex',
-                color: 'grey',
-                justifyContent: 'space-between',
-              }}
-            >
-              <View style={{}}>更多</View>
-              <View
-                className="at-icon at-icon-chevron-right"
-                style={{
-                  fontSize: '50rpx',
-                }}
-              ></View>
-            </View> */}
-        </View>
-        <AlbumsCard albums={allImages?.albums} />
-      </View>
+        infoTopLeftImage={{
+          pagePath: '/pages/activity/Activity',
+          params: {
+            imageUrl: allImages?.activityTagsImage?.['繁花专场'],
+            title: '繁花专场',
+            description: '繁花专场\n参与活动，获取丰富奖励~',
+            pagePath: '/pages/activity/Activity',
+            text: '繁花专场',
+          },
+        }}
+        infoTopRightImage={{
+          pagePath: '/pages/activity/Activity',
+          params: {
+            imageUrl: allImages?.tagsImage?.['韩式写真'],
+            title: '韩式写真',
+            description: '韩式写真\n参与活动，获取丰富奖励~',
+            pagePath: '/pages/activity/Activity',
+            text: '韩式写真',
+          },
+        }}
+        // infoTopRightImage={{
+        //   pagePath: '/pages/refine/index',
+        //   params: {
+        //     imageUrl: allImages?.activityTagsImage?.['焱落纱'],
+        //     title: '#AI修图',
+        //     description: '分享你当反派能活到第几集\n参与活动，获取丰富奖励~',
+        //   },
+        // }}
+      />
+
+      <CardPhotoView allImages={allImages} />
       <PopularTemplate activityTagsImage={allImages?.activityTagsImage} />
 
-      {/* <View
+      <View
         style={{
           fontSize: '36rpx',
           margin: '40rpx 18rpx 18rpx 18rpx ',
@@ -166,8 +157,16 @@ export default () => {
           justifyContent: 'space-between',
         }}
       >
-        <Text style={{}}>最近热门</Text>
-      </View> */}
+        <Text
+          style={{
+            marginLeft: '10px',
+            fontSize: '18px',
+            fontWeight: 'bold',
+          }}
+        >
+          最近热门
+        </Text>
+      </View>
       <WaterfallList
         imageListLeft={leftHalf || []}
         imageListRight={rightHalf || []}
