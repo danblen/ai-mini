@@ -18,6 +18,7 @@ import CardView from './CardView.jsx';
 import PushView from './PushView.jsx';
 import ButtonView from './ButtonView.jsx';
 import CardPhotoView from './CardPhotoView.jsx';
+import TitleView from './TitleView.jsx';
 
 let firstGetImages = 0;
 export default () => {
@@ -149,7 +150,7 @@ export default () => {
       <CardPhotoView allImages={allImages} />
       <PopularTemplate activityTagsImage={allImages?.activityTagsImage} />
 
-      <View
+      {/* <View
         style={{
           fontSize: '36rpx',
           margin: '40rpx 18rpx 18rpx 18rpx ',
@@ -166,7 +167,8 @@ export default () => {
         >
           最近热门
         </Text>
-      </View>
+      </View> */}
+      <TitleView title="最近热门" rightText="" />
       <WaterfallList
         imageListLeft={leftHalf || []}
         imageListRight={rightHalf || []}

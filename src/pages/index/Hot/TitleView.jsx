@@ -7,6 +7,7 @@ export default ({ title, rightText, imageUrl, onRightClick }) => {
         display: 'flex',
         justifyContent: 'center',
         height: 40,
+        width: '100%',
       }}
     >
       <View
@@ -22,14 +23,16 @@ export default ({ title, rightText, imageUrl, onRightClick }) => {
             display: 'flex',
           }}
         >
-          <Image
-            style={{
-              width: 20,
-              height: 20,
-              marginRight: 10,
-            }}
-            src={imageUrl}
-          ></Image>
+          {imageUrl && (
+            <Image
+              style={{
+                width: 20,
+                height: 20,
+                marginRight: 10,
+              }}
+              src={imageUrl}
+            ></Image>
+          )}
           <Text
             style={{
               fontSize: 16,
@@ -46,7 +49,7 @@ export default ({ title, rightText, imageUrl, onRightClick }) => {
           }}
           onClick={onRightClick}
         >
-          {rightText || '查看全部'}
+          {rightText === undefined ? '查看全部' : rightText}
         </View>
       </View>
     </View>

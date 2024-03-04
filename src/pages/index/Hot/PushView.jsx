@@ -5,12 +5,7 @@ import TitleView from './TitleView';
 const photoPage = '/pages/photo/index';
 export default ({ albums }) => {
   return (
-    <View
-      style={{
-        borderRadius: '15rpx',
-        marginTop: '20rpx',
-      }}
-    >
+    <>
       <TitleView
         imageUrl="https://facei.top/static/allImages/activity_tags/%E6%B8%AF%E9%A3%8E/lszu7ifdfwjkb-1.jpg"
         title="写真集"
@@ -80,6 +75,6 @@ export default ({ albums }) => {
           </View>
         ))}
       </ScrollView>
-    </View>
+    </>
   );
 };
