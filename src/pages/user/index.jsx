@@ -72,6 +72,7 @@ export default () => {
           backgroundColor: '#f7e9e2',
           height: '400rpx',
           paddingTop: 90,
+          backgroundImage: 'linear-gradient(to right, #67B26F, #4ca2cd)', // 添加渐变背景
         }}
       >
         <View

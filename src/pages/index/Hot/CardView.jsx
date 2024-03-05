@@ -34,6 +34,10 @@ export default ({ infoLeftImage, infoTopLeftImage, infoTopRightImage }) => {
         marginTop: '10px',
         marginLeft: '18rpx',
         marginRight: '18rpx',
+
+        backgroundImage:
+          'linear-gradient(to right, rgb(181 191 193), rgb(11 118 228 / 48%))', // 添加渐变背景
+        background: 'rgb(204, 197, 197)',
       }}
     >
       <View
