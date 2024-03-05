@@ -1,8 +1,7 @@
 // 将按键浮在图片上方
-import React, { useState, useEffect } from 'react';
+import { Image, ScrollView, Text, View } from '@tarojs/components';
 import Taro from '@tarojs/taro';
-import { AtIcon } from 'taro-ui';
-import { View, Image, ScrollView, Text } from '@tarojs/components';
+import React, { useEffect, useState } from 'react';
 import { delete_all_images, delete_select_images } from '../../api';
 import { getStorageSync } from '../../base/global';
 
@@ -23,12 +22,6 @@ const ImageList = ({ images, loadMore, onFetchData }) => {
       } else {
         setSelectedImages([...selectedImages, index]);
       }
-    } else {
-      const urlsArray = images.map((image) => image.url);
-      Taro.previewImage({
-        current: images[index].url,
-        urls: urlsArray,
-      });
     }
   };
 
@@ -120,61 +113,83 @@ const ImageList = ({ images, loadMore, onFetchData }) => {
   };
 
   return (
-    <View style={{ marginTop: 50 }}>
+    <>
       <View
         style={{
           position: 'fixed',
-          top: 10,
-          left: 10,
-          display: 'flex',
-          justifyContent: 'space-between',
-          width: '95%',
-          backgroundColor: 'rgb(255 255 255 / 51%)',
-          borderRadius: '10%',
+          top: 0,
+          zIndex: 10,
+          height: 30,
+          backgroundColor: '#fff',
+          width: '100%',
         }}
       >
-        {!selectedMode ? (
-          <View
-            className="at-icon at-icon-reload"
-            onClick={() => {
-              onFetchData(true); // 调用fetchData函数
-            }}
-          >
-            刷新
-          </View>
-        ) : (
-          <View></View>
-        )}
-        <View style={{ display: 'flex' }}>
-          {selectedMode && (
-            <View style={{ display: 'flex' }}>
-              <View className="at-icon at-icon-trash" onClick={handlSaveImages}>
-                保存选中
-              </View>
-              <View
-                className="at-icon at-icon-trash"
-                onClick={handleDeleteAllImages}
-              >
-                删除全部
-              </View>
-              <View
-                className="at-icon at-icon-trash"
-                onClick={handleDeleteSelectedImages}
-              >
-                删除选中
-              </View>
+        <View
+          style={{
+            width: '96%',
+            marginLeft: 'auto',
+            marginRight: 'auto',
+            display: 'flex',
+            justifyContent: 'space-between',
+          }}
+        >
+          {!selectedMode ? (
+            <View
+              className="at-icon at-icon-reload"
+              onClick={() => {
+                onFetchData(true); // 调用fetchData函数
+              }}
+            >
+              刷新
             </View>
+          ) : (
+            <View></View>
           )}
-          <View className="at-icon at-icon-list" onClick={handleToggleMode}>
-            {selectedMode ? '取消' : '选择'}
+          <View style={{ display: 'flex' }}>
+            {selectedMode && (
+              <View style={{ display: 'inline-flex' }}>
+                <View
+                  style={{
+                    marginRight: 10,
+                  }}
+                  className="at-icon at-icon-trash"
+                  onClick={handlSaveImages}
+                >
+                  保存选中
+                </View>
+                <View
+                  style={{
+                    marginRight: 10,
+                    color: 'darkred',
+                  }}
+                  className="at-icon at-icon-trash"
+                  onClick={handleDeleteAllImages}
+                >
+                  删除全部
+                </View>
+                <View
+                  style={{
+                    marginRight: 10,
+                    color: 'darkred',
+                  }}
+                  className="at-icon at-icon-trash"
+                  onClick={handleDeleteSelectedImages}
+                >
+                  删除选中
+                </View>
+              </View>
+            )}
+            <View
+              className="at-icon at-icon-list"
+              onClick={handleToggleMode}
+            >
+              {selectedMode ? '取消' : '选择'}
+            </View>
           </View>
         </View>
       </View>
-      <ScrollView
-        scrollY
-        // style={{ height: '100vh' }}
-        onScrollToLower={loadMore}
-      >
+
+      <ScrollView scrollY style={{ marginTop: 30 }} onScrollToLower={loadMore}>
         {showImages.length === 0 ? (
           <View
             style={{
@@ -223,7 +238,12 @@ const ImageList = ({ images, loadMore, onFetchData }) => {
                       lazyLoad={true}
                       className=" "
                       src={image.url}
-                      onClick={() => {}}
+                      onClick={() => {
+                        Taro.previewImage({
+                          current: image.url,
+                          urls: showImages.map((image) => image.url),
+                        });
+                      }}
                     ></Image>
                     {selectedMode && (
                       <View
@@ -239,7 +259,6 @@ const ImageList = ({ images, loadMore, onFetchData }) => {
                           top: 10,
                         }}
                         onClick={(e) => {
-                          // e.stopPropagation();
                           toggleSelectImage(index);
                         }}
                       ></View>
@@ -248,8 +267,6 @@ const ImageList = ({ images, loadMore, onFetchData }) => {
                       <View
                         style={{
                           opacity: selectedImages.includes(index) ? 1 : 0,
-                          // width: 20,
-                          // height: 20,
                           color: 'white',
                           position: 'absolute',
                           top: 10,
@@ -258,7 +275,6 @@ const ImageList = ({ images, loadMore, onFetchData }) => {
                         }}
                         className="at-icon at-icon-check-circle"
                         onClick={(e) => {
-                          // e.stopPropagation();
                           toggleSelectImage(index);
                         }}
                       ></View>
@@ -270,7 +286,7 @@ const ImageList = ({ images, loadMore, onFetchData }) => {
           </View>
         )}
       </ScrollView>
-    </View>
+    </>
   );
 };
 

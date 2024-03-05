@@ -66,7 +66,6 @@ export default ({ images }) => {
       {userInfo.isLogin ? (
         <View
           style={{
-            marginTop: '10rpx',
           }}
         >
           <FinishedTask images={allImages} onFetchData={fetchData} />
