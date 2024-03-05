@@ -14,14 +14,12 @@ const ImageList = ({ images, loadMore, onFetchData }) => {
   }, [images]);
 
   const toggleSelectImage = (index) => {
-    if (selectedMode) {
-      if (selectedImages.includes(index)) {
-        setSelectedImages(
-          selectedImages.filter((selected) => selected !== index)
-        );
-      } else {
-        setSelectedImages([...selectedImages, index]);
-      }
+    if (selectedImages.includes(index)) {
+      setSelectedImages(
+        selectedImages.filter((selected) => selected !== index)
+      );
+    } else {
+      setSelectedImages([...selectedImages, index]);
     }
   };
 
@@ -151,21 +149,26 @@ const ImageList = ({ images, loadMore, onFetchData }) => {
                 <View
                   style={{
                     marginRight: 10,
-                  }}
-                  className="at-icon at-icon-trash"
-                  onClick={handlSaveImages}
-                >
-                  保存选中
-                </View>
-                <View
-                  style={{
-                    marginRight: 10,
                     color: 'darkred',
                   }}
-                  className="at-icon at-icon-trash"
-                  onClick={handleDeleteAllImages}
+                  className={
+                    selectedImages.length === showImages.length
+                      ? 'at-icon at-icon-check-circle'
+                      : 'at-icon at-icon-subtract-circle'
+                  }
+                  onClick={() => {
+                    if (selectedImages.length !== showImages.length) {
+                      setSelectedImages(
+                        showImages.map((image, index) => index)
+                      );
+                    } else {
+                      setSelectedImages([]);
+                    }
+                  }}
                 >
-                  删除全部
+                  {selectedImages.length !== showImages.length
+                    ? '全选所有'
+                    : '取消全选'}
                 </View>
                 <View
                   style={{
@@ -175,14 +178,20 @@ const ImageList = ({ images, loadMore, onFetchData }) => {
                   className="at-icon at-icon-trash"
                   onClick={handleDeleteSelectedImages}
                 >
-                  删除选中
+                  删除
+                </View>
+                <View
+                  style={{
+                    marginRight: 10,
+                  }}
+                  className="at-icon at-icon-file-generic"
+                  onClick={handlSaveImages}
+                >
+                  保存
                 </View>
               </View>
             )}
-            <View
-              className="at-icon at-icon-list"
-              onClick={handleToggleMode}
-            >
+            <View className="at-icon at-icon-list" onClick={handleToggleMode}>
               {selectedMode ? '取消' : '选择'}
             </View>
           </View>
