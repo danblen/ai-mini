@@ -1,6 +1,6 @@
 import { Button, View } from '@tarojs/components';
 
-export default () => {
+export default ({ isEraserActivated }) => {
   return (
     <View>
       <Button

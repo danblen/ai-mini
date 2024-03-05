@@ -17,6 +17,7 @@ import ImagePicker from '../comps/ImagePicker.jsx';
 import IncreaseResolution from './IncreaseResolution.jsx';
 import NavBar from './NavBar.jsx';
 import TopButtons from './TopButtons.jsx';
+import Repaint from './Repaint.jsx';
 
 export default ({}) => {
   const router = useRouter();
@@ -480,41 +481,6 @@ export default ({}) => {
       )}
 
       <View>
-        <AtFloatLayout
-          isOpened={isOpened}
-          onClose={() => {
-            setIsOpened(false);
-          }}
-        >
-          {currentTab === 0 && (
-            <IncreaseResolution
-              sdWith2KParams={sdWith2KParams}
-              sdWith4KParams={sdWith4KParams}
-            />
-          )}
-          {/* {currentTab === 1 && (
-            <Repaint
-              onClick={async () => {
-                console.log(lineWidth);
-                if (lineWidth >= 40) setlineWidth(lineWidth);
-                else setlineWidth(lineWidth + 5);
-              }}
-              // onClick={async () => {
-              //   if (lineWidth <= 5) setlineWidth(5);
-              //   else setlineWidth(lineWidth - 5);
-              // }}
-              // onClick={async () => {
-              //   initCanvas();
-              // }}
-              // onClick={async () => {
-              //   setIsEraserActivated(!isEraserActivated);
-              // }}
-              // onClick={async () => {
-              //   inpaitUseSD();
-              // }}
-            />
-          )} */}
-        </AtFloatLayout>
         <View
           style={{
             position: 'absolute',
@@ -546,6 +512,41 @@ export default ({}) => {
           </View>
         </View>
       </View>
+      <AtFloatLayout
+        isOpened={isOpened}
+        onClose={() => {
+          setIsOpened(false);
+        }}
+      >
+        {currentTab === 0 && (
+          <IncreaseResolution
+            sdWith2KParams={sdWith2KParams}
+            sdWith4KParams={sdWith4KParams}
+          />
+        )}
+        {/* {currentTab === 1 && (
+          <Repaint
+            onClick={async () => {
+              console.log(lineWidth);
+              if (lineWidth >= 40) setlineWidth(lineWidth);
+              else setlineWidth(lineWidth + 5);
+            }}
+            // onClick={async () => {
+            //   if (lineWidth <= 5) setlineWidth(5);
+            //   else setlineWidth(lineWidth - 5);
+            // }}
+            // onClick={async () => {
+            //   initCanvas();
+            // }}
+            // onClick={async () => {
+            //   setIsEraserActivated(!isEraserActivated);
+            // }}
+            // onClick={async () => {
+            //   inpaitUseSD();
+            // }}
+          />
+        )} */}
+      </AtFloatLayout>
     </View>
   );
 };

@@ -4,8 +4,6 @@ export default ({ sdWith2KParams, sdWith4KParams }) => {
   return (
     <View
       style={{
-        bottom: 30,
-        position: 'absolute',
       }}
     >
       <Button
