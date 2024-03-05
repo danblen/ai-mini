@@ -146,8 +146,12 @@ export default () => {
       />
 
       <CardPhotoView allImages={allImages} />
-      <PushView albums={allImages?.albums} />
-      <PushView albums={allImages?.albums} />
+      <PushView
+        albums={allImages?.tagsImage?.['美高Girl'] || []}
+        title="👩‍🎓美高Girl"
+      />
+      <PushView albums={allImages?.tagsImage?.['江南'] || []} title="🏞️江南" />
+      <PushView albums={allImages?.tagsImage?.['暗调'] || []} title="🖤暗调" />
       <PopularTemplate activityTagsImage={allImages?.activityTagsImage} />
 
       {/* <View

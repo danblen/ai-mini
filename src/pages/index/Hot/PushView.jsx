@@ -2,8 +2,8 @@ import { Image, ScrollView, Text, View } from '@tarojs/components';
 import React from 'react';
 import { navigateTo } from '../../../base/global';
 import TitleView from './TitleView';
-const photoPage = '/pages/photo/index';
-export default ({ albums }) => {
+const photoPage = '/pages/faceswap/index';
+export default ({ albums, title }) => {
   return (
     <View
       style={{
@@ -17,8 +17,8 @@ export default ({ albums }) => {
       }}
     >
       <TitleView
-        imageUrl="https://facei.top/static/allImages/activity_tags/%E6%B8%AF%E9%A3%8E/lszu7ifdfwjkb-1.jpg"
-        title="写真集"
+        // imageUrl="https://facei.top/static/allImages/activity_tags/%E6%B8%AF%E9%A3%8E/lszu7ifdfwjkb-1.jpg"
+        title={title}
         rightText="查看全部"
       />
 
@@ -33,31 +33,32 @@ export default ({ albums }) => {
         scroll-x
         scrollWithAnimation
       >
-        {Object.values(albums)?.map?.((albumData) => (
+        {Object.values(albums)?.map?.((albumData, index) => (
           <View
+            key={index}
             style={{
               display: 'inline-flex',
               flexDirection: 'column',
               justifyContent: 'center',
               position: 'relative',
-              height: 120,
+              height: 160,
             }}
           >
             <Image
               style={{
                 marginLeft: '18rpx',
-                width: 100,
-                height: 100,
+                width: '120px', // 设置图片宽度为 120 rpx
+                // height: '120px', // 设置图片高度为 120 rpx
                 borderRadius: 10,
               }}
+              mode="aspectFill"
               className=" "
               onClick={() => {
                 navigateTo({
-                  url: photoPage,
-                  success: function (res) {},
+                  url: '/pages/faceswap/index?imageUrl=' + albumData,
                 });
               }}
-              src={albumData.index}
+              src={albumData}
             ></Image>
             <View
               style={{
@@ -75,13 +76,13 @@ export default ({ albums }) => {
               <View className="at-icon at-icon-eye"></View>
               {123}
             </View>
-            <View
+            {/* <View
               style={{
                 marginLeft: '18rpx',
               }}
             >
               {343242}
-            </View>
+            </View> */}
           </View>
         ))}
       </ScrollView>

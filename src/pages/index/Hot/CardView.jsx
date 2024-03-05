@@ -173,7 +173,7 @@ export default ({ infoLeftImage, infoTopLeftImage, infoTopRightImage }) => {
               <View
                 style={{
                   position: 'absolute',
-                  top: '21%',
+                  top: '17.5%',
                   right: '28%',
                   flexDirection: 'row', // 设置为水平排列
                   alignItems: 'center', // 垂直居中对齐
@@ -185,7 +185,7 @@ export default ({ infoLeftImage, infoTopLeftImage, infoTopRightImage }) => {
               <View
                 style={{
                   position: 'absolute',
-                  top: '21%',
+                  top: '17.5%',
                   right: '3%',
                   flexDirection: 'row', // 设置为水平排列
                   alignItems: 'center', // 垂直居中对齐
@@ -210,7 +210,7 @@ export default ({ infoLeftImage, infoTopLeftImage, infoTopRightImage }) => {
               <View
                 style={{
                   position: 'absolute',
-                  top: '25%',
+                  top: '21%',
                   right: '7%',
                   flexDirection: 'row', // 设置为水平排列
                   alignItems: 'center', // 垂直居中对齐
