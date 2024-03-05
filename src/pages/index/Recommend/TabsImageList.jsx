@@ -110,40 +110,40 @@ export default ({ tags_image, onNavigateToHot }) => {
         style={{
           paddingTop: 50,
         }}
-        // 模拟器有时候点图片会切换tab，真机正常
-        onTouchStart={(e) => {
-          startXRef.current = e.touches[0].clientX;
-          startYRef.current = e.touches[0].clientY;
-        }}
-        onTouchMove={(e) => {
-          endXRef.current = e.touches[0].clientX;
-          endYRef.current = e.touches[0].clientY;
-        }}
-        onTouchEnd={() => {
-          const distanceX = endXRef.current - startXRef.current;
-          // console.log('startYRef', endYRef, startYRef);
-          const distanceY = endYRef.current - startYRef.current;
-          // console.log('123123111', distanceX, distanceY);
-          const flags = distanceY < -10 || distanceY > 10;
-          if (flags && distanceX > 100) {
-            // 设置一个阈值，例如50px，表示滑动距离超过50px才切换tab
-            // 向右滑动，切换到前一个tab
-            const tab = tabList.findIndex((tab) => tab.title === current) - 1;
-            const index = Math.max(tab, 0);
-            if (tab < 0) {
-              console.log(tab);
-              onNavigateToHot();
-            }
-            handleTabClick(tabList[index].title);
-          } else if (flags && distanceX < -10) {
-            // 向左滑动，切换到下一个tab
-            const index = Math.min(
-              tabList.findIndex((tab) => tab.title === current) + 1,
-              tabList.length - 1
-            );
-            handleTabClick(tabList[index].title);
-          }
-        }}
+        // 模拟器有时候点图片会切换tab
+        // onTouchStart={(e) => {
+        //   startXRef.current = e.touches[0].clientX;
+        //   startYRef.current = e.touches[0].clientY;
+        // }}
+        // onTouchMove={(e) => {
+        //   endXRef.current = e.touches[0].clientX;
+        //   endYRef.current = e.touches[0].clientY;
+        // }}
+        // onTouchEnd={() => {
+        //   const distanceX = endXRef.current - startXRef.current;
+        //   // console.log('startYRef', endYRef, startYRef);
+        //   const distanceY = endYRef.current - startYRef.current;
+        //   // console.log('123123111', distanceX, distanceY);
+        //   const flags = distanceY < -10 || distanceY > 10;
+        //   if (flags && distanceX > 100) {
+        //     // 设置一个阈值，例如50px，表示滑动距离超过50px才切换tab
+        //     // 向右滑动，切换到前一个tab
+        //     const tab = tabList.findIndex((tab) => tab.title === current) - 1;
+        //     const index = Math.max(tab, 0);
+        //     if (tab < 0) {
+        //       console.log(tab);
+        //       onNavigateToHot();
+        //     }
+        //     handleTabClick(tabList[index].title);
+        //   } else if (flags && distanceX < -10) {
+        //     // 向左滑动，切换到下一个tab
+        //     const index = Math.min(
+        //       tabList.findIndex((tab) => tab.title === current) + 1,
+        //       tabList.length - 1
+        //     );
+        //     handleTabClick(tabList[index].title);
+        //   }
+        // }}
       >
         {imageUrlsMap[current] && (
           <ImageList imageUrls={imageUrlsMap[current]} />

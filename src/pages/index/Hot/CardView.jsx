@@ -1,6 +1,9 @@
 import { Image, Text, View } from '@tarojs/components';
 import Taro from '@tarojs/taro';
+import buttonImages from '../../../static/image/my/mine_bg_3x.png';
+import plusIcon from '../../../static/image/my/square-plus-w.png';
 import iconwechat from '../../../static/image/share/icon_wechat.png';
+import { AtIcon } from 'taro-ui';
 
 export default ({ infoLeftImage, infoTopLeftImage, infoTopRightImage }) => {
   const handleButtonClick = (pagePath, params) => {
@@ -74,15 +77,39 @@ export default ({ infoLeftImage, infoTopLeftImage, infoTopRightImage }) => {
                 height: 200,
               }}
             />
-            <Text
+            {/* 右下角角标 */}
+            <View
               style={{
                 position: 'absolute',
-                bottom: 13,
-                right: 0,
+                top: '84%',
+                right: '0%',
+                flexDirection: 'row', // 设置为水平排列
+                alignItems: 'center', // 垂直居中对齐
+                borderRadius: '10px',
+                paddingLeft: '10px',
+                background: '#2196f394',
               }}
             >
-              sadads
-            </Text>
+              <Text
+                style={{
+                  // flex: 1,
+                  // marginBottom: '5px',
+                  overflow: 'hidden',
+                  // display: '-webkit-box',
+                  WebkitBoxOrient: 'vertical',
+                  WebkitLineClamp: 2, // 控制显示行数
+                  color: '#ffffff',
+                  fontSize: '13px',
+                  // zIndex: 1,
+                  // position: 'absolute',
+                  // top: '6.7%',
+                  // right: '9%',
+                }}
+              >
+                影楼风格
+              </Text>
+              <AtIcon value="chevron-right" size="24" color="#cdcecd" />
+            </View>
           </View>
           {/* 右侧布局 */}
           <View
@@ -124,7 +151,7 @@ export default ({ infoLeftImage, infoTopLeftImage, infoTopRightImage }) => {
                 src={
                   infoTopRightImage.params.imageUrl &&
                   infoTopRightImage.params.imageUrl.length > 0
-                    ? infoTopRightImage.params.imageUrl[0]
+                    ? infoTopRightImage.params.imageUrl[29]
                     : []
                 }
                 mode="aspectFill"
@@ -142,11 +169,36 @@ export default ({ infoLeftImage, infoTopLeftImage, infoTopRightImage }) => {
                   )
                 }
               />
+              {/* 右下角角标 */}
+              <View
+                style={{
+                  position: 'absolute',
+                  top: '21%',
+                  right: '28%',
+                  flexDirection: 'row', // 设置为水平排列
+                  alignItems: 'center', // 垂直居中对齐
+                  borderRadius: '10px',
+                }}
+              >
+                <AtIcon value="chevron-right" size="20" color="#ffffff" />
+              </View>
+              <View
+                style={{
+                  position: 'absolute',
+                  top: '21%',
+                  right: '3%',
+                  flexDirection: 'row', // 设置为水平排列
+                  alignItems: 'center', // 垂直居中对齐
+                  borderRadius: '10px',
+                }}
+              >
+                <AtIcon value="chevron-right" size="20" color="#ffffff" />
+              </View>
             </View>
             <View>
               {/* 下半部分长方形图 */}
               <Image
-                src="https://facei.top/static/allImages/activity_tags/%E6%B8%AF%E9%A3%8E/lszu7ifdfwjkb-1.jpg"
+                src={buttonImages}
                 style={{
                   width: '100%',
                   height: 95,
@@ -155,6 +207,42 @@ export default ({ infoLeftImage, infoTopLeftImage, infoTopRightImage }) => {
                   // objectFit: 'cover',
                 }}
               />
+              <View
+                style={{
+                  position: 'absolute',
+                  top: '25%',
+                  right: '7%',
+                  flexDirection: 'row', // 设置为水平排列
+                  alignItems: 'center', // 垂直居中对齐
+                }}
+              >
+                <Image
+                  src={plusIcon}
+                  style={{
+                    width: '30px', // 设置图标宽度与字体大小相近
+                    height: '30px', // 设置图标高度与字体大小相近
+                    marginRight: '10px',
+                  }}
+                />
+                <Text
+                  style={{
+                    // flex: 1,
+                    // marginBottom: '5px',
+                    overflow: 'hidden',
+                    // display: '-webkit-box',
+                    WebkitBoxOrient: 'vertical',
+                    WebkitLineClamp: 2, // 控制显示行数
+                    color: '#ffffff',
+                    fontSize: '26px',
+                    // zIndex: 1,
+                    // position: 'absolute',
+                    // top: '6.7%',
+                    // right: '9%',
+                  }}
+                >
+                  开始创作
+                </Text>
+              </View>
             </View>
           </View>
         </View>

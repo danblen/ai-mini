@@ -3,7 +3,7 @@ import { navigateTo } from '../../base/global';
 const url = '/pages/faceswap/index';
 export default ({ image }) => {
   return (
-    <View style={{marginBottom:10}}>
+    <View style={{ marginBottom: 10 }}>
       <Image
         style={Styles.image}
         mode="aspectFill"
@@ -59,6 +59,7 @@ export default ({ image }) => {
             overflow: 'hidden',
             textOverflow: 'ellipsis',
             whiteSpace: 'nowrap',
+            color: '#928c8c',
           }}
         >
           {image.userName}
@@ -70,7 +71,13 @@ export default ({ image }) => {
           }}
         >
           <View className="at-icon at-icon-eye"></View>
-          {image.viewCount}
+          <Text
+            style={{
+              color: '#928c8c',
+            }}
+          >
+            {image.viewCount}
+          </Text>
         </View>
       </View>
     </View>

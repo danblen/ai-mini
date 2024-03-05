@@ -6,12 +6,12 @@ export default ({ allImages }) => {
   return (
     <View
       style={{
-        // marginTop: '20px',
-        // paddingTop: 10,
+        marginTop: '18rpx',
         marginLeft: '18rpx',
         marginRight: '18rpx',
         borderRadius: '8rpx',
-        background: '#dcdadacf',
+        paddingBottom: '8rpx',
+        background: '0% 0% / cover rgb(204, 197, 197)',
         // background:'#fff'
       }}
     >

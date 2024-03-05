@@ -103,8 +103,6 @@ export default () => {
         </AtNoticebar>
       </View>
 
-      <PushView albums={allImages?.albums} />
-
       {/* <ButtonView allImages={allImages} /> */}
       <CardView
         infoLeftImage={{
@@ -130,11 +128,11 @@ export default () => {
         infoTopRightImage={{
           pagePath: '/pages/activity/Activity',
           params: {
-            imageUrl: allImages?.tagsImage?.['韩式写真'],
-            title: '韩式写真',
-            description: '韩式写真\n参与活动，获取丰富奖励~',
+            imageUrl: allImages?.tagsImage?.['韩式证件照'],
+            title: '韩式证件照',
+            description: '韩式证件照\n参与活动，获取丰富奖励~',
             pagePath: '/pages/activity/Activity',
-            text: '韩式写真',
+            text: '韩式证件照',
           },
         }}
         // infoTopRightImage={{
@@ -148,6 +146,8 @@ export default () => {
       />
 
       <CardPhotoView allImages={allImages} />
+      <PushView albums={allImages?.albums} />
+      <PushView albums={allImages?.albums} />
       <PopularTemplate activityTagsImage={allImages?.activityTagsImage} />
 
       {/* <View
@@ -168,12 +168,12 @@ export default () => {
           最近热门
         </Text>
       </View> */}
-      <TitleView title="最近热门" rightText="" />
+      {/* <TitleView title="最近热门" rightText="" />
       <WaterfallList
         imageListLeft={leftHalf || []}
         imageListRight={rightHalf || []}
         LeftTop={<CustomTop curTagPage="Hot" />}
-      />
+      /> */}
     </ScrollView>
   );
 };
