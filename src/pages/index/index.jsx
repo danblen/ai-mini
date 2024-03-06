@@ -52,7 +52,14 @@ export default () => {
   });
 
   return (
-    <ScrollView enhanced showScrollbar={false} scroll-y>
+    <ScrollView
+      enhanced
+      showScrollbar={false}
+      scroll-y
+      style={{
+        marginTop: '10px',
+      }}
+    >
       <NavBar
         currentTab={currentTab}
         onSwitchTab={(tabName) => {

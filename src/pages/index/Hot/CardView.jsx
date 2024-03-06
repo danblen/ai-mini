@@ -1,8 +1,8 @@
 import { Image, Text, View } from '@tarojs/components';
 import Taro from '@tarojs/taro';
 import { AtIcon } from 'taro-ui';
-import buttonImages from '../../../static/image/my/mine_bg_3x.png';
-import plusIcon from '../../../static/image/my/square-plus-w.png';
+import buttonImages from '../../../static/image/my/dddepth-335.jpg';
+import plusIcon from '../../../static/image/my/add.png';
 
 export default ({ infoLeftImage, infoTopLeftImage, infoTopRightImage }) => {
   const handleButtonClick = (pagePath, params) => {
@@ -31,8 +31,7 @@ export default ({ infoLeftImage, infoTopLeftImage, infoTopRightImage }) => {
         marginTop: '10px',
         marginLeft: '18rpx',
         marginRight: '18rpx',
-        backgroundImage:
-          'linear-gradient(to right, rgb(181 191 193), rgb(11 118 228 / 48%))', // 添加渐变背景
+        background: '0% 0% / cover rgba(204, 197, 197, 0.5)', // 添加渐变背景
       }}
     >
       <View
@@ -66,7 +65,7 @@ export default ({ infoLeftImage, infoTopLeftImage, infoTopRightImage }) => {
               src={
                 infoLeftImage.params.imageUrl &&
                 infoLeftImage.params.imageUrl.length > 0
-                  ? infoLeftImage.params.imageUrl[0]
+                  ? infoLeftImage.params.imageUrl[1]
                   : []
               }
               mode="aspectFill"
@@ -80,23 +79,34 @@ export default ({ infoLeftImage, infoTopLeftImage, infoTopRightImage }) => {
             <View
               style={{
                 position: 'absolute',
-                top: '84%',
+                top: '77%',
                 right: '0%',
+                width: '100%', // 设置宽度为图片的宽度
                 flexDirection: 'row', // 设置为水平排列
-                alignItems: 'center', // 垂直居中对齐
-                borderRadius: '10px',
-                paddingLeft: '10px',
-                background: '#2196f394',
+                justifyContent: 'center', // 水平居中对齐
+                borderRadius: 5, // 继续使用像素值或者修改为 '5px'
+                background:
+                  'linear-gradient(to top, rgba(23, 24, 25, 0.86) 0%, rgba(23, 24, 25, 0.65) 50%, rgba(33, 150, 243, 0) 100%)', // 使用渐变，但只对PHOTO STUDIO生效
               }}
             >
               <Text
                 style={{
                   overflow: 'hidden',
                   color: '#ffffff',
-                  fontSize: '13px',
+                  textAlign: 'center', // 文字水平居中
                 }}
               >
-                影楼风格
+                PHOTO STUDIO{'\n'}
+                <Text
+                  style={{
+                    fontWeight: 'bold',
+                    fontSize: '13px',
+                    background:
+                      'linear-gradient(to top, rgba(23, 24, 25, 0.94), rgba(33, 150, 243, 0))', // PHOTO STUDIO的渐变背景
+                  }}
+                >
+                  影楼风格
+                </Text>
               </Text>
               <AtIcon value="chevron-right" size="24" color="#cdcecd" />
             </View>
@@ -201,7 +211,7 @@ export default ({ infoLeftImage, infoTopLeftImage, infoTopRightImage }) => {
               style={{
                 width: '100%',
                 height: 95,
-                borderRadius: 5,
+                borderRadius: 20,
                 display: 'flex',
                 alignItems: 'center', // 垂直居中对齐
                 justifyContent: 'center',
@@ -212,16 +222,20 @@ export default ({ infoLeftImage, infoTopLeftImage, infoTopRightImage }) => {
               <Image
                 src={plusIcon}
                 style={{
-                  width: '30px', // 设置图标宽度与字体大小相近
-                  height: '30px', // 设置图标高度与字体大小相近
-                  marginRight: '10px',
+                  width: '20px', // 设置图标宽度与字体大小相近
+                  height: '20px', // 设置图标高度与字体大小相近
+                  marginRight: '5px',
+                  borderRadius: '9px',
+                  padding: '5px',
+                  background: '#40a2dc',
                 }}
               />
               <Text
                 style={{
                   overflow: 'hidden',
-                  color: '#ffffff',
-                  fontSize: '26px',
+                  color: '#000000',
+                  fontWeight: 'bold',
+                  fontSize: '24px',
                 }}
               >
                 开始创作

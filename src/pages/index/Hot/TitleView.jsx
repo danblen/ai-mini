@@ -44,12 +44,15 @@ export default ({ title, rightText, imageUrl, onRightClick }) => {
         </View>
         <View
           style={{
-            color: 'grey',
+            background: '#038aa038',
             fontSize: 12,
+            borderRadius: '6px',
+            paddingLeft: '6px',
+            paddingRight: '6px',
           }}
           onClick={onRightClick}
         >
-          {rightText === undefined ? '查看全部' : rightText}
+          {rightText === undefined ? '全部>' : rightText}
         </View>
       </View>
     </View>

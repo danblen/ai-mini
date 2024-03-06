@@ -2,8 +2,15 @@ import { Image, ScrollView, Text, View } from '@tarojs/components';
 import React from 'react';
 import { navigateTo } from '../../../base/global';
 import TitleView from './TitleView';
-const photoPage = '/pages/faceswap/index';
+import recomView from '../Recommend/index';
+
 export default ({ albums, title }) => {
+  const handleRightClick = () => {
+    // 在这里定义右侧点击事件的处理逻辑
+    console.log('Right button clicked');
+    // 例如，可以在这里触发导航到相应页面的操作
+    navigateTo({ url: '/pages/index/Recommend' });
+  };
   return (
     <View
       style={{
@@ -12,14 +19,15 @@ export default ({ albums, title }) => {
         marginRight: '18rpx',
         borderRadius: '8rpx',
         paddingBottom: '8rpx',
-        background: '0% 0% / cover rgb(204, 197, 197)',
+        background: '0% 0% / cover rgb(204, 197, 197, 0.5)',
         // background:'#fff'
       }}
     >
       <TitleView
         // imageUrl="https://facei.top/static/allImages/activity_tags/%E6%B8%AF%E9%A3%8E/lszu7ifdfwjkb-1.jpg"
         title={title}
-        rightText="查看全部"
+        rightText="全部>"
+        onRightClick={handleRightClick}
       />
 
       <ScrollView
@@ -63,11 +71,11 @@ export default ({ albums, title }) => {
             <View
               style={{
                 position: 'absolute',
-                bottom: 20,
-                opacity: 0.5,
+                top: '90%',
+                opacity: 0.8,
                 left: 10,
                 borderRadius: 5,
-                background: 'gray',
+                background: '#f9f9f9a6',
                 fontSize: 12,
                 paddingLeft: 5,
                 paddingRight: 5,

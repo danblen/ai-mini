@@ -11,7 +11,7 @@ export default ({ allImages }) => {
         marginRight: '18rpx',
         borderRadius: '8rpx',
         paddingBottom: '8rpx',
-        background: '0% 0% / cover rgb(204, 197, 197)',
+        background: '0% 0% / cover rgb(204, 197, 197, 0.5)',
         // background:'#fff'
       }}
     >
