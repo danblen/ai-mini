@@ -2,7 +2,7 @@ import { View } from '@tarojs/components';
 import ButtonsBox from '../comps/ButtonsBox';
 import { PAGES } from '../../const/app';
 
-export default () => {
+export default ({ onLogout }) => {
   return (
     <View
       style={{
@@ -12,16 +12,16 @@ export default () => {
       }}
     >
       <ButtonsBox
-        background='#fff'
+        background="#fff"
         buttons={[
           {
             imageUrl: require('../../static/image/my/icons8-joker-dc-200.png'),
-            pagePath: '/pages/activity/Activity',
+            // pagePath: '/pages/activity/Activity',
             text: '我的积分',
           },
           {
             imageUrl: require('../../static/image/my/icons8-编辑图像-100.png'),
-            pagePath: '/pages/activity/Activity',
+            // pagePath: '/pages/album/index',
             text: '我的作品',
           },
           {
@@ -31,8 +31,8 @@ export default () => {
           },
           {
             imageUrl: require('../../static/image/my/icons8-编辑图像-100.png'),
-            pagePath: '/pages/refine/index',
             text: '退出登陆',
+            onClick: onLogout,
           },
         ]}
       />

@@ -18,15 +18,19 @@ export default ({ onCheck }) => {
     >
       <View
         style={{
-          height: 50,
-          paddingLeft: 10,
           backgroundColor: '#fff',
           width: '96%',
           display: 'flex',
           alignItems: 'center',
         }}
       >
-        <Text>签到领积分</Text>
+        <Text
+          style={{
+            paddingLeft: 10,
+          }}
+        >
+          签到领积分
+        </Text>
         <Text
           style={{
             fontSize: 10,

@@ -190,7 +190,7 @@ export default () => {
           paddingTop: 20,
         }}
       >
-        {userInfo.isLogin && !userInfo.data.isChecked||true && (
+        {userInfo.isLogin && !userInfo.data.isChecked && (
           <CheckIn
             onCheck={async () => {
               const res = await api.checkIn({
@@ -207,16 +207,27 @@ export default () => {
                   data: res.data,
                 });
               }
-              Taro.showToast({title:'积分 +2',icon:'none'})
+              Taro.showToast({ title: '积分 +2', icon: 'none' });
               fetchUserInfo();
             }}
           />
         )}
 
-        <ButtonView />
+        <ButtonView
+          onLogout={() => {
+            clearUserInfo();
+            setUserInfo({
+              isLogin: false,
+              data: {
+                points: 0,
+                userId: '',
+                isChecked: false,
+                avatarUrl: '',
+              },
+            });
+          }}
+        />
       </View>
-
-      
 
       <AtFloatLayout
         isOpened={isOpened}
@@ -237,4 +248,3 @@ export default () => {
     </View>
   );
 };
-
