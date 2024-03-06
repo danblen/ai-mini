@@ -15,13 +15,14 @@ const Hot = lazy(() => import('./Hot'));
 const Recommend = lazy(() => import('./Recommend'));
 const New = lazy(() => import('./New'));
 
-function TabContent({ currentTab, allImages, navigateToHot }) {
+function TabContent({ currentTab, allImages, navigateToTab, recomTitle }) {
   const tabComponents = {
-    hot: <Hot />,
+    hot: <Hot onNavigateToTab={navigateToTab} />,
     recommend: (
       <Recommend
         tags_image={allImages?.tagsImage}
-        onNavigateToHot={navigateToHot}
+        onNavigateToTab={navigateToTab}
+        titleParam={recomTitle}
       />
     ),
     new: <New />,
@@ -32,6 +33,7 @@ function TabContent({ currentTab, allImages, navigateToHot }) {
 }
 export default () => {
   const [currentTab, setCurrentTab] = useState('hot');
+  const [recomTitle, setRecomTitle] = useState('古装');
   // 获取推荐tab页的图片，需要优化
   let [allImages, setAllImages] = useState({ albums: {}, tagsImage: {} });
   const getAllImages = async () => {
@@ -75,7 +77,11 @@ export default () => {
         <TabContent
           currentTab={currentTab}
           allImages={allImages}
-          navigateToHot={() => setCurrentTab('hot')}
+          navigateToTab={(param, title) => {
+            setCurrentTab(param);
+            setRecomTitle(title);
+          }}
+          recomTitle={recomTitle}
         />
       </ScrollView>
     </ScrollView>

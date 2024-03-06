@@ -3,17 +3,22 @@ import { useEffect, useRef, useState } from 'react';
 import { AtFloatLayout } from 'taro-ui';
 import ImageList from './ImageList';
 
-export default ({ tags_image, onNavigateToHot }) => {
+export default ({ tags_image, onNavigateToTab, titleParam }) => {
   const [imageUrlsMap, setImageUrlsMap] = useState({});
   const [imageUrls, setImageUrls] = useState([]);
   const [tabList, setTabList] = useState([]);
-  const [current, setCurrent] = useState('古装');
+  const [current, setCurrent] = useState(titleParam || '古装');
   const [showDrawer, setShowDrawer] = useState(false);
   const startXRef = useRef(0);
   const endXRef = useRef(0);
   const startYRef = useRef(0);
   const endYRef = useRef(0);
 
+  useEffect(() => {
+    console.log('titleParam:', titleParam);
+    // setCurrent(titleParam);
+    // setImageUrls(tags_image[titleParam]);
+  }, [titleParam]);
   useEffect(() => {
     if (tags_image) {
       const tabList = Object.keys(tags_image).map((key) => ({ title: key }));
@@ -132,7 +137,7 @@ export default ({ tags_image, onNavigateToHot }) => {
         //     const index = Math.max(tab, 0);
         //     if (tab < 0) {
         //       console.log(tab);
-        //       onNavigateToHot();
+        //       onNavigateToTab('hot');
         //     }
         //     handleTabClick(tabList[index].title);
         //   } else if (flags && distanceX < -10) {

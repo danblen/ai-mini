@@ -1,10 +1,11 @@
 import TabsImageList from './TabsImageList';
 
-export default ({ tags_image, onNavigateToHot }) => {
+export default ({ tags_image, onNavigateToTab, titleParam }) => {
   return (
     <TabsImageList
       tags_image={tags_image}
-      onNavigateToHot={onNavigateToHot}
+      onNavigateToTab={onNavigateToTab}
+      titleParam={titleParam}
     ></TabsImageList>
   );
 };

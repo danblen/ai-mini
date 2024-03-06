@@ -21,7 +21,7 @@ import CardPhotoView from './CardPhotoView.jsx';
 import TitleView from './TitleView.jsx';
 
 let firstGetImages = 0;
-export default () => {
+export default ({ onNavigateToTab }) => {
   let [allImages, setAllImages] = useState({ albums: {}, tags_image: {} });
   const [leftHalf, setLeftHalf] = useState();
   const [rightHalf, setRightHalf] = useState();
@@ -148,10 +148,19 @@ export default () => {
       <CardPhotoView allImages={allImages} />
       <PushView
         albums={allImages?.tagsImage?.['美高Girl'] || []}
-        title="👩‍🎓美高Girl"
+        title="👩‍🎓 美高Girl"
+        onNavigateToTab={onNavigateToTab}
       />
-      <PushView albums={allImages?.tagsImage?.['江南'] || []} title="🏞️江南" />
-      <PushView albums={allImages?.tagsImage?.['暗调'] || []} title="🖤暗调" />
+      <PushView
+        albums={allImages?.tagsImage?.['江南'] || []}
+        title="🏞️ 江南"
+        onNavigateToTab={onNavigateToTab}
+      />
+      <PushView
+        albums={allImages?.tagsImage?.['暗调'] || []}
+        title="🖤 暗调"
+        onNavigateToTab={onNavigateToTab}
+      />
       <PopularTemplate activityTagsImage={allImages?.activityTagsImage} />
 
       {/* <View

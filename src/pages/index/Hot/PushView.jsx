@@ -4,12 +4,16 @@ import { navigateTo } from '../../../base/global';
 import TitleView from './TitleView';
 import recomView from '../Recommend/index';
 
-export default ({ albums, title }) => {
+export default ({ albums, title, onNavigateToTab }) => {
   const handleRightClick = () => {
-    // 在这里定义右侧点击事件的处理逻辑
-    console.log('Right button clicked');
-    // 例如，可以在这里触发导航到相应页面的操作
-    navigateTo({ url: '/pages/index/Recommend' });
+    // 触发导航到相应页面的操作
+    const emojiRegex = /[\uD800-\uDBFF][\uDC00-\uDFFF]/g;
+
+    // 使用正则表达式替换表情符号为空字符串
+    const stringWithoutEmojis = title.replace(emojiRegex, '');
+
+    console.log(stringWithoutEmojis);
+    onNavigateToTab('recommend', stringWithoutEmojis);
   };
   return (
     <View
