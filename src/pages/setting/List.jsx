@@ -24,7 +24,8 @@ export default ({}) => {
   return (
     <View style={Style.list}>
       <View style={Style.item}>
-        <Text style={Style.title}>版本更新</Text>
+        <View style={Style.title}>版本号</View>
+        <View style={{ fontSize: 12 }}>1.12.0</View>
       </View>
       <View style={Style.item} onClick={() => {}}>
         账户安全设置
@@ -64,14 +65,17 @@ const Style = {
     borderRadius: 10,
     backgroundColor: '#fff',
     border: '1px solid #fff',
-    paddingLeft: 20,
+    paddingLeft: 10,
+    paddingRight: 10,
     margin: 10,
   },
   item: {
-    // backgroundColor: '#fff',
     borderBottom: '1px solid #f9f9f9',
     height: '80rpx',
     lineHeight: '80rpx',
+    display: 'flex',
+    width: '100%',
+    justifyContent: 'space-between',
   },
   title: {},
 };

@@ -2,7 +2,7 @@
  * 用户页
  */
 import { Image, Text, View } from '@tarojs/components';
-import { useDidShow, useTabItemTap } from '@tarojs/taro';
+import Taro, { useDidShow, useTabItemTap } from '@tarojs/taro';
 import React, { useState } from 'react';
 import { AtFloatLayout } from 'taro-ui';
 import { api, get_user_info } from '../../api';
@@ -11,6 +11,7 @@ import { clearUserInfo, saveUserInfo } from '../../common/user';
 import iconwechat from '../../static/image/share/icon_wechat.png';
 import LoginView from '../comps/LoginView';
 import CheckIn from './CheckIn';
+import ButtonView from './ButtonView';
 
 export default () => {
   const [isOpened, setIsOpened] = useState(false);
@@ -185,11 +186,11 @@ export default () => {
           borderRadius: '18px',
           position: 'relative',
           backgroundColor: '#f8f8f8',
-          top: '-50rpx',
+          top: -30,
           paddingTop: 20,
         }}
       >
-        {userInfo.isLogin && !userInfo.data.isChecked && (
+        {userInfo.isLogin && !userInfo.data.isChecked||true && (
           <CheckIn
             onCheck={async () => {
               const res = await api.checkIn({
@@ -206,89 +207,16 @@ export default () => {
                   data: res.data,
                 });
               }
+              Taro.showToast({title:'积分 +2',icon:'none'})
               fetchUserInfo();
             }}
           />
         )}
 
-        <View style={Style.gridContainerStyle}>
-          <View style={Style.gridItemStyle}>
-            <View
-              className="at-icon at-icon-settings"
-              style={{
-                fontSize: '40rpx',
-                width: '40rpx',
-                top: '10rpx',
-                right: '10rpx',
-              }}
-              onClick={() => {
-                navigateTo({ url: '/pages/album/index' });
-              }}
-            ></View>
-            <View>我的作品</View>
-          </View>
-          <View style={Style.gridItemStyle}>
-            <View
-              className="at-icon at-icon-settings"
-              style={{
-                fontSize: '40rpx',
-                width: '40rpx',
-                top: '10rpx',
-                right: '10rpx',
-              }}
-              onClick={() => {}}
-            ></View>
-            <View>我的积分</View>
-          </View>
-          <View style={Style.gridItemStyle}>
-            <View
-              className="at-icon at-icon-settings"
-              style={{
-                fontSize: '40rpx',
-                width: '40rpx',
-                top: '10rpx',
-                right: '10rpx',
-              }}
-              onClick={() => {}}
-            ></View>
-            <View>我的签到</View>
-          </View>
-          <View style={Style.gridItemStyle}>
-            <View
-              className="at-icon at-icon-settings"
-              style={{
-                fontSize: '40rpx',
-                width: '40rpx',
-                top: '10rpx',
-                right: '10rpx',
-              }}
-              onClick={() => {}}
-            ></View>
-            <View>我的签到</View>
-          </View>
-          <View
-            style={Style.gridItemStyle}
-            onClick={() => {
-              clearUserInfo();
-              setUserInfo({
-                isLogin: false,
-                data: null,
-              });
-            }}
-          >
-            <View
-              className="at-icon at-icon-settings"
-              style={{
-                fontSize: '40rpx',
-                width: '40rpx',
-                top: '10rpx',
-                right: '10rpx',
-              }}
-            ></View>
-            <View>退出登陆</View>
-          </View>
-        </View>
+        <ButtonView />
       </View>
+
+      
 
       <AtFloatLayout
         isOpened={isOpened}
@@ -310,30 +238,3 @@ export default () => {
   );
 };
 
-const Style = {
-  gridContainerStyle: {
-    backgroundColor: '#fff',
-    borderRadius: '10px',
-    padding: '16px',
-    margin: '10px',
-    display: 'grid',
-    gridTemplateColumns: 'repeat(3, 1fr)' /* 3列的网格，每列平均分配宽度 */,
-    gap: '16px' /* 网格项之间的间隔 */,
-  },
-
-  gridItemStyle: {
-    padding: '16px',
-    // border: '1px solid #ccc',
-    textAlign: 'center',
-  },
-  cardStyle: {
-    margin: '30rpx',
-    position: 'relative',
-    top: '-200rpx',
-    border: '1px solid #e0e0e0',
-    backgroundColor: '#fff',
-    borderRadius: '20rpx',
-    padding: '20rpx',
-    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-  },
-};

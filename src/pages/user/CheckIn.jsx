@@ -1,4 +1,4 @@
-import { View } from '@tarojs/components';
+import { Text, View } from '@tarojs/components';
 import React from 'react';
 
 export default ({ onCheck }) => {
@@ -8,22 +8,32 @@ export default ({ onCheck }) => {
     <View
       style={{
         fontSize: '40rpx',
-        height: '100rpx',
+        height: 50,
         borderRadius: '10px',
-        backgroundColor: '#fff',
-        top: '10rpx',
-        margin: '10px',
-        right: '10rpx',
-        padding: '10rpx',
+        display: 'flex',
+        justifyContent: 'center',
+        width: '100%',
       }}
       onClick={onCheck}
     >
       <View
         style={{
-          lineHeight: '100rpx',
+          height: 50,
+          paddingLeft: 10,
+          backgroundColor: '#fff',
+          width: '96%',
+          display: 'flex',
+          alignItems: 'center',
         }}
       >
-        签到领积分
+        <Text>签到领积分</Text>
+        <Text
+          style={{
+            fontSize: 10,
+          }}
+        >
+          ({content})
+        </Text>
         <View className="at-icon at-icon-chevron-right" />
       </View>
     </View>

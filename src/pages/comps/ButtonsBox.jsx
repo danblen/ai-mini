@@ -1,19 +1,18 @@
 import { Image, Text, View } from '@tarojs/components';
 import { navigateTo } from '../../base/global';
 
-export default ({ buttons }) => {
-  const handleButtonClick = (pagePath, params) => {
-    if (!pagePath || !params) {
-      console.error('Invalid navigation parameters:', pagePath, params);
+export default ({ background, buttons }) => {
+  const handleButtonClick = (button) => {
+    if (button.onClick) {
+      button.onClick();
       return;
     }
-
     // 对参数进行编码
-    const encodedParams = Object.entries(params)
+    const encodedParams =button.params&& Object.entries(button.params)
       .map(([key, value]) => `${key}=${encodeURIComponent(value)}`)
       .join('&');
 
-    const url = `${pagePath}?${encodedParams}`;
+    const url = `${button.pagePath}?${encodedParams}`;
 
     navigateTo({
       url: url,
@@ -26,16 +25,13 @@ export default ({ buttons }) => {
         paddingTop: 10,
         paddingBottom: 10,
         borderRadius: 5,
-        background: '#dcdadacf',
+        background: background || '#dcdadacf',
         width: '96%',
       }}
     >
       <View style={{ display: 'flex', justifyContent: 'space-around' }}>
         {buttons.map((button, index) => (
-          <View
-            key={index}
-            onClick={() => handleButtonClick(button.pagePath, button.params)}
-          >
+          <View key={index} onClick={() => handleButtonClick(button)}>
             <View
               style={{
                 display: 'flex',

@@ -48,6 +48,9 @@ api.updateUserProcessInfo = (data) => {
 api.updateImageUserUploadInfo = (data) => {
   return request.post('/updateImageUserUploadInfo', data);
 };
+api.feedback = (data) => {
+  return request.post('/feedback', data);
+};
 
 export { api };
 

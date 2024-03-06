@@ -19,7 +19,14 @@ export default ({ userInfo, onLogout }) => {
   //   '退出登录',
   // ];
   return (
-    <View style={Style.list}>
+    <View
+      style={{
+        borderRadius: 10,
+        backgroundColor: '#fff',
+        paddingLeft: 10,
+        marginTop: 20,
+      }}
+    >
       {/* <View style={Style.item}>
         <Text style={Style.title}>版本更新</Text>
       </View> */}
@@ -75,12 +82,6 @@ export default ({ userInfo, onLogout }) => {
   );
 };
 const Style = {
-  list: {
-    borderRadius: 10,
-    backgroundColor: '#fff',
-    paddingLeft: 10,
-    marginTop: 20,
-  },
   item: {
     borderBottom: '1px solid #f9f9f9',
     height: '80rpx',

@@ -11,6 +11,7 @@ export const PAGES = {
   setting: '/pages/setting/index',
   search: '/pages/search/index',
   faceswap: '/pages/faceswap/index',
+  feedback: '/pages/feedback/index',
   photo: '/pages/photo/index',
   userAgreements: '/pages/user/agreements/index',
   userPrivacy: '/pages/user/privacy/index',
