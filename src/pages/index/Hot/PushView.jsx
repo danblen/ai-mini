@@ -1,20 +1,30 @@
+/**
+ * @description 此组件用于展示主题图片，包括标题、标签名以及主题图片。
+ *              相册图片点击时会调用导航函数进行页面跳转。
+ *              组件包含滚动视图，可左右滑动浏览相册图片。每张图片下方会显示浏览次数。
+ * @param {Object[]} albums - 包含相册数据的数组。每个相册数据应包含图片信息。
+ * @param {string} title - 视图组件的标题。
+ * @param {string} tagName - 用于从服务器SQL获取相应的标签图片。
+ * @param {function} onNavigateToTab - 导航到标签页的函数（暂无用）。
+ * @returns {JSX.Element} - 返回一个包含主题图片的视图组件。
+ * @example
+ * // Example usage:
+ * <PushView
+ *        allImages={allImages}
+ *        albums={allImages?.tagsImage?.['美高Girl'] || []}
+ *        title="👩‍🎓美高Girl"
+ *        tagName="美高Girl"
+ *        onNavigateToTab={onNavigateToTab}
+ *      />
+ */
+
 import { Image, ScrollView, Text, View } from '@tarojs/components';
 import React from 'react';
 import { navigateTo } from '../../../base/global';
 import TitleView from './TitleView';
 import recomView from '../Recommend/index';
 
-export default ({ albums, title, onNavigateToTab }) => {
-  const handleRightClick = () => {
-    // 触发导航到相应页面的操作
-    const emojiRegex = /[\uD800-\uDBFF][\uDC00-\uDFFF]/g;
-
-    // 使用正则表达式替换表情符号为空字符串
-    const stringWithoutEmojis = title.replace(emojiRegex, '');
-
-    console.log(stringWithoutEmojis);
-    onNavigateToTab('recommend', stringWithoutEmojis);
-  };
+export default ({ albums, title, tagName, onNavigateToTab }) => {
   return (
     <View
       style={{
@@ -28,10 +38,18 @@ export default ({ albums, title, onNavigateToTab }) => {
       }}
     >
       <TitleView
-        // imageUrl="https://facei.top/static/allImages/activity_tags/%E6%B8%AF%E9%A3%8E/lszu7ifdfwjkb-1.jpg"
         title={title}
         rightText="全部>"
-        onRightClick={handleRightClick}
+        // onRightClick={handleRightClick} //跳转到推荐页
+        infoTopRightImage={{
+          pagePath: '/pages/activity/Activity',
+          params: {
+            title: tagName,
+            description: `${tagName}\n参与活动，获取丰富奖励~`,
+            pagePath: '/pages/activity/Activity',
+            text: tagName,
+          },
+        }}
       />
 
       <ScrollView

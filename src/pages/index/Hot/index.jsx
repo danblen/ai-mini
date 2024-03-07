@@ -147,46 +147,27 @@ export default ({ onNavigateToTab }) => {
 
       <CardPhotoView allImages={allImages} />
       <PushView
+        allImages={allImages}
         albums={allImages?.tagsImage?.['美高Girl'] || []}
-        title="👩‍🎓 美高Girl"
+        title="👩‍🎓美高Girl"
+        tagName="美高Girl"
         onNavigateToTab={onNavigateToTab}
       />
       <PushView
+        allImages={allImages}
         albums={allImages?.tagsImage?.['江南'] || []}
-        title="🏞️ 江南"
+        title="🏞️江南"
+        tagName="江南"
         onNavigateToTab={onNavigateToTab}
       />
       <PushView
+        allImages={allImages}
         albums={allImages?.tagsImage?.['暗调'] || []}
-        title="🖤 暗调"
+        title="🖤暗调"
+        tagName="暗调"
         onNavigateToTab={onNavigateToTab}
       />
       <PopularTemplate activityTagsImage={allImages?.activityTagsImage} />
-
-      {/* <View
-        style={{
-          fontSize: '36rpx',
-          margin: '40rpx 18rpx 18rpx 18rpx ',
-          display: 'flex',
-          justifyContent: 'space-between',
-        }}
-      >
-        <Text
-          style={{
-            marginLeft: '10px',
-            fontSize: '18px',
-            fontWeight: 'bold',
-          }}
-        >
-          最近热门
-        </Text>
-      </View> */}
-      {/* <TitleView title="最近热门" rightText="" />
-      <WaterfallList
-        imageListLeft={leftHalf || []}
-        imageListRight={rightHalf || []}
-        LeftTop={<CustomTop curTagPage="Hot" />}
-      /> */}
     </ScrollView>
   );
 };

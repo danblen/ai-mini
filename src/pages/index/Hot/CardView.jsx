@@ -1,3 +1,48 @@
+/**
+ * @description 生成一个包含左右布局的视图组件，用于展示图片和相关信息。
+ * @param {Object} infoLeftImage - 左边大图的信息对象，包括页面路径和参数。
+ * @param {Object} infoTopLeftImage - 右边上半部分左侧小图的信息对象，包括页面路径和参数。
+ * @param {Object} infoTopRightImage - 右边上半部分右侧小图的信息对象，包括页面路径和参数。
+ * @returns {JSX.Element} - 返回一个包含左右布局的视图组件。
+ *
+ * 此组件用于展示图片和相关信息，分为左右两部分布局，左侧包含大图和右下角角标，右侧包含两个小图和一个长方形图标。
+ *
+ * @example
+ * // Example usage:
+ * <CardView
+ *    infoLeftImage={{
+ *      pagePath: '/pages/activity/Activity',
+ *      params: {
+ *        imageUrl: allImages?.activityTagsImage?.['影楼'],
+ *        title: '影楼',
+ *        description: '影楼风格',
+ *        pagePath: '/pages/activity/Activity',
+ *        text: '影楼风格',
+ *      },
+ *    }}
+ *    infoTopLeftImage={{
+ *      pagePath: '/pages/activity/Activity',
+ *      params: {
+ *        imageUrl: allImages?.activityTagsImage?.['繁花专场'],
+ *        title: '繁花专场',
+ *        description: '繁花专场\n参与活动，获取丰富奖励~',
+ *        pagePath: '/pages/activity/Activity',
+ *        text: '繁花专场',
+ *      },
+ *    }}
+ *    infoTopRightImage={{
+ *      pagePath: '/pages/activity/Activity',
+ *      params: {
+ *        imageUrl: allImages?.tagsImage?.['韩式证件照'],
+ *        title: '韩式证件照',
+ *        description: '韩式证件照\n参与活动，获取丰富奖励~',
+ *        pagePath: '/pages/activity/Activity',
+ *        text: '韩式证件照',
+ *      },
+ *    }}
+ * />
+ */
+
 import { Image, Text, View } from '@tarojs/components';
 import Taro from '@tarojs/taro';
 import { AtIcon } from 'taro-ui';
