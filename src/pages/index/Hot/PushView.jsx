@@ -19,12 +19,31 @@
  */
 
 import { Image, ScrollView, Text, View } from '@tarojs/components';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { navigateTo } from '../../../base/global';
 import TitleView from './TitleView';
 import recomView from '../Recommend/index';
+import { api } from '../../../api/index.js';
 
-export default ({ albums, title, tagName, onNavigateToTab }) => {
+export default ({ albums, title, description, tagName, onNavigateToTab }) => {
+  const [scrollImages, setScrollImages] = useState([]);
+
+  useEffect(() => {
+    // 组件挂载时获取图片数据
+    const getTagNameImages = async () => {
+      try {
+        const res = await api.getTagImages({ tagName: tagName });
+        if (res?.data) {
+          setScrollImages(res.data);
+        }
+      } catch (error) {
+        console.error('Error fetching tag images:', error);
+      }
+    };
+
+    getTagNameImages();
+  }, [tagName]);
+
   return (
     <View
       style={{
@@ -45,7 +64,7 @@ export default ({ albums, title, tagName, onNavigateToTab }) => {
           pagePath: '/pages/activity/Activity',
           params: {
             title: tagName,
-            description: `${tagName}\n参与活动，获取丰富奖励~`,
+            description: description,
             pagePath: '/pages/activity/Activity',
             text: tagName,
           },
@@ -63,7 +82,7 @@ export default ({ albums, title, tagName, onNavigateToTab }) => {
         scroll-x
         scrollWithAnimation
       >
-        {Object.values(albums)?.map?.((albumData, index) => (
+        {scrollImages.map((albumData, index) => (
           <View
             key={index}
             style={{
@@ -85,10 +104,14 @@ export default ({ albums, title, tagName, onNavigateToTab }) => {
               className=" "
               onClick={() => {
                 navigateTo({
-                  url: '/pages/faceswap/index?imageUrl=' + albumData,
+                  url:
+                    '/pages/faceswap/index?imageUrl=' +
+                    albumData.momentPics +
+                    '&momentId=' +
+                    albumData.momentId,
                 });
               }}
-              src={albumData}
+              src={albumData.momentPics}
             ></Image>
             <View
               style={{
@@ -104,15 +127,8 @@ export default ({ albums, title, tagName, onNavigateToTab }) => {
               }}
             >
               <View className="at-icon at-icon-eye"></View>
-              {123}
+              {albumData.viewCount}
             </View>
-            {/* <View
-              style={{
-                marginLeft: '18rpx',
-              }}
-            >
-              {343242}
-            </View> */}
           </View>
         ))}
       </ScrollView>

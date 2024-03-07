@@ -92,7 +92,7 @@ export default ({
             )
           }
         >
-          {rightText === undefined ? '全部>' : rightText}
+          {rightText}
         </View>
       </View>
     </View>

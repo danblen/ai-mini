@@ -150,6 +150,7 @@ export default ({ onNavigateToTab }) => {
         allImages={allImages}
         albums={allImages?.tagsImage?.['美高Girl'] || []}
         title="👩‍🎓美高Girl"
+        description={`美高Girl\n参与活动，获取丰富奖励~`}
         tagName="美高Girl"
         onNavigateToTab={onNavigateToTab}
       />
@@ -157,6 +158,7 @@ export default ({ onNavigateToTab }) => {
         allImages={allImages}
         albums={allImages?.tagsImage?.['江南'] || []}
         title="🏞️江南"
+        description={`江南\n参与活动，获取丰富奖励~`}
         tagName="江南"
         onNavigateToTab={onNavigateToTab}
       />
@@ -164,6 +166,7 @@ export default ({ onNavigateToTab }) => {
         allImages={allImages}
         albums={allImages?.tagsImage?.['暗调'] || []}
         title="🖤暗调"
+        description={`暗调\n参与活动，获取丰富奖励~`}
         tagName="暗调"
         onNavigateToTab={onNavigateToTab}
       />

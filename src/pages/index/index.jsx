@@ -11,11 +11,19 @@ import {
   updateUserTokenFromStorage,
 } from '../../common/user';
 import NavBar from './NavBar';
+import { api } from '../../api/index.js';
+
 const Hot = lazy(() => import('./Hot'));
 const Recommend = lazy(() => import('./Recommend'));
 const New = lazy(() => import('./New'));
 
-function TabContent({ currentTab, allImages, navigateToTab, recomTitle }) {
+function TabContent({
+  currentTab,
+  allImages,
+  tagImages,
+  navigateToTab,
+  recomTitle,
+}) {
   const tabComponents = {
     hot: <Hot onNavigateToTab={navigateToTab} />,
     recommend: (
@@ -25,7 +33,7 @@ function TabContent({ currentTab, allImages, navigateToTab, recomTitle }) {
         titleParam={recomTitle}
       />
     ),
-    new: <New />,
+    new: <New tagImages={tagImages} />,
   };
   const TabComponent = tabComponents[currentTab];
 
@@ -36,6 +44,7 @@ export default () => {
   const [recomTitle, setRecomTitle] = useState('古装');
   // 获取推荐tab页的图片，需要优化
   let [allImages, setAllImages] = useState({ albums: {}, tagsImage: {} });
+  let [tagImages, setTagImages] = useState([]);
   const getAllImages = async () => {
     let res = await get_all_images();
     // 通过这种判断来确定接口调用成功与否
@@ -43,14 +52,25 @@ export default () => {
       setAllImages(res.data);
     }
   };
+
+  const getTagImages = async () => {
+    let res = await api.getTagImages({ tagName: 'Hot' });
+    if (res?.data) {
+      setTagImages(res.data);
+      // setStorageSync('tmpNewTagimages', res.data);
+      // setLRHalfPic(res.data);
+    }
+  };
   useEffect(() => {
     getAllImages();
+    getTagImages();
     updateUserInfoFromStorage();
     updateUserTokenFromStorage();
   }, []);
   usePullDownRefresh(() => {
     //调用Taro.stopPullDownRefresh 停止下拉效果
     getAllImages().then(() => Taro.stopPullDownRefresh());
+    getTagImages().then(() => Taro.stopPullDownRefresh());
   });
 
   return (
@@ -77,6 +97,7 @@ export default () => {
         <TabContent
           currentTab={currentTab}
           allImages={allImages}
+          tagImages={tagImages}
           navigateToTab={(param, title) => {
             setCurrentTab(param);
             setRecomTitle(title);
