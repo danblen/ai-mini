@@ -34,7 +34,8 @@ export default ({ albums, title, description, tagName, onNavigateToTab }) => {
       try {
         const res = await api.getTagImages({ tagName: tagName });
         if (res?.data) {
-          setScrollImages(res.data);
+          const shuffledImages = res.data.sort(() => Math.random() - 0.5);
+          setScrollImages(shuffledImages);
         }
       } catch (error) {
         console.error('Error fetching tag images:', error);
