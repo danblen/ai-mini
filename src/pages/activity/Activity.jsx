@@ -81,7 +81,7 @@ const ActivityPage = () => {
               {decodedTitle}
             </Text>
             {/* 活动描述 */}
-            <Text style={{ color: '#666' }}>{decodedDescription}</Text>
+            <Text style={{ color: '#252424' }}>{decodedDescription}</Text>
           </View>
         </View>
         {/* 图片列表区域 */}

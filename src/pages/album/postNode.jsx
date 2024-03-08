@@ -36,14 +36,14 @@ export default () => {
         });
         return;
       }
-      if (title === '') {
-        Taro.showToast({
-          title: '请输入模板标题',
-          icon: 'none',
-          duration: 2000,
-        });
-        return;
-      }
+      // if (title === '') {
+      //   Taro.showToast({
+      //     title: '请输入模板标题',
+      //     icon: 'none',
+      //     duration: 2000,
+      //   });
+      //   return;
+      // }
       const storageUserInfo = getStorageSync('userInfo');
       if (storageUserInfo && storageUserInfo.isLogin) {
         const compressBase64Array = selectedImages.map(
@@ -54,7 +54,7 @@ export default () => {
           userId: storageUserInfo.data.userId,
           tagName: tagName,
           momentPics: compressBase64Array,
-          momentTitle: title ? title : '这是没有标题的模板',
+          momentTitle: title,
         });
         Taro.showToast({
           title: '发布成功',

@@ -150,7 +150,15 @@ export default ({ onNavigateToTab }) => {
         allImages={allImages}
         albums={allImages?.tagsImage?.['美高Girl'] || []}
         title="👩‍🎓美高Girl"
-        description={`美高Girl\n参与活动，获取丰富奖励~`}
+        description={`
+        🕶️比法式更潮，比港式更青春
+
+        ✨经典与时尚完美结合
+
+        📸留下时光的印记，一起走进复古美高潮流
+
+        #复古风 #潮流回潮 #青春时尚
+        `}
         tagName="美高Girl"
         onNavigateToTab={onNavigateToTab}
       />
@@ -158,7 +166,15 @@ export default ({ onNavigateToTab }) => {
         allImages={allImages}
         albums={allImages?.tagsImage?.['江南'] || []}
         title="🏞️江南"
-        description={`江南\n参与活动，获取丰富奖励~`}
+        description={`
+        🌳江南风情，唤醒你的浪漫心弦
+
+        ✨如诗如画的江南，让你陶醉其中
+
+        🍃品味清茶，回味无穷
+
+        #江南风情 #如诗如画 #浪漫心弦 #古典韵味
+        `}
         tagName="江南"
         onNavigateToTab={onNavigateToTab}
       />
@@ -166,7 +182,13 @@ export default ({ onNavigateToTab }) => {
         allImages={allImages}
         albums={allImages?.tagsImage?.['暗调'] || []}
         title="🖤暗调"
-        description={`暗调\n参与活动，获取丰富奖励~`}
+        description={`
+        ✨一种自信和独立的态度。
+
+        🖤让你散发出与众不同的魅力。
+
+        #暗调风格 #个性穿搭 #独特品味
+        `}
         tagName="暗调"
         onNavigateToTab={onNavigateToTab}
       />

@@ -54,7 +54,18 @@ const PopularTemplate = ({ activityTagsImage }) => {
           title="#港风"
           hotness={768}
           onClick={() =>
-            handleItemClick(activityTagsImage?.['港风'], '港风', '港风系列')
+            handleItemClick(
+              activityTagsImage?.['港风'],
+              '港风',
+              `💫寻找电影感场景
+
+              🌆用逆光和柔光创造港风氛围。
+              
+              💃🏻快来感受香港电影的魅力吧
+              
+              #港风写真 #香港风情 #电影感 #逆光柔光 #柔焦模式
+              `
+            )
           }
         />
         <LineSeparator />
@@ -67,7 +78,14 @@ const PopularTemplate = ({ activityTagsImage }) => {
             handleItemClick(
               activityTagsImage?.['焱落纱'],
               '焱落纱',
-              '焱落纱系列<原创:麦橘MERJIC>'
+              `
+              🔥轻盈飘逸，如火焰般燃烧！
+
+              💃🏻让你散发出独特而迷人的魅力！
+
+              <原创:麦橘MERJIC>
+              
+              #焱落纱`
             )
           }
         />
@@ -81,7 +99,15 @@ const PopularTemplate = ({ activityTagsImage }) => {
             handleItemClick(
               activityTagsImage?.['水果裙'],
               '水果裙',
-              '奇装异服系列<原创:白泽MARS>'
+              `
+              🍉水果图案点缀，色彩缤纷绚丽！
+              
+              🍍让你在夏日中散发出活力和青春的气息！
+              
+              <原创:白泽MARS>
+
+              #夏日时尚 #色彩缤纷 #夏日青春
+              `
             )
           }
         />
