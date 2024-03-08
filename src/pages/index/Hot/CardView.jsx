@@ -221,7 +221,7 @@ export default ({ infoLeftImage, infoTopLeftImage, infoTopRightImage }) => {
                   src={
                     infoTopRightImage.params.imageUrl &&
                     infoTopRightImage.params.imageUrl.length > 0
-                      ? infoTopRightImage.params.imageUrl[29]
+                      ? infoTopRightImage.params.imageUrl[0]
                       : []
                   }
                   mode="aspectFill"

@@ -100,6 +100,7 @@ export default ({ albums, title, description, tagName, onNavigateToTab }) => {
                 // height: '120px', // 设置图片高度为 120 rpx
                 borderRadius: 10,
               }}
+              lazyLoad={true}
               mode="aspectFill"
               className=" "
               onClick={() => {

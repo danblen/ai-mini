@@ -110,7 +110,13 @@ export default ({ onNavigateToTab }) => {
           params: {
             imageUrl: allImages?.activityTagsImage?.['影楼'],
             title: '影楼',
-            description: '影楼风格',
+            description: `
+            ✨不一样的你，不一样的风格
+
+            💯影楼级真实体验
+
+            #影楼风格 #自然美 #捕捉
+            `,
             pagePath: '/pages/activity/Activity',
             text: '影楼风格',
           },
@@ -120,7 +126,13 @@ export default ({ onNavigateToTab }) => {
           params: {
             imageUrl: allImages?.activityTagsImage?.['繁花专场'],
             title: '繁花专场',
-            description: '繁花专场\n参与活动，获取丰富奖励~',
+            description: `
+            ✨光影交织，艺术感十足
+
+            👉细腻呈现，勾勒出浓厚的情感
+
+            #繁花风格写真 #光影 #艺术氛围#
+            `,
             pagePath: '/pages/activity/Activity',
             text: '繁花专场',
           },
@@ -130,7 +142,15 @@ export default ({ onNavigateToTab }) => {
           params: {
             imageUrl: allImages?.tagsImage?.['韩式证件照'],
             title: '韩式证件照',
-            description: '韩式证件照\n参与活动，获取丰富奖励~',
+            description: `
+            📸想要与众不同的证件照吗？来试试韩式风格！
+
+            💼时尚又有个性，让你瞬间提升颜值
+
+            ✨清新自然的韩风魅力
+
+            #韩式证件照 #时尚颜值 #个性魅力
+            `,
             pagePath: '/pages/activity/Activity',
             text: '韩式证件照',
           },

@@ -27,6 +27,7 @@ export default ({ albums }) => {
               width: '300rpx',
               borderRadius: '15rpx',
             }}
+            lazyLoad={true}
             className=" "
             mode="widthFix"
             onClick={() => {
