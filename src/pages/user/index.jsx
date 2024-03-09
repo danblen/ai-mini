@@ -150,7 +150,7 @@ export default () => {
                   }}
                   onClick={handleNicknameClick}
                 >
-                  {userInfo.data.userName}
+                  {userInfo?.data?.userName || '输入昵称'}
                 </View>
 
                 <AtModal
