@@ -6,7 +6,7 @@ export default {
     'pages/album/index',
     'pages/refine/index',
     'pages/create/index',
-    'pages/album/postNode',
+    'pages/postNode/index',
     'pages/discover/index',
     'pages/message/index',
     'pages/activity/Activity',

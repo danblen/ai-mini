@@ -7,7 +7,7 @@ const PAGES = [
   'pages/index/index',
   'pages/create/index',
   'pages/user/index',
-  'pages/album/postNode',
+  'pages/postNode/index',
   'pages/discover/index',
   'pages/message/index',
   'pages/activity/Activity',

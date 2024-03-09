@@ -282,8 +282,13 @@ export default ({ infoLeftImage, infoTopLeftImage, infoTopRightImage }) => {
                   fontWeight: 'bold',
                   fontSize: '24px',
                 }}
+                onClick={() => {
+                  Taro.navigateTo({
+                    url: '/pages/refine/index',
+                  });
+                }}
               >
-                开始创作
+                AI修图
               </Text>
             </View>
           </View>

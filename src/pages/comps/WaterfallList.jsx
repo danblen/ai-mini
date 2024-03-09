@@ -1,7 +1,7 @@
 import { View } from '@tarojs/components';
 import React from 'react';
 import SingleColumnImageList from './SingleColumnImageList';
-const PostNodePages = '/pages/album/postNode';
+const PostNodePages = '/pages/postNode/index';
 
 export default ({ imageListLeft, imageListRight, LeftTop, RightTop }) => {
   return (

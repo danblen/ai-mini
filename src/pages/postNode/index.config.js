@@ -1,5 +1,5 @@
 export default {
-  navigationBarTitleText: 'AI修图',
+  navigationBarTitleText: '发布',
   navigationStyle: 'default',
   enableShareAppMessage: true,
 };

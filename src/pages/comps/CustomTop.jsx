@@ -1,7 +1,7 @@
 import { Image, Text, View } from '@tarojs/components';
 import compareIcon from '../../static/image/login/bg_login.png';
 import { navigateTo } from '../../base/global';
-const PostNodePages = '/pages/album/postNode';
+const PostNodePages = '/pages/postNode/index';
 
 export default ({ curTagPage }) => {
   return (
@@ -47,7 +47,7 @@ export default ({ curTagPage }) => {
           left: '50px',
         }}
       >
-        发布模板
+        {curTagPage === 'New' ? '发布动态' : '发布模板'}
       </Text>
     </View>
   );

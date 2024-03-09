@@ -4,7 +4,7 @@ export const PAGES = {
   refine: '/pages/refine/index',
   create: '/pages/create/index',
   user: '/pages/user/index',
-  album: '/pages/album/postNode',
+  album: '/pages/album/index',
   discover: '/pages/discover/index',
   message: '/pages/message/index',
   activity: '/pages/activity/Activity',
