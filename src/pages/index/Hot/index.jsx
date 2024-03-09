@@ -20,18 +20,9 @@ import ButtonView from './ButtonView.jsx';
 import CardPhotoView from './CardPhotoView.jsx';
 import TitleView from './TitleView.jsx';
 
-let firstGetImages = 0;
 export default ({ onNavigateToTab }) => {
   let [allImages, setAllImages] = useState({ albums: {}, tags_image: {} });
-  const [leftHalf, setLeftHalf] = useState();
-  const [rightHalf, setRightHalf] = useState();
-  const setLRHalfPic = async (originalImageArray) => {
-    // 计算数组长度的一半
-    const halfLength = Math.ceil(originalImageArray.length / 2 - 1);
-    // 将原始数组切割成两半
-    setLeftHalf(originalImageArray.slice(0, halfLength));
-    setRightHalf(originalImageArray.slice(halfLength));
-  };
+
   const getAllImages = async () => {
     let res = await get_all_images();
     if (res?.data) {
@@ -39,31 +30,20 @@ export default ({ onNavigateToTab }) => {
       setStorageSync('tmpAllimages', res.data);
     }
   };
-  const getTagImages = async () => {
-    let res = await api.getTagImages({ tagName: 'Hot' });
-    if (res?.data) {
-      setStorageSync('tmpHotTagimages', res.data);
-      setLRHalfPic(res.data);
-    }
-  };
-  if (!firstGetImages) {
-    firstGetImages = 1;
-    getAllImages();
-    getTagImages();
-  }
   useEffect(() => {
-    const tmpAllimages = getStorageSync('tmpAllimages');
-    if (!tmpAllimages) {
-      getAllImages();
-    } else {
-      setAllImages(tmpAllimages);
-    }
-    const tmpHotTagimages = getStorageSync('tmpHotTagimages');
-    if (!tmpHotTagimages) {
-      getTagImages();
-    } else {
-      setLRHalfPic(tmpHotTagimages);
-    }
+    getAllImages();
+    // const tmpAllimages = getStorageSync('tmpAllimages');
+    // if (!tmpAllimages) {
+    //   getAllImages();
+    // } else {
+    //   setAllImages(tmpAllimages);
+    // }
+    // const tmpHotTagimages = getStorageSync('tmpHotTagimages');
+    // if (!tmpHotTagimages) {
+    //   getTagImages();
+    // } else {
+    //   setLRHalfPic(tmpHotTagimages);
+    // }
     // const timer = setInterval(() => {
     //   getAllImages();
     //   getTagImages();
@@ -140,7 +120,7 @@ export default ({ onNavigateToTab }) => {
         infoTopRightImage={{
           pagePath: '/pages/activity/Activity',
           params: {
-            imageUrl: allImages?.tagsImage?.['韩式证件照'],
+            imageUrl: allImages?.activityTagsImage?.['韩式证件照'],
             title: '韩式证件照',
             description: `
             📸想要与众不同的证件照吗？来试试韩式风格！

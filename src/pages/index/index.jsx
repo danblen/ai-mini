@@ -47,8 +47,27 @@ export default () => {
   let [tagImages, setTagImages] = useState([]);
   const getAllImages = async () => {
     let res = await get_all_images();
-    // 通过这种判断来确定接口调用成功与否
     if (res?.data) {
+      const shuffledData = {};
+      for (const key in res.data.tagsImage) {
+        if (res.data.tagsImage.hasOwnProperty(key)) {
+          const shuffledIndexes = res.data.tagsImage[key].sort(
+            () => Math.random() - 0.5
+          );
+          shuffledData[key] = shuffledIndexes;
+        }
+      }
+
+      // 对 "abc" 进行随机排序
+      const shuffledKeys = Object.keys(shuffledData).sort(
+        () => Math.random() - 0.5
+      );
+      const shuffledImageData = {};
+      for (const key of shuffledKeys) {
+        shuffledImageData[key] = shuffledData[key];
+      }
+
+      res.data.tagsImage = shuffledImageData;
       setAllImages(res.data);
     }
   };
@@ -56,7 +75,8 @@ export default () => {
   const getTagImages = async () => {
     let res = await api.getTagImages({ tagName: 'Hot' });
     if (res?.data) {
-      setTagImages(res.data);
+      const shuffledImages = res.data.sort(() => Math.random() - 0.5);
+      setTagImages(shuffledImages);
       // setStorageSync('tmpNewTagimages', res.data);
       // setLRHalfPic(res.data);
     }
