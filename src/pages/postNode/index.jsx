@@ -78,7 +78,7 @@ export default () => {
 
   return (
     <View>
-      <CustomNavBar></CustomNavBar>
+      {/* <CustomNavBar></CustomNavBar> */}
       {/* <View
         style={{
           display: 'flex',
@@ -149,10 +149,10 @@ export default () => {
               });
             }
           }}
-          count={9}
+          count={1}
           mode="aspectFill"
-          length={3}
-          showAddBtn={selectedImages.length < 9}
+          length={1}
+          showAddBtn={selectedImages.length < 1}
         />
       </View>
       <View
