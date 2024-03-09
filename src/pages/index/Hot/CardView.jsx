@@ -263,6 +263,11 @@ export default ({ infoLeftImage, infoTopLeftImage, infoTopRightImage }) => {
                 background: `url(${buttonImages})`,
                 backgroundSize: 'cover',
               }}
+              onClick={() => {
+                Taro.navigateTo({
+                  url: '/pages/refine/index',
+                });
+              }}
             >
               <Image
                 src={plusIcon}
@@ -281,11 +286,6 @@ export default ({ infoLeftImage, infoTopLeftImage, infoTopRightImage }) => {
                   color: '#000000',
                   fontWeight: 'bold',
                   fontSize: '24px',
-                }}
-                onClick={() => {
-                  Taro.navigateTo({
-                    url: '/pages/refine/index',
-                  });
                 }}
               >
                 AI修图

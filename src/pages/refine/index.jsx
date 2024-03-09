@@ -1,74 +1,240 @@
 import Taro from '@tarojs/taro';
 import { View, Text, Image } from '@tarojs/components';
-const src1 =
-  'https://facei.top/static/allImages/tags/海/006W9z2kly1hhb3e09wavj31hc1z4al1.jpg';
+import { AtIcon } from 'taro-ui';
+import React, { useRef, useState } from 'react';
+import IconTri from '../../static/image/my/triangle.png';
+import Icon1080 from '../../static/image/my/full1080.png';
+import Icon4k from '../../static/image/my/full.png';
+import IconAI from '../../static/image/my/artificial-intelligence.png';
+import IconCartoon from '../../static/image/my/success.png';
 
-const highQualityImage =
-  'https://facei.top/static/allImages/tags/海/006W9z2kly1hhb3e09wavj31hc1z4al1.jpg';
-const ultraHighQualityImage =
-  'https://facei.top/static/allImages/tags/海/006W9z2kly1hhb3ee5brkj31hc1z4dtg.jpg';
-const partialRepairImage =
-  'https://facei.top/static/allImages/tags/海/008sfn0Jgy1hhh5txlzxxj30u013xq78.jpg';
+const srcHD1 = 'https://facei.top/static/allImages/index/HD.jpg';
+const srcHD = 'https://facei.top/static/allImages/index/HD+.jpg';
+const srcAI = 'https://facei.top/static/allImages/index/woman_cartoon.jpg';
+const srcMan = 'https://facei.top/static/allImages/index/man_cartoon.jpg';
 
 const HomePage = () => {
+  const [selectedOption, setSelectedOption] = useState('HD');
+  const [iconPosition, setIconPosition] = useState('15%'); // 初始化iconPosition为20%
+  const [borderColor0, setBorderColor0] = useState('#024c8c');
+  const [borderColor1, setBorderColor1] = useState('#808080');
+  const [borderColor2, setBorderColor2] = useState('#808080');
+  const [borderColor3, setBorderColor3] = useState('#808080');
+  const [src, setSrc] = useState(srcHD);
+
   const handleOptionClick = (option) => {
-    // 处理选项点击事件，根据不同选项进行相应操作
-    switch (option) {
-      case 'highQuality':
-        // 处理高清选项点击
-        break;
-      case 'ultraHighQuality':
-        // 处理超清选项点击
-        break;
-      case 'partialRepair':
-        // 处理局部修复选项点击
-        break;
-      default:
-        break;
+    setSelectedOption(option);
+    if (option === 'HD') {
+      setSrc(srcHD);
+      setIconPosition('15%');
+      setBorderColor0('#024c8c');
+      setBorderColor1('#808080');
+      setBorderColor2('#808080');
+      setBorderColor3('#808080');
+    } else if (option === 'HD+') {
+      setSrc(srcHD1);
+      setIconPosition('38%');
+      setBorderColor0('#808080');
+      setBorderColor1('#024c8c');
+      setBorderColor2('#808080');
+      setBorderColor3('#808080');
+    } else if (option === 'Fix') {
+      setSrc(srcHD);
+      setIconPosition('59%');
+      setBorderColor0('#808080');
+      setBorderColor1('#808080');
+      setBorderColor2('#024c8c');
+      setBorderColor3('#808080');
+    } else if (option === 'CTON') {
+      setSrc(srcMan);
+      setIconPosition('83%');
+      setBorderColor0('#808080');
+      setBorderColor1('#808080');
+      setBorderColor2('#808080');
+      setBorderColor3('#024c8c');
     }
   };
 
-  const handleExperienceClick = () => {
-    // 立即体验按钮点击事件处理
-    // 进行相应操作
-  };
-
   return (
-    <View>
-      <Text style={{ fontSize: '24px', fontWeight: 'bold' }}>AI修图</Text>
-      <Text style={{ fontSize: '14px' }}>一键拯救低画质</Text>
-      <Image src={src1} style={{ width: '100%', height: '300px' }} />
+    <View
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+      }}
+    >
+      <Text
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          fontSize: '24px',
+          fontWeight: 'bold',
+        }}
+      >
+        AI修图
+      </Text>
+      <Text
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          fontSize: '14px',
+        }}
+      >
+        一键拯救低画质
+      </Text>
+      <View
+        style={{
+          width: '100%',
+          height: '300px',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <Image
+          mode="aspectFill"
+          src={src}
+          style={{ maxWidth: '100%', height: '300px', objectFit: 'contain' }}
+        />
+      </View>
+      <View>
+        <View
+          style={{
+            position: 'relative',
+            left: iconPosition,
+            top: '20px',
+          }}
+        >
+          <Image
+            src={IconTri}
+            style={{
+              width: '15px',
+              height: '15px',
+            }}
+          />
+          {/* <AtIcon value="chevron-up" size="20" color="#033561" /> */}
+        </View>
+      </View>
       <View
         style={{
           display: 'flex',
           flexDirection: 'row',
           justifyContent: 'space-between',
+          margin: '5%',
         }}
       >
-        <View onClick={() => handleOptionClick('highQuality')}>
-          <Image
-            src={highQualityImage}
-            style={{ width: '100px', height: '100px' }}
-          />
-          <Text>高清</Text>
+        <View
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            border: '4px solid transparent',
+            borderColor: borderColor0,
+            borderRadius: '10px',
+            padding: '4px',
+          }}
+          onClick={() => handleOptionClick('HD')}
+        >
+          <Image src={Icon1080} style={{ width: '80px', height: '80px' }} />
+          <Text
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            高清
+          </Text>
         </View>
-        <View onClick={() => handleOptionClick('ultraHighQuality')}>
-          <Image
-            src={ultraHighQualityImage}
-            style={{ width: '100px', height: '100px' }}
-          />
-          <Text>超清</Text>
+        <View
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            border: '4px solid transparent',
+            borderColor: borderColor1,
+            borderRadius: '10px',
+            padding: '4px',
+          }}
+          onClick={() => handleOptionClick('HD+')}
+        >
+          <Image src={Icon4k} style={{ width: '80px', height: '80px' }} />
+          <Text
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            超清
+          </Text>
         </View>
-        <View onClick={() => handleOptionClick('partialRepair')}>
-          <Image
-            src={partialRepairImage}
-            style={{ width: '100px', height: '100px' }}
-          />
-          <Text>局部修复</Text>
+        <View
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            border: '4px solid transparent',
+            borderColor: borderColor2,
+            borderRadius: '10px',
+            padding: '4px',
+          }}
+          onClick={() => handleOptionClick('Fix')}
+        >
+          <Image src={IconAI} style={{ width: '80px', height: '80px' }} />
+          <Text
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            涂鸦修图
+          </Text>
+        </View>
+        <View
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            border: '4px solid transparent',
+            borderColor: borderColor3,
+            borderRadius: '10px',
+            padding: '4px',
+          }}
+          onClick={() => handleOptionClick('CTON')}
+        >
+          <Image src={IconCartoon} style={{ width: '80px', height: '80px' }} />
+          <Text
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            漫画
+          </Text>
         </View>
       </View>
-      <View onClick={handleExperienceClick}>
-        <Text>立即体验</Text>
+      <View
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <Text
+          style={{
+            background: '#00adff',
+            borderRadius: '10px',
+            padding: '10px',
+            paddingLeft: '20px',
+            paddingRight: '20px',
+          }}
+        >
+          立即体验
+        </Text>
       </View>
     </View>
   );
