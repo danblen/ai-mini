@@ -1,7 +1,7 @@
 /**
  * 用户页
  */
-import { Image, Text, View } from '@tarojs/components';
+import { Image, Text, View, Input, Button } from '@tarojs/components';
 import Taro, { useDidShow, useTabItemTap } from '@tarojs/taro';
 import React, { useState } from 'react';
 import { AtFloatLayout } from 'taro-ui';
@@ -12,8 +12,11 @@ import iconwechat from '../../static/image/share/icon_wechat.png';
 import LoginView from '../comps/LoginView';
 import CheckIn from './CheckIn';
 import ButtonView from './ButtonView';
+import { AtModal, AtModalHeader, AtModalContent, AtModalAction } from 'taro-ui';
 
 export default () => {
+  const [isOpenedText, setIsOpenedText] = useState(false);
+  const [nickname, setNickname] = useState('');
   const [isOpened, setIsOpened] = useState(false);
   // 用户信息数据结构，和storage中存储的一致
   const [userInfo, setUserInfo] = useState({
@@ -23,6 +26,7 @@ export default () => {
       userId: '',
       isChecked: false,
       avatarUrl: '',
+      userName: '输入昵称',
     },
   });
   // 获取用户信息
@@ -66,6 +70,23 @@ export default () => {
     fetchUserInfo();
   });
 
+  const handleNicknameClick = () => {
+    setIsOpenedText(true);
+  };
+
+  const handleConfirm = async () => {
+    // 关闭弹窗
+    setIsOpenedText(false);
+    if (userInfo.isLogin) {
+      const res = await api.updateUserInfo({
+        userId: userInfo.data.userId,
+        userName: nickname,
+      });
+      if (res?.data) {
+        fetchUserInfo();
+      }
+    }
+  };
   return (
     <View style={{}}>
       <View
@@ -117,9 +138,23 @@ export default () => {
                   style={{
                     fontSize: '40rpx',
                   }}
+                  onClick={handleNicknameClick}
                 >
-                  微信用户
+                  {userInfo.data.userName}
                 </View>
+                <AtModal isOpened={isOpenedText}>
+                  <AtModalHeader>请输入昵称</AtModalHeader>
+                  <AtModalContent>
+                    <Input
+                      placeholder="请输入昵称"
+                      value={nickname}
+                      onInput={(e) => setNickname(e.detail.value)}
+                    />
+                  </AtModalContent>
+                  <AtModalAction>
+                    <Button onClick={() => handleConfirm()}>确定</Button>
+                  </AtModalAction>
+                </AtModal>
                 <Text
                   style={{
                     borderRadius: 10,
@@ -180,7 +215,6 @@ export default () => {
           ></View>
         </View>
       </View>
-
       <View
         style={{
           borderRadius: '18px',
