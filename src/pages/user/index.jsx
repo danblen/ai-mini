@@ -74,17 +74,27 @@ export default () => {
     setIsOpenedText(true);
   };
 
+  const handleCancel = async () => {
+    setIsOpenedText(false);
+  };
+  const handleClose = async () => {
+    setIsOpenedText(false);
+  };
   const handleConfirm = async () => {
     // 关闭弹窗
-    setIsOpenedText(false);
-    if (userInfo.isLogin) {
-      const res = await api.updateUserInfo({
-        userId: userInfo.data.userId,
-        userName: nickname,
-      });
-      if (res?.data) {
-        fetchUserInfo();
+    if (nickname != '') {
+      setIsOpenedText(false);
+      if (userInfo.isLogin) {
+        const res = await api.updateUserInfo({
+          userId: userInfo.data.userId,
+          userName: nickname,
+        });
+        if (res?.data) {
+          fetchUserInfo();
+        }
       }
+    } else {
+      Taro.showToast({ title: '请输入昵称', icon: 'none' });
     }
   };
   return (
@@ -142,8 +152,17 @@ export default () => {
                 >
                   {userInfo.data.userName}
                 </View>
-                <AtModal isOpened={isOpenedText}>
-                  <AtModalHeader>请输入昵称</AtModalHeader>
+
+                <AtModal
+                  isOpened={isOpenedText}
+                  // title="修改昵称"
+                  // cancelText="取消"
+                  // confirmText="确认"
+                  onClose={handleClose}
+                  onCancel={handleCancel}
+                  onConfirm={handleConfirm}
+                >
+                  <AtModalHeader>修改昵称</AtModalHeader>
                   <AtModalContent>
                     <Input
                       placeholder="请输入昵称"
@@ -152,6 +171,7 @@ export default () => {
                     />
                   </AtModalContent>
                   <AtModalAction>
+                    <Button onClick={() => handleCancel()}>取消</Button>
                     <Button onClick={() => handleConfirm()}>确定</Button>
                   </AtModalAction>
                 </AtModal>
