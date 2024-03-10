@@ -1,6 +1,7 @@
 import { View } from '@tarojs/components';
 import ButtonsBox from '../comps/ButtonsBox';
 import { PAGES } from '../../const/app';
+import Taro from '@tarojs/taro';
 
 export default ({ onLogout }) => {
   return (
@@ -21,8 +22,13 @@ export default ({ onLogout }) => {
           },
           {
             imageUrl: require('../../static/image/my/icons8-编辑图像-100.png'),
-            // pagePath: '/pages/album/index',
+            // pagePath: PAGES.album,
             text: '我的作品',
+            onClick: () => {
+              Taro.switchTab({
+                url: PAGES.album,
+              });
+            }
           },
           {
             imageUrl: require('../../static/image/my/feedback.png'),

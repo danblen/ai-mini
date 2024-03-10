@@ -13,6 +13,7 @@ export default {
     'pages/setting/index',
     'pages/search/index',
     'pages/faceswap/index',
+    'pages/feedback/index',
     'pages/photo/index',
     'pages/user/agreements/index',
     'pages/user/privacy/index',
