@@ -62,7 +62,7 @@ export default ({ tagImages }) => {
       <WaterfallList
         imageListLeft={leftHalf || []}
         imageListRight={rightHalf || []}
-        LeftTop={<CustomTop curTagPage="New" />}
+        LeftTop={<CustomTop curTagPage="NEW" />}
       />
     </ScrollView>
   );

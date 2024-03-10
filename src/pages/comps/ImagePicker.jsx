@@ -1,8 +1,8 @@
-import { AtImagePicker } from 'taro-ui';
-import { View, Image } from '@tarojs/components';
-import React, { useRef, useState, useEffect } from 'react';
-import Taro from '@tarojs/taro';
-import { wxPathToBase64 } from '../../utils/imageTools';
+const { useState, useEffect, useRef } = require('react');
+const { View, Image } = require('@tarojs/components');
+const { AtImagePicker } = require('taro-ui');
+const Taro = require('@tarojs/taro');
+const { wxPathToBase64 } = require('../../utils/imageTools');
 
 export default function ImagePicker({ onFilesChange, onSelectImage }) {
   const [files, setFiles] = useState([]);
@@ -50,6 +50,12 @@ export default function ImagePicker({ onFilesChange, onSelectImage }) {
     };
   }, []);
 
+  const generateUniqueId = () => {
+    const timestamp = Date.now();
+    const randomString = Math.random().toString(36).substring(2, 8);
+    return `${timestamp}-${randomString}`;
+  };
+
   const compressInputImage = async (file) => {
     try {
       let compressedFile;
@@ -86,29 +92,21 @@ export default function ImagePicker({ onFilesChange, onSelectImage }) {
       return file;
     }
   };
-  function generateUniqueId() {
-    const timestamp = Date.now();
-    const randomString = Math.random().toString(36).substring(2, 8);
-    return `${timestamp}-${randomString}`;
-  }
+
   const handleImageChange = async (newFiles) => {
     try {
       let curIndex = newFiles.length - 1;
-      const compressedFile = await compressInputImage(newFiles[curIndex]);
-      const updatedFiles = newFiles.map((file, index) => {
-        file.id = file.id ?? generateUniqueId();
-        if (index === curIndex) {
-          return {
-            ...file,
-            compressBase64: compressedFile.base64
-              ? compressedFile.base64
-              : null,
-          };
-        }
-        return file;
-      });
+      // 添加文件时才进行压缩处理
+      if (newFiles.length > files.length) {
+        const compressedFile = await compressInputImage(newFiles[curIndex]);
+        newFiles[curIndex].id = generateUniqueId();
+        newFiles[curIndex].compressBase64 = compressedFile.base64
+          ? compressedFile.base64
+          : null;
+      }
+
       const dataToStore = {
-        files: updatedFiles,
+        files: newFiles,
         selectedIndex: curIndex, // 将 selectedIndex 存储为当前选中的索引
       };
       wx.setStorage({
@@ -121,10 +119,10 @@ export default function ImagePicker({ onFilesChange, onSelectImage }) {
           console.error('数据保存失败', err);
         },
       });
-      setFiles(updatedFiles);
+      setFiles(newFiles);
       setSelectedIndex(curIndex);
-      onFilesChange(updatedFiles);
-      onSelectImage(updatedFiles.length - 1);
+      onFilesChange(newFiles);
+      onSelectImage(newFiles.length - 1);
     } catch (error) {
       console.error('处理图片失败：', error);
     }

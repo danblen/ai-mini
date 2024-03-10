@@ -71,14 +71,18 @@ export default () => {
       setAllImages(res.data);
     }
   };
-
   const getTagImages = async () => {
-    let res = await api.getTagImages({ tagName: 'Hot' });
+    let res = await api.getTagImages({ tagName: 'NEW' });
     if (res?.data) {
-      const shuffledImages = res.data.sort(() => Math.random() - 0.5);
-      setTagImages(shuffledImages);
-      // setStorageSync('tmpNewTagimages', res.data);
-      // setLRHalfPic(res.data);
+      // 过滤掉值为 null 的元素
+      const filteredData = res.data.filter((item) => item !== null);
+      if (filteredData.length > 0) {
+        const shuffledImages = filteredData.sort(() => Math.random() - 0.5);
+        setTagImages(shuffledImages);
+        console.log(shuffledImages);
+        // setStorageSync('tmpNewTagimages', res.data);
+        // setLRHalfPic(res.data);
+      }
     }
   };
   useEffect(() => {

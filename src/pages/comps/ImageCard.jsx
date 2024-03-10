@@ -42,6 +42,7 @@ export default ({ image }) => {
           }}
         >
           <Image
+            lazyLoad={true}
             mode="aspectFill"
             src={image.userHeadPic}
             style={{
