@@ -6,11 +6,12 @@ export default () => {
     <View
       style={{
         marginTop: '170rpx',
-      }}>
+      }}
+    >
       <ButtonsBox
         buttons={[
           {
-            imageUrl: require('../../../static/image/my/icons8-joker-dc-200.png'),
+            imageUrl: require('../../../static/image/my/comment.png'),
             pagePath: '/pages/activity/Activity',
             text: 'AI修图',
             params: {
@@ -19,7 +20,7 @@ export default () => {
             },
           },
           {
-            imageUrl: require('../../../static/image/my/icons8-神奇女侠-100.png'),
+            imageUrl: require('../../../static/image/my/comment.png'),
             pagePath: '/pages/activity/Activity',
             text: '老照片修复',
             params: {
@@ -28,7 +29,7 @@ export default () => {
             },
           },
           {
-            imageUrl: require('../../../static/image/my/icons8-编辑图像-100.png'),
+            imageUrl: require('../../../static/image/my/comment.png'),
             // pagePath: "/pages/activity/Activity",
             text: 'AI动漫',
             // params: {
@@ -37,7 +38,7 @@ export default () => {
             // },
           },
           {
-            imageUrl: require('../../../static/image/my/icons8-获得现金-100.png'),
+            imageUrl: require('../../../static/image/my/comment.png'),
             pagePath: '/pages/activity/Activity',
             text: 'AI证件照',
             params: {

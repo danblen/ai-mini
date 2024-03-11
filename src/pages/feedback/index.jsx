@@ -9,6 +9,7 @@ import { AtImagePicker } from 'taro-ui';
 import { api } from '../../api';
 import { getStorageSync, setStorageSync } from '../../base/global';
 import { compressInputImage } from '../../utils/imageTools';
+import Taro from '@tarojs/taro';
 
 export default () => {
   const [uploadedFiles, setUploadedFiles] = useState([]);
@@ -115,6 +116,7 @@ export default () => {
                 desc,
                 image: uploadedFiles,
               });
+              Taro.showToast({ title: '反馈成功', icon: 'none' });
             } else {
             }
           }}

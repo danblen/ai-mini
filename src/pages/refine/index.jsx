@@ -21,7 +21,12 @@ const HomePage = () => {
   const [borderColor2, setBorderColor2] = useState('#808080');
   const [borderColor3, setBorderColor3] = useState('#808080');
   const [src, setSrc] = useState(srcHD);
-
+  const handleTextClick = () => {
+    Taro.showToast({
+      title: '加紧开发中~',
+      icon: 'none',
+    });
+  };
   const handleOptionClick = (option) => {
     setSelectedOption(option);
     if (option === 'HD') {
@@ -232,6 +237,7 @@ const HomePage = () => {
             paddingLeft: '20px',
             paddingRight: '20px',
           }}
+          onClick={handleTextClick}
         >
           立即体验
         </Text>

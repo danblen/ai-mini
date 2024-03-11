@@ -14,6 +14,7 @@ export default {
     'pages/search/index',
     'pages/faceswap/index',
     'pages/feedback/index',
+    'pages/QrCodeGenerator/index',
     'pages/photo/index',
     'pages/user/agreements/index',
     'pages/user/privacy/index',

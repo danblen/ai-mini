@@ -13,7 +13,7 @@ export default ({ allImages }) => {
       <ButtonsBox
         buttons={[
           {
-            imageUrl: require('../../../static/image/my/icons8-joker-dc-200.png'),
+            imageUrl: require('../../../static/image/my/comment.png'),
             pagePath: '/pages/activity/Activity',
             text: '#影楼风格',
             params: {
@@ -25,7 +25,7 @@ export default ({ allImages }) => {
             },
           },
           {
-            imageUrl: require('../../../static/image/my/icons8-神奇女侠-100.png'),
+            imageUrl: require('../../../static/image/my/comment.png'),
             pagePath: '/pages/activity/Activity',
             text: '#繁花专场',
             params: {
@@ -37,7 +37,7 @@ export default ({ allImages }) => {
             },
           },
           {
-            imageUrl: require('../../../static/image/my/icons8-编辑图像-100.png'),
+            imageUrl: require('../../../static/image/my/comment.png'),
             pagePath: '/pages/refine/index',
             text: 'AI修图',
             params: {
@@ -46,7 +46,7 @@ export default ({ allImages }) => {
             },
           },
           {
-            imageUrl: require('../../../static/image/my/icons8-获得现金-100.png'),
+            imageUrl: require('../../../static/image/my/comment.png'),
             pagePath: '/pages/activity/Activity',
             text: '晒一晒加积分',
             params: {

@@ -79,7 +79,6 @@ export default () => {
       if (filteredData.length > 0) {
         const shuffledImages = filteredData.sort(() => Math.random() - 0.5);
         setTagImages(shuffledImages);
-        console.log(shuffledImages);
         // setStorageSync('tmpNewTagimages', res.data);
         // setLRHalfPic(res.data);
       }
