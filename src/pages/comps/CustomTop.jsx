@@ -1,6 +1,7 @@
 import { Image, Text, View } from '@tarojs/components';
-import compareIcon from '../../static/image/login/bg_login.png';
+const compareIcon = URL_STATIC + '/appstatic/image/login/bg_login.png';
 import { navigateTo } from '../../base/global';
+import { URL_STATIC } from '../../api/config';
 const PostNodePages = '/pages/postNode/index';
 
 export default ({ curTagPage }) => {

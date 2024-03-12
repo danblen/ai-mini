@@ -3,16 +3,21 @@
  */
 import { Image, Text, View, Input, Button } from '@tarojs/components';
 import Taro, { useDidShow, useTabItemTap } from '@tarojs/taro';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AtFloatLayout } from 'taro-ui';
 import { api, get_user_info } from '../../api';
 import { navigateTo } from '../../base/global';
-import { clearUserInfo, saveUserInfo } from '../../common/user';
-import iconwechat from '../../static/image/share/icon_wechat.png';
+import {
+  clearUserInfo,
+  saveUserInfo,
+  updateUserInfoFromStorage,
+} from '../../common/user';
 import LoginView from '../comps/LoginView';
 import CheckIn from './CheckIn';
 import ButtonView from './ButtonView';
 import { AtModal, AtModalHeader, AtModalContent, AtModalAction } from 'taro-ui';
+import { URL_STATIC } from '../../api/config';
+const iconwechat = URL_STATIC + '/appstatic/image/share/icon_wechat.png';
 
 export default () => {
   const [isOpenedText, setIsOpenedText] = useState(false);
@@ -29,6 +34,9 @@ export default () => {
       userName: '输入昵称',
     },
   });
+  useEffect(() => {
+    updateUserInfoFromStorage();
+  }, []);
   // 获取用户信息
   const fetchUserInfo = async () => {
     let userInfo = global.userInfo;

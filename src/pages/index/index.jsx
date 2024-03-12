@@ -12,6 +12,7 @@ import {
 } from '../../common/user';
 import NavBar from './NavBar';
 import { api } from '../../api/index.js';
+import { getStorage } from '../../base/global.js';
 
 const Hot = lazy(() => import('./Hot'));
 const Recommend = lazy(() => import('./Recommend'));
@@ -83,6 +84,13 @@ export default () => {
         // setLRHalfPic(res.data);
       }
     }
+  };
+  const uploadLaunchInfo = async () => {
+    // const launchInfo = await getStorage('launchInfo');
+    const launchInfo = global.launchInfo;
+    api.uploadLaunchInfo({
+      launchInfo,
+    });
   };
   useEffect(() => {
     getAllImages();

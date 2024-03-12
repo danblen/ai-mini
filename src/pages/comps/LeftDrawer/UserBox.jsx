@@ -1,7 +1,8 @@
 import { Image, Text, View } from '@tarojs/components';
 import Taro from '@tarojs/taro';
 import { PAGES } from '../../../const/app';
-import iconwechat from '../../../static/image/share/icon_wechat.png';
+import { URL_STATIC } from '../../../api/config';
+const iconwechat = URL_STATIC + '/appstatic/image/share/icon_wechat.png';
 export default ({ userInfo }) => {
   return (
     <View

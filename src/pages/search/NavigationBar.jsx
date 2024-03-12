@@ -3,24 +3,6 @@ import Taro from '@tarojs/taro';
 import { useState } from 'react';
 import { AtDrawer } from 'taro-ui';
 import LeftDrawer from '../comps/LeftDrawer';
-const PAGES = [
-  'pages/index/index',
-  'pages/create/index',
-  'pages/user/index',
-  'pages/postNode/index',
-  'pages/discover/index',
-  'pages/message/index',
-  'pages/activity/Activity',
-  'pages/setting/index',
-  'pages/search/index',
-  'pages/faceswap/index',
-  'pages/refine/index',
-  'pages/album/index',
-  'pages/photo/index',
-  'pages/gen/index',
-  'pages/user/agreements/index',
-  'pages/user/privacy/index',
-];
 const PAGE_INFO = {
   index: {
     url: 'pages/index/index',

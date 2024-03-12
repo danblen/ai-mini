@@ -21,10 +21,6 @@ import {
   data,
   swap_face_and_add_detail_data,
 } from '../../const/sdApiParams.js';
-import IconBad from '../../static/image/my/icons-bad.png';
-import IconBad1 from '../../static/image/my/icons-bad1.png';
-import IconGood from '../../static/image/my/icons-good.png';
-import IconGood1 from '../../static/image/my/icons-good1.png';
 import compareIcon from '../../static/image/my/icons8-compare-64.png';
 import { downloadImages } from '../../utils/imageTools.js';
 import { deepCopy } from '../../utils/object.js';
@@ -33,6 +29,10 @@ import TaskList from '../comps/TaskList.jsx';
 import CustomNavBar from '../index/CustomNavBar.jsx';
 import SwapButton from './SwapButton.jsx';
 import TaskListTip from './TaskListTip.jsx';
+const IconBad = URL_STATIC + '/appstatic/image/my/icons-bad.png';
+const IconBad1 = URL_STATIC + '/appstatic/image/my/icons-bad1.png';
+const IconGood = URL_STATIC + '/appstatic/image/my/icons-good.png';
+const IconGood1 = URL_STATIC + '/appstatic/image/my/icons-good1.png';
 const sdFaceSwapAddDetailParam = deepCopy(swap_face_and_add_detail_data);
 const sdFaceSwapParam = deepCopy(data);
 

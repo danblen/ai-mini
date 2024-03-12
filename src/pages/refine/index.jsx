@@ -1,12 +1,12 @@
+import { Image, Text, View } from '@tarojs/components';
 import Taro from '@tarojs/taro';
-import { View, Text, Image } from '@tarojs/components';
-import { AtIcon } from 'taro-ui';
-import React, { useRef, useState } from 'react';
-import IconTri from '../../static/image/my/triangle.png';
-import Icon1080 from '../../static/image/my/full1080.png';
-import Icon4k from '../../static/image/my/full.png';
-import IconAI from '../../static/image/my/artificial-intelligence.png';
-import IconCartoon from '../../static/image/my/success.png';
+import React, { useState } from 'react';
+import { URL_STATIC } from '../../api/config';
+const IconTri = URL_STATIC + '/appstatic/image/my/triangle.png';
+const Icon1080 = URL_STATIC + '/appstatic/image/my/full1080.png';
+const Icon4k = URL_STATIC + '/appstatic/image/my/full.png';
+const IconAI = URL_STATIC + '/appstatic/image/my/artificial-intelligence.png';
+const IconCartoon = URL_STATIC + '/appstatic/image/my/success.png';
 
 const srcHD1 = 'https://facei.top/static/allImages/index/HD.jpg';
 const srcHD = 'https://facei.top/static/allImages/index/HD+.jpg';

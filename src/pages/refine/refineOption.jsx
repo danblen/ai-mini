@@ -11,7 +11,7 @@ import { mask_data, scale_data } from '../../const/sdApiParams.js';
 import { wxPathToBase64 } from '../../utils/imageTools';
 import { getTaskImage } from '../../common/getTaskImage.js';
 import { faceSwap } from '../../api';
-import defaultPic from '../../static/image/my/icons8-上传-64.png';
+const defaultPic = URL_STATIC + '/appstatic/image/my/icons8-上传-64.png';
 import { URL_STATIC } from '../../api/config.js';
 
 export default ({}) => {

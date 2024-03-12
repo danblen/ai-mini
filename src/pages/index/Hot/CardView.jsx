@@ -46,8 +46,9 @@
 import { Image, Text, View } from '@tarojs/components';
 import Taro from '@tarojs/taro';
 import { AtIcon } from 'taro-ui';
-import buttonImages from '../../../static/image/my/dddepth-335.jpg';
-import plusIcon from '../../../static/image/my/add.png';
+import { URL_STATIC } from '../../../api/config';
+const buttonImages = URL_STATIC + '/appstatic/image/my/dddepth-335.jpg';
+const plusIcon = URL_STATIC + '/appstatic/image/my/add.png';
 
 export default ({ infoLeftImage, infoTopLeftImage, infoTopRightImage }) => {
   const handleButtonClick = (pagePath, params) => {

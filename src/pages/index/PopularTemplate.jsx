@@ -1,9 +1,10 @@
 import { Image, Text, View } from '@tarojs/components';
 import { AtIcon } from 'taro-ui';
 import { navigateTo } from '../../base/global';
-import IconGood1 from '../../static/image/my/icons8-奥运奖牌金牌-48.png';
-import IconGood3 from '../../static/image/my/icons8-奥运奖牌铜牌-48.png';
-import IconGood2 from '../../static/image/my/icons8-奥运奖牌银牌-48.png';
+import { URL_STATIC } from '../../api/config';
+const IconGood1 = URL_STATIC + '/appstatic/image/my/icons8-奥运奖牌金牌-48.png';
+const IconGood3 = URL_STATIC + '/appstatic/image/my/icons8-奥运奖牌铜牌-48.png';
+const IconGood2 = URL_STATIC + '/appstatic/image/my/icons8-奥运奖牌银牌-48.png';
 
 const PopularTemplate = ({ activityTagsImage }) => {
   const handleItemClick = (imageUrl, title, description) => {
