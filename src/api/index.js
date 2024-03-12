@@ -54,6 +54,15 @@ api.updateImageUserUploadInfo = (data) => {
 api.feedback = (data) => {
   return request.post('/feedback', data);
 };
+api.getQRCode = (data) => {
+  return request.post('/getQRCode', data);
+};
+api.userlog = (data) => {
+  return request.post('/userlog', data);
+};
+api.uploadLaunchInfo = (data) => {
+  return request.post('/uploadLaunchInfo', data);
+};
 
 export { api };
 
