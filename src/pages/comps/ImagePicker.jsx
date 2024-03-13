@@ -1,5 +1,5 @@
 const { useState, useEffect, useRef } = require('react');
-const { View, Image } = require('@tarojs/components');
+const { View, Image, ScrollView } = require('@tarojs/components');
 const { AtImagePicker } = require('taro-ui');
 const Taro = require('@tarojs/taro');
 const { wxPathToBase64 } = require('../../utils/imageTools');
@@ -154,7 +154,7 @@ export default function ImagePicker({ onFilesChange, onSelectImage }) {
                     width: 80,
                     height: 80,
                     border: '2px solid #06638e', // 图像边框样式
-                    borderRadius: 5,
+                    borderRadius: 8,
                   }}
                   mode="aspectFill"
                 />
@@ -176,17 +176,26 @@ export default function ImagePicker({ onFilesChange, onSelectImage }) {
             )
         )}
       </View>
-      <AtImagePicker
-        length={4}
-        count={2}
-        files={files}
-        onChange={handleImageChange}
-        onFail={(mes) => {}}
-        onImageClick={(index, file) => {
-          setSelectedIndex(index);
-          onSelectImage(index);
+      <ScrollView
+        scrollY
+        style={{
+          maxHeight: 160,
+          display:'flex',
+          alignItems:'center'
         }}
-      />
+      >
+        <AtImagePicker
+          length={4}
+          count={99}
+          files={files}
+          onChange={handleImageChange}
+          onFail={(mes) => {}}
+          onImageClick={(index, file) => {
+            setSelectedIndex(index);
+            onSelectImage(index);
+          }}
+        />
+      </ScrollView>
     </View>
   );
 }
