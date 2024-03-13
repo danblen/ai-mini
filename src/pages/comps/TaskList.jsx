@@ -38,42 +38,62 @@ export default ({ images }) => {
         <AtIcon value="chevron-right" size="22" />
       </View>
 
-      <ScrollView style={{ background: 'black' }}>
-        {images?.map((image, index) => (
+      <ScrollView
+        style={{
+          background: 'black',
+        }}
+      >
+        <View
+          style={{
+            background: 'black',
+            display: 'flex',
+            width: '100%',
+            justifyContent: 'center',
+          }}
+        >
           <View
-            key={index}
             style={{
-              display: 'inline-block',
+              display: 'flex',
+              justifyContent: 'space-between',
+              flexWrap: 'wrap',
+              width: '96%',
             }}
           >
-            {image.status === 'pending' ? (
-              <View
-                style={{
-                  marginLeft: '15rpx',
-                }}
-              >
-                {/* <Loading /> */}
-                <View>制作中</View>
-              </View>
-            ) : (
-              <Image
-                style={{
-                  width: '280rpx',
-                  marginLeft: '15rpx',
-                  borderRadius: '10rpx',
-                }}
-                src={image.src}
-                mode="widthFix"
-                onClick={() => {
-                  Taro.previewImage({
-                    current: image.src,
-                    urls: images.map((image) => image.src),
-                  });
-                }}
-              />
-            )}
+            {images?.map((image) => (
+              <>
+                {image.status === 'pending' ? (
+                  <View
+                    style={{
+                      width: '49%',
+                      height: '280rpx',
+                      marginBottom: 6,
+                      borderRadius: '10rpx',
+                    }}
+                  >
+                    {/* <Loading /> */}
+                    <View>制作中</View>
+                  </View>
+                ) : (
+                  <Image
+                    style={{
+                      width: '49%',
+                      marginBottom: 6,
+                      borderRadius: '10rpx',
+                    }}
+                    src={image.src}
+                    mode="widthFix"
+                    onClick={() => {
+                      Taro.previewImage({
+                        current: image.src,
+                        urls: images.map((image) => image.src),
+                      });
+                    }}
+                  />
+                )}
+              </>
+            ))}
           </View>
-        ))}
+        </View>
       </ScrollView>
     </View>
   );
