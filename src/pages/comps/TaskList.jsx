@@ -61,7 +61,7 @@ export default ({ images }) => {
           >
             {images?.map((image) => (
               <>
-                {image.status === 'pending' ? (
+                {image.status === 'pending' && (
                   <View
                     style={{
                       width: '49%',
@@ -73,7 +73,20 @@ export default ({ images }) => {
                     {/* <Loading /> */}
                     <View>制作中</View>
                   </View>
-                ) : (
+                )}
+                {image.status === 'failed' && (
+                  <View
+                    style={{
+                      width: '49%',
+                      height: '280rpx',
+                      marginBottom: 6,
+                      borderRadius: '10rpx',
+                    }}
+                  >
+                    <View>超时，请稍后在作品页查看</View>
+                  </View>
+                )}
+                {image.status === 'finished' && (
                   <Image
                     style={{
                       width: '49%',

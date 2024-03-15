@@ -1,5 +1,5 @@
 import Taro from '@tarojs/taro';
-import { faceSwap } from '../../api';
+import { api, faceSwap } from '../../api';
 import { useState, useEffect, useRef } from 'react';
 import { View, Text } from '@tarojs/components';
 import { AtButton, AtActivityIndicator, AtFloatLayout } from 'taro-ui';
@@ -7,6 +7,7 @@ import { wxPathToBase64 } from '../../utils/imageTools';
 import { saveUserInfo, wechatLogin } from '../../common/user.js';
 import LoginView from '../comps/LoginView.jsx';
 import { getStorageSync } from '../../base/global.js';
+import { generateUniqueId } from '../../utils/index.js';
 const SwapCount = ({ clickCount }) => (
   <View
     style={{
@@ -35,7 +36,6 @@ const SwapCount = ({ clickCount }) => (
     )}
   </View>
 );
-
 export default ({
   imageUrl,
   selectedImageUrl,
@@ -48,6 +48,7 @@ export default ({
   const clickCount = useRef(Taro.getApp().globalData.clickCount);
   const [isOpened, setIsOpened] = useState(false);
   const [updateTrigger, forceUpdate] = useState({});
+  const [usedFaceImages, setUsedFaceImages] = useState([]);
 
   useEffect(() => {
     // clickCount大于0，重新进入页面后，clickCount在其他页面变为0，不会触发这个地方，需要使用forceUpdate强制刷新
@@ -69,69 +70,115 @@ export default ({
     };
   }, []);
 
+  const getParams = async () => {
+    const srcBase64 = await wxPathToBase64(imageUrl);
+    const tarBase64 = await wxPathToBase64(selectedImageUrl);
+    sdparam.momentId = momentId;
+    sdparam.usePoint = usePoint;
+    sdparam.init_images = [srcBase64];
+    sdparam.alwayson_scripts.roop.args[0] = tarBase64;
+    return sdparam;
+  };
+
+  // const handleClick = async () => {
+  //   if (imageUrl && selectedImageUrl) {
+  //     try {
+  //       // 异步操作
+  //       let res = await faceSwap(await getParams());
+  //       if (res.data?.status === 'pending') {
+  //         onUpdateTaskImages(res.data.requestId);
+  //       } else {
+  //         if (typeof res?.error === 'string') {
+  //           console.log('res', res);
+  //           if (res.error === 'no points') {
+  //             Taro.showToast({
+  //               title: '积分不足',
+  //               icon: 'none',
+  //             });
+  //           } else {
+  //             Taro.showToast({
+  //               title: res.error,
+  //               icon: 'none',
+  //             });
+  //           }
+  //         } else {
+  //           Taro.showToast({
+  //             title: 'Unknown error occurred',
+  //             icon: 'none',
+  //           });
+  //         }
+  //         setLoading(false);
+  //         return;
+  //       }
+
+  //       setLoading(false);
+  //       Taro.getApp().globalData.updateGlobalClickCount(1); // 减少全局变量中的点击次数
+  //       clickCount.current = Taro.getApp().globalData.clickCount;
+  //     } catch (error) {
+  //       console.error(error);
+  //     }
+  //   } else {
+  //     Taro.showToast({
+  //       title: `请点击+号,选择人脸图像~`,
+  //       icon: 'none',
+  //     });
+  //   }
+  // };
   const handleClick = async () => {
-    if (imageUrl && selectedImageUrl) {
-      try {
-        const storageUserInfo = getStorageSync('userInfo');
-        if (storageUserInfo === null || !storageUserInfo.isLogin) {
-          setIsOpened(true);
-          return;
-        }
-        if (storageUserInfo.data.points < 1) {
-          Taro.showToast({
-            title: `积分为0，请先获取积分`,
-            icon: 'none',
-          });
-          return;
-        }
-        setLoading(true);
-        const srcBase64 = await wxPathToBase64(imageUrl);
-        const tarBase64 = await wxPathToBase64(selectedImageUrl);
-        sdparam.userId = storageUserInfo.data.userId;
-        sdparam.momentId = momentId;
-        sdparam.usePoint = usePoint;
-        sdparam.init_images = [srcBase64];
-        sdparam.alwayson_scripts.roop.args[0] = tarBase64;
-
-        // 异步操作
-        let res = await faceSwap(sdparam);
-        if (res.data?.status === 'pending') {
-          onUpdateTaskImages(res.data.requestId);
-        } else {
-          if (typeof res?.error === 'string') {
-            console.log('res', res);
-            if (res.error === 'no points') {
-              Taro.showToast({
-                title: '积分不足',
-                icon: 'none',
-              });
-            } else {
-              Taro.showToast({
-                title: res.error,
-                icon: 'none',
-              });
-            }
-          } else {
-            Taro.showToast({
-              title: 'Unknown error occurred',
-              icon: 'none',
-            });
-          }
-          setLoading(false);
-          return;
-        }
-
-        setLoading(false);
-        Taro.getApp().globalData.updateGlobalClickCount(1); // 减少全局变量中的点击次数
-        clickCount.current = Taro.getApp().globalData.clickCount;
-      } catch (error) {
-        console.error(error);
-      }
-    } else {
+    if (!imageUrl) {
+      Taro.showToast({
+        title: `出错了，返回页面重新进来试试~`,
+        icon: 'none',
+      });
+      return;
+    }
+    if (!selectedImageUrl) {
       Taro.showToast({
         title: `请点击+号,选择人脸图像~`,
         icon: 'none',
       });
+      return;
+    }
+    if (usedFaceImages.indexOf(selectedImageUrl) > -1) {
+      Taro.showToast({
+        title: `这张已经换过哦~`,
+        icon: 'none',
+      });
+      return;
+    }
+    // 未登录
+    if (global.userInfo === null || !global.userInfo.isLogin) {
+      setIsOpened(true);
+      return;
+    }
+    if (global.userInfo.data.points < 1) {
+      Taro.showToast({
+        title: `积分为0，请先获取积分`,
+        icon: 'none',
+      });
+      return;
+    }
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+    // 随机数
+    const requestId = generateUniqueId();
+    onUpdateTaskImages('pending', requestId, '');
+    const res = await api.img2img({
+      userId: global.userInfo.data.userId,
+      requestId,
+      sdParams: await getParams(),
+    });
+    if (res?.data) {
+      setUsedFaceImages([...usedFaceImages, selectedImageUrl]);
+      onUpdateTaskImages('finished', requestId, res.data.imageUrl);
+    } else {
+      Taro.showToast({
+        title: res.message,
+        icon: 'none',
+      });
+      onUpdateTaskImages('failed', requestId, '');
     }
   };
 

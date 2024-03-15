@@ -63,6 +63,9 @@ api.userlog = (data) => {
 api.uploadLaunchInfo = (data) => {
   return request.post('/uploadLaunchInfo', data);
 };
+api.img2img = (data) => {
+  return request.post('/img2img', data);
+};
 
 export { api };
 
