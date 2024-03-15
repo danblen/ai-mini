@@ -1,4 +1,5 @@
 import { View } from '@tarojs/components';
+import Taro from '@tarojs/taro';
 
 export default () => {
   return (
@@ -6,33 +7,30 @@ export default () => {
       style={{
         borderRadius: '50%',
         backgroundColor: 'rgba(2, 0, 0, 0.5)',
-        padding:5,
-        // marginTop: '46px',
-        // marginLeft: '10px',
+        top: 50,
+        left: 15,
+        width: 30,
+        height: 30,
         position: 'absolute',
+        display: 'flex',
+        alignItems: 'center',
+        zIndex: 10,
+      }}
+      onClick={() => {
+        if (Taro.getCurrentPages().length > 1) {
+          Taro.navigateBack();
+        }
       }}
     >
       <View
+        className="at-icon at-icon-chevron-left"
         style={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
+          fontSize: 18,
+          paddingLeft: 4,
+          paddingTop: 2,
+          color: 'white',
         }}
-        onClick={() => {
-          if (Taro.getCurrentPages().length > 1) {
-            Taro.navigateBack();
-          }
-        }}
-      >
-        <View
-          className="at-icon at-icon-chevron-left"
-          style={{
-            fontSize: 18,
-            
-            color:"#cdcecd"
-          }}
-        />
-      </View>
+      />
     </View>
   );
 };

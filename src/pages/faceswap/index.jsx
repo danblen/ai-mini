@@ -26,9 +26,9 @@ import { downloadImages } from '../../utils/imageTools.js';
 import { deepCopy } from '../../utils/object.js';
 import ImagePicker from '../comps/ImagePicker.jsx';
 import TaskList from '../comps/TaskList.jsx';
-import CustomNavBar from '../index/CustomNavBar.jsx';
 import SwapButton from './SwapButton.jsx';
 import TaskListTip from './TaskListTip.jsx';
+import BackButton from '../comps/BackButton.jsx';
 const IconBad = URL_STATIC + '/appstatic/image/my/icons-bad.png';
 const IconBad1 = URL_STATIC + '/appstatic/image/my/icons-bad1.png';
 const IconGood = URL_STATIC + '/appstatic/image/my/icons-good.png';
@@ -238,7 +238,7 @@ export default () => {
       onTouchEnd={onTouchEnd}
       style={{ background: 'black', height: '100vh', position: 'relative' }}
     >
-      <CustomNavBar></CustomNavBar>
+      <BackButton />
       <View
         style={{
           position: 'absolute',

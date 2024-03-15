@@ -129,8 +129,7 @@ export default () => {
         background: 'black',
       }}
     >
-      <CustomNavBar></CustomNavBar>
-      {/* <BackButton /> */}
+      <BackButton />
       <TaskListTip onClick={() => setShowDrawer(true)}></TaskListTip>
 
       <View className="">

@@ -13,10 +13,9 @@ import {
 import NavBar from './NavBar';
 import { api } from '../../api/index.js';
 import { getStorage } from '../../base/global.js';
-
-const Hot = lazy(() => import('./Hot'));
-const Recommend = lazy(() => import('./Recommend'));
-const New = lazy(() => import('./New'));
+import Hot from './Hot';
+import Recommend from './Recommend';
+import New from './New';
 
 function TabContent({
   currentTab,
@@ -26,7 +25,7 @@ function TabContent({
   recomTitle,
 }) {
   const tabComponents = {
-    hot: <Hot onNavigateToTab={navigateToTab} />,
+    hot: <Hot allImages={allImages} onNavigateToTab={navigateToTab} />,
     recommend: (
       <Recommend
         tags_image={allImages?.tagsImage}
@@ -38,12 +37,11 @@ function TabContent({
   };
   const TabComponent = tabComponents[currentTab];
 
-  return <Suspense fallback={<View>Loading...</View>}>{TabComponent}</Suspense>;
+  return TabComponent;
 }
 export default () => {
   const [currentTab, setCurrentTab] = useState('hot');
   const [recomTitle, setRecomTitle] = useState('古装');
-  // 获取推荐tab页的图片，需要优化
   let [allImages, setAllImages] = useState({ albums: {}, tagsImage: {} });
   let [tagImages, setTagImages] = useState([]);
   const getAllImages = async () => {
@@ -105,14 +103,7 @@ export default () => {
   });
 
   return (
-    <ScrollView
-      enhanced
-      showScrollbar={false}
-      scroll-y
-      style={{
-        marginTop: '10px',
-      }}
-    >
+    <ScrollView enhanced showScrollbar={false} scroll-y>
       <NavBar
         currentTab={currentTab}
         onSwitchTab={(tabName) => {
@@ -125,6 +116,7 @@ export default () => {
         showScrollbar={false}
         style={{ marginTop: 90 }}
       >
+        {/* <View style={{ marginTop: 90 }}> */}
         <TabContent
           currentTab={currentTab}
           allImages={allImages}
@@ -135,6 +127,7 @@ export default () => {
           }}
           recomTitle={recomTitle}
         />
+        {/* </View> */}
       </ScrollView>
     </ScrollView>
   );

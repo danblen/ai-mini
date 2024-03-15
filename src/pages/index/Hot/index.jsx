@@ -19,69 +19,21 @@ import PushView from './PushView.jsx';
 import ButtonView from './ButtonView.jsx';
 import CardPhotoView from './CardPhotoView.jsx';
 import TitleView from './TitleView.jsx';
+import Notices from './Notices.jsx';
 
-export default ({ onNavigateToTab }) => {
-  let [allImages, setAllImages] = useState({ albums: {}, tags_image: {} });
-
-  const getAllImages = async () => {
-    let res = await get_all_images();
-    if (res?.data) {
-      setAllImages(res.data);
-      setStorageSync('tmpAllimages', res.data);
-    }
-  };
-  useEffect(() => {
-    getAllImages();
-    // const tmpAllimages = getStorageSync('tmpAllimages');
-    // if (!tmpAllimages) {
-    //   getAllImages();
-    // } else {
-    //   setAllImages(tmpAllimages);
-    // }
-    // const tmpHotTagimages = getStorageSync('tmpHotTagimages');
-    // if (!tmpHotTagimages) {
-    //   getTagImages();
-    // } else {
-    //   setLRHalfPic(tmpHotTagimages);
-    // }
-    // const timer = setInterval(() => {
-    //   getAllImages();
-    //   getTagImages();
-    // }, 1 * 60 * 1000); // 1分钟
-  }, []);
-  const notices = [
-    '每日签到即可加积分💕',
-    '尝试使用标准人像照进行换脸，可能效果更好🤩',
-    '换脸精修模式更好看🥰',
-    '别人使用你发布的模板，你也会得到积分✌',
-  ];
-
-  const [currentNoticeIndex, setCurrentNoticeIndex] = useState(0);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      // 切换到下一条通知
-      setCurrentNoticeIndex((prevIndex) => (prevIndex + 1) % notices.length);
-    }, 5000); // 设置每条通知显示的时间，这里设置为1秒
-
-    return () => {
-      clearTimeout(timer);
-    };
-  }, [currentNoticeIndex]);
+export default ({ allImages, onNavigateToTab }) => {
   return (
-    <ScrollView enhanced showScrollbar={false} scroll-y>
+    <ScrollView
+      style={{
+        marginTop: '10px',
+      }}
+      enhanced
+      showScrollbar={false}
+      scroll-y
+    >
       <TopBanner banners={allImages?.bannerImage?.['首页日更']} />
 
-      <View
-        style={{
-          marginTop: '5px',
-          // marginTop: '200px',
-        }}
-      >
-        <AtNoticebar icon="volume-plus">
-          {notices[currentNoticeIndex]}
-        </AtNoticebar>
-      </View>
+      <Notices />
 
       {/* <ButtonView allImages={allImages} /> */}
       <CardView
