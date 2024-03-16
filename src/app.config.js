@@ -2,8 +2,10 @@ export default {
   // 所有的页面，新增页面需要在这里加上才能用
   pages: [
     'pages/index/index',
-    'pages/user/index',
+    'pages/UploadDigital/index',
+    'pages/gen/index',
     'pages/QrCodeGenerator/index',
+    'pages/user/index',
     'pages/album/index',
     'pages/refine/index',
     'pages/create/index',
@@ -32,18 +34,18 @@ export default {
         selectedIconPath: './static/image/tabbar/home-sel.png',
         // text: '首页',
       },
-      // {
-      //   pagePath: 'pages/discover/index',
-      //   iconPath: './static/image/tabbar/icons8-图片编辑器-100.png',
-      //   selectedIconPath: './static/image/tabbar/icons8-图片编辑器-100 (1).png',
-      //   text: '发现',
-      // },
-      // {
-      //   pagePath: 'pages/create/index',
-      //   iconPath: './static/image/tabbar/icons8-图片编辑器-100.png',
-      //   selectedIconPath: './static/image/tabbar/icons8-图片编辑器-100 (1).png',
-      //   text: '创作',
-      // },
+      {
+        pagePath: 'pages/UploadDigital/index',
+        iconPath: './static/image/tabbar/icons8-图片编辑器-100.png',
+        selectedIconPath: './static/image/tabbar/icons8-图片编辑器-100 (1).png',
+        text: '发现',
+      },
+      {
+        pagePath: 'pages/gen/index',
+        iconPath: './static/image/tabbar/icons8-图片编辑器-100.png',
+        selectedIconPath: './static/image/tabbar/icons8-图片编辑器-100 (1).png',
+        text: '创作',
+      },
       {
         pagePath: 'pages/album/index',
         iconPath: './static/image/tabbar/picture.png',
