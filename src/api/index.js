@@ -72,6 +72,9 @@ api.txt2img = (data) => {
 api.easyPhotoTrainLora = (data) => {
   return request.post('/easyPhotoTrainLora', data);
 };
+api.easyPhotoSwapFace = (data) => {
+  return request.post('/easyPhotoSwapFace', data);
+};
 
 export { api };
 

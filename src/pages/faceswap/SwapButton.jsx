@@ -184,12 +184,18 @@ export default ({
     // 随机数
     const requestId = generateUniqueId();
     onUpdateTaskImages('pending', requestId, '');
-    const res = await api.img2img({
-      userId: global.userInfo.data.userId,
-      requestId,
-      usePoint,
-      sdParams: await getParams(),
-    });
+    if (selectedOption === '快速模式') {
+      sdparam = sdFaceSwapParam;
+    } else if (selectedOption === '数字分身模式') {
+      const res = await api.easyPhotoSwapFace({
+        userId: global.userInfo.data.userId,
+        requestId,
+        usePoint,
+        sdParams: await getParams(),
+      });
+    } else {
+      sdparam = sdFaceSwapAddDetailParam;
+    }
     if (res?.data) {
       setUsedFaceImages([...usedFaceImages, selectedImageUrl]);
       onUpdateTaskImages('finished', requestId, res.data.imageUrl);
