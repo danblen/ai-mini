@@ -62,11 +62,13 @@ export default () => {
     // 保存更新后的 storageUserInfo
     saveUserInfo(storageUserInfo);
     setShowOptions(false);
-    if (option === '快速模式') {
-      setFaceSwapParam(sdFaceSwapParam);
-    } else {
-      setFaceSwapParam(sdFaceSwapAddDetailParam);
-    }
+    // if (option === '快速模式') {
+    //   setFaceSwapParam(sdFaceSwapParam);
+    // } else if (option === '数字分身模式') {
+    //   setFaceSwapParam(sdFaceSwapWithLora);
+    // } else {
+    //   setFaceSwapParam(sdFaceSwapAddDetailParam);
+    // }
   };
   useEffect(() => {
     const storageUserInfo = Taro.getStorageSync('userInfo');
@@ -90,16 +92,17 @@ export default () => {
       }
     }
 
-    const down = async () => {
-      const tempFilePath = await downloadImages(params.imageUrl);
-      if (!ignore) setImageUrl(tempFilePath);
-    };
+    // const down = async () => {
+    //   const tempFilePath = await downloadImages(params.imageUrl);
+    //   if (!ignore) setImageUrl(tempFilePath);
+    // };
     // 获取传递过来的参数
     const params = Taro.getCurrentInstance().router.params;
     let ignore = false;
     if (params && params.imageUrl) {
       // 先把图片下载下来，并展示出来
-      down();
+      // down();
+      setImageUrl(params.imageUrl);
       api.updateImageUserUploadInfo({
         momentId: params.momentId,
         viewCount: 1,
@@ -300,6 +303,29 @@ export default () => {
             </Text>
           </View>
         </AtActionSheetItem>
+        <AtActionSheetItem onClick={() => handleOptionSelect('数字分身模式')}>
+          <View
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <AtIcon
+              value={
+                selectedOption === '数字分身模式'
+                  ? 'check-circle'
+                  : 'close-circle'
+              }
+              size="18"
+              color={selectedOption === '快速模式' ? '#6190E8' : '#666'}
+              style={{ marginRight: '10px' }}
+            />
+            <Text style={{ color: selectedOption === 0 ? '#6190E8' : '#666' }}>
+              数字分身模式(积分)
+            </Text>
+          </View>
+        </AtActionSheetItem>
         <AtActionSheetItem onClick={() => handleOptionSelect('精修模式')}>
           <View
             style={{
@@ -464,7 +490,7 @@ export default () => {
             uploadedFiles[selectedIndex]?.url
           }
           onUpdateTaskImages={onUpdateTaskImages}
-          sdparam={faceSwapParam}
+          selectedOption={selectedOption}
           momentId={MomentId}
           usePoint={faceSwapParam === sdFaceSwapParam ? 1 : 3}
         ></SwapButton>

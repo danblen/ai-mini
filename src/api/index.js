@@ -66,6 +66,12 @@ api.uploadLaunchInfo = (data) => {
 api.img2img = (data) => {
   return request.post('/img2img', data);
 };
+api.txt2img = (data) => {
+  return request.post('/txt2img', data);
+};
+api.easyPhotoTrainLora = (data) => {
+  return request.post('/easyPhotoTrainLora', data);
+};
 
 export { api };
 

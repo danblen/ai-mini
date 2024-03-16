@@ -131,7 +131,9 @@ export default ({ albumUrls, selfUrl, onUpdateTaskImages }) => {
           requestId,
           sdParams: await getParams(imageUrl),
         })
-        .catch();
+        .catch((err) => {
+          onUpdateTaskImages('failed', requestId, '');
+        });
       if (res?.data) {
         onUpdateTaskImages('finished', requestId, res.data.imageUrl);
       } else {

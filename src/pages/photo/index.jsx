@@ -213,14 +213,3 @@ export default () => {
     </View>
   );
 };
-const Styles = {
-  indexImage: {},
-  image: {
-    width: '360rpx',
-    borderRadius: '10rpx',
-  },
-  imageWrap: {
-    paddingLeft: '10rpx',
-    display: 'inline-block',
-  },
-};

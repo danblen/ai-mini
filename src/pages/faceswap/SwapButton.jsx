@@ -3,7 +3,7 @@ import { api, faceSwap } from '../../api';
 import { useState, useEffect, useRef } from 'react';
 import { View, Text } from '@tarojs/components';
 import { AtButton, AtActivityIndicator, AtFloatLayout } from 'taro-ui';
-import { wxPathToBase64 } from '../../utils/imageTools';
+import { downloadImages, wxPathToBase64 } from '../../utils/imageTools';
 import {
   saveUserInfo,
   updateUserInfoFromApi,
@@ -11,7 +11,13 @@ import {
 } from '../../common/user.js';
 import LoginView from '../comps/LoginView.jsx';
 import { getStorageSync } from '../../base/global.js';
-import { generateUniqueId } from '../../utils/index.js';
+import { deepCopy, generateUniqueId } from '../../utils/index.js';
+import {
+  data,
+  swap_face_and_add_detail_data,
+} from '../../const/sdApiParams.js';
+const sdFaceSwapAddDetailParam = deepCopy(swap_face_and_add_detail_data);
+const sdFaceSwapParam = deepCopy(data);
 const SwapCount = ({ clickCount }) => (
   <View
     style={{
@@ -44,7 +50,7 @@ export default ({
   imageUrl,
   selectedImageUrl,
   onUpdateTaskImages,
-  sdparam,
+  selectedOption,
   momentId,
   usePoint,
 }) => {
@@ -75,7 +81,17 @@ export default ({
   }, []);
 
   const getParams = async () => {
-    const srcBase64 = await wxPathToBase64(imageUrl);
+    if (selectedOption === '快速模式') {
+      sdparam = sdFaceSwapParam;
+    } else if (selectedOption === '数字分身模式') {
+      return {
+        tmpPics: [imageUrl],
+      };
+    } else {
+      sdparam = sdFaceSwapAddDetailParam;
+    }
+    const tempFilePath = await downloadImages(imageUrl);
+    const srcBase64 = await wxPathToBase64(tempFilePath);
     const tarBase64 = await wxPathToBase64(selectedImageUrl);
     sdparam.momentId = momentId;
     sdparam.init_images = [srcBase64];
@@ -209,7 +225,7 @@ export default ({
         loading={loading}
         onClick={handleClick}
       >
-        一键换脸
+        一键换脸（消耗{usePoint}积分）
       </AtButton>
       <AtFloatLayout
         isOpened={isOpened}

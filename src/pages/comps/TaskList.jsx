@@ -91,7 +91,6 @@ export default ({ images }) => {
                     style={{
                       border: '1px solid #eee',
                       borderRadius: 5,
-
                       boxSizing: 'border-box',
                       width: '49%',
                       height: 200,
@@ -107,7 +106,7 @@ export default ({ images }) => {
                         padding: 10,
                       }}
                     >
-                      任务超时，请稍后在作品页查看
+                      已在后台排队处理中，请稍后在作品页查看
                     </View>
                   </View>
                 )}
