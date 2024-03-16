@@ -40,7 +40,7 @@ function baseRequest(
     Taro.request({
       url: Url,
       method: method || 'GET',
-      timeout: 600000,
+      timeout: 6000000,
       header: header,
       // header: {
       // 	'content-type': 'multipart/form-data', // 使用表单数据格式

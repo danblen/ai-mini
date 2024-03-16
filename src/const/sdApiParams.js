@@ -1,5 +1,5 @@
 export const data = {
-  userId: '123456',
+  // userId: '123456',
   init_images: [], // Original image address
   denoising_strength: 0, // Range 0-1, smaller value closer to original image. Larger value more likely to let imagination fly
   prompt: '',
@@ -15,7 +15,8 @@ export const data = {
   sampler_name: 'DPM++ 2M Karras',
   sampler_index: 'DPM++ 2M Karras', // or "DPM++ 2M Karras"
   override_settings: {
-    sd_model_checkpoint: 'majicmixRealistic_v6.safetensors',
+    // sd_model_checkpoint: 'majicmixRealistic_v6.safetensors',
+    sd_model_checkpoint: 'Anything-ink.safetensorss',
   },
   alwayson_scripts: {
     roop: {
@@ -25,8 +26,8 @@ export const data = {
         '', //0 File Input
         true, //1 Enable Roop
         '0', //2 Comma separated face number(s)
-        '/home/vipuser/code/' +
-          'stable_diffusion_webui/models/roop/inswapper_128.onnx', //3 Model
+        // '/home/vipuser/code/stable_diffusion_webui/models/roop/inswapper_128.onnx', //3 Model
+        '/root/stable-diffusion-webui/models/roop/inswapper_128.onnx', //3 Model
         'CodeFormer', //4 Restore Face: None; CodeFormer; GFPGAN
         1, //5 Restore visibility value
         true, //6 Restore face -> Upscale

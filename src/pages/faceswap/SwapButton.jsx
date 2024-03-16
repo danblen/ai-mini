@@ -74,7 +74,6 @@ export default ({
     const srcBase64 = await wxPathToBase64(imageUrl);
     const tarBase64 = await wxPathToBase64(selectedImageUrl);
     sdparam.momentId = momentId;
-    sdparam.usePoint = usePoint;
     sdparam.init_images = [srcBase64];
     sdparam.alwayson_scripts.roop.args[0] = tarBase64;
     return sdparam;
@@ -168,6 +167,7 @@ export default ({
     const res = await api.img2img({
       userId: global.userInfo.data.userId,
       requestId,
+      usePoint,
       sdParams: await getParams(),
     });
     if (res?.data) {
