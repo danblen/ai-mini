@@ -65,33 +65,59 @@ export default ({ images }) => {
                   <View
                     style={{
                       width: '49%',
-                      height: '280rpx',
+                      height: 200,
                       marginBottom: 6,
-                      borderRadius: '10rpx',
+                      borderRadius: 5,
+                      border: '1px solid #aaa',
+                      boxSizing: 'border-box',
+                      // textAlign: 'center',
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
                     }}
                   >
                     {/* <Loading /> */}
-                    <View>制作中</View>
+                    <View
+                      style={{
+                        padding: 10,
+                      }}
+                    >
+                      制作中...
+                    </View>
                   </View>
                 )}
                 {image.status === 'failed' && (
                   <View
                     style={{
+                      border: '1px solid #eee',
+                      borderRadius: 5,
+
+                      boxSizing: 'border-box',
                       width: '49%',
-                      height: '280rpx',
+                      height: 200,
                       marginBottom: 6,
                       borderRadius: '10rpx',
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
                     }}
                   >
-                    <View>超时，请稍后在作品页查看</View>
+                    <View
+                      style={{
+                        padding: 10,
+                      }}
+                    >
+                      任务超时，请稍后在作品页查看
+                    </View>
                   </View>
                 )}
                 {image.status === 'finished' && (
                   <Image
                     style={{
                       width: '49%',
+                      height: 200,
                       marginBottom: 6,
-                      borderRadius: '10rpx',
+                      borderRadius: 5,
                     }}
                     src={image.src}
                     mode="widthFix"

@@ -7,7 +7,7 @@ import { downloadImages, wxPathToBase64 } from '../../utils/imageTools.js';
 import { deepCopy } from '../../utils/object.js';
 import { getStorageSync } from '../../base/global.js';
 import LoginView from '../comps/LoginView.jsx';
-import { saveUserInfo } from '../../common/user.js';
+import { saveUserInfo, updateUserInfoFromApi } from '../../common/user.js';
 import { generateUniqueId } from '../../utils/index.js';
 const SD_PARAMS = deepCopy(data);
 
@@ -98,13 +98,13 @@ export default ({ albumUrls, selfUrl, onUpdateTaskImages }) => {
       });
       return;
     }
-    if (usedFaceImages.indexOf(selfUrl) > -1) {
-      Taro.showToast({
-        title: `这张已经换过哦~`,
-        icon: 'none',
-      });
-      return;
-    }
+    // if (usedFaceImages.indexOf(selfUrl) > -1) {
+    //   Taro.showToast({
+    //     title: `这张已经换过哦~`,
+    //     icon: 'none',
+    //   });
+    //   return;
+    // }
     // 未登录
     if (global.userInfo === null || !global.userInfo.isLogin) {
       setIsOpened(true);
@@ -124,7 +124,6 @@ export default ({ albumUrls, selfUrl, onUpdateTaskImages }) => {
 
     const swapOne = async (imageUrl) => {
       const requestId = generateUniqueId();
-      console.log(requestId);
       onUpdateTaskImages('pending', requestId, '');
       const res = await api
         .img2img({
@@ -146,6 +145,7 @@ export default ({ albumUrls, selfUrl, onUpdateTaskImages }) => {
 
     setUsedFaceImages([...usedFaceImages, selfUrl]);
     await Promise.all(imageUrls.map((imageUrl) => swapOne(imageUrl)));
+    updateUserInfoFromApi();
   };
 
   return (
@@ -173,10 +173,6 @@ export default ({ albumUrls, selfUrl, onUpdateTaskImages }) => {
       >
         <LoginView
           onConfirmLogin={async (res) => {
-            saveUserInfo({
-              isLogin: true,
-              data: res.data,
-            });
             setIsOpened(false);
           }}
         />

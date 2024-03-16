@@ -118,9 +118,9 @@ export default ({ albums, title, description, tagName, onNavigateToTab }) => {
             <View
               style={{
                 position: 'absolute',
-                top: '90%',
+                top: '88%',
                 opacity: 0.8,
-                left: 10,
+                left: 13,
                 borderRadius: 5,
                 background: '#f9f9f9a6',
                 fontSize: 12,

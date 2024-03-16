@@ -4,7 +4,11 @@ import { useState, useEffect, useRef } from 'react';
 import { View, Text } from '@tarojs/components';
 import { AtButton, AtActivityIndicator, AtFloatLayout } from 'taro-ui';
 import { wxPathToBase64 } from '../../utils/imageTools';
-import { saveUserInfo, wechatLogin } from '../../common/user.js';
+import {
+  saveUserInfo,
+  updateUserInfoFromApi,
+  wechatLogin,
+} from '../../common/user.js';
 import LoginView from '../comps/LoginView.jsx';
 import { getStorageSync } from '../../base/global.js';
 import { generateUniqueId } from '../../utils/index.js';
@@ -138,13 +142,13 @@ export default ({
       });
       return;
     }
-    if (usedFaceImages.indexOf(selectedImageUrl) > -1) {
-      Taro.showToast({
-        title: `这张已经换过哦~`,
-        icon: 'none',
-      });
-      return;
-    }
+    // if (usedFaceImages.indexOf(selectedImageUrl) > -1) {
+    //   Taro.showToast({
+    //     title: `这张已经换过哦~`,
+    //     icon: 'none',
+    //   });
+    //   return;
+    // }
     // 未登录
     if (global.userInfo === null || !global.userInfo.isLogin) {
       setIsOpened(true);
@@ -173,6 +177,7 @@ export default ({
     if (res?.data) {
       setUsedFaceImages([...usedFaceImages, selectedImageUrl]);
       onUpdateTaskImages('finished', requestId, res.data.imageUrl);
+      updateUserInfoFromApi();
     } else {
       Taro.showToast({
         title: res.message,
@@ -214,10 +219,6 @@ export default ({
       >
         <LoginView
           onConfirmLogin={async (res) => {
-            saveUserInfo({
-              isLogin: true,
-              data: res.data,
-            });
             setIsOpened(false);
           }}
         />

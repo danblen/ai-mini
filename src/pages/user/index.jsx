@@ -9,7 +9,9 @@ import { api, get_user_info } from '../../api';
 import { navigateTo } from '../../base/global';
 import {
   clearUserInfo,
+  fetchUserInfo,
   saveUserInfo,
+  updateUserInfoFromApi,
   updateUserInfoFromStorage,
 } from '../../common/user';
 import LoginView from '../comps/LoginView';
@@ -38,34 +40,18 @@ export default () => {
     updateUserInfoFromStorage();
   }, []);
   // 获取用户信息
-  const fetchUserInfo = async () => {
-    let userInfo = global.userInfo;
-    // storage或global中有数据表示用户已经登陆
-    if (userInfo?.isLogin && userInfo.data?.userId) {
-      // if (userInfo) {
-      let res = await get_user_info({
-        userId: userInfo.data.userId,
-      });
-      // 所有接口都可通过这种方式判断调用成功与否
-      if (res?.data) {
-        setUserInfo((pre) => ({
-          ...pre,
-          isLogin: true,
-          data: res.data,
-        }));
-        saveUserInfo({
-          isLogin: true,
-          data: res.data,
-        });
-      } else {
-        // 获取用户数据失败
-        setUserInfo({
-          isLogin: false,
-          data: {},
-        });
-      }
+
+  const getUserInfo = async () => {
+    let res = await updateUserInfoFromApi();
+    // 所有接口都可通过这种方式判断调用成功与否
+    if (res?.data) {
+      setUserInfo((pre) => ({
+        ...pre,
+        isLogin: true,
+        data: res.data,
+      }));
     } else {
-      // 用户未登陆，清空
+      // 获取用户数据失败
       setUserInfo({
         isLogin: false,
         data: {},
@@ -75,7 +61,7 @@ export default () => {
   // 每次点击到tabbar 我的 都会触发，更新用户信息并刷新页面
   useTabItemTap((tab) => {});
   useDidShow(() => {
-    fetchUserInfo();
+    getUserInfo();
   });
 
   const handleNicknameClick = () => {
@@ -98,7 +84,7 @@ export default () => {
           userName: nickname,
         });
         if (res?.data) {
-          fetchUserInfo();
+          getUserInfo();
         }
       }
     } else {
