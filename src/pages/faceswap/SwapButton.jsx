@@ -85,7 +85,7 @@ export default ({
       sdparam = sdFaceSwapParam;
     } else if (selectedOption === '数字分身模式') {
       return {
-        imageUrls: [imageUrl],
+        imageUrl: [imageUrl],
       };
     } else {
       sdparam = sdFaceSwapAddDetailParam;

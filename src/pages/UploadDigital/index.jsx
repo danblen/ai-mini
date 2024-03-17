@@ -4,6 +4,7 @@ import { AtButton } from 'taro-ui';
 import { api } from '../../api';
 import { updateUserInfoFromStorage } from '../../common/user';
 import { useEffect, useState } from 'react';
+import { generateUniqueId } from '../../utils/index.js';
 
 export default () => {
   const [uploadedFiles, setUploadedFiles] = useState([]);
@@ -62,6 +63,8 @@ export default () => {
         onClick={async () => {
           const res = await api.easyPhotoTrainLora({
             userId: global.userInfo.data.userId,
+            requestId: generateUniqueId(),
+            usePoint: 2,
             userTrainImages: uploadedFiles
               .map((file) => file.compressBase64)
               .filter((file) => file),
