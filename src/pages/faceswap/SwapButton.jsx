@@ -10,7 +10,6 @@ import {
   wechatLogin,
 } from '../../common/user.js';
 import LoginView from '../comps/LoginView.jsx';
-import { getStorageSync } from '../../base/global.js';
 import { deepCopy, generateUniqueId } from '../../utils/index.js';
 import {
   data,
@@ -81,11 +80,12 @@ export default ({
   }, []);
 
   const getParams = async () => {
+    let sdparam = sdFaceSwapParam;
     if (selectedOption === '快速模式') {
       sdparam = sdFaceSwapParam;
     } else if (selectedOption === '数字分身模式') {
       return {
-        tmpPics: [imageUrl],
+        imageUrls: [imageUrl],
       };
     } else {
       sdparam = sdFaceSwapAddDetailParam;
@@ -184,17 +184,21 @@ export default ({
     // 随机数
     const requestId = generateUniqueId();
     onUpdateTaskImages('pending', requestId, '');
-    if (selectedOption === '快速模式') {
-      sdparam = sdFaceSwapParam;
-    } else if (selectedOption === '数字分身模式') {
-      const res = await api.easyPhotoSwapFace({
+    let res;
+    if (selectedOption === '数字分身模式') {
+      res = await api.easyPhotoSwapFace({
         userId: global.userInfo.data.userId,
         requestId,
         usePoint,
         sdParams: await getParams(),
       });
     } else {
-      sdparam = sdFaceSwapAddDetailParam;
+      res = await api.img2img({
+        userId: global.userInfo.data.userId,
+        requestId,
+        usePoint,
+        sdParams: await getParams(),
+      });
     }
     if (res?.data) {
       setUsedFaceImages([...usedFaceImages, selectedImageUrl]);

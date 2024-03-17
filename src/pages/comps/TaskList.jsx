@@ -1,17 +1,19 @@
-import { View, ScrollView, Image } from '@tarojs/components';
+import { Image, ScrollView, View } from '@tarojs/components';
 import Taro from '@tarojs/taro';
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useCallback } from 'react';
 import { AtIcon } from 'taro-ui';
 
 export default ({ images }) => {
-  const timersRef = useRef({});
-  useEffect(() => {
-    return () => {
-      Object.keys(timersRef.current).forEach((key) => {
-        clearInterval(timersRef.current[key]);
+  const imageUrls = images.map((img) => img.src);
+  const handleImageClick = useCallback(
+    (src) => {
+      Taro.previewImage({
+        current: src,
+        urls: imageUrls,
       });
-    };
-  }, []);
+    },
+    [imageUrls]
+  );
   return (
     <View
       style={{
@@ -70,7 +72,6 @@ export default ({ images }) => {
                       borderRadius: 5,
                       border: '1px solid #aaa',
                       boxSizing: 'border-box',
-                      // textAlign: 'center',
                       display: 'flex',
                       justifyContent: 'center',
                       alignItems: 'center',
@@ -120,12 +121,7 @@ export default ({ images }) => {
                     }}
                     src={image.src}
                     mode="widthFix"
-                    onClick={() => {
-                      Taro.previewImage({
-                        current: image.src,
-                        urls: images.map((image) => image.src),
-                      });
-                    }}
+                    onClick={() => handleImageClick(image.src)}
                   />
                 )}
               </>
