@@ -90,11 +90,11 @@ export default ({
     } else {
       sdparam = sdFaceSwapAddDetailParam;
     }
-    const tempFilePath = await downloadImages(imageUrl);
-    const srcBase64 = await wxPathToBase64(tempFilePath);
+    // const tempFilePath = await downloadImages(imageUrl);
+    // const srcBase64 = await wxPathToBase64(tempFilePath);
     const tarBase64 = await wxPathToBase64(selectedImageUrl);
-    sdparam.momentId = momentId;
-    sdparam.init_images = [srcBase64];
+    // sdparam.momentId = momentId;
+    sdparam.init_images[0] = imageUrl;
     sdparam.alwayson_scripts.roop.args[0] = tarBase64;
     return sdparam;
   };
@@ -198,6 +198,7 @@ export default ({
         requestId,
         usePoint,
         sdParams: await getParams(),
+        momentId: momentId,
       });
     }
     if (res?.data) {

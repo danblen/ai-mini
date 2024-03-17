@@ -51,7 +51,7 @@ export const data = {
 
 //2、换脸+增加脸部细节
 export const swap_face_and_add_detail_data = {
-  userId: '123456',
+  // userId: '123456',
   init_images: [], // Original image address
   denoising_strength: 0, // Range 0-1, smaller value closer to original image. Larger value more likely to let imagination fly
   prompt: '<lora:pytorch_lora_weights:1>',
@@ -133,7 +133,7 @@ export const swap_face_and_add_detail_data = {
 
 //3、超分：默认放大1.5倍
 export const scale_data = {
-  userId: '123456',
+  // userId: '123456',
   init_images: [], // Original image address
   denoising_strength: 0.4, // Range 0-1, smaller value closer to original image. Larger value more likely to let imagination fly
   prompt: '<lora:pytorch_lora_weights:1>',
@@ -174,7 +174,7 @@ export const scale_data = {
 
 //4、局部重绘
 export const mask_data = {
-  userId: '123456',
+  // userId: '123456',
   init_images: [], // Original image address
   denoising_strength: 0.4, // Range 0-1, smaller value closer to original image. Larger value more likely to let imagination fly
   prompt: '<lora:pytorch_lora_weights:1>',
