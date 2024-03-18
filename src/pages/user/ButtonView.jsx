@@ -3,7 +3,7 @@ import ButtonsBox from '../comps/ButtonsBox';
 import { PAGES } from '../../const/app';
 import Taro from '@tarojs/taro';
 
-export default ({ onLogout }) => {
+export default ({ onLogout, editDigital }) => {
   return (
     <View
       style={{
@@ -15,6 +15,11 @@ export default ({ onLogout }) => {
       <ButtonsBox
         background="#fff"
         buttons={[
+          {
+            imageUrl: require('../../static/image/my/coin.png'),
+            text: '管理分身',
+            onClick: editDigital,
+          },
           {
             imageUrl: require('../../static/image/my/coin.png'),
             // pagePath: '/pages/activity/Activity',

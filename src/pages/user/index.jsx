@@ -20,12 +20,15 @@ import ButtonView from './ButtonView';
 import { AtModal, AtModalHeader, AtModalContent, AtModalAction } from 'taro-ui';
 import { URL_STATIC } from '../../api/config';
 import { PAGES } from '../../const/app';
+import UploadDigital from '../UploadDigital';
 const iconwechat = URL_STATIC + '/appstatic/image/share/icon_wechat.png';
+const buttonImages = URL_STATIC + '/appstatic/image/tabbar/user.png';
 
 export default () => {
   const [isOpenedText, setIsOpenedText] = useState(false);
   const [nickname, setNickname] = useState(null);
   const [isOpened, setIsOpened] = useState(false);
+  const [editDigitalMode, setEditDigitalMode] = useState(true);
   // 用户信息数据结构，和storage中存储的一致
   const [userInfo, setUserInfo] = useState({
     isLogin: false,
@@ -51,6 +54,9 @@ export default () => {
         isLogin: true,
         data: res.data,
       }));
+      if (userInfo?.data?.loraPic) {
+        setEditDigitalMode(false);
+      }
     } else {
       // 获取用户数据失败
       setUserInfo({
@@ -62,7 +68,6 @@ export default () => {
   // 每次点击到tabbar 我的 都会触发，更新用户信息并刷新页面
   useTabItemTap((tab) => {});
   useDidShow(() => {
-    console.log('user didShow');
     getUserInfo();
   });
 
@@ -98,7 +103,7 @@ export default () => {
       <View
         style={{
           backgroundColor: '#f7e9e2',
-          height: '400rpx',
+          height: '160px',
           paddingTop: 90,
           backgroundImage: 'linear-gradient(to right, #67B26F, #4ca2cd)', // 添加渐变背景
         }}
@@ -278,8 +283,18 @@ export default () => {
               },
             });
           }}
+          editDigital={() => {
+            console.log('editDigitalMode', editDigitalMode);
+            if (editDigitalMode) setEditDigitalMode(false);
+            else setEditDigitalMode(true);
+          }}
         />
-        <Button
+        <UploadDigital
+          digitalUser={userInfo?.data?.loraPic || buttonImages}
+          editDigitalMode={editDigitalMode}
+        ></UploadDigital>
+        {/* 支付接口 */}
+        {/* <Button
           type="primary"
           onClick={async () => {
             const paymentParams = await api.getPaymentParams({ amount: 0.1 }); // Request payment parameters from server
@@ -302,7 +317,7 @@ export default () => {
           }}
         >
           WeChat Pay 0.1 RMB
-        </Button>
+        </Button> */}
       </View>
 
       <AtFloatLayout
