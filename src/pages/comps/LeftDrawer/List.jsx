@@ -45,7 +45,7 @@ export default ({ userInfo, onLogout }) => {
       <View
         style={Style.item}
         onClick={() => {
-          navigateTo({ url: '/pages/user/privacy/index' });
+          navigateTo({ url: PAGES.userPrivacy });
         }}
       >
         隐私协议
@@ -53,7 +53,7 @@ export default ({ userInfo, onLogout }) => {
       <View
         style={Style.item}
         onClick={() => {
-          navigateTo({ url: '/pages/user/agreements/index' });
+          navigateTo({ url: PAGES.userAgreements });
         }}
       >
         用户协议

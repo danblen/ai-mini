@@ -3,23 +3,30 @@ export default {
   pages: [
     'pages/index/index',
     'pages/UploadDigital/index',
-    'pages/gen/index',
+    // 'pages/gen/index',
     'pages/QrCodeGenerator/index',
     'pages/user/index',
     'pages/album/index',
     'pages/refine/index',
     'pages/create/index',
     'pages/postNode/index',
-    // 'pages/discover/index',
+    'pages/discover/index',
     'pages/message/index',
     'pages/activity/Activity',
-    'pages/setting/index',
     // 'pages/search/index',
     'pages/faceswap/index',
-    'pages/feedback/index',
     'pages/photo/index',
-    'pages/user/agreements/index',
-    'pages/user/privacy/index',
+  ],
+  subPackages: [
+    {
+      root: 'pages/userModule',
+      pages: [
+        'agreements/index',
+        'privacy/index',
+        'setting/index',
+        'feedback/index',
+      ],
+    },
   ],
   // 底部导航tabbar
   tabBar: {
@@ -40,12 +47,12 @@ export default {
         selectedIconPath: './static/image/tabbar/icons8-图片编辑器-100 (1).png',
         text: '发现',
       },
-      {
-        pagePath: 'pages/gen/index',
-        iconPath: './static/image/tabbar/icons8-图片编辑器-100.png',
-        selectedIconPath: './static/image/tabbar/icons8-图片编辑器-100 (1).png',
-        text: '创作',
-      },
+      // {
+      //   pagePath: 'pages/gen/index',
+      //   iconPath: './static/image/tabbar/icons8-图片编辑器-100.png',
+      //   selectedIconPath: './static/image/tabbar/icons8-图片编辑器-100 (1).png',
+      //   text: '创作',
+      // },
       {
         pagePath: 'pages/album/index',
         iconPath: './static/image/tabbar/picture.png',

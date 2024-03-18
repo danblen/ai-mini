@@ -19,6 +19,7 @@ import CheckIn from './CheckIn';
 import ButtonView from './ButtonView';
 import { AtModal, AtModalHeader, AtModalContent, AtModalAction } from 'taro-ui';
 import { URL_STATIC } from '../../api/config';
+import { PAGES } from '../../const/app';
 const iconwechat = URL_STATIC + '/appstatic/image/share/icon_wechat.png';
 
 export default () => {
@@ -226,7 +227,7 @@ export default () => {
             }}
             onClick={() => {
               navigateTo({
-                url: '/pages/setting/index',
+                url: PAGES.setting,
               });
             }}
           ></View>

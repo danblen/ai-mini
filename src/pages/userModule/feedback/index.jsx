@@ -6,9 +6,9 @@
 import { Textarea, View } from '@tarojs/components';
 import { useEffect, useState } from 'react';
 import { AtImagePicker } from 'taro-ui';
-import { api } from '../../api';
-import { getStorageSync, setStorageSync } from '../../base/global';
-import { compressInputImage } from '../../utils/imageTools';
+import { api } from '../../../api';
+import { getStorageSync, setStorageSync } from '../../../base/global';
+import { compressInputImage } from '../../../utils/imageTools';
 import Taro from '@tarojs/taro';
 
 export default () => {

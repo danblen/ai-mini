@@ -3,8 +3,9 @@
  */
 import { Text, View } from '@tarojs/components';
 import React, { useCallback, useState } from 'react';
-import { clearUserInfo } from '../../common/user';
-import { navigateTo } from '../../base/global';
+import { clearUserInfo } from '../../../common/user';
+import { navigateTo } from '../../../base/global';
+import { PAGES } from '../../../const/app';
 
 export default ({}) => {
   const [current, setCurrent] = useState(0);
@@ -34,8 +35,7 @@ export default ({}) => {
       <View
         style={Style.item}
         onClick={() => {
-          navigateTo({ url: '/pages/user/privacy/index' });
-          navigateTo({ url: '/pages/user/privacy/index' });
+          navigateTo({ url: PAGES.userPrivacy });
         }}
       >
         隐私协议
@@ -43,7 +43,7 @@ export default ({}) => {
       <View
         style={Style.item}
         onClick={() => {
-          navigateTo({ url: '/pages/user/agreements/index' });
+          navigateTo({ url: PAGES.userAgreements });
         }}
       >
         用户协议
