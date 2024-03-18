@@ -23,7 +23,7 @@ const iconwechat = URL_STATIC + '/appstatic/image/share/icon_wechat.png';
 
 export default () => {
   const [isOpenedText, setIsOpenedText] = useState(false);
-  const [nickname, setNickname] = useState('');
+  const [nickname, setNickname] = useState(null);
   const [isOpened, setIsOpened] = useState(false);
   // 用户信息数据结构，和storage中存储的一致
   const [userInfo, setUserInfo] = useState({
@@ -61,6 +61,7 @@ export default () => {
   // 每次点击到tabbar 我的 都会触发，更新用户信息并刷新页面
   useTabItemTap((tab) => {});
   useDidShow(() => {
+    console.log('user didShow');
     getUserInfo();
   });
 
@@ -158,11 +159,13 @@ export default () => {
                 >
                   <AtModalHeader>修改昵称</AtModalHeader>
                   <AtModalContent>
-                    <Input
-                      placeholder="请输入昵称"
-                      value={nickname}
-                      onInput={(e) => setNickname(e.detail.value)}
-                    />
+                    {isOpenedText && (
+                      <Input
+                        placeholder="请输入昵称"
+                        value={nickname}
+                        onInput={(e) => setNickname(e.detail.value)}
+                      />
+                    )}
                   </AtModalContent>
                   <AtModalAction>
                     <Button onClick={() => handleCancel()}>取消</Button>
@@ -275,6 +278,30 @@ export default () => {
             });
           }}
         />
+        <Button
+          type="primary"
+          onClick={async () => {
+            const paymentParams = await api.getPaymentParams({ amount: 0.1 }); // Request payment parameters from server
+            Taro.requestPayment({
+              timeStamp: paymentParams.timeStamp,
+              nonceStr: paymentParams.nonceStr,
+              package: paymentParams.package,
+              signType: 'MD5',
+              paySign: paymentParams.paySign,
+              success: function (res) {
+                Taro.showToast({
+                  title: 'Payment successful',
+                  icon: 'success',
+                });
+              },
+              fail: function (res) {
+                Taro.showToast({ title: 'Payment failed', icon: 'none' });
+              },
+            });
+          }}
+        >
+          WeChat Pay 0.1 RMB
+        </Button>
       </View>
 
       <AtFloatLayout

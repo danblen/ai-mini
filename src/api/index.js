@@ -189,3 +189,7 @@ export function get_user_info(data) {
 // export function getAnalysRes(fileDir, name) {
 //   return request.get(`/file=${fileDir}/${name}.txt`);
 // }
+// 获取支付参数
+api.getPaymentParams = (data) => {
+  return request.post('/getPaymentParams', data);
+};
