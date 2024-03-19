@@ -30,7 +30,13 @@ export const compressInputImage = async (file) => {
       if (quality > 99) {
         quality = 99;
       }
-      console.log('compressed siez', src_size);
+      console.log('compressed size', src_size);
+    }
+
+    // 如果不需要压缩，直接转换成base64
+    if (!compressedFile) {
+      srcBase64 = await wxPathToBase64(file.url);
+      console.log('uncompressed size', srcBase64.length);
     }
 
     return {

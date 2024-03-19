@@ -1,4 +1,4 @@
-import { View, Button } from '@tarojs/components';
+import { View, Button, WebView } from '@tarojs/components';
 import ImagePicker from '../comps/ImagePicker';
 import { AtButton } from 'taro-ui';
 import { api } from '../../api';
@@ -9,10 +9,14 @@ import Image from '@taroify/core/image/index.js';
 import { AtImagePicker } from 'taro-ui';
 import { compressInputImage } from '../comps/ImagePicker.jsx';
 import Taro from '@tarojs/taro';
+import { URL_STATIC } from '../../api/config';
 import { AtModal, AtModalHeader, AtModalContent, AtModalAction } from 'taro-ui';
 
 let notifyCheckPact = true;
-export default ({ digitalUser, editDigitalMode }) => {
+const officialAccountQRcode =
+  URL_STATIC + '/appstatic/image/my/qrcode_for_gh_778fd61f0698_258.jpg';
+
+export default ({ digitalUser, editDigitalMode, isTraining }) => {
   const [uploadedFiles, setUploadedFiles] = useState([]);
   const [isOpenedText, setIsOpenedText] = useState(false);
   const [isOpenedWaitNofity, setIsOpenedWaitNofity] = useState(false);
@@ -47,7 +51,41 @@ export default ({ digitalUser, editDigitalMode }) => {
     setIsOpenedWaitNofity(false);
   };
   const handleConfirm2 = async () => {
-    setIsOpenedWaitNofity(false);
+    try {
+      setIsOpenedWaitNofity(false);
+      const res = await Taro.downloadFile({ url: officialAccountQRcode });
+      if (res.statusCode === 200) {
+        const saveRes = await Taro.saveImageToPhotosAlbum({
+          filePath: res.tempFilePath,
+        });
+        if (saveRes.errMsg === 'saveImageToPhotosAlbum:ok') {
+          Taro.showToast({
+            title: '保存成功',
+            icon: 'success',
+            duration: 2000,
+          });
+        } else {
+          Taro.showToast({
+            title: '保存失败，请重试',
+            icon: 'none',
+            duration: 2000,
+          });
+        }
+      } else {
+        Taro.showToast({
+          title: '下载失败，请重试',
+          icon: 'none',
+          duration: 2000,
+        });
+      }
+    } catch (error) {
+      console.error('保存二维码失败', error);
+      Taro.showToast({
+        title: '保存失败，请重试',
+        icon: 'none',
+        duration: 2000,
+      });
+    }
   };
   return (
     <View
@@ -62,19 +100,20 @@ export default ({ digitalUser, editDigitalMode }) => {
         zIndex: 99,
       }}
     >
-      <View
-        style={{
-          marginBottom: '10rpx',
-          borderRadius: '20rpx',
-          background: 'transparent', // 将背景改为透明
-          opacity: 1,
-          color: 'white',
-        }}
-      >
-        <Image mode="aspectFill" src={digitalUser} />
-      </View>
-
       {editDigitalMode && (
+        <View
+          style={{
+            marginBottom: '10rpx',
+            borderRadius: '20rpx',
+            background: 'transparent', // 将背景改为透明
+            opacity: 1,
+            color: 'white',
+          }}
+        >
+          <Image mode="aspectFill" src={digitalUser} />
+        </View>
+      )}
+      {!isTraining && editDigitalMode && (
         <View
           style={{
             width: '95%',
@@ -96,7 +135,6 @@ export default ({ digitalUser, editDigitalMode }) => {
             files={uploadedFiles}
             onChange={async (pickerAllFile, operationType, index) => {
               const newImages = pickerAllFile.slice(uploadedFiles.length);
-
               // 判断是否为添加图片操作
               if (operationType === 'add') {
                 try {
@@ -122,7 +160,7 @@ export default ({ digitalUser, editDigitalMode }) => {
                     ]);
                   } else {
                     Taro.showToast({
-                      title: `最多选择${maxTrainLoraImages}张图,算不过来了`,
+                      title: `最多选择${maxTrainLoraImages}张图,处理不过来了`,
                       icon: 'none',
                       duration: 2000,
                     });
@@ -146,7 +184,6 @@ export default ({ digitalUser, editDigitalMode }) => {
           />
         </View>
       )}
-
       {editDigitalMode && (
         <AtButton
           type="primary"
@@ -161,40 +198,44 @@ export default ({ digitalUser, editDigitalMode }) => {
             zIndex: 0,
           }}
           shape="circle"
-          // loading={loading}
+          loading={isTraining}
           onClick={async () => {
-            if (notifyCheckPact) {
-              setIsOpenedText(true);
-              notifyCheckPact = false;
-            } else {
-              if (uploadedFiles.length === 0) {
-                Taro.showToast({
-                  title: `请点击+号,选择2-${maxTrainLoraImages}张人脸图像`,
-                  icon: 'none',
-                });
+            if (!isTraining) {
+              if (notifyCheckPact) {
+                setIsOpenedText(true);
+                notifyCheckPact = false;
               } else {
-                const res = await api.easyPhotoTrainLora({
-                  userId: global.userInfo.data.userId,
-                  requestId: generateUniqueId(),
-                  usePoint: 2,
-                  userTrainImages: uploadedFiles
-                    .map((file) => file.compressBase64)
-                    .filter((file) => file),
-                });
-                if (res?.data) {
+                if (uploadedFiles.length === 0) {
+                  Taro.showToast({
+                    title: `请点击+号,选择3-${maxTrainLoraImages}张人脸图像`,
+                    icon: 'none',
+                  });
+                } else {
+                  const res = await api.easyPhotoTrainLora({
+                    userId: global.userInfo.data.userId,
+                    requestId: generateUniqueId(),
+                    usePoint: 2,
+                    userTrainImages: uploadedFiles
+                      .map((file) => file.compressBase64)
+                      .filter((file) => file),
+                  });
+                  if (res?.data) {
+                  }
+                  setIsOpenedWaitNofity(true);
                 }
-                setIsOpenedWaitNofity(true);
               }
             }
           }}
         >
-          制作数字分身
+          {isTraining ? '制作分身中' : '制作数字分身'}
         </AtButton>
       )}
       <AtModal isOpened={isOpenedText} onClose={handleClose}>
         <AtModalHeader>AIGC协议</AtModalHeader>
         <AtModalContent>
-          欢迎使用AIGC大头贴，您将上传照片用于生成图片服务，应当在取得照片权利人的同意后再进行操作，您上传的照片将仅用于制作数字分身，不会用于其他用途，相关规则请您仔细阅读《用户服务协议》《隐私政策》
+          欢迎使用AIGC大头贴，您将上传照片用于生成图片服务，应当在取得照片权利人的同意后再进行操作，您上传的照片将仅用于制作数字分身，不会用于其他用途，相关规则请您仔细阅读
+          <strong>《用户服务协议》</strong>
+          <strong>《隐私政策》</strong>
         </AtModalContent>
         <AtModalAction>
           <Button onClick={() => handleCancel()}>取消</Button>
@@ -202,9 +243,27 @@ export default ({ digitalUser, editDigitalMode }) => {
         </AtModalAction>
       </AtModal>
       <AtModal isOpened={isOpenedWaitNofity} onClose={handleClose1}>
-        <AtModalHeader>开始训练</AtModalHeader>
         <AtModalContent>
-          需要等待5-10分钟,您可以关注“AIGC大头贴”公众号，完成后会通知您，前方还有n位...
+          <div>
+            <p>您的数字分身已开始制作，需要等待10-15分钟。</p>
+            <p>也可尝试快速模式（3-5秒出图）</p>
+            <p>保存二维码关注“AIGC大头贴” 公众号，完成后会通知您。</p>
+            {/* <p>正在排队中，第5位 / 共5位</p> */}
+          </div>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            {/* 显示二维码图片 */}
+            <img
+              src={officialAccountQRcode}
+              alt="公众号二维码"
+              style={{ width: '200px', height: '200px' }}
+            />
+          </div>
         </AtModalContent>
         <AtModalAction>
           <Button onClick={() => handleConfirm1()}>等等吧</Button>

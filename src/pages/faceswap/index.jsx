@@ -322,7 +322,7 @@ export default () => {
               style={{ marginRight: '10px' }}
             />
             <Text style={{ color: selectedOption === 0 ? '#6190E8' : '#666' }}>
-              数字分身模式(积分)
+              数字分身模式(5积分)
             </Text>
           </View>
         </AtActionSheetItem>

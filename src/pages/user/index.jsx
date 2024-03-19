@@ -22,13 +22,14 @@ import { URL_STATIC } from '../../api/config';
 import { PAGES } from '../../const/app';
 import UploadDigital from '../UploadDigital';
 const iconwechat = URL_STATIC + '/appstatic/image/share/icon_wechat.png';
-const buttonImages = URL_STATIC + '/appstatic/image/tabbar/user.png';
+const buttonImages = URL_STATIC + '/appstatic/image/my/userPicToast.jpg';
 
 export default () => {
   const [isOpenedText, setIsOpenedText] = useState(false);
   const [nickname, setNickname] = useState(null);
   const [isOpened, setIsOpened] = useState(false);
   const [editDigitalMode, setEditDigitalMode] = useState(true);
+  const [isTraining, setIsTraining] = useState(false);
   // 用户信息数据结构，和storage中存储的一致
   const [userInfo, setUserInfo] = useState({
     isLogin: false,
@@ -54,8 +55,14 @@ export default () => {
         isLogin: true,
         data: res.data,
       }));
-      if (userInfo?.data?.loraPic) {
+      if (res?.data?.loraPic) {
         setEditDigitalMode(false);
+      }
+      console.log(res.data);
+      if (res?.data?.loraStatus === 'pending') {
+        setIsTraining(true);
+      } else {
+        setIsTraining(false);
       }
     } else {
       // 获取用户数据失败
@@ -292,6 +299,7 @@ export default () => {
         <UploadDigital
           digitalUser={userInfo?.data?.loraPic || buttonImages}
           editDigitalMode={editDigitalMode}
+          isTraining={isTraining}
         ></UploadDigital>
         {/* 支付接口 */}
         {/* <Button
