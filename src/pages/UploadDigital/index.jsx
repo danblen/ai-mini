@@ -16,7 +16,13 @@ let notifyCheckPact = true;
 const officialAccountQRcode =
   URL_STATIC + '/appstatic/image/my/qrcode_for_gh_778fd61f0698_258.jpg';
 
-export default ({ digitalUser, editDigitalMode, isTraining }) => {
+export default ({
+  isLogin,
+  digitalUser,
+  editDigitalMode,
+  isTraining,
+  onSelectImage,
+}) => {
   const [uploadedFiles, setUploadedFiles] = useState([]);
   const [isOpenedText, setIsOpenedText] = useState(false);
   const [isOpenedWaitNofity, setIsOpenedWaitNofity] = useState(false);
@@ -200,30 +206,34 @@ export default ({ digitalUser, editDigitalMode, isTraining }) => {
           shape="circle"
           loading={isTraining}
           onClick={async () => {
-            if (!isTraining) {
-              if (notifyCheckPact) {
-                setIsOpenedText(true);
-                notifyCheckPact = false;
-              } else {
-                if (uploadedFiles.length === 0) {
-                  Taro.showToast({
-                    title: `请点击+号,选择3-${maxTrainLoraImages}张人脸图像`,
-                    icon: 'none',
-                  });
+            if (isLogin) {
+              if (!isTraining) {
+                if (notifyCheckPact) {
+                  setIsOpenedText(true);
+                  notifyCheckPact = false;
                 } else {
-                  const res = await api.easyPhotoTrainLora({
-                    userId: global.userInfo.data.userId,
-                    requestId: generateUniqueId(),
-                    usePoint: 2,
-                    userTrainImages: uploadedFiles
-                      .map((file) => file.compressBase64)
-                      .filter((file) => file),
-                  });
-                  if (res?.data) {
+                  if (uploadedFiles.length === 0) {
+                    Taro.showToast({
+                      title: `请点击+号,选择3-${maxTrainLoraImages}张人脸图像`,
+                      icon: 'none',
+                    });
+                  } else {
+                    const res = await api.easyPhotoTrainLora({
+                      userId: global.userInfo.data.userId,
+                      requestId: generateUniqueId(),
+                      usePoint: 2,
+                      userTrainImages: uploadedFiles
+                        .map((file) => file.compressBase64)
+                        .filter((file) => file),
+                    });
+                    if (res?.data) {
+                    }
+                    setIsOpenedWaitNofity(true);
                   }
-                  setIsOpenedWaitNofity(true);
                 }
               }
+            } else {
+              onSelectImage(true);
             }
           }}
         >

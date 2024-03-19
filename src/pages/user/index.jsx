@@ -291,15 +291,18 @@ export default () => {
             });
           }}
           editDigital={() => {
-            console.log('editDigitalMode', editDigitalMode);
             if (editDigitalMode) setEditDigitalMode(false);
             else setEditDigitalMode(true);
           }}
         />
         <UploadDigital
+          isLogin={userInfo?.isLogin || null}
           digitalUser={userInfo?.data?.loraPic || buttonImages}
           editDigitalMode={editDigitalMode}
           isTraining={isTraining}
+          onSelectImage={(login) => {
+            setIsOpened(login);
+          }}
         ></UploadDigital>
         {/* 支付接口 */}
         {/* <Button
