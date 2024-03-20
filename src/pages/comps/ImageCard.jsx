@@ -1,5 +1,6 @@
 import { Image, Text, View } from '@tarojs/components';
 import { navigateTo } from '../../base/global';
+import { URL_STATIC } from '../../api/config';
 const url = '/pages/faceswap/index';
 export default ({ image }) => {
   return (
@@ -19,7 +20,7 @@ export default ({ image }) => {
               image.momentId,
           });
         }}
-        src={image.momentPics}
+        src={URL_STATIC + image.momentPics}
       ></Image>
 
       {/* Displaying file name dynamically */}
@@ -44,7 +45,7 @@ export default ({ image }) => {
           <Image
             lazyLoad={true}
             mode="aspectFill"
-            src={image.userHeadPic}
+            src={URL_STATIC + image.userHeadPic}
             style={{
               width: 20, // 调整为适当的宽度
               height: 20, // 调整为适当的高度

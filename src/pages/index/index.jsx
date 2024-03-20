@@ -71,10 +71,10 @@ export default () => {
     }
   };
   const getTagImages = async () => {
-    let res = await api.getTagImages({ tagName: 'NEW' });
+    let res = await api.getImages([{ tagName: 'NEW' }]);
     if (res?.data) {
       // 过滤掉值为 null 的元素
-      const filteredData = res.data.filter((item) => item !== null);
+      const filteredData = res.data[0].filter((item) => item !== null);
       if (filteredData.length > 0) {
         const shuffledImages = filteredData.sort(() => Math.random() - 0.5);
         setTagImages(shuffledImages);
@@ -100,6 +100,7 @@ export default () => {
     //调用Taro.stopPullDownRefresh 停止下拉效果
     getAllImages().then(() => Taro.stopPullDownRefresh());
     getTagImages().then(() => Taro.stopPullDownRefresh());
+    // api.update({});
   });
 
   return (

@@ -12,6 +12,12 @@ const api = {};
 api.login = (data) => {
   return request.post('/login', data);
 };
+api.update = (data) => {
+  return request.post('/update', data);
+};
+api.getImages = (data) => {
+  return request.post('/getImages', data);
+};
 // 获取banner图
 api.getBanners = (data) => {
   return request.post('/getBanners', data);

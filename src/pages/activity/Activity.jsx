@@ -39,9 +39,9 @@ const ActivityPage = () => {
 
   // 获取所有图片数据
   const getTagNameImages = async () => {
-    let res = await api.getTagImages({ tagName: decodedTitle });
+    let res = await api.getImages([{ tagName: decodedTitle }]);
     if (res?.data) {
-      setLRHalfPic(res.data);
+      setLRHalfPic(res.data[0]);
     }
   };
 

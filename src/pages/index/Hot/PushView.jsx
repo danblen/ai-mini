@@ -24,17 +24,17 @@ import { navigateTo } from '../../../base/global';
 import TitleView from './TitleView';
 import recomView from '../Recommend/index';
 import { api } from '../../../api/index.js';
+import { URL_STATIC } from '../../../api/config.js';
 
 export default ({ albums, title, description, tagName, onNavigateToTab }) => {
   const [scrollImages, setScrollImages] = useState([]);
-
   useEffect(() => {
     // 组件挂载时获取图片数据
     const getTagNameImages = async () => {
       try {
-        const res = await api.getTagImages({ tagName: tagName });
+        const res = await api.getImages([{ tagName: tagName }]);
         if (res?.data) {
-          const shuffledImages = res.data.sort(() => Math.random() - 0.5);
+          const shuffledImages = res.data[0].sort(() => Math.random() - 0.5);
           setScrollImages(shuffledImages);
         }
       } catch (error) {
@@ -113,7 +113,7 @@ export default ({ albums, title, description, tagName, onNavigateToTab }) => {
                     albumData.momentId,
                 });
               }}
-              src={albumData.momentPics}
+              src={URL_STATIC + albumData.momentPics}
             ></Image>
             <View
               style={{
