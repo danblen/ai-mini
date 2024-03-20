@@ -18,6 +18,9 @@ api.update = (data) => {
 api.getImages = (data) => {
   return request.post('/getImages', data);
 };
+api.getAppImages = (data) => {
+  return request.post('/getAppImages', data);
+};
 // 获取banner图
 api.getBanners = (data) => {
   return request.post('/getBanners', data);
