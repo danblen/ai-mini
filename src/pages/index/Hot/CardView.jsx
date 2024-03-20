@@ -108,12 +108,7 @@ export default ({ infoLeftImage, infoTopLeftImage, infoTopRightImage }) => {
             }
           >
             <Image
-              src={
-                infoLeftImage.params.imageUrl &&
-                infoLeftImage.params.imageUrl.length > 0
-                  ? infoLeftImage.params.imageUrl[1]
-                  : []
-              }
+              src={infoLeftImage.params.imageUrl}
               mode="aspectFill"
               style={{
                 width: '100%',
@@ -185,12 +180,7 @@ export default ({ infoLeftImage, infoTopLeftImage, infoTopRightImage }) => {
                 }}
               >
                 <Image
-                  src={
-                    infoTopLeftImage.params.imageUrl &&
-                    infoTopLeftImage.params.imageUrl.length > 0
-                      ? infoTopLeftImage.params.imageUrl[0]
-                      : []
-                  }
+                  src={infoTopLeftImage.params.imageUrl}
                   mode="aspectFill"
                   style={{ width: '100%', height: 95, borderRadius: 5 }}
                   onClick={() =>
@@ -219,12 +209,7 @@ export default ({ infoLeftImage, infoTopLeftImage, infoTopRightImage }) => {
                 }}
               >
                 <Image
-                  src={
-                    infoTopRightImage.params.imageUrl &&
-                    infoTopRightImage.params.imageUrl.length > 0
-                      ? infoTopRightImage.params.imageUrl[0]
-                      : []
-                  }
+                  src={infoTopRightImage.params.imageUrl}
                   mode="aspectFill"
                   style={{
                     width: '100%',

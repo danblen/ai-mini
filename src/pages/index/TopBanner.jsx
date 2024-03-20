@@ -4,7 +4,7 @@ export default ({ banners }) => {
   return (
     <View style={Styles.container}>
       <Swiper circular indicatorDots autoplay style={Styles.Swiper}>
-        {banners?.map?.((url, index) => (
+        {banners?.map?.((banner, index) => (
           <SwiperItem key={index}>
             <Image
               style={Styles.image}
@@ -15,7 +15,7 @@ export default ({ banners }) => {
               //     url: '/pages/faceswap/index?imageUrl=' + url,
               //   });
               // }}
-              src={url}
+              src={banner.imageUrl}
             ></Image>
           </SwiperItem>
         ))}

@@ -4,7 +4,7 @@ import Taro from '@tarojs/taro';
 import React from 'react';
 import { AtIcon } from 'taro-ui';
 import { navigateTo } from '../../../base/global';
-const photoPage = '/pages/photo/index';
+import { PAGES } from '../../../const/app';
 export default ({ albums }) => {
   return (
     <View
@@ -20,7 +20,7 @@ export default ({ albums }) => {
         scrollX
         scrollWithAnimation
       >
-        {Object.values(albums)?.map?.((albumData) => (
+        {albums?.map?.((albumData) => (
           <Image
             style={{
               marginLeft: '18rpx',
@@ -32,7 +32,7 @@ export default ({ albums }) => {
             mode="widthFix"
             onClick={() => {
               navigateTo({
-                url: photoPage,
+                url: PAGES.photo,
                 success: function (res) {
                   // 通过eventChannel向被打开页面传送数据
                   res.eventChannel.emit('acceptDataFromOpenerPage', {
@@ -41,7 +41,7 @@ export default ({ albums }) => {
                 },
               });
             }}
-            src={albumData.index}
+            src={albumData.imageUrl}
           ></Image>
         ))}
       </ScrollView>

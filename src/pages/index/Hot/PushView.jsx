@@ -113,7 +113,7 @@ export default ({ albums, title, description, tagName, onNavigateToTab }) => {
                     albumData.momentId,
                 });
               }}
-              src={URL_STATIC + albumData.momentPics}
+              src={albumData.momentPics}
             ></Image>
             <View
               style={{

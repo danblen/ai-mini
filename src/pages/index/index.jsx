@@ -20,12 +20,23 @@ import New from './New';
 function TabContent({
   currentTab,
   allImages,
+  banners,
+  albums,
   tagImages,
+  activityTagsImage,
   navigateToTab,
   recomTitle,
 }) {
   const tabComponents = {
-    hot: <Hot allImages={allImages} onNavigateToTab={navigateToTab} />,
+    hot: (
+      <Hot
+        banners={banners}
+        albums={albums}
+        activityTagsImage={activityTagsImage}
+        tagsImage={tagImages}
+        onNavigateToTab={navigateToTab}
+      />
+    ),
     recommend: (
       <Recommend
         tags_image={allImages?.tagsImage}
@@ -42,8 +53,12 @@ function TabContent({
 export default () => {
   const [currentTab, setCurrentTab] = useState('hot');
   const [recomTitle, setRecomTitle] = useState('古装');
-  let [allImages, setAllImages] = useState({ albums: {}, tagsImage: {} });
+  // let [allImages, setAllImages] = useState({ albums: {}, tagsImage: {} });
+  const [albums, setAlbums] = useState([]);
+  const [banners, setBanners] = useState([]);
+  const [activityTagsImage, setActivityTagsImage] = useState([]);
   let [tagImages, setTagImages] = useState([]);
+
   const getAllImages = async () => {
     let res = await get_all_images();
     if (res?.data) {
@@ -67,7 +82,7 @@ export default () => {
       }
 
       res.data.tagsImage = shuffledImageData;
-      setAllImages(res.data);
+      // setAllImages(res.data);
     }
   };
   const getTagImages = async () => {
@@ -90,17 +105,30 @@ export default () => {
       launchInfo,
     });
   };
+  const getAppImages = async () => {
+    const res = await api.getAppImages([
+      { category: 'banner' },
+      { category: 'albums' },
+      { category: 'activity_tags' },
+    ]);
+    if (res?.data) {
+      setBanners(res.data[0]);
+      setAlbums(res.data[1]);
+      setActivityTagsImage(res.data[2]);
+    }
+  };
   useEffect(() => {
     getAllImages();
+    getAppImages();
     getTagImages();
     updateUserInfoFromStorage();
     updateUserTokenFromStorage();
   }, []);
   usePullDownRefresh(() => {
     //调用Taro.stopPullDownRefresh 停止下拉效果
-    getAllImages().then(() => Taro.stopPullDownRefresh());
+    // getAllImages().then(() => Taro.stopPullDownRefresh());
     getTagImages().then(() => Taro.stopPullDownRefresh());
-    // api.update({});
+    api.update({});
   });
 
   return (
@@ -120,7 +148,10 @@ export default () => {
         {/* <View style={{ marginTop: 90 }}> */}
         <TabContent
           currentTab={currentTab}
-          allImages={allImages}
+          // allImages={allImages}
+          banners={banners}
+          albums={albums}
+          activityTagsImage={activityTagsImage}
           tagImages={tagImages}
           navigateToTab={(param, title) => {
             setCurrentTab(param);

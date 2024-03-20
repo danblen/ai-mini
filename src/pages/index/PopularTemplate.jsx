@@ -50,13 +50,15 @@ const PopularTemplate = ({ activityTagsImage }) => {
         }}
       >
         <CardItem
-          imageUrl={activityTagsImage?.['港风']}
+          imageUrl={
+            activityTagsImage?.find((item) => item.tags === '港风')?.imageUrl
+          }
           iconUrl={IconGood3}
           title="#港风"
           hotness={768}
           onClick={() =>
             handleItemClick(
-              activityTagsImage?.['港风'],
+              activityTagsImage?.find((item) => item.tags === '港风')?.imageUrl,
               '港风',
               `💫寻找电影感场景
 
@@ -71,13 +73,16 @@ const PopularTemplate = ({ activityTagsImage }) => {
         />
         <LineSeparator />
         <CardItem
-          imageUrl={activityTagsImage?.['焱落纱']}
+          imageUrl={
+            activityTagsImage?.find((item) => item.tags === '焱落纱')?.imageUrl
+          }
           iconUrl={IconGood2}
           title="#焱落纱"
           hotness={562}
           onClick={() =>
             handleItemClick(
-              activityTagsImage?.['焱落纱'],
+              activityTagsImage?.find((item) => item.tags === '焱落纱')
+                ?.imageUrl,
               '焱落纱',
               `
               🔥轻盈飘逸，如火焰般燃烧！
@@ -92,13 +97,16 @@ const PopularTemplate = ({ activityTagsImage }) => {
         />
         <LineSeparator />
         <CardItem
-          imageUrl={activityTagsImage?.['水果裙']}
+          imageUrl={
+            activityTagsImage?.find((item) => item.tags === '水果裙')?.imageUrl
+          }
           iconUrl={IconGood1}
           title="#水果裙"
           hotness={323}
           onClick={() =>
             handleItemClick(
-              activityTagsImage?.['水果裙'],
+              activityTagsImage?.find((item) => item.tags === '水果裙')
+                ?.imageUrl,
               '水果裙',
               `
               🍉水果图案点缀，色彩缤纷绚丽！
@@ -150,7 +158,7 @@ const CardItem = ({ imageUrl, iconUrl, title, hotness, onClick }) => {
         }}
       >
         <Image
-          src={imageUrl ? imageUrl[0] : null}
+          src={imageUrl}
           style={{
             width: 80,
             marginLeft: 30,

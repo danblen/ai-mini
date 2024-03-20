@@ -2,7 +2,7 @@ import { Image, Text, View } from '@tarojs/components';
 import AlbumsCard from './AlbumsCard.jsx';
 import TitleView from './TitleView.jsx';
 // import iconwechat from '../../../static/image/share/icon_wechat.png';
-export default ({ allImages }) => {
+export default ({ albums }) => {
   return (
     <View
       style={{
@@ -17,7 +17,7 @@ export default ({ allImages }) => {
     >
       <TitleView title="写真集" />
 
-      <AlbumsCard albums={allImages?.albums} />
+      <AlbumsCard albums={albums} />
     </View>
   );
 };

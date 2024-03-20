@@ -149,10 +149,10 @@ export default () => {
               left: 0,
             }}
             mode="widthFix"
-            src={albumData.index}
+            src={albumData.imageUrl}
           />
         </View>
-        <ImageList imageUrls={albumData.urls} />
+        <ImageList imageUrls={albumData.data} />
       </View>
 
       <View

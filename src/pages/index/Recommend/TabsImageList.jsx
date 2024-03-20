@@ -25,6 +25,7 @@ export default ({ tags_image, onNavigateToTab, titleParam }) => {
       setTabList(tabList);
       const initialTab = tabList[0]?.title || '';
       setCurrent(initialTab);
+      // setImageUrlsMap(tags_image);
       if (!imageUrlsMap[initialTab]) {
         setImageUrlsMap({
           ...imageUrlsMap,
@@ -35,6 +36,7 @@ export default ({ tags_image, onNavigateToTab, titleParam }) => {
   }, [tags_image]);
 
   const handleTabClick = (tabTitle) => {
+    console.log('tabTitle:', tabTitle, imageUrlsMap);
     setCurrent(tabTitle);
     if (!imageUrlsMap[tabTitle]) {
       setImageUrlsMap({ ...imageUrlsMap, [tabTitle]: tags_image[tabTitle] });
@@ -151,7 +153,9 @@ export default ({ tags_image, onNavigateToTab, titleParam }) => {
         // }}
       >
         {imageUrlsMap[current] && (
-          <ImageList imageUrls={imageUrlsMap[current]} />
+          <ImageList
+            imageUrls={imageUrlsMap[current].map((item) => item.momentPics)}
+          />
         )}
       </View>
 

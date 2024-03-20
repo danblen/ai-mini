@@ -41,12 +41,12 @@ export default {
         selectedIconPath: './static/image/tabbar/home-sel.png',
         // text: '首页',
       },
-      {
-        pagePath: 'pages/UploadDigital/index',
-        iconPath: './static/image/tabbar/icons8-图片编辑器-100.png',
-        selectedIconPath: './static/image/tabbar/icons8-图片编辑器-100 (1).png',
-        text: '发现',
-      },
+      // {
+      //   pagePath: 'pages/UploadDigital/index',
+      //   iconPath: './static/image/tabbar/icons8-图片编辑器-100.png',
+      //   selectedIconPath: './static/image/tabbar/icons8-图片编辑器-100 (1).png',
+      //   text: '发现',
+      // },
       // {
       //   pagePath: 'pages/gen/index',
       //   iconPath: './static/image/tabbar/icons8-图片编辑器-100.png',

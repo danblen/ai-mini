@@ -21,7 +21,13 @@ import CardPhotoView from './CardPhotoView.jsx';
 import TitleView from './TitleView.jsx';
 import Notices from './Notices.jsx';
 
-export default ({ allImages, onNavigateToTab }) => {
+export default ({
+  banners,
+  albums,
+  tagsImage,
+  activityTagsImage,
+  onNavigateToTab,
+}) => {
   return (
     <ScrollView
       style={{
@@ -31,7 +37,7 @@ export default ({ allImages, onNavigateToTab }) => {
       showScrollbar={false}
       scroll-y
     >
-      <TopBanner banners={allImages?.bannerImage?.['首页日更']} />
+      <TopBanner banners={banners} />
 
       <Notices />
 
@@ -40,7 +46,8 @@ export default ({ allImages, onNavigateToTab }) => {
         infoLeftImage={{
           pagePath: '/pages/activity/Activity',
           params: {
-            imageUrl: allImages?.activityTagsImage?.['影楼'],
+            imageUrl: activityTagsImage?.find((item) => item.tags === '影楼')
+              ?.imageUrl,
             title: '影楼',
             description: `
             ✨不一样的你，不一样的风格
@@ -56,7 +63,9 @@ export default ({ allImages, onNavigateToTab }) => {
         infoTopLeftImage={{
           pagePath: '/pages/activity/Activity',
           params: {
-            imageUrl: allImages?.activityTagsImage?.['繁花专场'],
+            imageUrl: activityTagsImage?.find(
+              (item) => item.tags === '繁花专场'
+            )?.imageUrl,
             title: '繁花专场',
             description: `
             ✨光影交织，艺术感十足
@@ -72,7 +81,9 @@ export default ({ allImages, onNavigateToTab }) => {
         infoTopRightImage={{
           pagePath: '/pages/activity/Activity',
           params: {
-            imageUrl: allImages?.activityTagsImage?.['韩式证件照'],
+            imageUrl: activityTagsImage?.find(
+              (item) => item.tags === '韩式证件照'
+            )?.imageUrl,
             title: '韩式证件照',
             description: `
             📸想要与众不同的证件照吗？来试试韩式风格！
@@ -97,10 +108,9 @@ export default ({ allImages, onNavigateToTab }) => {
         // }}
       />
 
-      <CardPhotoView allImages={allImages} />
+      <CardPhotoView albums={albums} />
       <PushView
-        allImages={allImages}
-        albums={allImages?.tagsImage?.['美高Girl'] || []}
+        albums={tagsImage?.['美高Girl'] || []}
         title="👩‍🎓美高Girl"
         description={`
         🕶️比法式更潮，比港式更青春
@@ -115,8 +125,7 @@ export default ({ allImages, onNavigateToTab }) => {
         onNavigateToTab={onNavigateToTab}
       />
       <PushView
-        allImages={allImages}
-        albums={allImages?.tagsImage?.['江南'] || []}
+        albums={tagsImage?.['江南'] || []}
         title="🏞️江南"
         description={`
         🌳江南风情，唤醒你的浪漫心弦
@@ -131,8 +140,7 @@ export default ({ allImages, onNavigateToTab }) => {
         onNavigateToTab={onNavigateToTab}
       />
       <PushView
-        allImages={allImages}
-        albums={allImages?.tagsImage?.['美高Boy'] || []}
+        albums={tagsImage?.['美高Boy'] || []}
         title="🎓美高Boy"
         description={`
 
@@ -146,8 +154,7 @@ export default ({ allImages, onNavigateToTab }) => {
         onNavigateToTab={onNavigateToTab}
       />
       <PushView
-        allImages={allImages}
-        albums={allImages?.tagsImage?.['暗调'] || []}
+        albums={tagsImage?.['暗调'] || []}
         title="🖤暗调"
         description={`
         ✨一种自信和独立的态度。
@@ -160,8 +167,7 @@ export default ({ allImages, onNavigateToTab }) => {
         onNavigateToTab={onNavigateToTab}
       />
       <PushView
-        allImages={allImages}
-        albums={allImages?.tagsImage?.['古装'] || []}
+        albums={tagsImage?.['古装'] || []}
         title="🪈古装"
         description={`
         别再等待了！想要展现你的英姿飒爽吗？还是更喜欢性感妩媚的风格？又或者你想要体验温婉典雅的气质？不用犹豫，汉服写真能满足你的所有期待！🌺💃
@@ -176,8 +182,7 @@ export default ({ allImages, onNavigateToTab }) => {
         onNavigateToTab={onNavigateToTab}
       />
       <PushView
-        allImages={allImages}
-        albums={allImages?.tagsImage?.['在逃公主'] || []}
+        albums={tagsImage?.['在逃公主'] || []}
         title="💍在逃公主"
         description={`
 
@@ -195,8 +200,7 @@ export default ({ allImages, onNavigateToTab }) => {
         onNavigateToTab={onNavigateToTab}
       />
       <PushView
-        allImages={allImages}
-        albums={allImages?.tagsImage?.['活力'] || []}
+        albums={tagsImage?.['活力'] || []}
         title="🎞️活力满满"
         description={`
         📸 用你最灿烂的笑容，展现活力四溢
@@ -215,8 +219,7 @@ export default ({ allImages, onNavigateToTab }) => {
         onNavigateToTab={onNavigateToTab}
       />
       <PushView
-        allImages={allImages}
-        albums={allImages?.tagsImage?.['街道'] || []}
+        albums={tagsImage?.['街道'] || []}
         title="🚉街道"
         description={`
         街道写真 – 展示城市独特风情
@@ -232,7 +235,7 @@ export default ({ allImages, onNavigateToTab }) => {
         tagName="街道"
         onNavigateToTab={onNavigateToTab}
       />
-      <PopularTemplate activityTagsImage={allImages?.activityTagsImage} />
+      <PopularTemplate activityTagsImage={activityTagsImage} />
     </ScrollView>
   );
 };

@@ -20,7 +20,7 @@ export default ({ image }) => {
               image.momentId,
           });
         }}
-        src={URL_STATIC + image.momentPics}
+        src={image.momentPics}
       ></Image>
 
       {/* Displaying file name dynamically */}
@@ -45,7 +45,7 @@ export default ({ image }) => {
           <Image
             lazyLoad={true}
             mode="aspectFill"
-            src={URL_STATIC + image.userHeadPic}
+            src={image.userHeadPic}
             style={{
               width: 20, // 调整为适当的宽度
               height: 20, // 调整为适当的高度
