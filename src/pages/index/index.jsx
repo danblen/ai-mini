@@ -59,32 +59,32 @@ export default () => {
   const [activityTagsImage, setActivityTagsImage] = useState([]);
   let [tagImages, setTagImages] = useState([]);
 
-  const getAllImages = async () => {
-    let res = await get_all_images();
-    if (res?.data) {
-      const shuffledData = {};
-      for (const key in res.data.tagsImage) {
-        if (res.data.tagsImage.hasOwnProperty(key)) {
-          const shuffledIndexes = res.data.tagsImage[key].sort(
-            () => Math.random() - 0.5
-          );
-          shuffledData[key] = shuffledIndexes;
-        }
-      }
+  // const getAllImages = async () => {
+  //   let res = await get_all_images();
+  //   if (res?.data) {
+  //     const shuffledData = {};
+  //     for (const key in res.data.tagsImage) {
+  //       if (res.data.tagsImage.hasOwnProperty(key)) {
+  //         const shuffledIndexes = res.data.tagsImage[key].sort(
+  //           () => Math.random() - 0.5
+  //         );
+  //         shuffledData[key] = shuffledIndexes;
+  //       }
+  //     }
 
-      // 对 "abc" 进行随机排序
-      const shuffledKeys = Object.keys(shuffledData).sort(
-        () => Math.random() - 0.5
-      );
-      const shuffledImageData = {};
-      for (const key of shuffledKeys) {
-        shuffledImageData[key] = shuffledData[key];
-      }
+  //     // 对 "abc" 进行随机排序
+  //     const shuffledKeys = Object.keys(shuffledData).sort(
+  //       () => Math.random() - 0.5
+  //     );
+  //     const shuffledImageData = {};
+  //     for (const key of shuffledKeys) {
+  //       shuffledImageData[key] = shuffledData[key];
+  //     }
 
-      res.data.tagsImage = shuffledImageData;
-      // setAllImages(res.data);
-    }
-  };
+  //     res.data.tagsImage = shuffledImageData;
+  //     // setAllImages(res.data);
+  //   }
+  // };
   const getTagImages = async () => {
     let res = await api.getImages([{ tagName: 'NEW' }]);
     if (res?.data) {
@@ -118,7 +118,7 @@ export default () => {
     }
   };
   useEffect(() => {
-    getAllImages();
+    // getAllImages();
     getAppImages();
     getTagImages();
     updateUserInfoFromStorage();
@@ -128,7 +128,6 @@ export default () => {
     //调用Taro.stopPullDownRefresh 停止下拉效果
     // getAllImages().then(() => Taro.stopPullDownRefresh());
     getTagImages().then(() => Taro.stopPullDownRefresh());
-    api.update({});
   });
 
   return (
