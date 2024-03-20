@@ -1,7 +1,15 @@
 /**
  * 用户页
  */
-import { Image, Text, View, Input, Button } from '@tarojs/components';
+import {
+  Image,
+  Text,
+  View,
+  Input,
+  Button,
+  Radio,
+  RadioGroup,
+} from '@tarojs/components';
 import Taro, { useDidShow, useTabItemTap } from '@tarojs/taro';
 import React, { useEffect, useState } from 'react';
 import { AtFloatLayout } from 'taro-ui';
@@ -27,6 +35,7 @@ const buttonImages = URL_STATIC + '/appstatic/image/my/userPicToast.jpg';
 export default () => {
   const [isOpenedText, setIsOpenedText] = useState(false);
   const [nickname, setNickname] = useState(null);
+  const [gender, setGender] = useState('');
   const [isOpened, setIsOpened] = useState(false);
   const [editDigitalMode, setEditDigitalMode] = useState(true);
   const [isTraining, setIsTraining] = useState(false);
@@ -39,6 +48,7 @@ export default () => {
       isChecked: false,
       avatarUrl: '',
       userName: '输入昵称',
+      userGender: '',
     },
   });
   useEffect(() => {
@@ -57,6 +67,9 @@ export default () => {
       }));
       if (res?.data?.loraPic) {
         setEditDigitalMode(false);
+      }
+      if (res?.data?.userGender) {
+        setGender(res.data.userGender);
       }
       console.log(res.data);
       if (res?.data?.loraStatus === 'pending') {
@@ -90,19 +103,20 @@ export default () => {
   };
   const handleConfirm = async () => {
     // 关闭弹窗
-    if (nickname != '') {
+    if (nickname != null && gender != '') {
       setIsOpenedText(false);
       if (userInfo.isLogin) {
         const res = await api.updateUserInfo({
           userId: userInfo.data.userId,
           userName: nickname,
+          userGender: gender,
         });
         if (res?.data) {
           getUserInfo();
         }
       }
     } else {
-      Taro.showToast({ title: '请输入昵称', icon: 'none' });
+      Taro.showToast({ title: '请输入昵称/性别', icon: 'none' });
     }
   };
   return (
@@ -160,31 +174,68 @@ export default () => {
                 >
                   {userInfo?.data?.userName || '输入昵称'}
                 </View>
-
                 <AtModal
                   isOpened={isOpenedText}
-                  // title="修改昵称"
-                  // cancelText="取消"
-                  // confirmText="确认"
                   onClose={handleClose}
                   onCancel={handleCancel}
                   onConfirm={handleConfirm}
                 >
-                  <AtModalHeader>修改昵称</AtModalHeader>
+                  <AtModalHeader>数字人属性</AtModalHeader>
                   <AtModalContent>
                     {isOpenedText && (
-                      <Input
-                        placeholder="请输入昵称"
-                        value={nickname}
-                        onInput={(e) => setNickname(e.detail.value)}
-                      />
+                      <React.Fragment>
+                        <View style={{ marginBottom: '10px' }}>
+                          <Text>昵称：</Text>
+                          <Input
+                            style={{
+                              border: '1px solid #ccc',
+                              padding: '5px',
+                              borderRadius: '4px',
+                            }}
+                            placeholder="请输入昵称"
+                            value={nickname}
+                            onInput={(e) => setNickname(e.detail.value)}
+                          />
+                        </View>
+                        <View style={{ marginBottom: '10px' }}>
+                          <Text>性别：</Text>
+                          <RadioGroup
+                            onChange={(e) => setGender(e.detail.value)}
+                            value={gender}
+                          >
+                            <Radio value="male">男</Radio>
+                            <Radio value="female">女</Radio>
+                          </RadioGroup>
+                        </View>
+                      </React.Fragment>
                     )}
                   </AtModalContent>
                   <AtModalAction>
-                    <Button onClick={() => handleCancel()}>取消</Button>
-                    <Button onClick={() => handleConfirm()}>确定</Button>
+                    <Button
+                      onClick={() => handleCancel()}
+                      style={{
+                        backgroundColor: '#999',
+                        color: '#fff',
+                        margin: '5px',
+                        borderRadius: '10px',
+                      }}
+                    >
+                      取消
+                    </Button>
+                    <Button
+                      onClick={() => handleConfirm()}
+                      style={{
+                        backgroundColor: '#6190E8',
+                        color: '#fff',
+                        margin: '5px',
+                        borderRadius: '10px',
+                      }}
+                    >
+                      确定
+                    </Button>
                   </AtModalAction>
                 </AtModal>
+
                 <Text
                   style={{
                     borderRadius: 10,
@@ -297,11 +348,15 @@ export default () => {
         />
         <UploadDigital
           isLogin={userInfo?.isLogin || null}
+          isHaveUserGender={userInfo?.data?.userGender || null}
           digitalUser={userInfo?.data?.loraPic || buttonImages}
           editDigitalMode={editDigitalMode}
           isTraining={isTraining}
-          onSelectImage={(login) => {
+          onLoginOpened={(login) => {
             setIsOpened(login);
+          }}
+          onNickOpened={(login) => {
+            setIsOpenedText(login);
           }}
         ></UploadDigital>
         {/* 支付接口 */}

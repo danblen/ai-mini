@@ -18,10 +18,12 @@ const officialAccountQRcode =
 
 export default ({
   isLogin,
+  isHaveUserGender,
   digitalUser,
   editDigitalMode,
   isTraining,
-  onSelectImage,
+  onLoginOpened,
+  onNickOpened,
 }) => {
   const [uploadedFiles, setUploadedFiles] = useState([]);
   const [isOpenedText, setIsOpenedText] = useState(false);
@@ -132,7 +134,7 @@ export default ({
         >
           {/* <ImagePicker
             onFilesChange={(images) => setUploadedFiles(images)}
-            onSelectImage={(index) => {
+            onLoginOpened={(index) => {
               setSelectedIndex(index);
             }}
             disSelectPic={false}
@@ -207,33 +209,37 @@ export default ({
           loading={isTraining}
           onClick={async () => {
             if (isLogin) {
-              if (!isTraining) {
-                if (notifyCheckPact) {
-                  setIsOpenedText(true);
-                  notifyCheckPact = false;
-                } else {
-                  if (uploadedFiles.length === 0) {
-                    Taro.showToast({
-                      title: `请点击+号,选择3-${maxTrainLoraImages}张人脸图像`,
-                      icon: 'none',
-                    });
+              if (isHaveUserGender) {
+                if (!isTraining) {
+                  if (notifyCheckPact) {
+                    setIsOpenedText(true);
+                    notifyCheckPact = false;
                   } else {
-                    const res = await api.easyPhotoTrainLora({
-                      userId: global.userInfo.data.userId,
-                      requestId: generateUniqueId(),
-                      usePoint: 2,
-                      userTrainImages: uploadedFiles
-                        .map((file) => file.compressBase64)
-                        .filter((file) => file),
-                    });
-                    if (res?.data) {
+                    if (uploadedFiles.length === 0) {
+                      Taro.showToast({
+                        title: `请点击+号,选择3-${maxTrainLoraImages}张人脸图像`,
+                        icon: 'none',
+                      });
+                    } else {
+                      const res = await api.easyPhotoTrainLora({
+                        userId: global.userInfo.data.userId,
+                        requestId: generateUniqueId(),
+                        usePoint: 2,
+                        userTrainImages: uploadedFiles
+                          .map((file) => file.compressBase64)
+                          .filter((file) => file),
+                      });
+                      if (res?.data) {
+                      }
+                      setIsOpenedWaitNofity(true);
                     }
-                    setIsOpenedWaitNofity(true);
                   }
                 }
+              } else {
+                onNickOpened(true);
               }
             } else {
-              onSelectImage(true);
+              onLoginOpened(true);
             }
           }}
         >
