@@ -1,10 +1,10 @@
 import { View } from '@tarojs/components';
 import { useState } from 'react';
 import { AtDrawer } from 'taro-ui';
-import TaskList from '../comps/TaskList';
+import TaskList from './TaskList';
 import TaskListTip from '../faceswap/TaskListTip';
 
-const viewStyle = { marginTop: 90 };
+const viewStyle = { height: '100vh', backgroundColor: 'black' };
 const drawerStyle = { background: 'black', height: '100%', zIndex: 10 };
 
 export default ({ images, children }) => {

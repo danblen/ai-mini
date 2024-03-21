@@ -3,8 +3,8 @@ import { useEffect, useState } from 'react';
 import { AtButton } from 'taro-ui';
 import { api } from '../../api';
 import { updateUserInfoFromStorage } from '../../common/user';
-import Container from './Container';
 import { sdParams } from './const';
+import Container from '../comps/Container';
 
 export default () => {
   const [images, setImages] = useState([]);

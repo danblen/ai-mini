@@ -15,8 +15,8 @@ import Taro from '@tarojs/taro';
 import React, { useEffect, useState } from 'react';
 import { api } from '../../api/index.js';
 import WaterfallList from '../comps/WaterfallList.jsx';
-import CustomNavBar from '../index/CustomNavBar.jsx';
 import CustomTop from '../comps/CustomTop.jsx';
+import BackButton from '../comps/BackButton.jsx';
 
 /**
  * 活动页面组件
@@ -52,8 +52,7 @@ const ActivityPage = () => {
 
   return (
     <>
-      {/* 自定义导航栏 */}
-      <CustomNavBar />
+      <BackButton />
       <View>
         {/* 活动标题和描述区域 */}
         <View

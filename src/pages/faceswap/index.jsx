@@ -25,10 +25,10 @@ import compareIcon from '../../static/image/my/icons8-compare-64.png';
 import { downloadImages } from '../../utils/imageTools.js';
 import { deepCopy } from '../../utils/object.js';
 import ImagePicker from '../comps/ImagePicker.jsx';
-import TaskList from '../comps/TaskList.jsx';
 import SwapButton from './SwapButton.jsx';
 import TaskListTip from './TaskListTip.jsx';
 import BackButton from '../comps/BackButton.jsx';
+import Container from '../comps/Container.jsx';
 const IconBad = URL_STATIC + '/appstatic/image/my/icons-bad.png';
 const IconBad1 = URL_STATIC + '/appstatic/image/my/icons-bad1.png';
 const IconGood = URL_STATIC + '/appstatic/image/my/icons-good.png';
@@ -37,8 +37,6 @@ const sdFaceSwapAddDetailParam = deepCopy(swap_face_and_add_detail_data);
 const sdFaceSwapParam = deepCopy(data);
 
 export default () => {
-  const [showDrawer, setShowDrawer] = useState(false);
-  const [startX, setStartX] = useState(0);
   const [imageUrl, setImageUrl] = useState('');
   const [images, setImages] = useState([]);
   const [uploadedFiles, setUploadedFiles] = useState([]);
@@ -73,7 +71,6 @@ export default () => {
   useEffect(() => {
     const storageUserInfo = Taro.getStorageSync('userInfo');
 
-    console.log(storageUserInfo);
     if (storageUserInfo) {
       // 检查 swapMode 是否存在
       if (!storageUserInfo.hasOwnProperty('swapMode')) {
@@ -92,16 +89,10 @@ export default () => {
       }
     }
 
-    // const down = async () => {
-    //   const tempFilePath = await downloadImages(params.imageUrl);
-    //   if (!ignore) setImageUrl(tempFilePath);
-    // };
     // 获取传递过来的参数
     const params = Taro.getCurrentInstance().router.params;
     let ignore = false;
     if (params && params.imageUrl) {
-      // 先把图片下载下来，并展示出来
-      // down();
       setImageUrl(params.imageUrl);
       api.updateImageUserUploadInfo({
         momentId: params.momentId,
@@ -222,25 +213,8 @@ export default () => {
     // Taro.eventCenter.trigger('globalClickCountChanged', updatedClickCount);
   };
 
-  const onTouchStart = (event) => {
-    setStartX(event.touches[0].clientX);
-  };
-  const onTouchEnd = (event) => {
-    const endX = event.changedTouches[0].clientX;
-    const deltaX = endX - startX;
-
-    if (deltaX < -50) {
-      setShowDrawer(true);
-    } else if (deltaX > 50) {
-      setShowDrawer(false);
-    }
-  };
   return (
-    <View
-      onTouchstart={onTouchStart}
-      onTouchEnd={onTouchEnd}
-      style={{ background: 'black', height: '100vh', position: 'relative' }}
-    >
+    <Container images={images}>
       <BackButton />
       <View
         style={{
@@ -452,8 +426,6 @@ export default () => {
         </View>
       </View>
 
-      <TaskListTip onClick={() => setShowDrawer(true)}></TaskListTip>
-
       <View
         style={{
           position: 'fixed',
@@ -495,17 +467,6 @@ export default () => {
           usePoint={faceSwapParam === sdFaceSwapParam ? 1 : 3}
         ></SwapButton>
       </View>
-
-      <AtDrawer
-        show={showDrawer}
-        right
-        mask
-        width="80%"
-        onClose={() => setShowDrawer(false)}
-        style={{ background: 'black', height: '100%' }}
-      >
-        <TaskList images={images} />
-      </AtDrawer>
-    </View>
+    </Container>
   );
 };

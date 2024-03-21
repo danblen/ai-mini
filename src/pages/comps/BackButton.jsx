@@ -11,7 +11,7 @@ export default () => {
         left: 15,
         width: 30,
         height: 30,
-        position: 'absolute',
+        position: 'fixed',
         display: 'flex',
         alignItems: 'center',
         zIndex: 10,
@@ -26,7 +26,7 @@ export default () => {
         className="at-icon at-icon-chevron-left"
         style={{
           fontSize: 18,
-          paddingLeft: 4,
+          paddingLeft: 5,
           paddingTop: 2,
           color: 'white',
         }}

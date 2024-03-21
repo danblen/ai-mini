@@ -1,8 +1,5 @@
-// import { useTextSelection } from "@reactuses/core";
-import { Image, ScrollView, Text, View } from '@tarojs/components';
-import Taro from '@tarojs/taro';
+import { Image, ScrollView, View } from '@tarojs/components';
 import React from 'react';
-import { AtIcon } from 'taro-ui';
 import { navigateTo } from '../../../base/global';
 import { PAGES } from '../../../const/app';
 export default ({ albums }) => {
@@ -24,11 +21,10 @@ export default ({ albums }) => {
           <Image
             style={{
               marginLeft: '18rpx',
-              width: '300rpx',
+              width: 160,
               borderRadius: '15rpx',
             }}
-            lazyLoad={true}
-            className=" "
+            // lazyLoad={true}
             mode="widthFix"
             onClick={() => {
               navigateTo({

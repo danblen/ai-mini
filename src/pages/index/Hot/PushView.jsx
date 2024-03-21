@@ -26,7 +26,7 @@ import recomView from '../Recommend/index';
 import { api } from '../../../api/index.js';
 import { URL_STATIC } from '../../../api/config.js';
 
-export default ({ albums, title, description, tagName, onNavigateToTab }) => {
+export default ({ title, description, tagName }) => {
   const [scrollImages, setScrollImages] = useState([]);
   useEffect(() => {
     // 组件挂载时获取图片数据
@@ -48,7 +48,7 @@ export default ({ albums, title, description, tagName, onNavigateToTab }) => {
   return (
     <View
       style={{
-        marginTop: '18rpx',
+        marginTop: 15,
         marginLeft: '18rpx',
         marginRight: '18rpx',
         borderRadius: '8rpx',

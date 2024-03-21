@@ -1,12 +1,11 @@
-import { Image, Text, View } from '@tarojs/components';
+import { View } from '@tarojs/components';
 import AlbumsCard from './AlbumsCard.jsx';
 import TitleView from './TitleView.jsx';
-// import iconwechat from '../../../static/image/share/icon_wechat.png';
 export default ({ albums }) => {
   return (
     <View
       style={{
-        marginTop: '18rpx',
+        marginTop: 15,
         marginLeft: '18rpx',
         marginRight: '18rpx',
         borderRadius: '8rpx',
