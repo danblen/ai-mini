@@ -12,6 +12,9 @@ const api = {};
 api.login = (data) => {
   return request.post('/login', data);
 };
+api.enqueue = (data) => {
+  return request.post('/enqueue', data);
+};
 api.update = (data) => {
   return request.post('/update', data);
 };

@@ -5,6 +5,7 @@ import { api } from '../../api';
 import { updateUserInfoFromStorage } from '../../common/user';
 import { sdParams } from './const';
 import Container from '../comps/Container';
+import { generateUniqueId } from '../../utils';
 
 export default () => {
   const [images, setImages] = useState([]);
@@ -78,9 +79,12 @@ export default () => {
           shape="circle"
           // loading={loading}
           onClick={async () => {
-            const res = await api.txt2img({
+            const requestId = generateUniqueId();
+            const res = await api.enqueue({
+              sdParams,
+              requestId,
+              taskType: 'txt2img',
               userId: global.userInfo.data.userId,
-              sdParams: sdParams,
             });
             if (res?.data) {
               setImages((prevImages) => [

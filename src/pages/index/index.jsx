@@ -128,6 +128,7 @@ export default () => {
     //调用Taro.stopPullDownRefresh 停止下拉效果
     // getAllImages().then(() => Taro.stopPullDownRefresh());
     getTagImages().then(() => Taro.stopPullDownRefresh());
+    // api.update();
   });
 
   return (

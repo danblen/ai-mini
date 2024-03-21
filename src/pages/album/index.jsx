@@ -7,10 +7,12 @@ import React, { useState } from 'react';
 import { getStorageSync, setStorageSync } from '../../base/global.js';
 import FinishedTask from './FinishedTask.jsx';
 import { fetchProcessedImages } from './fetchProcessedImages.js';
+import { api } from '../../api/index.js';
 
 let lastPicCount = 0;
-export default ({ images }) => {
+export default ({}) => {
   const [allImages, setAllImages] = useState([]);
+  const [images, setImages] = useState([]);
   const [userInfo, setUserInfo] = useState({
     isLogin: false,
     data: {
@@ -57,18 +59,26 @@ export default ({ images }) => {
       Taro.removeStorageSync('processedImages');
     }
   };
-
+  const getImages = async () => {
+    let res = await api.getUserProcessImage({
+      userId: global.userInfo.data.userId,
+    });
+    setImages(
+      res.data.map((item) => ({
+        ...item,
+        url: item.outputImagePath,
+      }))
+    );
+  };
   useDidShow(() => {
-    fetchData();
+    // fetchData();
+    getImages();
   }, []);
   return (
     <View>
-      {userInfo.isLogin ? (
-        <View
-          style={{
-          }}
-        >
-          <FinishedTask images={allImages} onFetchData={fetchData} />
+      {global.userInfo.isLogin ? (
+        <View style={{}}>
+          <FinishedTask images={images} onFetchData={fetchData} />
         </View>
       ) : (
         <View style={{}}>
