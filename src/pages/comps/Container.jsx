@@ -4,10 +4,9 @@ import { AtDrawer } from 'taro-ui';
 import TaskList from './TaskList';
 import TaskListTip from '../faceswap/TaskListTip';
 
-const viewStyle = { height: '100vh', backgroundColor: 'black' };
 const drawerStyle = { background: 'black', height: '100%', zIndex: 10 };
 
-export default ({ images, children }) => {
+export default ({ images, children, background }) => {
   const [showDrawer, setShowDrawer] = useState(false);
   const [startX, setStartX] = useState(0);
 
@@ -25,6 +24,7 @@ export default ({ images, children }) => {
     }
   };
 
+  const viewStyle = { height: '100vh', background: background || 'black' };
   return (
     <View
       onTouchstart={handleTouchStart}
