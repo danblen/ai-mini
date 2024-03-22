@@ -349,7 +349,11 @@ export default () => {
         <UploadDigital
           isLogin={userInfo?.isLogin || null}
           isHaveUserGender={userInfo?.data?.userGender || null}
-          digitalUser={userInfo?.data?.loraPic || buttonImages}
+          digitalUser={
+            userInfo?.data?.loraPic
+              ? URL_STATIC + userInfo.data.loraPic
+              : buttonImages
+          }
           editDigitalMode={editDigitalMode}
           isTraining={isTraining}
           onLoginOpened={(login) => {

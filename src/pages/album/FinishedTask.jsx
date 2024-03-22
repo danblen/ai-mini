@@ -4,11 +4,14 @@ import Taro from '@tarojs/taro';
 import React, { useEffect, useState } from 'react';
 import { delete_all_images, delete_select_images } from '../../api';
 import { getStorageSync } from '../../base/global';
+import { AtActivityIndicator } from 'taro-ui';
 
 const ImageList = ({ images, loadMore, onFetchData }) => {
   const [showImages, setShowImages] = useState([]);
   const [selectedImages, setSelectedImages] = useState([]);
   const [selectedMode, setSelectedMode] = useState(false);
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     setShowImages(images);
   }, [images]);
@@ -79,12 +82,15 @@ const ImageList = ({ images, loadMore, onFetchData }) => {
         success: async (res) => {
           if (res.confirm) {
             try {
+              setLoading(true);
               for (const index of selectedImages) {
                 const imageUrl = showImages[index].url; // 获取选中作品的图片链接
                 // 将图片下载到本地
                 const { tempFilePath } = await Taro.downloadFile({
                   url: imageUrl,
                 });
+                // 下载保存完成后隐藏加载指示器
+                setLoading(false);
                 // 保存图片到相册
                 await Taro.saveImageToPhotosAlbum({ filePath: tempFilePath });
               }
@@ -93,6 +99,7 @@ const ImageList = ({ images, loadMore, onFetchData }) => {
               // 提示保存成功
               Taro.showToast({ title: '保存成功', icon: 'success' });
             } catch (error) {
+              setLoading(false);
               console.error('保存作品失败', error);
               // 提示保存失败
               Taro.showToast({ title: '保存失败', icon: 'none' });
@@ -197,7 +204,6 @@ const ImageList = ({ images, loadMore, onFetchData }) => {
           </View>
         </View>
       </View>
-
       <ScrollView scrollY style={{ marginTop: 30 }} onScrollToLower={loadMore}>
         {showImages.length === 0 ? (
           <View
@@ -236,6 +242,9 @@ const ImageList = ({ images, loadMore, onFetchData }) => {
                       position: 'relative',
                     }}
                   >
+                    {loading && selectedImages.includes(index) && (
+                      <AtActivityIndicator mode="center" />
+                    )}
                     <Image
                       key={index}
                       style={{
@@ -248,9 +257,13 @@ const ImageList = ({ images, loadMore, onFetchData }) => {
                       className=" "
                       src={image.url}
                       onClick={() => {
+                        console.log('previewImage', image);
+                        const validUrls = showImages
+                          .map((image) => image.url)
+                          .filter((url) => url !== null);
                         Taro.previewImage({
                           current: image.url,
-                          urls: showImages.map((image) => image.url),
+                          urls: validUrls,
                         });
                       }}
                     ></Image>
