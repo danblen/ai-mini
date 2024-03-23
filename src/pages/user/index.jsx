@@ -38,7 +38,7 @@ export default () => {
   const [gender, setGender] = useState('');
   const [isOpened, setIsOpened] = useState(false);
   const [editDigitalMode, setEditDigitalMode] = useState(true);
-  const [isTraining, setIsTraining] = useState(false);
+  const [trainStatus, setIsTrainStatus] = useState('');
   // 用户信息数据结构，和storage中存储的一致
   const [userInfo, setUserInfo] = useState({
     isLogin: false,
@@ -65,18 +65,19 @@ export default () => {
         isLogin: true,
         data: res.data,
       }));
-      if (res?.data?.loraPic) {
-        setEditDigitalMode(false);
-      }
+      // if (res?.data?.loraPic) {
+      //   setEditDigitalMode(false);
+      // }
       if (res?.data?.userGender) {
         setGender(res.data.userGender);
       }
       console.log(res.data);
-      if (res?.data?.loraStatus === 'pending') {
-        setIsTraining(true);
-      } else {
-        setIsTraining(false);
-      }
+      setIsTrainStatus(res?.data?.loraStatus);
+      // if (res?.data?.loraStatus === 'pending') {
+      //   setIsTrainStatus(true);
+      // } else {
+      //   setIsTrainStatus(false);
+      // }
     } else {
       // 获取用户数据失败
       setUserInfo({
@@ -355,13 +356,14 @@ export default () => {
               : buttonImages
           }
           editDigitalMode={editDigitalMode}
-          isTraining={isTraining}
+          trainStatus={trainStatus}
           onLoginOpened={(login) => {
             setIsOpened(login);
           }}
           onNickOpened={(login) => {
             setIsOpenedText(login);
           }}
+          isTrainDone={userInfo?.data?.loraPic ? 1 : 0}
         ></UploadDigital>
         {/* 支付接口 */}
         {/* <Button

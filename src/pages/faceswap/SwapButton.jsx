@@ -1,8 +1,9 @@
 import Taro from '@tarojs/taro';
 import { api, faceSwap } from '../../api';
 import { useState, useEffect, useRef } from 'react';
-import { View, Text } from '@tarojs/components';
+import { View, Button, Text } from '@tarojs/components';
 import { AtButton, AtActivityIndicator, AtFloatLayout } from 'taro-ui';
+import { AtModal, AtModalHeader, AtModalContent, AtModalAction } from 'taro-ui';
 import { downloadImages, wxPathToBase64 } from '../../utils/imageTools';
 import {
   saveUserInfo,
@@ -15,6 +16,8 @@ import {
   data,
   swap_face_and_add_detail_data,
 } from '../../const/sdApiParams.js';
+import { PAGES } from '../../const/app';
+
 const sdFaceSwapAddDetailParam = deepCopy(swap_face_and_add_detail_data);
 const sdFaceSwapParam = deepCopy(data);
 const SwapCount = ({ clickCount }) => (
@@ -58,6 +61,7 @@ export default ({
   const [isOpened, setIsOpened] = useState(false);
   const [updateTrigger, forceUpdate] = useState({});
   const [usedFaceImages, setUsedFaceImages] = useState([]);
+  const [isOpenedText, setIsOpenedText] = useState(false);
 
   useEffect(() => {
     // clickCount大于0，重新进入页面后，clickCount在其他页面变为0，不会触发这个地方，需要使用forceUpdate强制刷新
@@ -206,12 +210,30 @@ export default ({
       onUpdateTaskImages('finished', requestId, res.data.imageUrl);
       updateUserInfoFromApi();
     } else {
-      Taro.showToast({
-        title: res.message,
-        icon: 'none',
-      });
+      if (res?.message === 'User loraName not found') {
+        setIsOpenedText(true);
+      } else if (global.userInfo.data.loraStatus != 'pending') {
+        Taro.showToast({
+          title: '您的数字分身正在制作中，请稍候..',
+          icon: 'none',
+        });
+      } else {
+        Taro.showToast({
+          title: res.message,
+          icon: 'none',
+        });
+      }
       onUpdateTaskImages('failed', requestId, '');
     }
+  };
+  const handleCancel = async () => {
+    setIsOpenedText(false);
+  };
+  const handleConfirm = async () => {
+    setIsOpenedText(false);
+    Taro.switchTab({
+      url: PAGES.user,
+    });
   };
 
   return (
@@ -221,6 +243,20 @@ export default ({
         width: '95%',
       }}
     >
+      <AtModal isOpened={isOpenedText} onClose={handleCancel}>
+        <AtModalHeader>👾 打造数字分身 👾</AtModalHeader>
+        <AtModalContent>
+          <div>
+            <p>🌟 精准复现面部特征和表情 </p>
+            <p>🏠 无论是户外风光还是室内布景，数字分身都能完美适应</p>
+            <p>🌿 让您的写真充满生命力和个性。</p>
+          </div>
+        </AtModalContent>
+        <AtModalAction>
+          <Button onClick={() => handleCancel()}>取消</Button>
+          <Button onClick={() => handleConfirm()}>去制作</Button>
+        </AtModalAction>
+      </AtModal>
       <SwapCount clickCount={clickCount.current} />
       <AtButton
         type="primary"

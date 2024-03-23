@@ -35,11 +35,11 @@ export default ({ onLogout, editDigital }) => {
           //     });
           //   },
           // },
-          // {
-          //   imageUrl: require('../../static/image/my/comment.png'),
-          //   pagePath: PAGES.feedback,
-          //   text: '建议反馈',
-          // },
+          {
+            imageUrl: require('../../static/image/my/comment.png'),
+            pagePath: PAGES.feedback,
+            text: '建议反馈',
+          },
           {
             imageUrl: require('../../static/image/my/direct-instagram.png'),
             pagePath: PAGES.QrCodeGenerator,

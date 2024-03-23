@@ -13,7 +13,7 @@ import Taro from '@tarojs/taro';
 
 export default () => {
   const [uploadedFiles, setUploadedFiles] = useState([]);
-  const [desc, setDesc] = useState([]);
+  const [desc, setDesc] = useState('');
 
   useEffect(() => {
     // 从storage中获取已经在本地存储的用户图片
@@ -50,15 +50,13 @@ export default () => {
             backgroundColor: '#f1f1f1',
           }}
           placeholder="请输入"
-          onClick={(event) => {
-            setDesc(event.target.value);
-          }}
+          onInput={(e) => setDesc(e.detail.value)}
           value={desc}
         ></Textarea>
       </View>
       上传截图（选填）
       <AtImagePicker
-        length={2}
+        length={1}
         count={1}
         style={{ height: '100rpx' }}
         files={uploadedFiles}
@@ -114,7 +112,7 @@ export default () => {
               api.feedback({
                 userId: global.userInfo.data.userId,
                 desc,
-                image: uploadedFiles,
+                image: uploadedFiles[0]?.compressBase64 || null,
               });
               Taro.showToast({ title: '反馈成功', icon: 'none' });
             } else {

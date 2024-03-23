@@ -11,10 +11,10 @@ export const compressInputImage = async (file) => {
     let srcBase64;
     let src_size = file.file.size;
 
-    let quality = Math.floor((-0.0738 * src_size) / 1024 + 113.75);
-    // 当文件大于200KB时循环压缩
+    let quality = Math.floor((-0.0738 * src_size) / 1024 + 100);
+    // 当文件大于300KB时循环压缩
     if (quality < 0) quality = 5;
-    while (src_size > 200 * 1024 && quality > 0) {
+    while (src_size > 300 * 1024 && quality > 0) {
       console.log('src_size', src_size, quality);
       compressedFile = await Taro.compressImage({
         src: file.url,

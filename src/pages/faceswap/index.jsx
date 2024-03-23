@@ -292,7 +292,7 @@ export default () => {
                   : 'close-circle'
               }
               size="18"
-              color={selectedOption === '快速模式' ? '#6190E8' : '#666'}
+              color={selectedOption === '数字分身模式' ? '#6190E8' : '#666'}
               style={{ marginRight: '10px' }}
             />
             <Text style={{ color: selectedOption === 0 ? '#6190E8' : '#666' }}>

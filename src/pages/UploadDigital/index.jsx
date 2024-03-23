@@ -8,7 +8,7 @@ import { generateUniqueId } from '../../utils/index.js';
 import Image from '@taroify/core/image/index.js';
 import { AtImagePicker } from 'taro-ui';
 import { compressInputImage } from '../comps/ImagePicker.jsx';
-import Taro from '@tarojs/taro';
+import Taro, { useDidShow } from '@tarojs/taro';
 import { URL_STATIC } from '../../api/config';
 import { AtModal, AtModalHeader, AtModalContent, AtModalAction } from 'taro-ui';
 
@@ -21,18 +21,27 @@ export default ({
   isHaveUserGender,
   digitalUser,
   editDigitalMode,
-  isTraining,
+  trainStatus,
   onLoginOpened,
   onNickOpened,
 }) => {
   const [uploadedFiles, setUploadedFiles] = useState([]);
   const [isOpenedText, setIsOpenedText] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [isOpenedWaitNofity, setIsOpenedWaitNofity] = useState(false);
   const maxTrainLoraImages = 5;
 
   useEffect(() => {
     updateUserInfoFromStorage();
   }, []);
+
+  useEffect(() => {
+    if (trainStatus === 'pending') {
+      setLoading(true);
+    } else {
+      setLoading(false);
+    }
+  }, [trainStatus]);
 
   const handleCancel = async () => {
     setIsOpenedText(false);
@@ -50,6 +59,8 @@ export default ({
         title: `请点击+号,选择2-${maxTrainLoraImages}张人脸图像`,
         icon: 'none',
       });
+    } else {
+      MakeDigital();
     }
   };
   const handleClose1 = async () => {
@@ -95,6 +106,54 @@ export default ({
       });
     }
   };
+  const MakeDigital = async () => {
+    if (uploadedFiles.length === 0) {
+      Taro.showToast({
+        title: `请点击+号,选择3-${maxTrainLoraImages}张人脸图像`,
+        icon: 'none',
+      });
+    } else {
+      setLoading(true);
+      const res = await api.easyPhotoTrainLora({
+        userId: global.userInfo.data.userId,
+        requestId: generateUniqueId(),
+        usePoint: 2,
+        userTrainImages: uploadedFiles
+          .map((file) => file.compressBase64)
+          .filter((file) => file),
+      });
+      if (res?.data) {
+        // 处理响应结果
+        setIsOpenedWaitNofity(true);
+      } else {
+        setLoading(false);
+        Taro.showToast({
+          title: '服务器异常,可通过“样股网络”公众号反馈,感谢理解',
+          icon: 'none',
+        });
+      }
+    }
+  };
+
+  const checkMakeDigital = async () => {
+    if (isLogin) {
+      if (isHaveUserGender) {
+        if (trainStatus !== 'pending') {
+          if (notifyCheckPact) {
+            setIsOpenedText(true);
+            notifyCheckPact = false;
+          } else {
+            MakeDigital();
+          }
+        }
+      } else {
+        onNickOpened(true);
+      }
+    } else {
+      onLoginOpened(true);
+    }
+  };
+
   return (
     <View
       style={{
@@ -117,11 +176,17 @@ export default ({
             opacity: 1,
             color: 'white',
           }}
+          onClick={() => {
+            Taro.previewImage({
+              current: digitalUser,
+              urls: [digitalUser], // 将digitalUser包装在数组中传递给urls参数
+            });
+          }}
         >
           <Image mode="aspectFill" src={digitalUser} />
         </View>
       )}
-      {!isTraining && editDigitalMode && (
+      {!trainStatus != 'pending' && editDigitalMode && (
         <View
           style={{
             width: '95%',
@@ -206,44 +271,16 @@ export default ({
             zIndex: 0,
           }}
           shape="circle"
-          loading={isTraining}
-          onClick={async () => {
-            if (isLogin) {
-              if (isHaveUserGender) {
-                if (!isTraining) {
-                  if (notifyCheckPact) {
-                    setIsOpenedText(true);
-                    notifyCheckPact = false;
-                  } else {
-                    if (uploadedFiles.length === 0) {
-                      Taro.showToast({
-                        title: `请点击+号,选择3-${maxTrainLoraImages}张人脸图像`,
-                        icon: 'none',
-                      });
-                    } else {
-                      const res = await api.easyPhotoTrainLora({
-                        userId: global.userInfo.data.userId,
-                        requestId: generateUniqueId(),
-                        usePoint: 2,
-                        userTrainImages: uploadedFiles
-                          .map((file) => file.compressBase64)
-                          .filter((file) => file),
-                      });
-                      if (res?.data) {
-                      }
-                      setIsOpenedWaitNofity(true);
-                    }
-                  }
-                }
-              } else {
-                onNickOpened(true);
-              }
-            } else {
-              onLoginOpened(true);
-            }
-          }}
+          loading={trainStatus === 'pending' || loading}
+          onClick={checkMakeDigital}
         >
-          {isTraining ? '制作分身中' : '制作数字分身'}
+          {trainStatus === 'pending'
+            ? '制作分身中'
+            : trainStatus === 'done'
+            ? '修改数字分身'
+            : trainStatus === 'error'
+            ? '制作数字分身'
+            : '制作数字分身'}
         </AtButton>
       )}
       <AtModal isOpened={isOpenedText} onClose={handleClose}>
