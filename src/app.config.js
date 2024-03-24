@@ -15,6 +15,7 @@ export default {
     'pages/activity/Activity',
     // 'pages/search/index',
     'pages/faceswap/index',
+    'pages/AIconvert/index',
     'pages/photo/index',
   ],
   subPackages: [

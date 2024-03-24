@@ -9,15 +9,15 @@ export const data = {
   n_iter: 1, // number of iterations
   steps: 50, // Number of runs, this value can be fine tuned, converging when too high, max 150 in webui, maybe can go higher here?
   cfg_scale: 7, // Influence of prompt text on image, usually 5-15, max 30 in webui, can fine tune
-  width: 1282,
-  height: 1708,
+  // width: 1282,
+  // height: 1708,
   restore_faces: false, // Whether to correct faces, for 3D, test later if open or not. Suggest False for now
   sampler_name: 'DPM++ 2M Karras',
   sampler_index: 'DPM++ 2M Karras', // or "DPM++ 2M Karras"
-  override_settings: {
-    // sd_model_checkpoint: 'majicmixRealistic_v6.safetensors',
-    sd_model_checkpoint: 'Anything-ink.safetensorss',
-  },
+  // override_settings: {
+  //   // sd_model_checkpoint: 'majicmixRealistic_v6.safetensors',
+  //   sd_model_checkpoint: 'Anything-ink.safetensorss',
+  // },
   alwayson_scripts: {
     roop: {
       is_img2img: true,

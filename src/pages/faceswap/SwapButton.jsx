@@ -155,7 +155,7 @@ export default ({
       });
       return;
     }
-    if (!selectedImageUrl) {
+    if (!selectedImageUrl && selectedOption == '快速模式') {
       Taro.showToast({
         title: `请点击+号,选择人脸图像~`,
         icon: 'none',
@@ -196,6 +196,14 @@ export default ({
         usePoint,
         sdParams: await getParams(),
       });
+      if (res?.message === 'User loraName not found') {
+        setIsOpenedText(true);
+      } else if (global.userInfo.data.loraStatus != 'pending') {
+        Taro.showToast({
+          title: '您的数字分身正在制作中，请稍候..',
+          icon: 'none',
+        });
+      }
     } else {
       res = await api.img2img({
         userId: global.userInfo.data.userId,
@@ -210,19 +218,10 @@ export default ({
       onUpdateTaskImages('finished', requestId, res.data.imageUrl);
       updateUserInfoFromApi();
     } else {
-      if (res?.message === 'User loraName not found') {
-        setIsOpenedText(true);
-      } else if (global.userInfo.data.loraStatus != 'pending') {
-        Taro.showToast({
-          title: '您的数字分身正在制作中，请稍候..',
-          icon: 'none',
-        });
-      } else {
-        Taro.showToast({
-          title: res.message,
-          icon: 'none',
-        });
-      }
+      Taro.showToast({
+        title: res.message,
+        icon: 'none',
+      });
       onUpdateTaskImages('failed', requestId, '');
     }
   };

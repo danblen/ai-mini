@@ -43,14 +43,66 @@
  * />
  */
 
-import { Image, Text, View } from '@tarojs/components';
+import { Editor, Image, Text, View } from '@tarojs/components';
 import Taro from '@tarojs/taro';
 import { AtIcon } from 'taro-ui';
 import { URL_STATIC } from '../../../api/config';
+import { AtActionSheet, AtActionSheetItem, AtImagePicker } from 'taro-ui';
+import React, { useState } from 'react';
+import { navigateTo } from '../../../base/global';
+
 const buttonImages = URL_STATIC + '/appstatic/image/my/dddepth-335.jpg';
 const plusIcon = URL_STATIC + '/appstatic/image/my/add.png';
+const toUrl = '/pages/AIconvert/index';
 
 export default ({ infoLeftImage, infoTopLeftImage, infoTopRightImage }) => {
+  const [showActionSheet, setShowActionSheet] = useState(false);
+
+  // 处理拍照上传的函数
+  const getPicFromSnap = () => {
+    setShowActionSheet(false); // 关闭 ActionSheet
+    // 在这里执行拍照上传的逻辑，您可以调用 Taro 的相关 API
+    Taro.chooseImage({
+      count: 1, // 最多可选择的图片张数
+      sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
+      sourceType: ['camera'], // 指定来源是相机
+      success: (res) => {
+        const tempFilePaths = res.tempFilePaths;
+        // 处理拍照后的逻辑，比如显示选择的图片等
+        console.log('拍照成功', tempFilePaths);
+        navigateTo({
+          url: toUrl + '?imageUrl=' + tempFilePaths,
+        });
+      },
+      fail: (error) => {
+        // 处理拍照失败的情况
+        console.log('拍照失败', error);
+      },
+    });
+  };
+
+  // 处理从相册选取的函数
+  const getPicFromAlbum = () => {
+    setShowActionSheet(false); // 关闭 ActionSheet
+    // 在这里执行从相册选取的逻辑，您可以调用 Taro 的相关 API
+    Taro.chooseImage({
+      count: 1, // 最多可选择的图片张数
+      sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
+      sourceType: ['album'], // 指定来源是相册
+      success: (res) => {
+        const tempFilePaths = res.tempFilePaths;
+        // 处理从相册选取后的逻辑，比如显示选择的图片等
+        console.log('从相册选取成功', tempFilePaths);
+        navigateTo({
+          url: toUrl + '?imageUrl=' + tempFilePaths,
+        });
+      },
+      fail: (error) => {
+        // 处理从相册选取失败的情况
+        console.log('从相册选取失败', error);
+      },
+    });
+  };
   const handleButtonClick = (pagePath, params) => {
     if (!pagePath || !params) {
       console.log('Invalid navigation parameters:', pagePath, params);
@@ -80,6 +132,20 @@ export default ({ infoLeftImage, infoTopLeftImage, infoTopRightImage }) => {
         background: '0% 0% / cover rgba(204, 197, 197, 0.5)', // 添加渐变背景
       }}
     >
+      <View>
+        <AtActionSheet
+          isOpened={showActionSheet}
+          onCancel={() => setShowActionSheet(false)}
+          onClose={() => setShowActionSheet(false)}
+        >
+          <AtActionSheetItem onClick={() => getPicFromSnap()}>
+            拍照上传
+          </AtActionSheetItem>
+          <AtActionSheetItem onClick={() => getPicFromAlbum()}>
+            从相册选取
+          </AtActionSheetItem>
+        </AtActionSheet>
+      </View>
       <View
         style={{
           display: 'flex',
@@ -177,9 +243,41 @@ export default ({ infoLeftImage, infoTopLeftImage, infoTopRightImage }) => {
                   width: '48%',
                   height: 95,
                   borderRadius: 5,
+                  background: `url(${buttonImages})`,
+                  backgroundSize: 'cover',
                 }}
+                onClick={() => setShowActionSheet(true)}
               >
-                <Image
+                自定义图片
+                {/* <Image
+                  style={{
+                    width: '100%',
+                    height: 95,
+                    borderRadius: 20,
+                    display: 'flex',
+                    alignItems: 'center', // 垂直居中对齐
+                    justifyContent: 'center',
+                    background: `url(${buttonImages})`,
+                    backgroundSize: 'cover',
+                  }}
+                  // onClick={() => {
+                  //   Taro.navigateTo({
+                  //     url: '/pages/refine/index',
+                  //   });
+                  // }}
+                  onClick={() => {
+                    navigateTo({
+                      url:
+                        url +
+                        '?imageUrl=' +
+                        image.momentPics +
+                        '&momentId=' +
+                        image.momentId,
+                    });
+                  }}
+                  src={image.momentPics}
+                ></Image> */}
+                {/* <Image
                   src={infoTopLeftImage.params.imageUrl}
                   mode="aspectFill"
                   style={{ width: '100%', height: 95, borderRadius: 5 }}
@@ -189,7 +287,7 @@ export default ({ infoLeftImage, infoTopLeftImage, infoTopRightImage }) => {
                       infoTopLeftImage.params
                     )
                   }
-                />
+                /> */}
                 <View
                   style={{
                     position: 'absolute',
@@ -206,9 +304,13 @@ export default ({ infoLeftImage, infoTopLeftImage, infoTopRightImage }) => {
                   width: '48%',
                   height: 95,
                   borderRadius: 5,
+                  background: `url(${buttonImages})`,
+                  backgroundSize: 'cover',
                 }}
+                onClick={() => setShowActionSheet(true)}
               >
-                <Image
+                更换背景
+                {/* <Image
                   src={infoTopRightImage.params.imageUrl}
                   mode="aspectFill"
                   style={{
@@ -224,7 +326,7 @@ export default ({ infoLeftImage, infoTopLeftImage, infoTopRightImage }) => {
                       infoTopRightImage.params
                     )
                   }
-                />
+                /> */}
                 {/* 右下角角标 */}
                 <View
                   style={{
