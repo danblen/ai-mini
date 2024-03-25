@@ -12,6 +12,9 @@ const api = {};
 api.login = (data) => {
   return request.post('/login', data);
 };
+api.saveImageToServerApi = (data) => {
+  return request.post('/saveImageToServerApi', data);
+};
 api.enqueue = (data) => {
   return request.post('/enqueue', data);
 };

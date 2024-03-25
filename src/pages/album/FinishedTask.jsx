@@ -122,7 +122,7 @@ const ImageList = ({ images, loadMore, onFetchData }) => {
       <View
         style={{
           position: 'fixed',
-          top: 0,
+          top: 39,
           zIndex: 10,
           height: 30,
           backgroundColor: '#fff',
@@ -204,7 +204,7 @@ const ImageList = ({ images, loadMore, onFetchData }) => {
           </View>
         </View>
       </View>
-      <ScrollView scrollY style={{ marginTop: 30 }} onScrollToLower={loadMore}>
+      <ScrollView scrollY style={{ marginTop: 70 }} onScrollToLower={loadMore}>
         {showImages.length === 0 ? (
           <View
             style={{
