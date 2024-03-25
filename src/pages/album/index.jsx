@@ -21,14 +21,7 @@ export default ({}) => {
     finishedImages: [],
     pendingImages: [],
   });
-  const [userInfo, setUserInfo] = useState({
-    isLogin: false,
-    data: {
-      points: 0,
-      userId: '',
-      isChecked: false,
-    },
-  });
+  const [userInfo, setUserInfo] = useState(global.userInfo);
   const [current, setCurrent] = useState('已完成');
   const fetchData = async (refresh) => {
     const storageUserInfo = getStorageSync('userInfo');
@@ -70,7 +63,6 @@ export default ({}) => {
   };
 
   const getImages = async () => {
-    await updateUserInfoFromStorage();
     if (global.userInfo.isLogin) {
       let res = await api.getUserProcessImage({
         userId: global.userInfo.data.userId,
@@ -95,7 +87,12 @@ export default ({}) => {
       title: '进行中',
     },
   ];
+  const updateUserInfo = async () => {
+    await updateUserInfoFromStorage();
+    setUserInfo(global.userInfo);
+  };
   useDidShow(() => {
+    updateUserInfo();
     // fetchData();
     getImages();
   }, []);
@@ -144,7 +141,7 @@ export default ({}) => {
         </ScrollView>
       </View>
 
-      {global.userInfo.isLogin && (
+      {userInfo.isLogin && (
         <View>
           {current === '已完成' && (
             <FinishedTask
@@ -160,7 +157,7 @@ export default ({}) => {
           )}
         </View>
       )}
-      {!global.userInfo.isLogin && (
+      {!userInfo.isLogin && (
         <View style={{ alignItems: 'center', marginTop: 60 }}>
           <Text style={{ fontSize: 18, textAlign: 'center' }}>
             您还未登陆，请先登陆

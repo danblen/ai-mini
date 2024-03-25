@@ -4,7 +4,6 @@ export default ({ images }) => {
     <View
       style={{
         height: '100vh',
-        color: '#fff',
         paddingTop: 40,
       }}
     >
@@ -46,7 +45,7 @@ export default ({ images }) => {
                       height: 200,
                       marginBottom: 6,
                       borderRadius: 5,
-                      border: '1px solid #aaa',
+                      border: '1px solid #555',
                       boxSizing: 'border-box',
                       display: 'flex',
                       justifyContent: 'center',
@@ -66,7 +65,7 @@ export default ({ images }) => {
                 {image.status === 'waiting' && (
                   <View
                     style={{
-                      border: '1px solid #eee',
+                      border: '1px solid #555',
                       borderRadius: 5,
                       boxSizing: 'border-box',
                       width: '49%',
@@ -83,7 +82,7 @@ export default ({ images }) => {
                         padding: 10,
                       }}
                     >
-                      已在后台排队处理中，请稍后在作品页查看
+                      后台排队处理中
                     </View>
                   </View>
                 )}
