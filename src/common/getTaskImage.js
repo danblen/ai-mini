@@ -1,27 +1,28 @@
-import { getSwapQueueResult } from '../api/index.js';
+import { api, getSwapQueueResult } from '../api/index.js';
 import { getStorageSync } from '../base/global.js';
 
 let timers = {};
 export const getTaskImage = async (requestId) => {
   return new Promise((resolve, reject) => {
-    const storageUserInfo = getStorageSync('userInfo');
-    const requestData = {
-      userId: storageUserInfo?.data?.userId,
-      requestId: requestId,
-      sql_query: {
-        request_status: '',
-        userId: '',
-      },
-    };
+    // const storageUserInfo = getStorageSync('userInfo');
+    // const requestData = {
+    //   userId: storageUserInfo?.data?.userId,
+    //   requestId: requestId,
+    //   sql_query: {
+    //     request_status: '',
+    //     userId: '',
+    //   },
+    // };
 
     let counter = 0; // 添加计数器
     const maxCounter = 20; // 设置最大计数值，相当于查询次数
 
     const checkStatus = async () => {
       try {
-        let res = await getSwapQueueResult(requestData);
+        // let res = await getSwapQueueResult(requestData);
+        let res = await api.queryResult({ requestId });
 
-        if (res.data.status === 'finishing') {
+        if (res?.data?.status === 'finishing') {
           clearInterval(timers[requestId]);
           resolve(res);
         } else {
