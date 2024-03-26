@@ -17,6 +17,7 @@ import {
   swap_face_and_add_detail_data,
 } from '../../const/sdApiParams.js';
 import { PAGES } from '../../const/app';
+import { URL_STATIC } from '../../api/config.js';
 
 const sdFaceSwapAddDetailParam = deepCopy(swap_face_and_add_detail_data);
 const sdFaceSwapParam = deepCopy(data);
@@ -97,9 +98,23 @@ export default ({
     // const tempFilePath = await downloadImages(imageUrl);
     // const srcBase64 = await wxPathToBase64(tempFilePath);
     const tarBase64 = await wxPathToBase64(selectedImageUrl);
+    // 上传到服务器
+    let dir = `/userImages/${global.userInfo.data.userId}/`;
+    let filename =
+      selectedImageUrl.substring(
+        selectedImageUrl.lastIndexOf('/') + 1,
+        selectedImageUrl.lastIndexOf('.')
+      ) + '.png';
+    api.saveImageToServerApi({
+      imageBase64: tarBase64,
+      dir,
+      filename,
+    });
     // sdparam.momentId = momentId;
     sdparam.init_images[0] = imageUrl;
-    sdparam.alwayson_scripts.roop.args[0] = tarBase64;
+    // 放url路径，发给gpu的时候再下载
+    sdparam.alwayson_scripts.roop.args[0] = URL_STATIC + dir + filename;
+    // sdparam.alwayson_scripts.roop.args[0] = tarBase64;
     return sdparam;
   };
 
@@ -187,7 +202,7 @@ export default ({
     }, 1000);
     // 随机数
     const requestId = generateUniqueId();
-    onUpdateTaskImages('pending', requestId, '');
+    onUpdateTaskImages(requestId);
     let res;
     if (selectedOption === '数字分身模式') {
       res = await api.easyPhotoSwapFace({
@@ -206,7 +221,10 @@ export default ({
       }
     } else {
       res = await api.img2img({
+        // res = await api.enqueue({
         userId: global.userInfo.data.userId,
+        taskType: 'img2img',
+        processType: 'img2img',
         requestId,
         usePoint,
         sdParams: await getParams(),
@@ -214,15 +232,13 @@ export default ({
       });
     }
     if (res?.data) {
-      setUsedFaceImages([...usedFaceImages, selectedImageUrl]);
-      onUpdateTaskImages('finished', requestId, res.data.imageUrl);
+      // setUsedFaceImages([...usedFaceImages, selectedImageUrl]);
       updateUserInfoFromApi();
     } else {
       Taro.showToast({
         title: res.message,
         icon: 'none',
       });
-      onUpdateTaskImages('failed', requestId, '');
     }
   };
   const handleCancel = async () => {

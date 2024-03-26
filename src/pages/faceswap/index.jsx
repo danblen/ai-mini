@@ -131,62 +131,23 @@ export default () => {
     api.updateUserProcessInfo(data);
   }, [rating]);
 
-  // const onUpdateTaskImages = async (requestId) => {
-  //   const newImage = {
-  //     src: '',
-  //     status: 'pending',
-  //     requestId,
-  //   };
-  //   setImages((prevImages) => [...prevImages, newImage]);
+  const onUpdateTaskImages = async (requestId) => {
+    const newImage = {
+      src: '',
+      status: 'pending',
+      requestId,
+    };
+    setImages((prevImages) => [...prevImages, newImage]);
 
-  //   try {
-  //     const res = await getTaskImage(requestId);
-  //     setImages((prevImages) =>
-  //       prevImages.map((image) =>
-  //         image.requestId === requestId
-  //           ? {
-  //               ...image,
-  //               src: URL_STATIC + res.data.imageUrl,
-  //               status: 'SUCCESS',
-  //             }
-  //           : image
-  //       )
-  //     );
-
-  //     Taro.showToast({
-  //       title: '已处理完成，在作品页查看~',
-  //       icon: 'none',
-  //     });
-  //     setRequestId(requestId);
-  //   } catch (error) {
-  //     // 在这里处理异常情况，比如超时或其他错误
-  //     console.error('Task error:', error);
-  //     Taro.showToast({
-  //       title: `请求超时,请重试`,
-  //       icon: 'none',
-  //     });
-  //   }
-  //   Taro.getApp().globalData.updateGlobalClickCount(-1);
-  //   const updatedClickCount = Taro.getApp().globalData.clickCount;
-  //   Taro.eventCenter.trigger('globalClickCountChanged', updatedClickCount);
-  // };
-
-  const onUpdateTaskImages = async (status, requestId, imageUrl) => {
-    if (status == 'pending') {
-      const newImage = {
-        src: '',
-        status,
-        requestId,
-      };
-      setImages((prevImages) => [...prevImages, newImage]);
-    } else if (status == 'finished') {
+    try {
+      const res = await getTaskImage(requestId);
       setImages((prevImages) =>
         prevImages.map((image) =>
           image.requestId === requestId
             ? {
                 ...image,
-                src: imageUrl,
-                status: status,
+                src: res.data?.imageUrl,
+                status: 'SUCCESS',
               }
             : image
         )
@@ -196,22 +157,61 @@ export default () => {
         title: '已处理完成，在作品页查看~',
         icon: 'none',
       });
-    } else if (status == 'failed') {
-      setImages((prevImages) =>
-        prevImages.map((image) =>
-          image.requestId === requestId
-            ? {
-                ...image,
-                status,
-              }
-            : image
-        )
-      );
+      // setRequestId(requestId);
+    } catch (error) {
+      // 在这里处理异常情况，比如超时或其他错误
+      console.error('Task error:', error);
+      Taro.showToast({
+        title: `请求超时,请重试`,
+        icon: 'none',
+      });
     }
-    // Taro.getApp().globalData.updateGlobalClickCount(-1);
-    // const updatedClickCount = Taro.getApp().globalData.clickCount;
-    // Taro.eventCenter.trigger('globalClickCountChanged', updatedClickCount);
+    Taro.getApp().globalData.updateGlobalClickCount(-1);
+    const updatedClickCount = Taro.getApp().globalData.clickCount;
+    Taro.eventCenter.trigger('globalClickCountChanged', updatedClickCount);
   };
+
+  // const onUpdateTaskImages = async (requestIds) => {
+  // if (status == 'pending') {
+  //   const newImage = {
+  //     src: '',
+  //     status,
+  //     requestId,
+  //   };
+  //   setImages((prevImages) => [...prevImages, newImage]);
+  // } else if (status == 'finished') {
+  //   setImages((prevImages) =>
+  //     prevImages.map((image) =>
+  //       image.requestId === requestId
+  //         ? {
+  //             ...image,
+  //             src: imageUrl,
+  //             status: status,
+  //           }
+  //         : image
+  //     )
+  //   );
+
+  //   Taro.showToast({
+  //     title: '已处理完成，在作品页查看~',
+  //     icon: 'none',
+  //   });
+  // } else if (status == 'failed') {
+  //   setImages((prevImages) =>
+  //     prevImages.map((image) =>
+  //       image.requestId === requestId
+  //         ? {
+  //             ...image,
+  //             status,
+  //           }
+  //         : image
+  //     )
+  //   );
+  // }
+  // Taro.getApp().globalData.updateGlobalClickCount(-1);
+  // const updatedClickCount = Taro.getApp().globalData.clickCount;
+  // Taro.eventCenter.trigger('globalClickCountChanged', updatedClickCount);
+  // };
 
   return (
     <Container images={images}>
