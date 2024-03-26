@@ -15,12 +15,14 @@ import { deepCopy, generateUniqueId } from '../../utils/index.js';
 import {
   data,
   swap_face_and_add_detail_data,
+  animeMix,
 } from '../../const/sdApiParams.js';
 import { PAGES } from '../../const/app';
 import { URL_STATIC } from '../../api/config.js';
 
 const sdFaceSwapAddDetailParam = deepCopy(swap_face_and_add_detail_data);
 const sdFaceSwapParam = deepCopy(data);
+const animeMixParam = deepCopy(animeMix);
 const SwapCount = ({ clickCount }) => (
   <View
     style={{
@@ -84,16 +86,42 @@ export default ({
     };
   }, []);
 
+  // 将图片文件转换为 base64 字符串的函数
+  function getBase64(filePath) {
+    return new Promise((resolve, reject) => {
+      Taro.getFileSystemManager().readFile({
+        filePath: filePath,
+        encoding: 'base64',
+        success: (res) => {
+          resolve(res.data);
+        },
+        fail: (err) => {
+          reject(err);
+        },
+      });
+    });
+  }
   const getParams = async () => {
     let sdparam = sdFaceSwapParam;
     if (selectedOption === '快速模式') {
       sdparam = sdFaceSwapParam;
+      const tarBase64 = await wxPathToBase64(selectedImageUrl);
+      sdparam.alwayson_scripts.roop.args[0] = tarBase64;
     } else if (selectedOption === '数字分身模式') {
       return {
         imageUrls: [imageUrl],
       };
+    } else if (selectedOption === '换背景' || selectedOption === '转动漫') {
+      console.log('12312123123', imageUrl);
+      const tarBase64 = await getBase64(imageUrl);
+      sdparam = animeMixParam;
+      sdparam.init_images[0] = tarBase64;
+      console.log(sdparam);
+      return sdparam;
     } else {
       sdparam = sdFaceSwapAddDetailParam;
+      const tarBase64 = await wxPathToBase64(selectedImageUrl);
+      sdparam.alwayson_scripts.roop.args[0] = tarBase64;
     }
     // const tempFilePath = await downloadImages(imageUrl);
     // const srcBase64 = await wxPathToBase64(tempFilePath);

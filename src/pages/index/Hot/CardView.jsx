@@ -50,6 +50,7 @@ import { URL_STATIC } from '../../../api/config';
 import { AtActionSheet, AtActionSheetItem, AtImagePicker } from 'taro-ui';
 import React, { useState } from 'react';
 import { navigateTo } from '../../../base/global';
+import { compressInputImage } from '../../comps/ImagePicker';
 
 const buttonImages = URL_STATIC + '/appstatic/image/my/dddepth-335.jpg';
 const plusIcon = URL_STATIC + '/appstatic/image/my/add.png';
@@ -70,6 +71,8 @@ export default ({ infoLeftImage, infoTopLeftImage, infoTopRightImage }) => {
         const tempFilePaths = res.tempFilePaths;
         // 处理拍照后的逻辑，比如显示选择的图片等
         console.log('拍照成功', tempFilePaths);
+        const path = compressInputImage(tempFilePaths);
+        console.log(path);
         navigateTo({
           url: toUrl + '?imageUrl=' + tempFilePaths,
         });
