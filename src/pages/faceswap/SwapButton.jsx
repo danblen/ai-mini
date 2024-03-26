@@ -200,7 +200,6 @@ export default ({
     setTimeout(() => {
       setLoading(false);
     }, 1000);
-    // 随机数
     const requestId = generateUniqueId();
     onUpdateTaskImages(requestId);
     let res;
@@ -221,7 +220,15 @@ export default ({
       }
     } else {
       res = await api.img2img({
-        // res = await api.enqueue({
+        userId: global.userInfo.data.userId,
+        taskType: 'img2img',
+        processType: 'img2img',
+        requestId,
+        usePoint,
+        sdParams: await getParams(),
+        momentId: momentId,
+      });
+      res = await api.enqueue({
         userId: global.userInfo.data.userId,
         taskType: 'img2img',
         processType: 'img2img',
