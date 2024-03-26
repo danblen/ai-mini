@@ -157,7 +157,7 @@ export default ({
   return (
     <View
       style={{
-        position: 'fixed',
+        // position: 'fixed',
         width: '100%',
         marginTop: '10rpx',
         display: 'flex',
@@ -170,6 +170,7 @@ export default ({
       {editDigitalMode && (
         <View
           style={{
+            marginTop: 30,
             marginBottom: '10rpx',
             borderRadius: '20rpx',
             background: 'transparent', // 将背景改为透明
@@ -183,7 +184,7 @@ export default ({
             });
           }}
         >
-          <Image mode="aspectFill" src={digitalUser} />
+          <Image mode="widthFix" src={digitalUser} />
         </View>
       )}
       {!trainStatus != 'pending' && editDigitalMode && (
