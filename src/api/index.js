@@ -16,7 +16,7 @@ api.queryResult = (data) => {
   return request.post('/queryResult', data);
 };
 api.upload = (data) => {
-  return request.post('/upload', data);
+  return request.upload('/upload', data);
 };
 api.saveImageToServerApi = (data) => {
   return request.post('/saveImageToServerApi', data);

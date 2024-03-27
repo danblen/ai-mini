@@ -114,13 +114,22 @@ export default ({
       });
     } else {
       setLoading(true);
+      const userTrainImages = [];
+      uploadedFiles.forEach((file, i) => {
+        api.saveImageToServerApi({
+          imageBase64: file.compressBase64,
+          dir: `/trainPic/${global.userInfo.data.userId}`,
+          filename: `pic_${i + 1}.png`,
+        });
+        userTrainImages.push(
+          `/trainPic/${global.userInfo.data.userId}` + `/${`pic_${i + 1}.png`}`
+        );
+      });
       const res = await api.easyPhotoTrainLora({
         userId: global.userInfo.data.userId,
         requestId: generateUniqueId(),
         usePoint: 2,
-        userTrainImages: uploadedFiles
-          .map((file) => file.compressBase64)
-          .filter((file) => file),
+        userTrainImages,
       });
       if (res?.data) {
         // 处理响应结果
