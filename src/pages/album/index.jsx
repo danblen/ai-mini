@@ -4,79 +4,30 @@
 import { Button, ScrollView, Text, View } from '@tarojs/components';
 import Taro, { useDidShow } from '@tarojs/taro';
 import React, { useState } from 'react';
-import { getStorageSync, setStorageSync } from '../../base/global.js';
-import FinishedTask from './FinishedTask.jsx';
-import { fetchProcessedImages } from './fetchProcessedImages.js';
-import { api } from '../../api/index.js';
 import { AtFloatLayout } from 'taro-ui';
+import { api } from '../../api/index.js';
 import LoginView from '../comps/LoginView.jsx';
-import { updateUserInfoFromStorage } from '../../common/user.js';
+import FinishedTask from './FinishedTask.jsx';
 import PendingTask from './PendingTask.jsx';
 
-let lastPicCount = 0;
 export default ({}) => {
-  const [allImages, setAllImages] = useState([]);
-  const [isOpened, setIsOpened] = useState(false);
   const [images, setImages] = useState({
     finishedImages: [],
     pendingImages: [],
   });
-  const [userInfo, setUserInfo] = useState(global.userInfo);
   const [current, setCurrent] = useState('已完成');
-  const fetchData = async (refresh) => {
-    const storageUserInfo = getStorageSync('userInfo');
-    setUserInfo(storageUserInfo);
-    let processedImages = getStorageSync('processedImages') || [];
-
-    lastPicCount = processedImages.length;
-    if (storageUserInfo?.isLogin && storageUserInfo.data?.userId) {
-      const userInfo = {
-        userId: storageUserInfo.data.userId,
-        requestStatus: 'finishing',
-      };
-      console.log('refresh', processedImages.length, lastPicCount);
-
-      // if (
-      //   refresh === true ||
-      //   processedImages.length === 0 ||
-      //   processedImages.length === lastPicCount
-      // ) {
-      // 从缓存中未获取到数据，进行网络请求
-      processedImages = await fetchProcessedImages(userInfo);
-
-      if (processedImages?.length > 0) {
-        processedImages.reverse();
-      }
-      lastPicCount = processedImages.length;
-      // 将请求到的数据缓存到本地存储
-      setStorageSync('processedImages', processedImages);
-      // }
-      // }
-
-      setAllImages(processedImages);
-    } else {
-      // 用户未登录或获取用户信息失败时，清空数据
-      setAllImages([]);
-      // 清空本地存储中的数据
-      Taro.removeStorageSync('processedImages');
-    }
-  };
 
   const getImages = async () => {
-    if (global.userInfo.isLogin) {
-      let res = await api.getUserProcessImage({
-        userId: global.userInfo.data.userId,
-      });
-      if (res?.data) {
-        let data = res.data;
-        data.finishedImages = data.finishedImages.map((item) => ({
-          ...item,
-          url: item.outputImagePath,
-        }));
-        setImages(data);
-      }
-    } else {
-      setIsOpened(true);
+    let res = await api.getUserProcessImage({
+      userId: global.userInfo.data.userId,
+    });
+    if (res?.data) {
+      let data = res.data;
+      data.finishedImages = data.finishedImages.map((item) => ({
+        ...item,
+        url: item.outputImagePath,
+      }));
+      setImages(data);
     }
   };
   const tabList = [
@@ -87,14 +38,15 @@ export default ({}) => {
       title: '进行中',
     },
   ];
-  const updateUserInfo = async () => {
-    await updateUserInfoFromStorage();
-    setUserInfo(global.userInfo);
-  };
   useDidShow(() => {
-    updateUserInfo();
-    // fetchData();
-    getImages();
+    if (global.userInfo.isLogin) {
+      getImages();
+    } else {
+      setImages({
+        finishedImages: [],
+        pendingImages: [],
+      });
+    }
   }, []);
   return (
     <View>
@@ -141,7 +93,7 @@ export default ({}) => {
         </ScrollView>
       </View>
 
-      {userInfo.isLogin && (
+      {global.userInfo.isLogin && (
         <View>
           {current === '已完成' && (
             <FinishedTask
@@ -157,11 +109,11 @@ export default ({}) => {
           )}
         </View>
       )}
-      {!userInfo.isLogin && (
+      {!global.userInfo.isLogin && (
         <View style={{ alignItems: 'center', marginTop: 60 }}>
-          <Text style={{ fontSize: 18, textAlign: 'center' }}>
+          <View style={{ fontSize: 18, textAlign: 'center' }}>
             您还未登陆，请先登陆
-          </Text>
+          </View>
           <Button
             type="primary"
             style={{
@@ -179,18 +131,13 @@ export default ({}) => {
         </View>
       )}
 
-      {/* <AtFloatLayout
-        isOpened={isOpened}
-        onClose={() => {
-          setIsOpened(false);
-        }}
-      >
+      <AtFloatLayout isOpened={!global.userInfo.isLogin}>
         <LoginView
           onConfirmLogin={async (res) => {
-            setIsOpened(false);
+            getImages();
           }}
         />
-      </AtFloatLayout> */}
+      </AtFloatLayout>
     </View>
   );
 };
