@@ -155,7 +155,6 @@ export default ({ albumUrls, selfUrl, onUpdateTaskImages }) => {
       <AtButton
         type="primary"
         style={{
-          background: 'linear-gradient(to right, #00467f, #a5cc82)',
           animation: 'swap 1s infinite',
           opacity: 0.8,
           fontWeight: 'bold',

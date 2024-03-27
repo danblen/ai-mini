@@ -36,7 +36,6 @@ const PopularTemplate = ({ activityTagsImage }) => {
         marginLeft: '18rpx',
         marginRight: '18rpx',
         borderRadius: '15rpx',
-        background: '#fff',
       }}
     >
       <Text style={{ margin: '10px 0', fontSize: '18px', fontWeight: 'bold' }}>
