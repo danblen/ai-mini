@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { AtButton } from 'taro-ui';
 import { api } from '../../api';
 import { updateUserInfoFromStorage } from '../../common/user';
-import { sdParams } from './const';
+import { appendprompt, sdParams } from './const';
 import Container from '../comps/Container';
 import { deepCopy, generateUniqueId } from '../../utils';
 import Prompt from './Prompt';
@@ -79,8 +79,9 @@ export default () => {
             // loading={loading}
             onClick={async () => {
               const requestId = generateUniqueId();
+              params.prompt = params.promp + appendprompt;
               const res = await api.enqueue({
-                sdParams,
+                sdParams: params,
                 requestId,
                 taskType: 'txt2img',
                 userId: global.userInfo.data.userId,

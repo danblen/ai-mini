@@ -2,14 +2,15 @@
  * 作品页
  */
 import { Button, ScrollView, Text, View } from '@tarojs/components';
-import Taro, { useDidShow } from '@tarojs/taro';
-import React, { useState } from 'react';
+import Taro, { useDidHide, useDidShow } from '@tarojs/taro';
+import React, { useEffect, useState } from 'react';
 import { AtFloatLayout } from 'taro-ui';
 import { api } from '../../api/index.js';
 import LoginView from '../comps/LoginView.jsx';
 import FinishedTask from './FinishedTask.jsx';
 import PendingTask from './PendingTask.jsx';
 
+let intervalId;
 export default ({}) => {
   const [images, setImages] = useState({
     finishedImages: [],
@@ -38,16 +39,26 @@ export default ({}) => {
       title: '进行中',
     },
   ];
+  const startInteval = () => {
+    clearInterval(intervalId);
+    intervalId = setInterval(() => {
+      getImages();
+    }, 3000);
+    getImages();
+  };
   useDidShow(() => {
     if (global.userInfo.isLogin) {
-      getImages();
+      startInteval();
     } else {
       setImages({
         finishedImages: [],
         pendingImages: [],
       });
     }
-  }, []);
+  });
+  useDidHide(() => {
+    clearInterval(intervalId);
+  });
   return (
     <View>
       <View
@@ -133,7 +144,7 @@ export default ({}) => {
       <AtFloatLayout isOpened={!global.userInfo.isLogin}>
         <LoginView
           onConfirmLogin={async (res) => {
-            getImages();
+            startInteval();
           }}
         />
       </AtFloatLayout>

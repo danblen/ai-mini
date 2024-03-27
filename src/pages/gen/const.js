@@ -44,3 +44,5 @@ export const sdParams = {
   tiling: false,
   width: 512,
 };
+export const appendprompt =
+  'HDR, UHD, 8K, 4K, 64K, Best quality, Masterpiece, Highly detailed, Studio lighting, Ultra-fine painting, Sharp focus, Physically-based rendering, Extreme detail description, Professional, Vivid colors, Bokeh, High resolution scan, Sketch, Painting';
