@@ -125,7 +125,6 @@ const ImageList = ({ images, loadMore, onFetchData }) => {
           top: 39,
           zIndex: 10,
           height: 30,
-          backgroundColor: '#fff',
           width: '100%',
         }}
       >

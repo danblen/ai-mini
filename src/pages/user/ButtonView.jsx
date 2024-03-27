@@ -13,7 +13,7 @@ export default ({ onLogout, editDigital }) => {
       }}
     >
       <ButtonsBox
-        background="#fff"
+        background={global.t.cardBg}
         buttons={[
           {
             imageUrl: require('../../static/image/my/coin.png'),

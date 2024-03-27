@@ -14,10 +14,9 @@ export default ({ currentTab, onSwitchTab }) => {
         height: 90,
         width: '100%',
         zIndex: '10',
-        backgroundColor: 'white',
         display: 'flex',
         alignItems: 'flex-end',
-        backgroundImage: 'linear-gradient(to right, #67B26F, #4ca2cd)', // 添加渐变背景
+        backgroundImage: global.t.bgImage, // 添加渐变背景
       }}
     >
       <View

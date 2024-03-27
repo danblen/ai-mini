@@ -29,13 +29,10 @@ const Styles = {
     height: '400rpx',
     width: '96%',
     borderRadius: 5,
-    backgroundColor: '#fff',
   },
   container: {
     display: 'flex',
     justifyContent: 'center',
-    backgroundColor: '#fff',
-    // backgroundImage: 'linear-gradient(to right, #67B26F, #4ca2cd)', // 添加渐变背景
   },
   image: {
     width: '100%',

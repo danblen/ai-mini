@@ -18,3 +18,8 @@ export const PAGES = {
   userAgreements: '/pages/userModule/agreements/index',
   userPrivacy: '/pages/userModule/privacy/index',
 };
+
+global.t = {
+  cardBg: '#eee',
+  bgImage: 'linear-gradient(to right, #B2DBD5, #6C7B95)',
+};

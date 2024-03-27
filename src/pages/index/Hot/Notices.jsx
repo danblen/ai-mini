@@ -26,6 +26,8 @@ export default () => {
     <View
       style={{
         marginTop: '5px',
+        width: '96%',
+        margin: '5px auto 0',
       }}
     >
       <AtNoticebar icon="volume-plus">

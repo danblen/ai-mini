@@ -52,7 +52,6 @@ export default ({ tags_image, onNavigateToTab, titleParam }) => {
           alignItems: 'center',
           justifyContent: 'space-between',
           position: 'fixed',
-          backgroundColor: 'white',
           zIndex: '5',
         }}
       >

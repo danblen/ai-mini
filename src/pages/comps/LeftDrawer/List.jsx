@@ -22,7 +22,7 @@ export default ({ userInfo, onLogout }) => {
     <View
       style={{
         borderRadius: 10,
-        backgroundColor: '#fff',
+        backgroundColor: global.t.cardBg,
         paddingLeft: 10,
         marginTop: 20,
       }}

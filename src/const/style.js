@@ -1,3 +1,44 @@
+// 雾霾蓝
+
+// 渐变：linear-gradient(to right, #B2DBD5, #6C7B95)
+// 描述：从浅蓝色过渡到淡灰蓝色。
+// 珊瑚绿
+
+// 渐变：linear-gradient(to right, #F6D365, #7D7AEB)
+// 描述：从明亮的珊瑚橙色过渡到柔和的绿色。
+// 金玉琼浆
+
+// 渐变：linear-gradient(to right, #D9AFD9, #97D9E1)
+// 描述：从淡紫色过渡到淡蓝绿色。
+// 晨曦粉
+
+// 渐变：linear-gradient(to right, #F8B500, #F78E3C)
+// 描述：从橙黄色过渡到粉红色。
+// 翡翠黛紫
+
+// 渐变：linear-gradient(to right, #6A9113, #141517)
+// 描述：从翠绿色过渡到深紫色。
+// 热带雨林
+
+// 渐变：linear-gradient(to right, #43C6AC, #191654)
+// 描述：从绿松石色过渡到深蓝色。
+// 梦幻紫罗兰
+
+// 渐变：linear-gradient(to right, #DA22FF, #9733EE)
+// 描述：从鲜艳的紫色过渡到深紫色。
+// 岩玉蓝
+
+// 渐变：linear-gradient(to right, #00C9FF, #92FE9D)
+// 描述：从亮蓝色过渡到淡绿色。
+// 金铜铁
+
+// 渐变：linear-gradient(to right, #E65C00, #F9D423)
+// 描述：从橙色过渡到淡黄色。
+// 夜幕苍穹
+
+// 渐变：linear-gradient(to right, #4B79A1, #283E51)
+// 描述：从宝蓝色过渡到深蓝色。
+
 // 清晰淡雅型
 // 极淡蓝色调:
 

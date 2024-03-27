@@ -16,8 +16,9 @@ export default ({ showDrawer, onClose }) => {
       <View
         style={{
           paddingTop: 50,
-          backgroundColor: '#f8f8f8',
+          backgroundImage: global.t.bgImage,
           display: 'flex',
+          height: '100vh',
           justifyContent: 'center',
         }}
       >

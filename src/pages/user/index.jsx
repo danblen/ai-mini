@@ -306,7 +306,7 @@ export default () => {
         style={{
           borderRadius: '18px',
           position: 'relative',
-          backgroundColor: '#f8f8f8',
+          backgroundImage: global.t.bgImage,
           top: -30,
           paddingTop: 20,
         }}
