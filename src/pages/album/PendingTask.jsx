@@ -42,10 +42,10 @@ export default ({ images }) => {
                   <View
                     style={{
                       width: '49%',
-                      height: 200,
+                      height: 230,
                       marginBottom: 6,
                       borderRadius: 5,
-                      border: '1px solid #555',
+                      border: '1px solid #888',
                       boxSizing: 'border-box',
                       display: 'flex',
                       justifyContent: 'center',
@@ -65,11 +65,11 @@ export default ({ images }) => {
                 {image.status === 'waiting' && (
                   <View
                     style={{
-                      border: '1px solid #555',
+                      border: '1px solid #888',
                       borderRadius: 5,
                       boxSizing: 'border-box',
                       width: '49%',
-                      height: 200,
+                      height: 230,
                       marginBottom: 6,
                       borderRadius: '10rpx',
                       display: 'flex',

@@ -57,7 +57,6 @@ export default ({
   onUpdateTaskImages,
   selectedOption,
   momentId,
-  usePoint,
 }) => {
   const [loading, setLoading] = useState(false);
   const clickCount = useRef(Taro.getApp().globalData.clickCount);
@@ -103,47 +102,43 @@ export default ({
   }
   const getParams = async () => {
     let sdparam = sdFaceSwapParam;
-    if (selectedOption === '快速模式') {
+    if (selectedOption.text === '快速模式') {
       sdparam = sdFaceSwapParam;
       const tarBase64 = await wxPathToBase64(selectedImageUrl);
-      sdparam.alwayson_scripts.roop.args[0] = tarBase64;
-    } else if (selectedOption === '数字分身模式') {
+      // 上传到服务器
+      let dir = `/userImages/${global.userInfo.data.userId}/`;
+      let filename =
+        selectedImageUrl.substring(
+          selectedImageUrl.lastIndexOf('/') + 1,
+          selectedImageUrl.lastIndexOf('.')
+        ) + '.png';
+      api.saveImageToServerApi({
+        imageBase64: tarBase64,
+        dir,
+        filename,
+      });
+      sdparam.init_images[0] = imageUrl;
+      sdparam.alwayson_scripts.roop.args[0] = URL_STATIC + dir + filename;
+      return sdparam;
+    } else if (selectedOption.text === '数字分身模式') {
       return {
         imageUrls: [imageUrl],
       };
-    } else if (selectedOption === '换背景' || selectedOption === '转动漫') {
-      console.log('12312123123', imageUrl);
+    } else if (
+      selectedOption.text === '换背景' ||
+      selectedOption.text === '转动漫'
+    ) {
       const tarBase64 = await getBase64(imageUrl);
       sdparam = animeMixParam;
       sdparam.init_images[0] = tarBase64;
-      console.log(sdparam);
       return sdparam;
-    } else {
+    } else if (selectedOption.text === '精修模式') {
       sdparam = sdFaceSwapAddDetailParam;
       const tarBase64 = await wxPathToBase64(selectedImageUrl);
       sdparam.alwayson_scripts.roop.args[0] = tarBase64;
+      sdparam.init_images[0] = imageUrl;
+      return sdparam;
     }
-    // const tempFilePath = await downloadImages(imageUrl);
-    // const srcBase64 = await wxPathToBase64(tempFilePath);
-    const tarBase64 = await wxPathToBase64(selectedImageUrl);
-    // 上传到服务器
-    let dir = `/userImages/${global.userInfo.data.userId}/`;
-    let filename =
-      selectedImageUrl.substring(
-        selectedImageUrl.lastIndexOf('/') + 1,
-        selectedImageUrl.lastIndexOf('.')
-      ) + '.png';
-    api.saveImageToServerApi({
-      imageBase64: tarBase64,
-      dir,
-      filename,
-    });
-    // sdparam.momentId = momentId;
-    sdparam.init_images[0] = imageUrl;
-    // 放url路径，发给gpu的时候再下载
-    sdparam.alwayson_scripts.roop.args[0] = URL_STATIC + dir + filename;
-    // sdparam.alwayson_scripts.roop.args[0] = tarBase64;
-    return sdparam;
   };
 
   // const handleClick = async () => {
@@ -198,7 +193,7 @@ export default ({
       });
       return;
     }
-    if (!selectedImageUrl && selectedOption == '快速模式') {
+    if (!selectedImageUrl && selectedOption.text == '快速模式') {
       Taro.showToast({
         title: `请点击+号,选择人脸图像~`,
         icon: 'none',
@@ -231,11 +226,11 @@ export default ({
     const requestId = generateUniqueId();
     onUpdateTaskImages(requestId);
     let res;
-    if (selectedOption === '数字分身模式') {
+    if (selectedOption.text === '数字分身模式') {
       res = await api.easyPhotoSwapFace({
         userId: global.userInfo.data.userId,
         requestId,
-        usePoint,
+        usePoint: selectedOption.usePoint,
         sdParams: await getParams(),
       });
       if (res?.message === 'User loraName not found') {
@@ -252,7 +247,7 @@ export default ({
         taskType: 'img2img',
         processType: 'img2img',
         requestId,
-        usePoint,
+        usePoint: selectedOption.usePoint,
         sdParams: await getParams(),
         momentId: momentId,
       });
@@ -261,7 +256,7 @@ export default ({
         taskType: 'img2img',
         processType: 'img2img',
         requestId,
-        usePoint,
+        usePoint: selectedOption.usePoint,
         sdParams: await getParams(),
         momentId: momentId,
       });
@@ -322,7 +317,7 @@ export default ({
         loading={loading}
         onClick={handleClick}
       >
-        一键换脸（消耗{usePoint}积分）
+        一键换脸（消耗{selectedOption.usePoint}积分）
       </AtButton>
       <AtFloatLayout
         isOpened={isOpened}
