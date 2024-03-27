@@ -1,5 +1,4 @@
-import { api, getSwapQueueResult } from '../api/index.js';
-import { getStorageSync } from '../base/global.js';
+import { api } from '../api/index.js';
 
 let timers = {};
 export const getTaskImage = async (requestId) => {
@@ -19,7 +18,6 @@ export const getTaskImage = async (requestId) => {
 
     const checkStatus = async () => {
       try {
-        // let res = await getSwapQueueResult(requestData);
         let res = await api.queryResult({ requestId });
 
         if (res?.data?.status === 'finishing') {

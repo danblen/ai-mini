@@ -4,7 +4,6 @@
 
 import { View } from '@tarojs/components';
 import React, { useEffect, useState } from 'react';
-import { get_all_images } from '../../api';
 import Hot from './Hot';
 import NavBar from './NavBar';
 import New from './New';

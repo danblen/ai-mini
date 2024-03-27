@@ -2,18 +2,25 @@
  * 用户页
  */
 import {
-  Image,
-  Text,
-  View,
-  Input,
   Button,
+  Image,
+  Input,
   Radio,
   RadioGroup,
+  Text,
+  View,
 } from '@tarojs/components';
 import Taro, { useDidShow, useTabItemTap } from '@tarojs/taro';
 import React, { useEffect, useState } from 'react';
-import { AtFloatLayout } from 'taro-ui';
-import { api, get_user_info } from '../../api';
+import {
+  AtFloatLayout,
+  AtModal,
+  AtModalAction,
+  AtModalContent,
+  AtModalHeader,
+} from 'taro-ui';
+import { api } from '../../api';
+import { URL_STATIC } from '../../api/config';
 import { navigateTo } from '../../base/global';
 import {
   clearUserInfo,
@@ -22,13 +29,11 @@ import {
   updateUserInfoFromApi,
   updateUserInfoFromStorage,
 } from '../../common/user';
-import LoginView from '../comps/LoginView';
-import CheckIn from './CheckIn';
-import ButtonView from './ButtonView';
-import { AtModal, AtModalHeader, AtModalContent, AtModalAction } from 'taro-ui';
-import { URL_STATIC } from '../../api/config';
 import { PAGES } from '../../const/app';
 import UploadDigital from '../UploadDigital';
+import LoginView from '../comps/LoginView';
+import ButtonView from './ButtonView';
+import CheckIn from './CheckIn';
 const iconwechat = URL_STATIC + '/appstatic/image/share/icon_wechat.png';
 const buttonImages = URL_STATIC + '/appstatic/image/my/userPicToast.jpg';
 

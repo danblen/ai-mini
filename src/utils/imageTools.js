@@ -1,7 +1,5 @@
 import Taro from '@tarojs/taro';
 
-import { QueryUserDataAPI } from '../api/index.js';
-
 function getLocalFilePath(path) {
   if (
     path.indexOf('_www') === 0 ||

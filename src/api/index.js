@@ -27,6 +27,7 @@ api.enqueue = (data) => {
 api.update = (data) => {
   return request.post('/update', data);
 };
+// 获取首页图片
 api.getImages = (data) => {
   return request.post('/getImages', data);
 };
@@ -96,23 +97,12 @@ api.easyPhotoTrainLora = (data) => {
 api.easyPhotoSwapFace = (data) => {
   return request.post('/easyPhotoSwapFace', data);
 };
+api.getUserInfo = (data) => {
+  return request.post('/getUserInfo', data);
+};
 
 export { api };
 
-// 换脸接口
-export function faceSwap(data) {
-  return request.post('/queueProcess', data, { auth: true });
-}
-
-// 获取换脸结果
-export function getSwapQueueResult(data) {
-  return request.post('/queryResult', data);
-}
-
-// 获取首页所有图片
-export function get_all_images() {
-  return request.post('/getAllImages', null, { auth: true });
-}
 // 删除用户所有作品图片
 export function delete_all_images(data) {
   return request.post('/deleteAllImages', data);
@@ -126,29 +116,6 @@ export function getPhotoData(data) {
 }
 export function getPhotoPath(path) {
   return request.post(`/list-files?path=${encodeURIComponent(path)}`);
-}
-
-/* 可通过字典查询UserSqlData数据
-@data(dict):可选匹配特征：
-            userId             = Integer
-            main_image_path     = String
-            roop_image_path     = String
-            output_image_path   = String
-            created_at          = DateTime
-            befor_process_time  = Float
-            process_time        = Float
-            image_type          = String
-            request_id          = String
-            request_status      = String
-*/
-export function QueryUserDataAPI(data) {
-  return request.post('/query-user-process-data', data);
-}
-// export function QueryUserPcocessDataAPI(data) {
-//   return request.post('/query-user-process-data', data);
-// }
-export function get_user_info(data) {
-  return request.post('/getUserInfo', data);
 }
 
 // // SD

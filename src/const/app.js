@@ -11,7 +11,7 @@ export const PAGES = {
   setting: '/pages/userModule/setting/index',
   search: '/pages/search/index',
   faceswap: '/pages/faceswap/index',
-  faceswap: '/pages/AIconvert/index',
+  AIconvert: '/pages/AIconvert/index',
   feedback: '/pages/userModule/feedback/index',
   QrCodeGenerator: '/pages/QrCodeGenerator/index',
   photo: '/pages/photo/index',

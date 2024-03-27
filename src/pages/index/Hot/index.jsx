@@ -2,24 +2,13 @@
  * 首页
  */
 
-import { ScrollView, Text, View, Image } from '@tarojs/components';
-import Taro from '@tarojs/taro';
-import React, { useEffect, useState } from 'react';
-import { AtNoticebar } from 'taro-ui';
-import { api, get_all_images } from '../../../api/index.js';
-import { getStorageSync, setStorageSync } from '../../../base/global.js';
-import ButtonsBox from '../../comps/ButtonsBox.jsx';
-import CustomTop from '../../comps/CustomTop.jsx';
-import WaterfallList from '../../comps/WaterfallList.jsx';
-// import tabSelect from '../tabSelect.jsx';
+import { ScrollView } from '@tarojs/components';
 import PopularTemplate from '../PopularTemplate.jsx';
 import TopBanner from '../TopBanner.jsx';
-import CardView from './CardView.jsx';
-import PushView from './PushView.jsx';
-import ButtonView from './ButtonView.jsx';
 import CardPhotoView from './CardPhotoView.jsx';
-import TitleView from './TitleView.jsx';
+import CardView from './CardView.jsx';
 import Notices from './Notices.jsx';
+import PushView from './PushView.jsx';
 
 export default ({
   banners,

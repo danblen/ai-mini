@@ -5,7 +5,6 @@
 import { ScrollView, View } from '@tarojs/components';
 import Taro, { usePullDownRefresh } from '@tarojs/taro';
 import React, { Suspense, lazy, useEffect, useState } from 'react';
-import { get_all_images } from '../../api';
 import {
   updateUserInfoFromStorage,
   updateUserTokenFromStorage,

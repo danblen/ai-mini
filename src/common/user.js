@@ -1,5 +1,5 @@
 import Taro from '@tarojs/taro';
-import { api, get_user_info } from '../api';
+import { api } from '../api';
 import { getStorage, setStorage } from '../base/global';
 
 export const wechatLogin = () =>
@@ -71,7 +71,7 @@ export const fetchUserInfo = async () => {
   let userInfo = global.userInfo;
   // storage或global中有数据表示用户已经登陆
   if (userInfo?.isLogin && userInfo.data?.userId) {
-    let res = await get_user_info({
+    let res = await api.getUserInfo({
       userId: userInfo.data.userId,
     });
     // 所有接口都可通过这种方式判断调用成功与否
