@@ -100,7 +100,10 @@ api.easyPhotoSwapFace = (data) => {
 api.getUserInfo = (data) => {
   return request.post('/getUserInfo', data);
 };
-
+// 获取支付参数
+api.getPaymentParams = (data) => {
+  return request.post('/getPaymentParams', data);
+};
 export { api };
 
 // 删除用户所有作品图片
@@ -110,12 +113,6 @@ export function delete_all_images(data) {
 // 删除用户选中作品图片
 export function delete_select_images(data) {
   return request.post('/deleteSelectImages', data);
-}
-export function getPhotoData(data) {
-  return request.post('/sdapi/v1/query-photo-image-sql-data-by-dict', data);
-}
-export function getPhotoPath(path) {
-  return request.post(`/list-files?path=${encodeURIComponent(path)}`);
 }
 
 // // SD
@@ -177,7 +174,3 @@ export function getPhotoPath(path) {
 // export function getAnalysRes(fileDir, name) {
 //   return request.get(`/file=${fileDir}/${name}.txt`);
 // }
-// 获取支付参数
-api.getPaymentParams = (data) => {
-  return request.post('/getPaymentParams', data);
-};
