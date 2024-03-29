@@ -13,6 +13,7 @@ export default ({ albums }) => {
         style={{
           whiteSpace: 'nowrap',
           display: 'flex',
+          height: 240,
         }}
         scrollX
         scrollWithAnimation

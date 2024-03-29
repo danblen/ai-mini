@@ -23,6 +23,7 @@ const description =
 
 const a = {
   cardBg: '#eee',
+  buttonBg: '#f5f5f5',
   bgImage: 'linear-gradient(to right, #B2DBD5, #6C7B95)',
 };
 global.t = a;

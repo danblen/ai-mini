@@ -67,7 +67,8 @@ export default ({ tags_image, onNavigateToTab, titleParam }) => {
               style={{
                 fontSize: 12,
                 display: 'inline-block',
-                backgroundColor: current === tab.title ? '#59a2dc' : '#fff',
+                backgroundColor:
+                  current === tab.title ? '#59a2dc' : global.t.buttonBg,
                 marginLeft: 8,
                 paddingLeft: 8,
                 paddingRight: 8,

@@ -43,12 +43,11 @@
  * />
  */
 
-import { Editor, Image, Text, View } from '@tarojs/components';
+import { Image, Text, View } from '@tarojs/components';
 import Taro from '@tarojs/taro';
-import { AtIcon } from 'taro-ui';
-import { URL_STATIC } from '../../../api/config';
-import { AtActionSheet, AtActionSheetItem, AtImagePicker } from 'taro-ui';
 import React, { useState } from 'react';
+import { AtActionSheet, AtActionSheetItem, AtIcon } from 'taro-ui';
+import { URL_STATIC } from '../../../api/config';
 import { navigateTo } from '../../../base/global';
 import { compressInputImage } from '../../comps/ImagePicker';
 
@@ -181,7 +180,7 @@ export default ({ infoLeftImage, infoTopLeftImage, infoTopRightImage }) => {
               mode="aspectFill"
               style={{
                 width: '100%',
-                borderRadius: 5,
+                borderRadius: 10,
                 height: 200,
               }}
             />
@@ -245,7 +244,7 @@ export default ({ infoLeftImage, infoTopLeftImage, infoTopRightImage }) => {
                   position: 'relative',
                   width: '48%',
                   height: 95,
-                  borderRadius: 5,
+                  borderRadius: 10,
                   background: `url(${buttonImages})`,
                   backgroundSize: 'cover',
                 }}
@@ -306,7 +305,7 @@ export default ({ infoLeftImage, infoTopLeftImage, infoTopRightImage }) => {
                   position: 'relative',
                   width: '48%',
                   height: 95,
-                  borderRadius: 5,
+                  borderRadius: 10,
                   background: `url(${buttonImages})`,
                   backgroundSize: 'cover',
                 }}

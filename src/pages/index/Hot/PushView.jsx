@@ -78,6 +78,7 @@ export default ({ title, description, tagName }) => {
           display: 'flex',
           flexDirection: 'row',
           justifyContent: 'center',
+          height: 170,
           width: '100%',
         }}
         scroll-x
