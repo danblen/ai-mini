@@ -10,7 +10,7 @@ export const sdParams = {
   do_not_save_grid: false,
   do_not_save_samples: false,
   enable_hr: false,
-  height: 512,
+  height: 1024,
   hr_negative_prompt: '',
   hr_prompt: '',
   hr_resize_x: 0,
@@ -42,7 +42,16 @@ export const sdParams = {
   subseed: -1,
   subseed_strength: 0,
   tiling: false,
-  width: 512,
+  width: 1024,
 };
 export const appendprompt =
   'HDR, UHD, 8K, 4K, 64K, Best quality, Masterpiece, Highly detailed, Studio lighting, Ultra-fine painting, Sharp focus, Physically-based rendering, Extreme detail description, Professional, Vivid colors, Bokeh, High resolution scan, Sketch, Painting';
+export const appendnegativeprompt =
+  'Low-poly,  Quirky, Wild,Embarrassing, Horrifying, Frightening, Scary,nsfw, sexual, violent, graphic, nudity, disgusting, horror, gore, blood, gore, graphic, violence, sexual, nudity, disgusting, horror, gore, blood, gore, graphic, violence, sexual, nudity, disgusting, horror, gore, blood, gore, graphic, violence, sexual, nudity, disgusting, horror, gore, blood, gore, graphic, violence, sexual, nudity, disgusting, horror, gore, blood, gore, graphic, violence, sexual, nudity, disgusting, horror, gore, blood, gore, graphic, violence, sexual, nudity, disgusting, horror, gore, blood, gore, graphic, viol';
+export const exp =
+  '一个纯白羽翼的天使，站在蔚蓝的天空之上，手拿一根闪耀着光芒的长剑。彩虹翅膀，幻想，完美主义，拉斐尔，超写实主义，头部仰望，永恒之美，柔和色调。';
+export const exp2 =
+  "RAW photo, best quality, realistic,CANNO EOS R3, photo-realistic:1.3, masterpiece, ultra-detailed, CG unity, 8k wallpaper, amazing, finely detailed,( light smile: 0.9), highres, iu, asymmetrical bangs, short bangs, pureerosface_v1, beautiful detailed girl, extremely detailed eyes and face, beautiful detailed eyes, light on face, looking at viewer, straight-on, staring, closed mouth, black hair, long hair, collarbone, bare shoulders, long eyelashes, upper body, 1girl, full body:1.3, highly detailed face: 1.5, beautiful ponytail:0.5, beautiful detailed eyes, beautiful detailed nose, realistic face, realistic body, comfortable expressions, smile, look at viewer, comfortable expressions,fit model, hotel room, boudoir photography, upscale business hotel, luxurious decorations, expensive furniture, clean room, tasteful poses, lying on bed, sitting on sofa, showcasing beautiful body, modestly covered, pure, beautiful, soft lighting, professional equipment, camera settings, focal length, wardrobe details, model's expression, eye contact, sexy clothing, clean, bright scene, comfortable, (soft cinematic light:1.2), (depth of field:1.4), (intricate details:1.12), (sharp, exposure blend, medium shot:1.2), (natural skin texture, hyperrealism:1.2)";
+
+const negative_prompt =
+  '(deformed, distorted, disfigured:1.3), poorly drawn, bad anatomy, wrong anatomy, extra limb, missing limb, floating limbs, (mutated hands and fingers:1.4), disconnected limbs, mutation, mutated, ugly, disgusting, blurry, amputation, watermark, (deformed, distorted, disfigured:1.3), poorly drawn, bad anatomy, wrong anatomy, extra limb, missing limb, floating limbs, (mutated hands and fingers:1.4), disconnected limbs, mutation, mutated, ugly, disgusting, blurry, amputation, watermark';

@@ -18,6 +18,9 @@ export const PAGES = {
   userAgreements: '/pages/userModule/agreements/index',
   userPrivacy: '/pages/userModule/privacy/index',
 };
+const description =
+  '请选择一张人脸清晰的照片，生成图片需要等待一段时间，可在作品页查看生成作品和进度，作品将在12小时后删除，请及时保存图片';
+
 const a = {
   cardBg: '#eee',
   bgImage: 'linear-gradient(to right, #B2DBD5, #6C7B95)',

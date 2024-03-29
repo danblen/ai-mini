@@ -34,10 +34,6 @@ api.getImages = (data) => {
 api.getAppImages = (data) => {
   return request.post('/getAppImages', data);
 };
-// 获取banner图
-api.getBanners = (data) => {
-  return request.post('/getBanners', data);
-};
 // 用来开发使用的，存储数据到数据库表中
 api.storeImages = (data) => {
   return request.post('/storeImages', data);
