@@ -1,5 +1,4 @@
 import { View, Button, WebView } from '@tarojs/components';
-import ImagePicker from '../comps/ImagePicker';
 import { AtButton } from 'taro-ui';
 import { api } from '../../api';
 import { updateUserInfoFromStorage } from '../../common/user';

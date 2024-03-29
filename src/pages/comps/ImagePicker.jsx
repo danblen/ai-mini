@@ -4,6 +4,7 @@ import { AtImagePicker } from 'taro-ui';
 import Taro from '@tarojs/taro';
 import { wxPathToBase64 } from '../../utils/imageTools';
 import { getStorage, setStorage } from '../../base/global';
+import { generateUniqueId } from '../../utils';
 
 export const compressInputImage = async (file) => {
   try {
@@ -39,25 +40,18 @@ export const compressInputImage = async (file) => {
       console.log('uncompressed size', srcBase64.length);
     }
 
-    return {
-      base64: srcBase64,
-    };
+    return srcBase64;
   } catch (error) {
     console.error('图片压缩失败：', error);
-    return file;
+    return null;
   }
 };
 
-export default function ImagePicker({
-  onFilesChange,
-  onSelectImage,
-  disSelectPic = true,
-}) {
+export default function ImagePicker({ onFilesChange, onSelectImage }) {
   const [files, setFiles] = useState([]);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const filesRef = useRef(files);
   const selectedIndexRef = useRef(selectedIndex);
-  const maxTrainLoraImages = 5;
 
   useEffect(() => {
     filesRef.current = files;
@@ -87,12 +81,6 @@ export default function ImagePicker({
     };
   }, []);
 
-  const generateUniqueId = () => {
-    const timestamp = Date.now();
-    const randomString = Math.random().toString(36).substring(2, 8);
-    return `${timestamp}-${randomString}`;
-  };
-
   return (
     <View
       style={{
@@ -101,47 +89,43 @@ export default function ImagePicker({
         alignItems: 'center',
       }}
     >
-      {disSelectPic && (
-        <View>
-          {files.map(
-            (file, index) =>
-              index === selectedIndex && (
-                <View
-                  key={index}
-                  style={{
-                    position: 'relative',
-                    margin: '5px',
-                    marginRight: '20px', // 间距以确保三角形与 AtImagePicker 有一定距离
-                  }}
-                >
-                  <Image
-                    src={file.url}
-                    style={{
-                      width: 80,
-                      height: 80,
-                      border: '2px solid #06638e', // 图像边框样式
-                      borderRadius: 8,
-                    }}
-                    mode="aspectFill"
-                  />
-                  {/* 添加倒三角形 */}
-                  <View
-                    style={{
-                      position: 'absolute',
-                      top: '50%', // 上下居中
-                      right: '-20px', // 贴近图像右侧
-                      transform: 'translateY(-50%)', // 上下居中
-                      width: 0,
-                      height: 0,
-                      borderTop: '8px solid transparent',
-                      borderBottom: '8px solid transparent',
-                      borderRight: '8px solid #06638e', // 右侧三角形指向 AtImagePicker
-                    }}
-                  />
-                </View>
-              )
-          )}
-        </View>
+      {files.map(
+        (file, index) =>
+          index === selectedIndex && (
+            <View
+              key={index}
+              style={{
+                position: 'relative',
+                margin: '5px',
+                marginRight: '20px', // 间距以确保三角形与 AtImagePicker 有一定距离
+              }}
+            >
+              <Image
+                src={file.url}
+                style={{
+                  width: 80,
+                  height: 80,
+                  border: '2px solid #06638e', // 图像边框样式
+                  borderRadius: 8,
+                }}
+                mode="aspectFill"
+              />
+              {/* 添加倒三角形 */}
+              <View
+                style={{
+                  position: 'absolute',
+                  top: '50%', // 上下居中
+                  right: '-20px', // 贴近图像右侧
+                  transform: 'translateY(-50%)', // 上下居中
+                  width: 0,
+                  height: 0,
+                  borderTop: '8px solid transparent',
+                  borderBottom: '8px solid transparent',
+                  borderRight: '8px solid #06638e', // 右侧三角形指向 AtImagePicker
+                }}
+              />
+            </View>
+          )
       )}
       <ScrollView
         scrollY
@@ -152,46 +136,18 @@ export default function ImagePicker({
         }}
       >
         <AtImagePicker
-          length={maxTrainLoraImages + 1}
-          count={maxTrainLoraImages} // 设置剩余可选择的图片数量
+          length={4}
+          count={99} // 设置可选择的图片数量
           files={files}
           onChange={async (newFiles) => {
             try {
-              // console.log(
-              //   'TrainLoraImages count:',
-              //   newFiles.length,
-              //   files.length
-              // );
-
-              // // 检查总数量是否超过限制
-              // if (newFiles.length > maxTrainLoraImages) {
-              //   Taro.showToast({
-              //     title: `${maxTrainLoraImages}张就够了，算不过来`,
-              //     icon: 'none',
-              //     duration: 1000,
-              //   });
-
-              //   // 获取当前已选择的图片数量
-              //   const currentSelectedCount = files.length;
-
-              //   // 截取新选择的图片数量，保留已选择的图片
-              //   newFiles = newFiles.slice(
-              //     0,
-              //     maxTrainLoraImages - currentSelectedCount
-              //   );
-              //   console.log('now', newFiles.length);
-              // }
-
               let curIndex = newFiles.length - 1;
               // 添加文件时才进行压缩处理
               if (newFiles.length > files.length) {
-                const compressedFile = await compressInputImage(
+                newFiles[curIndex].id = generateUniqueId();
+                newFiles[curIndex].compressBase64 = await compressInputImage(
                   newFiles[curIndex]
                 );
-                newFiles[curIndex].id = generateUniqueId();
-                newFiles[curIndex].compressBase64 = compressedFile.base64
-                  ? compressedFile.base64
-                  : null;
               }
 
               const dataToStore = {
