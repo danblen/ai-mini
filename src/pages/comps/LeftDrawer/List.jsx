@@ -34,14 +34,14 @@ export default ({ userInfo, onLogout }) => {
         账户安全设置
       </View> */}
       {/* <View style={Style.item}>个人信息清单</View> */}
-      <View
+      {/* <View
         style={Style.item}
         onClick={() => {
           navigateTo({ url: PAGES.message });
         }}
       >
         我的消息
-      </View>
+      </View> */}
       <View
         style={Style.item}
         onClick={() => {

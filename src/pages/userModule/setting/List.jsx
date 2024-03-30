@@ -28,10 +28,10 @@ export default ({}) => {
         <View style={Style.title}>版本号</View>
         <View style={{ fontSize: 12 }}>1.12.0</View>
       </View>
-      <View style={Style.item} onClick={() => {}}>
+      {/* <View style={Style.item} onClick={() => {}}>
         账户安全设置
       </View>
-      <View style={Style.item}>个人信息清单</View>
+      <View style={Style.item}>个人信息清单</View> */}
       <View
         style={Style.item}
         onClick={() => {
