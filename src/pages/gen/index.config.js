@@ -1,3 +1,5 @@
 export default {
-  navigationBarTitleText: '首页'
-}
+  navigationBarTitleText: '创作',
+  navigationStyle: 'default',
+  enableShareAppMessage: true,
+};

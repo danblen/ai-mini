@@ -26,6 +26,9 @@ const foldPanelStyle = {
   borderRadius: '5px',
   backgroundColor: '#f8f8f8',
   padding: '10px',
+  width: '96%',
+  boxSizing: 'border-box',
+  margin: '0 auto',
 };
 
 const headerStyle = {

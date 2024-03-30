@@ -2,11 +2,11 @@ export default {
   // 所有的页面，新增页面需要在这里加上才能用
   pages: [
     'pages/index/index',
+    'pages/gen/index',
+    'pages/album/index',
     'pages/UploadDigital/index',
-    // 'pages/gen/index',
     'pages/QrCodeGenerator/index',
     'pages/user/index',
-    'pages/album/index',
     'pages/refine/index',
     'pages/create/index',
     'pages/postNode/index',
@@ -31,7 +31,8 @@ export default {
   ],
   // 底部导航tabbar
   tabBar: {
-    backgroundColor: '#fafafa',
+    backgroundColor: '#6c7b95',
+    // backgroundColor: '#fafafa',
     borderStyle: 'white',
     selectedColor: '#AB956D',
     color: '#666',
@@ -48,12 +49,12 @@ export default {
       //   selectedIconPath: './static/image/tabbar/icons8-图片编辑器-100 (1).png',
       //   text: '发现',
       // },
-      // {
-      //   pagePath: 'pages/gen/index',
-      //   iconPath: './static/image/tabbar/icons8-图片编辑器-100.png',
-      //   selectedIconPath: './static/image/tabbar/icons8-图片编辑器-100 (1).png',
-      //   text: '创作',
-      // },
+      {
+        pagePath: 'pages/gen/index',
+        iconPath: './static/image/tabbar/发现-on.png',
+        selectedIconPath: './static/image/tabbar/发现-on.png',
+        // text: '创作',
+      },
       {
         pagePath: 'pages/album/index',
         iconPath: './static/image/tabbar/picture.png',
@@ -71,7 +72,7 @@ export default {
   // 全局配置
   window: {
     backgroundTextStyle: 'light',
-    navigationBarBackgroundColor: '#fff',
+    navigationBarBackgroundColor: '#b2dbd5',
     navigationBarTextStyle: 'black',
     navigationStyle: 'custom',
   },

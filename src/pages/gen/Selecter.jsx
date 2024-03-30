@@ -21,6 +21,9 @@ export default ({ title, data }) => {
         backgroundColor: '#f4f4f4',
         borderRadius: '5px',
         padding: '10px',
+        boxSizing: 'border-box',
+        width: '96%',
+        margin: '0 auto',
       }}
     >
       <Text style={{ fontWeight: 'bold', marginBottom: 40, fontSize: '18px' }}>
