@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Canvas, Image } from '@tarojs/components';
 import Taro from '@tarojs/taro';
-import { api } from '../../api';
+import { api } from '../../../api';
 // import QRCode from 'qrcode'; // 引入第三方库
 
 export default () => {

@@ -13,7 +13,7 @@ export const PAGES = {
   faceswap: '/pages/faceswap/index',
   AIconvert: '/pages/AIconvert/index',
   feedback: '/pages/userModule/feedback/index',
-  QrCodeGenerator: '/pages/QrCodeGenerator/index',
+  QrCodeGenerator: '/pages/userModule/QrCodeGenerator/index',
   photo: '/pages/photo/index',
   userAgreements: '/pages/userModule/agreements/index',
   userPrivacy: '/pages/userModule/privacy/index',
