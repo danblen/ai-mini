@@ -16,6 +16,7 @@ export default ({ currentTab, onSwitchTab }) => {
         zIndex: '10',
         display: 'flex',
         alignItems: 'flex-end',
+        backgroundColor: global.t.navBarBg,
         backgroundImage: global.t.bgImage, // 添加渐变背景
       }}
     >

@@ -6,7 +6,7 @@ export default {
     'pages/album/index',
     'pages/UploadDigital/index',
     'pages/user/index',
-    'pages/refine/index',
+    // 'pages/refine/index',
     'pages/create/index',
     'pages/postNode/index',
     'pages/discover/index',
@@ -27,6 +27,10 @@ export default {
         'feedback/index',
         'QrCodeGenerator/index',
       ],
+    },
+    {
+      root: 'pages/refineModule',
+      pages: ['refine/index'],
     },
   ],
   // 底部导航tabbar
