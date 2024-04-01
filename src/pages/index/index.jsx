@@ -15,7 +15,12 @@ import { getStorage } from '../../base/global.js';
 import Hot from './Hot';
 import Recommend from './Recommend';
 import New from './New';
+import {
+  getTaskNotifyAuth,
+  getUserAuthorization,
+} from '../../common/requestAuth.js';
 
+// 在任务完成后调用此函数获取用户授权
 function TabContent({
   currentTab,
   allImages,
@@ -134,6 +139,7 @@ export default () => {
       <NavBar
         currentTab={currentTab}
         onSwitchTab={(tabName) => {
+          getTaskNotifyAuth();
           setCurrentTab(tabName);
         }}
       ></NavBar>
