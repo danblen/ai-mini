@@ -35,6 +35,6 @@ const c = {
   cardBg: '#eee',
   buttonBg: '#f5f5f5',
   bgImage: '#fff',
-  navBarBg: '#fff',
+  navBarBg: '#b2dbd5',
 };
 global.t = c;

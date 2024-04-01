@@ -9,6 +9,7 @@ import { api } from '../../api/index.js';
 import LoginView from '../comps/LoginView.jsx';
 import FinishedTask from './FinishedTask.jsx';
 import PendingTask from './PendingTask.jsx';
+import { getTaskNotifyAuth } from '../../common/requestAuth.js';
 
 let intervalId;
 export default ({}) => {
@@ -93,6 +94,7 @@ export default ({}) => {
                 lineHeight: '50rpx',
               }}
               onClick={() => {
+                getTaskNotifyAuth();
                 getImages();
                 setCurrent(tab.title);
               }}

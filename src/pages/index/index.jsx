@@ -139,7 +139,6 @@ export default () => {
       <NavBar
         currentTab={currentTab}
         onSwitchTab={(tabName) => {
-          getTaskNotifyAuth();
           setCurrentTab(tabName);
         }}
       ></NavBar>
@@ -152,7 +151,6 @@ export default () => {
         {/* <View style={{ marginTop: 90 }}> */}
         <TabContent
           currentTab={currentTab}
-          // allImages={allImages}
           banners={banners}
           albums={albums}
           activityTagsImage={activityTagsImage}
