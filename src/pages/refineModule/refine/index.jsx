@@ -1,7 +1,7 @@
 import { Image, Text, View } from '@tarojs/components';
 import Taro from '@tarojs/taro';
 import React, { useState } from 'react';
-import { URL_STATIC } from '../../api/config';
+import { URL_STATIC } from '../../../api/config';
 const IconTri = URL_STATIC + '/appstatic/image/my/triangle.png';
 const Icon1080 = URL_STATIC + '/appstatic/image/my/full1080.png';
 const Icon4k = URL_STATIC + '/appstatic/image/my/full.png';
