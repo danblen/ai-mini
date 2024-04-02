@@ -29,9 +29,9 @@ export default () => {
   }, []);
 
   return (
-    <Container images={images} background={'#fff'}>
-      {/* <View style={{ width: '96%', margin: '0 auto' }}> */}
-      <View style={{ marginTop: 90 }}></View>
+    // <Container images={images} background={'#fff'}>
+    <View style={{ margin: '0 auto' }}>
+      <View style={{}}></View>
       <Prompt
         title={'绘画描述'}
         value={prompt}
@@ -46,6 +46,11 @@ export default () => {
         }}
       ></Size> */}
       <Selecter data={channels} title={'选择通道'}></Selecter>
+      <View
+        style={{
+          marginTop: '20px',
+        }}
+      ></View>
       <Advance
         negativePrompt={negativePrompt}
         setNegativePrompt={setNegativePrompt}
@@ -123,7 +128,7 @@ export default () => {
         </AtButton>
         {/* </View> */}
       </View>
-      {/* </View> */}
-    </Container>
+    </View>
+    // </Container>
   );
 };

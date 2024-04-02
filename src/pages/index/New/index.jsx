@@ -14,7 +14,7 @@
  * <New />
  */
 
-import { ScrollView } from '@tarojs/components';
+import { ScrollView, View } from '@tarojs/components';
 import React, { useEffect, useState } from 'react';
 import WaterfallList from '../../comps/WaterfallList.jsx';
 import CustomTop from '../../comps/CustomTop.jsx';
@@ -59,6 +59,7 @@ export default ({ tagImages }) => {
   }, [tagImages]);
   return (
     <ScrollView enhanced showScrollbar={false} scroll-y>
+      <View style={{ marginTop: 10 }}></View>
       <WaterfallList
         imageListLeft={leftHalf || []}
         imageListRight={rightHalf || []}

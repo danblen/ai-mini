@@ -53,6 +53,7 @@ export default ({ tags_image, onNavigateToTab, titleParam }) => {
           justifyContent: 'space-between',
           position: 'fixed',
           zIndex: '5',
+          background: global.t.containerBg,
         }}
       >
         <ScrollView

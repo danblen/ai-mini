@@ -36,5 +36,6 @@ const c = {
   buttonBg: '#f5f5f5',
   bgImage: '#fff',
   navBarBg: '#b2dbd5',
+  containerBg: '#fff',
 };
 global.t = c;

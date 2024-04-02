@@ -72,6 +72,7 @@ export default ({}) => {
           justifyContent: 'space-between',
           position: 'fixed',
           zIndex: '5',
+          background: global.t.containerBg,
         }}
       >
         <ScrollView
