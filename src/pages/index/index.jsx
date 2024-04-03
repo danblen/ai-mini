@@ -11,19 +11,13 @@ import {
 } from '../../common/user';
 import NavBar from './NavBar';
 import { api } from '../../api/index.js';
-import { getStorage } from '../../base/global.js';
 import Hot from './Hot';
 import Recommend from './Recommend';
 import New from './New';
-import {
-  getTaskNotifyAuth,
-  getUserAuthorization,
-} from '../../common/requestAuth.js';
 
 // 在任务完成后调用此函数获取用户授权
 function TabContent({
   currentTab,
-  allImages,
   banners,
   albums,
   tagImages,
@@ -42,11 +36,7 @@ function TabContent({
       />
     ),
     recommend: (
-      <Recommend
-        tags_image={allImages?.tagsImage}
-        onNavigateToTab={navigateToTab}
-        titleParam={recomTitle}
-      />
+      <Recommend onNavigateToTab={navigateToTab} titleParam={recomTitle} />
     ),
     new: <New tagImages={tagImages} />,
   };
@@ -130,7 +120,6 @@ export default () => {
   }, []);
   usePullDownRefresh(() => {
     //调用Taro.stopPullDownRefresh 停止下拉效果
-    // getAllImages().then(() => Taro.stopPullDownRefresh());
     getTagImages().then(() => Taro.stopPullDownRefresh());
   });
 
@@ -148,7 +137,6 @@ export default () => {
         showScrollbar={false}
         style={{ marginTop: 90 }}
       >
-        {/* <View style={{ marginTop: 90 }}> */}
         <TabContent
           currentTab={currentTab}
           banners={banners}
@@ -161,7 +149,6 @@ export default () => {
           }}
           recomTitle={recomTitle}
         />
-        {/* </View> */}
       </ScrollView>
     </ScrollView>
   );

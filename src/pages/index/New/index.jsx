@@ -22,11 +22,24 @@ import { getStorageSync, setStorageSync } from '../../../base/global.js';
 import { api } from '../../../api/index.js';
 
 let firstGetImages = 0;
-export default ({ tagImages }) => {
+export default ({}) => {
   const [leftHalf, setLeftHalf] = useState();
   const [rightHalf, setRightHalf] = useState();
-
-  const setLRHalfPic = async () => {
+  const getTagImages = async () => {
+    let res = await api.getImages([{ tagName: 'NEW' }]);
+    if (res?.data) {
+      // 过滤掉值为 null 的元素
+      const filteredData = res.data[0].filter((item) => item !== null);
+      if (filteredData.length > 0) {
+        const shuffledImages = filteredData.sort(() => Math.random() - 0.5);
+        setHalfPic(shuffledImages);
+      }
+    }
+  };
+  useEffect(() => {
+    getTagImages();
+  }, []);
+  const setHalfPic = async (tagImages) => {
     if (!Array.isArray(tagImages)) {
       console.log('tagImages is not an array:', tagImages);
       return;
@@ -37,26 +50,6 @@ export default ({ tagImages }) => {
     setLeftHalf(tagImages.slice(0, halfLength));
     setRightHalf(tagImages.slice(halfLength));
   };
-  // const getTagImages = async () => {
-  //   let res = await api.getTagImages({ tagName: 'Hot' });
-  //   if (res?.data) {
-  //     setStorageSync('tmpNewTagimages', res.data);
-  //     setLRHalfPic(res.data);
-  //   }
-  // };
-  // if (!firstGetImages) {
-  //   firstGetImages = 1;
-  //   getTagImages();
-  // }
-  useEffect(() => {
-    setLRHalfPic();
-    // const tmpHotTagimages = getStorageSync('tmpHotTagimages');
-    // if (!tmpHotTagimages) {
-    //   getTagImages();
-    // } else {
-    //   setLRHalfPic(tmpHotTagimages);
-    // }
-  }, [tagImages]);
   return (
     <ScrollView enhanced showScrollbar={false} scroll-y>
       <View style={{ marginTop: 10 }}></View>
