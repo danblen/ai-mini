@@ -121,6 +121,7 @@ export default () => {
   usePullDownRefresh(() => {
     //调用Taro.stopPullDownRefresh 停止下拉效果
     getTagImages().then(() => Taro.stopPullDownRefresh());
+    getAppImages().then(() => Taro.stopPullDownRefresh());
   });
 
   return (
