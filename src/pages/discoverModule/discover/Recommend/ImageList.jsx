@@ -1,7 +1,7 @@
 import { Image, Text, View } from '@tarojs/components';
 import React from 'react';
 import { AtIcon } from 'taro-ui';
-import { navigateTo } from '../../../base/global';
+import { navigateTo } from '../../../../base/global';
 
 export default ({ imageUrls }) => {
   const getRandomImage = () => {

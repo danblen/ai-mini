@@ -21,7 +21,6 @@ import CustomTop from '../../comps/CustomTop.jsx';
 import { getStorageSync, setStorageSync } from '../../../base/global.js';
 import { api } from '../../../api/index.js';
 
-let firstGetImages = 0;
 export default ({}) => {
   const [leftHalf, setLeftHalf] = useState();
   const [rightHalf, setRightHalf] = useState();

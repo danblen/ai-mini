@@ -6,10 +6,8 @@ export default {
     'pages/album/index',
     'pages/UploadDigital/index',
     'pages/user/index',
-    // 'pages/refine/index',
     'pages/create/index',
     'pages/postNode/index',
-    'pages/discover/index',
     'pages/message/index',
     'pages/activity/Activity',
     // 'pages/search/index',
@@ -31,6 +29,10 @@ export default {
     {
       root: 'pages/refineModule',
       pages: ['refine/index'],
+    },
+    {
+      root: 'pages/discoverModule',
+      pages: ['discover/index'],
     },
   ],
   // 底部导航tabbar
