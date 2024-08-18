@@ -1,7 +1,6 @@
 import { Text, View } from '@tarojs/components';
 import { useState } from 'react';
-import { AtDrawer } from 'taro-ui';
-import LeftDrawer from '../comps/LeftDrawer';
+import LeftDrawer from '../../comps/LeftDrawer';
 
 export default ({ currentTab, onSwitchTab }) => {
   const [showDrawer, setShowDrawer] = useState(false);

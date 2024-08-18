@@ -11,7 +11,7 @@ export default () => {
       <ButtonsBox
         buttons={[
           {
-            imageUrl: require('../../../static/image/my/comment.png'),
+            imageUrl: require('../../../../static/image/my/comment.png'),
             pagePath: '/pages/activity/Activity',
             text: 'AI修图',
             params: {
@@ -20,7 +20,7 @@ export default () => {
             },
           },
           {
-            imageUrl: require('../../../static/image/my/comment.png'),
+            imageUrl: require('../../../../static/image/my/comment.png'),
             pagePath: '/pages/activity/Activity',
             text: '老照片修复',
             params: {
@@ -29,7 +29,7 @@ export default () => {
             },
           },
           {
-            imageUrl: require('../../../static/image/my/comment.png'),
+            imageUrl: require('../../../../static/image/my/comment.png'),
             // pagePath: "/pages/activity/Activity",
             text: 'AI动漫',
             // params: {
@@ -38,7 +38,7 @@ export default () => {
             // },
           },
           {
-            imageUrl: require('../../../static/image/my/comment.png'),
+            imageUrl: require('../../../../static/image/my/comment.png'),
             pagePath: '/pages/activity/Activity',
             text: 'AI证件照',
             params: {
